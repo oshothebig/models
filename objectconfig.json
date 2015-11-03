@@ -1,0 +1,12 @@
+[
+	 {"Name"      : "V4Route",
+	  "Primary"   : "ribd",
+	  "Secondary" : ["asicd",
+					    ]
+	 },
+
+	 {"Name"      : "Vlan",
+	  "Primary"   : "asicd",
+	  "Secondary" : []
+	 },
+]
