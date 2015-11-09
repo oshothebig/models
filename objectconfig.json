@@ -1,12 +1,21 @@
 [
 	 {"Name"      : "V4Route",
 	  "Primary"   : "ribd",
-	  "Secondary" : ["asicd",
-					    ]
+	  "Secondary" : []
 	 },
 
 	 {"Name"      : "Vlan",
 	  "Primary"   : "asicd",
 	  "Secondary" : []
 	 },
+
+     {"Name"      : "IPv4Intf",
+      "Primary"   : "asicd",
+      "Secondary" : []
+     },
+
+     {"Name"      : "IPv4Neighbor",
+      "Primary"   : "asicd",
+      "Secondary" : []
+     }
 ]
