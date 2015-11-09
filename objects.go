@@ -96,8 +96,7 @@ type Vlan struct {
  * Internally this l2 object name can be translated
  * into appropriate key.
  */
-
-type IPv4Intf {
+type IPv4Intf struct {
     IpAddr   string
     RouterIf int32
 }
@@ -109,49 +108,30 @@ type IPv4Neighbor struct {
     RouterIf int32
 }
 
-func (obj *Vlan) UnmarshalHTTP(r *http.Request) error {
-	var vlanobj Vlan
-	body, err := ioutil.ReadAll(io.LimitReader(r.Body, 1048576))
-	if err != nil {
-	 return err
-	}
-	if err := r.Body.Close(); err != nil {
-		return err
-	}
-	if err = json.Unmarshal(body, &vlanobj); err != nil  {
-		fmt.Println("# Vlan create called, unmarshal failed", vlanobj)
-	}
-	return nil
+func (obj Vlan) UnmarshalObject(body []byte) (ConfigObj, error) {
+    var vlanObj Vlan
+    var err error
+    if err = json.Unmarshal(body, &vlanObj); err != nil  {
+        fmt.Println("### Vlan create called, unmarshal failed", vlanObj)
+    }
+    return vlanObj, err
 }
 
-func (obj *IPv4Intf) UnmarshalHTTP(r *http.Request) error {
-	var v4Intf IPv4Intf
-	body, err := ioutil.ReadAll(io.LimitReader(r.Body, 1048576))
-	if err != nil {
-	 return err
-	}
-	if err := r.Body.Close(); err != nil {
-		return err
-	}
-	if err = json.Unmarshal(body, &v4Intf); err != nil  {
-		fmt.Println("# IPv4Intf create called, unmarshal failed", v4Intf)
-	}
-	return nil
+func (obj IPv4Intf) UnmarshalObject(body []byte) (ConfigObj, error) {
+    var v4Intf IPv4Intf
+    var err error
+    if err = json.Unmarshal(body, &v4Intf); err != nil  {
+        fmt.Println("### IPV4Route create called, unmarshal failed", v4Intf)
+    }
+    return v4Intf, err
 }
 
-func (obj *IPv4Neighbor) UnmarshalHTTP(r *http.Request) error {
-	var v4Nbr v4Nbr
-	body, err := ioutil.ReadAll(io.LimitReader(r.Body, 1048576))
-	if err != nil {
-	 return err
-	}
-	if err := r.Body.Close(); err != nil {
-		return err
-	}
-	if err = json.Unmarshal(body, &v4Nbr); err != nil  {
-		fmt.Println("# IPv4Neighbor create called, unmarshal failed", v4Nbr)
-	}
-	return nil
+func (obj IPv4Neighbor) UnmarshalObject(body []byte) (ConfigObj, error) {
+    var v4Nbr IPv4Neighbor
+    var err error
+    if err = json.Unmarshal(body, &v4Nbr); err != nil  {
+        fmt.Println("### IPV4Route create called, unmarshal failed", v4Nbr)
+    }
+    return v4Nbr, err
 }
-
 /* End - Asicd objects*/
