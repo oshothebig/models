@@ -68,31 +68,14 @@ const (
 	PeerTypeExternal
 )
 
-type Received struct {
+type BgpCounters struct {
 	Update uint64
 	Notification uint64
-	Open uint64
-	Refresh uint64
-	Keepalive uint64
-	DynamicCap uint64
-	Discarded uint64
-	Total uint64
-}
-
-type Sent struct {
-	Update uint64
-	Notification uint64
-	Open uint64
-	Refresh uint64
-	Keepalive uint64
-	DynamicCap uint64
-	Discarded uint64
-	Total uint64
 }
 
 type Messages struct {
-	Sent Sent
-	Received Received
+	Sent BgpCounters
+	Received BgpCounters
 }
 
 type Queues struct {
