@@ -1,21 +1,13 @@
-[
-	 {"Name"      : "V4Route",
-	  "Primary"   : "ribd",
-	  "Secondary" : []
-	 },
+{
+ "Vlan"     : {"Owner": "asicd", 
+	           "Listeners":[]},
 
-	 {"Name"      : "Vlan",
-	  "Primary"   : "asicd",
-	  "Secondary" : []
-	 },
+ "IPv4Intf" : {"Owner": "asicd",
+               "Listeners" : []},
 
-     {"Name"      : "IPv4Intf",
-      "Primary"   : "asicd",
-      "Secondary" : []
-     },
+ "IPv4Neighbor" : {"Owner" : "asicd",
+                   "Listeners" : []},
 
-     {"Name"      : "IPv4Neighbor",
-      "Primary"   : "asicd",
-      "Secondary" : []
-     }
-]
+ "IPV4Route": {"Owner": "ribd", 
+	           "Listeners": ["asicd","bgpd"]}
+}
