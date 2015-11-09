@@ -1,16 +1,11 @@
 package models
 
-import (
-	"fmt"
-	"encoding/json"
-	"io"
-	"io/ioutil"
-	"net"
-	"net/http"
-)
+import("encoding/json"
+		  "fmt"
+      )
 
 type ConfigObj interface {
-	UnmarshalHTTP(*http.Request) error
+	     UnmarshalObject(data []byte) (ConfigObj, error)
 }
 
 //
@@ -25,19 +20,14 @@ type IPV4Route struct {
 	Protocol string
 }
 
-func (obj *IPV4Route) UnmarshalHTTP(r *http.Request) error {
+func (obj IPV4Route) UnmarshalObject(body []byte) (ConfigObj, error) {
 	var v4Route IPV4Route
-	body, err := ioutil.ReadAll(io.LimitReader(r.Body, 1048576))
-	if err != nil {
-	 return err
-	}
-	if err := r.Body.Close(); err != nil {
-		return err
-	}
+	 var err  error
 	if err = json.Unmarshal(body, &v4Route); err != nil  {
 		fmt.Println("### IPV4Route Create is called", v4Route)
 	}
-	return nil
+	 fmt.Println("### IPV4Route Create is Unmarshal Object", err, v4Route)
+	 return v4Route, err 
 }
 
 type Vlan struct {
@@ -45,8 +35,8 @@ type Vlan struct {
 	PortMap  string
 }
 
-func (obj *Vlan) UnmarshalHTTP(r *http.Request) error {
-	return nil
+func (obj Vlan) UnmarshalObject(data []byte) (ConfigObj, error) {
+	 return Vlan{}, nil
 }
 
 type GlobalConfig struct {

@@ -1,12 +1,7 @@
-[
-	 {"Name"      : "V4Route",
-	  "Primary"   : "ribd",
-	  "Secondary" : ["asicd",
-					    ]
-	 },
+{
+ "IPV4Route": {"Owner": "ribd", 
+	            "Listeners": ["asicd","bgpd"]},
 
-	 {"Name"      : "Vlan",
-	  "Primary"   : "asicd",
-	  "Secondary" : []
-	 },
-]
+ "Vlan"     : {"Owner": "asicd", 
+	            "Listeners":[]}
+}
