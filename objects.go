@@ -121,7 +121,7 @@ func (obj IPv4Intf) UnmarshalObject(body []byte) (ConfigObj, error) {
     var v4Intf IPv4Intf
     var err error
     if err = json.Unmarshal(body, &v4Intf); err != nil  {
-        fmt.Println("### IPV4Route create called, unmarshal failed", v4Intf)
+        fmt.Println("### IPv4Intf create called, unmarshal failed", v4Intf)
     }
     return v4Intf, err
 }
@@ -130,7 +130,7 @@ func (obj IPv4Neighbor) UnmarshalObject(body []byte) (ConfigObj, error) {
     var v4Nbr IPv4Neighbor
     var err error
     if err = json.Unmarshal(body, &v4Nbr); err != nil  {
-        fmt.Println("### IPV4Route create called, unmarshal failed", v4Nbr)
+        fmt.Println("### IPv4Neighbor create called, unmarshal failed", v4Nbr)
     }
     return v4Nbr, err
 }
