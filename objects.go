@@ -27,17 +27,8 @@ func (obj IPV4Route) UnmarshalObject(body []byte) (ConfigObj, error) {
 	if err = json.Unmarshal(body, &v4Route); err != nil {
 		fmt.Println("### IPV4Route Create is called", v4Route)
 	}
-	fmt.Println("### IPV4Route Create is Unmarshal Object", err, v4Route)
-	return v4Route, err
-}
-
-type Vlan struct {
-	VlanId  int
-	PortMap string
-}
-
-func (obj Vlan) UnmarshalObject(data []byte) (ConfigObj, error) {
-	return Vlan{}, nil
+	 fmt.Println("### IPV4Route Create is Unmarshal Object", err, v4Route)
+	 return v4Route, err
 }
 
 type BGPGlobalConfig struct {
@@ -93,3 +84,55 @@ type BGPNeighborState struct {
 	Messages        BGPMessages
 	Queues          BGPQueues
 }
+
+/* Start - Asicd objects */
+type Vlan struct {
+    VlanId    int32
+    Ports     string
+    PortTagType string
+}
+
+/* FIXME : RouterIf needs to be replaced by generic
+ * layer 2 object name e.x Port-21 or Vlan-5 etc.
+ * Internally this l2 object name can be translated
+ * into appropriate key.
+ */
+type IPv4Intf struct {
+    IpAddr   string
+    RouterIf int32
+}
+
+type IPv4Neighbor struct {
+    IpAddr   string
+    MacAddr  string
+    VlanId   int32
+    RouterIf int32
+}
+
+func (obj Vlan) UnmarshalObject(body []byte) (ConfigObj, error) {
+    var vlanObj Vlan
+    var err error
+    if err = json.Unmarshal(body, &vlanObj); err != nil  {
+        fmt.Println("### Vlan create called, unmarshal failed", vlanObj)
+    }
+    return vlanObj, err
+}
+
+func (obj IPv4Intf) UnmarshalObject(body []byte) (ConfigObj, error) {
+    var v4Intf IPv4Intf
+    var err error
+    if err = json.Unmarshal(body, &v4Intf); err != nil  {
+        fmt.Println("### IPv4Intf create called, unmarshal failed", v4Intf)
+    }
+    return v4Intf, err
+}
+
+func (obj IPv4Neighbor) UnmarshalObject(body []byte) (ConfigObj, error) {
+    var v4Nbr IPv4Neighbor
+    var err error
+    if err = json.Unmarshal(body, &v4Nbr); err != nil  {
+        fmt.Println("### IPv4Neighbor create called, unmarshal failed", v4Nbr)
+    }
+    return v4Nbr, err
+}
+/* End - Asicd objects*/

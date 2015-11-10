@@ -1,7 +1,13 @@
 {
- "IPV4Route": {"Owner": "ribd", 
-	            "Listeners": ["asicd","bgpd"]},
-
  "Vlan"     : {"Owner": "asicd", 
-	            "Listeners":[]}
+	           "Listeners":[]},
+
+ "IPv4Intf" : {"Owner": "asicd",
+               "Listeners" : []},
+
+ "IPv4Neighbor" : {"Owner" : "asicd",
+                   "Listeners" : []},
+
+ "IPV4Route": {"Owner": "ribd", 
+	           "Listeners": ["asicd","bgpd"]}
 }
