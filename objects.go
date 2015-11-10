@@ -36,6 +36,15 @@ type BGPGlobalConfig struct {
 	RouterId string
 }
 
+func (obj BGPGlobalConfig) UnmarshalObject(body []byte) (ConfigObj, error) {
+    var gConf BGPGlobalConfig
+    var err error
+    if err = json.Unmarshal(body, &gConf); err != nil  {
+        fmt.Println("### BGPGlobalConfig create called, unmarshal failed", gConf)
+    }
+    return gConf, err
+}
+
 type BGPGlobalState struct {
 	AS            uint32
 	RouterId      string
@@ -71,6 +80,15 @@ type BGPNeighborConfig struct {
 	AuthPassword    string
 	Description     string
 	NeighborAddress string
+}
+
+func (obj BGPNeighborConfig) UnmarshalObject(body []byte) (ConfigObj, error) {
+    var nConf BGPNeighborConfig
+    var err error
+    if err = json.Unmarshal(body, &nConf); err != nil  {
+        fmt.Println("### BGPNeighborConfig create called, unmarshal failed", nConf)
+    }
+    return nConf, err
 }
 
 type BGPNeighborState struct {
