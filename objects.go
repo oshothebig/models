@@ -86,8 +86,8 @@ type NeighborState struct {
 
 /* Start - Asicd objects */
 type Vlan struct {
-    VlanId      int
-    PortMap     string
+    VlanId    int32
+    Ports     string
     PortTagType string
 }
 
