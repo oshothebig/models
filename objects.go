@@ -36,8 +36,8 @@ type BGPGlobalConfig struct {
 	RouterId string
 }
 
-func (obj BgpGlobalConfig) UnmarshalObject(body []byte) (ConfigObj, error) {
-    var gConf BgpGlobalConfig
+func (obj BGPGlobalConfig) UnmarshalObject(body []byte) (ConfigObj, error) {
+    var gConf BGPGlobalConfig
     var err error
     if err = json.Unmarshal(body, &gConf); err != nil  {
         fmt.Println("### BGPGlobalConfig create called, unmarshal failed", gConf)

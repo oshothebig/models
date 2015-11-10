@@ -6,4 +6,6 @@ package models
 var ConfigObjectMap = map[string] ConfigObj{ "IPV4Route"    : &IPV4Route{},
                                              "Vlan"         : &Vlan{},
                                              "IPv4Intf"     : &IPv4Intf{},
-                                             "IPv4Neighbor" : &IPv4Neighbor{}}
+                                             "IPv4Neighbor" : &IPv4Neighbor{},
+											"BGPGlobalConfig": &BGPGlobalConfig{},
+											"BGPNeighborConfig": &BGPNeighborConfig{}}
