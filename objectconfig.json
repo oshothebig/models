@@ -1,5 +1,5 @@
 {
- "Vlan"     : {"Owner": "asicd", 
+ "Vlan"     : {"Owner": "asicd",
 	           "Listeners":[]},
 
  "IPv4Intf" : {"Owner": "asicd",
@@ -8,6 +8,13 @@
  "IPv4Neighbor" : {"Owner" : "asicd",
                    "Listeners" : []},
 
- "IPV4Route": {"Owner": "ribd", 
-	           "Listeners": ["asicd","bgpd"]}
+ "IPV4Route": {"Owner": "ribd",
+	           "Listeners": ["asicd","bgpd"]},
+
+ "BGPGlobalConfig": {"Owner": "bgpd",
+					"Listeners": []},
+
+ "BGPNeighborConfig": {"Owner": "bgpd",
+					  "Listeners": []}
+
 }
