@@ -123,10 +123,6 @@
         "Owner": "", 
         "Listeners": []
     }, 
-    "BgpPeerGroupsPeerGroupUseMultiplePathsEbgpConfig": {
-        "Owner": "", 
-        "Listeners": []
-    }, 
     "BgpNeighborAfiSafiIpv4LabelledUnicastPrefixLimitConfig": {
         "Owner": "", 
         "Listeners": []
@@ -140,10 +136,6 @@
         "Listeners": []
     }, 
     "BgpNeighborUseMultiplePathsEbgpConfig": {
-        "Owner": "", 
-        "Listeners": []
-    }, 
-    "BgpPeerGroupsPeerGroupUseMultiplePathsIbgpConfig": {
         "Owner": "", 
         "Listeners": []
     }, 
@@ -280,10 +272,6 @@
         "Listeners": []
     }, 
     "BgpNeighborAsPathOptionsConfig": {
-        "Owner": "", 
-        "Listeners": []
-    }, 
-    "BgpPeerGroupsPeerGroupUseMultiplePathsConfig": {
         "Owner": "", 
         "Listeners": []
     }, 
