@@ -1,12 +1,15 @@
 package models
 
 import (
+	"database/sql"
 	"encoding/json"
 	"fmt"
 )
 
 type ConfigObj interface {
 	UnmarshalObject(data []byte) (ConfigObj, error)
+	CreateDBTable(dbHdl *sql.DB) error
+	StoreObjectInDb(dbHdl *sql.DB) (int64, error)
 }
 
 //
@@ -21,14 +24,72 @@ type IPV4Route struct {
 	Protocol          string
 }
 
+func (obj IPV4Route) CreateDBTable(dbHdl *sql.DB) error {
+	dbCmd := "CREATE TABLE IF NOT EXISTS IPV4Routes " +
+		"( DestinationNw varchar(255) PRIMARY KEY ," +
+		"NetworkMask varchar(255) ," +
+		"Cost integer ," +
+		"NextHopIp varchar(255) ," +
+		"OutgoingInterface varchar(255) ," +
+		"Protocol varchar(255) )"
+
+	txn, err := dbHdl.Begin()
+	if err != nil {
+		fmt.Println("### Failed to strart a transaction")
+	}
+	fmt.Println("**** Executing DB command ", dbCmd)
+	_, err = dbHdl.Exec(dbCmd)
+	if err != nil {
+		fmt.Println("**** Failed to Create table", err)
+	}
+
+	err = txn.Commit()
+	if err != nil {
+		fmt.Println("### Failed to Commit transaction")
+	}
+	return nil
+}
+
+func (obj IPV4Route) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
+	//var result sql.SQLiteResult
+	var objectId int64
+	insertsql := fmt.Sprintf(`INSERT INTO IPV4Routes (DestinationNw, NetworkMask, Cost, NextHopIp, OutgoingInterface, Protocol) VALUES ('%v', '%v', %v, '%v', '%v', '%s') ;`,
+		obj.DestinationNw, obj.NetworkMask, obj.Cost, obj.NextHopIp, obj.OutgoingInterface, obj.Protocol)
+
+	fmt.Println("**** Create Object called with ", obj)
+
+	txn, err := dbHdl.Begin()
+	if err != nil {
+		fmt.Println("### Failed to strart a transaction")
+	}
+	fmt.Println("**** Executing DB command ", insertsql)
+	result, err1 := dbHdl.Exec(insertsql)
+	if err1 != nil {
+		fmt.Println("**** Failed to Create table", err)
+	}
+
+	err = txn.Commit()
+	if err != nil {
+		fmt.Println("### Failed to Commit transaction")
+	}
+	objectId, err = result.LastInsertId()
+	if err != nil {
+		fmt.Println("### Failed to return last object id", err)
+	} else {
+		fmt.Println("### Object ID return ", objectId)
+	}
+
+	return objectId, nil
+}
+
 func (obj IPV4Route) UnmarshalObject(body []byte) (ConfigObj, error) {
 	var v4Route IPV4Route
 	var err error
 	if err = json.Unmarshal(body, &v4Route); err != nil {
 		fmt.Println("### IPV4Route Create is called", v4Route)
 	}
-	 fmt.Println("### IPV4Route Create is Unmarshal Object", err, v4Route)
-	 return v4Route, err
+	fmt.Println("### IPV4Route Create is Unmarshal Object", err, v4Route)
+	return v4Route, err
 }
 
 type BGPGlobalConfig struct {
@@ -36,13 +97,20 @@ type BGPGlobalConfig struct {
 	RouterId string
 }
 
+func (obj BGPGlobalConfig) CreateDBTable(dbHdl *sql.DB) error {
+	return nil
+}
+
+func (obj BGPGlobalConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
+	return int64(0), nil
+}
 func (obj BGPGlobalConfig) UnmarshalObject(body []byte) (ConfigObj, error) {
-    var gConf BGPGlobalConfig
-    var err error
-    if err = json.Unmarshal(body, &gConf); err != nil  {
-        fmt.Println("### BGPGlobalConfig create called, unmarshal failed", gConf)
-    }
-    return gConf, err
+	var gConf BGPGlobalConfig
+	var err error
+	if err = json.Unmarshal(body, &gConf); err != nil {
+		fmt.Println("### BGPGlobalConfig create called, unmarshal failed", gConf)
+	}
+	return gConf, err
 }
 
 type BGPGlobalState struct {
@@ -82,13 +150,20 @@ type BGPNeighborConfig struct {
 	NeighborAddress string
 }
 
+func (obj BGPNeighborConfig) CreateDBTable(dbHdl *sql.DB) error {
+	return nil
+}
+
+func (obj BGPNeighborConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
+	return int64(0), nil
+}
 func (obj BGPNeighborConfig) UnmarshalObject(body []byte) (ConfigObj, error) {
-    var nConf BGPNeighborConfig
-    var err error
-    if err = json.Unmarshal(body, &nConf); err != nil  {
-        fmt.Println("### BGPNeighborConfig create called, unmarshal failed", nConf)
-    }
-    return nConf, err
+	var nConf BGPNeighborConfig
+	var err error
+	if err = json.Unmarshal(body, &nConf); err != nil {
+		fmt.Println("### BGPNeighborConfig create called, unmarshal failed", nConf)
+	}
+	return nConf, err
 }
 
 type BGPNeighborState struct {
@@ -105,9 +180,9 @@ type BGPNeighborState struct {
 
 /* Start - Asicd objects */
 type Vlan struct {
-    VlanId    int32
-    Ports     string
-    PortTagType string
+	VlanId      int32
+	Ports       string
+	PortTagType string
 }
 
 /* FIXME : RouterIf needs to be replaced by generic
@@ -116,41 +191,66 @@ type Vlan struct {
  * into appropriate key.
  */
 type IPv4Intf struct {
-    IpAddr   string
-    RouterIf int32
+	IpAddr   string
+	RouterIf int32
 }
 
 type IPv4Neighbor struct {
-    IpAddr   string
-    MacAddr  string
-    VlanId   int32
-    RouterIf int32
+	IpAddr   string
+	MacAddr  string
+	VlanId   int32
+	RouterIf int32
+}
+
+func (obj Vlan) CreateDBTable(dbHdl *sql.DB) error {
+	return nil
+}
+
+func (obj Vlan) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
+	return int64(0), nil
 }
 
 func (obj Vlan) UnmarshalObject(body []byte) (ConfigObj, error) {
-    var vlanObj Vlan
-    var err error
-    if err = json.Unmarshal(body, &vlanObj); err != nil  {
-        fmt.Println("### Vlan create called, unmarshal failed", vlanObj)
-    }
-    return vlanObj, err
+	var vlanObj Vlan
+	var err error
+	if err = json.Unmarshal(body, &vlanObj); err != nil {
+		fmt.Println("### Vlan create called, unmarshal failed", vlanObj)
+	}
+	return vlanObj, err
+}
+
+func (obj IPv4Intf) CreateDBTable(dbHdl *sql.DB) error {
+	return nil
+}
+
+func (obj IPv4Intf) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
+	return int64(0), nil
 }
 
 func (obj IPv4Intf) UnmarshalObject(body []byte) (ConfigObj, error) {
-    var v4Intf IPv4Intf
-    var err error
-    if err = json.Unmarshal(body, &v4Intf); err != nil  {
-        fmt.Println("### IPv4Intf create called, unmarshal failed", v4Intf)
-    }
-    return v4Intf, err
+	var v4Intf IPv4Intf
+	var err error
+	if err = json.Unmarshal(body, &v4Intf); err != nil {
+		fmt.Println("### IPv4Intf create called, unmarshal failed", v4Intf)
+	}
+	return v4Intf, err
+}
+
+func (obj IPv4Neighbor) CreateDBTable(dbHdl *sql.DB) error {
+	return nil
+}
+
+func (obj IPv4Neighbor) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
+	return int64(0), nil
 }
 
 func (obj IPv4Neighbor) UnmarshalObject(body []byte) (ConfigObj, error) {
-    var v4Nbr IPv4Neighbor
-    var err error
-    if err = json.Unmarshal(body, &v4Nbr); err != nil  {
-        fmt.Println("### IPv4Neighbor create called, unmarshal failed", v4Nbr)
-    }
-    return v4Nbr, err
+	var v4Nbr IPv4Neighbor
+	var err error
+	if err = json.Unmarshal(body, &v4Nbr); err != nil {
+		fmt.Println("### IPv4Neighbor create called, unmarshal failed", v4Nbr)
+	}
+	return v4Nbr, err
 }
+
 /* End - Asicd objects*/
