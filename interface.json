@@ -105,7 +105,7 @@
     }, 
     "EthernetConfig": {
         "Owner": "", 
-        "Listeners": [lacpd]
+        "Listeners": ["lacpd"]
     }, 
     "RoutedVlanIpv4AddressVrrpVrrpGroupInterfaceTrackingConfig": {
         "Owner": "", 
