@@ -6,6 +6,7 @@ var ConfigObjectMap = map[string]ConfigObj{
 	"IPv4Intf":              &IPv4Intf{},     // manually merged from originional
 	"IPv4Neighbor":          &IPv4Neighbor{}, // manually merged from originional
 	"AggregationLacpConfig": &AggregationLacpConfig{},
+	"EthernetConfig":        &EthernetConfig{},
 	"AggregationConfig":     &AggregationConfig{},
 	"BgpGlobalConfig":       &BgpGlobalConfig{},
 	"BgpNeighborConfig":     &BgpNeighborConfig{},
