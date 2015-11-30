@@ -6,5 +6,11 @@
                    "Listeners" : ["asicd"]},
 
  "IPV4Route": {"Owner": "ribd",
-	           "Listeners": ["asicd","bgpd"]}
+	           "Listeners": ["asicd","bgpd"]},
+ "Vlan": {"Owner": "asicd",
+          "Listeners" : [] },
+ "BGPGlobalConfig": {"Owner": "bgpd",
+					"Listeners": []},		
+ "BGPNeighborConfig": {"Owner": "bgpd",
+				  "Listeners": []}
 }

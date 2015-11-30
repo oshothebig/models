@@ -352,7 +352,7 @@
         "Listeners": []
     }, 
     "BgpGlobalConfig": {
-        "Owner": "bgpd", 
+        "Owner": "", 
         "Listeners": []
     }, 
     "BgpPeerGroupTimersConfig": {
@@ -360,7 +360,7 @@
         "Listeners": []
     }, 
     "BgpNeighborConfig": {
-        "Owner": "bgpd", 
+        "Owner": "", 
         "Listeners": []
     }
 }
