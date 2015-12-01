@@ -1,6 +1,6 @@
 {
- "Vlan"     : {"Owner": "asicd",
-	           "Listeners":[]},
+ "Vlan"     : {"Owner": "portd",
+	           "Listeners":["asicd"]},
 
  "IPv4Intf" : {"Owner": "portd",
                "Listeners" : ["asicd"]},

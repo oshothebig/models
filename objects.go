@@ -119,8 +119,9 @@ type Vlan struct {
  * into appropriate key.
  */
 type IPv4Intf struct {
-	IpAddr   string
-	RouterIf int32
+	IpAddr      string
+	RouterIf    int32
+	VlanEnabled bool
 }
 
 type IPv4Neighbor struct {
