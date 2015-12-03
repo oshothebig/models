@@ -121,7 +121,7 @@ type Vlan struct {
 type IPv4Intf struct {
 	IpAddr      string
 	RouterIf    int32
-	VlanEnabled bool
+	VlanEnabled int32
 }
 
 type IPv4Neighbor struct {
