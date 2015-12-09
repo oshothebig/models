@@ -22,6 +22,7 @@ type IPV4Route struct {
 	NetworkMask       string
 	Cost              int
 	NextHopIp         string
+	OutgoingIntfType  string
 	OutgoingInterface string
 	Protocol          string
 }
