@@ -64,6 +64,10 @@ func (obj IPV4Route) DeleteObjectFromDb(objId int64, dbHdl *sql.DB) error {
 	return err
 }
 
+func (obj IPV4Route) GetKey(dbHdl *sql.DB) (int64, error) {
+	return int64(0), nil
+}
+
 func (obj BGPGlobalConfig) CreateDBTable(dbHdl *sql.DB) error {
 	return nil
 }
@@ -74,6 +78,10 @@ func (obj BGPGlobalConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 
 func (obj BGPGlobalConfig) DeleteObjectFromDb(objId int64, dbHdl *sql.DB) error {
 	return nil
+}
+
+func (obj BGPGlobalConfig) GetKey(dbHdl *sql.DB) (int64, error) {
+	return int64(0), nil
 }
 
 func (obj BGPNeighborConfig) CreateDBTable(dbHdl *sql.DB) error {
@@ -88,6 +96,10 @@ func (obj BGPNeighborConfig) DeleteObjectFromDb(objId int64, dbHdl *sql.DB) erro
 	return nil
 }
 
+func (obj BGPNeighborConfig) GetKey(dbHdl *sql.DB) (int64, error) {
+	return int64(0), nil
+}
+
 func (obj Vlan) CreateDBTable(dbHdl *sql.DB) error {
 	return nil
 }
@@ -98,6 +110,10 @@ func (obj Vlan) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 
 func (obj Vlan) DeleteObjectFromDb(objId int64, dbHdl *sql.DB) error {
 	return nil
+}
+
+func (obj Vlan) GetKey(dbHdl *sql.DB) (int64, error) {
+	return int64(0), nil
 }
 
 func (obj IPv4Intf) CreateDBTable(dbHdl *sql.DB) error {
@@ -112,6 +128,10 @@ func (obj IPv4Intf) DeleteObjectFromDb(objId int64, dbHdl *sql.DB) error {
 	return nil
 }
 
+func (obj IPv4Intf) GetKey(dbHdl *sql.DB) (int64, error) {
+	return int64(0), nil
+}
+
 func (obj IPv4Neighbor) CreateDBTable(dbHdl *sql.DB) error {
 	return nil
 }
@@ -122,4 +142,8 @@ func (obj IPv4Neighbor) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 
 func (obj IPv4Neighbor) DeleteObjectFromDb(objId int64, dbHdl *sql.DB) error {
 	return nil
+}
+
+func (obj IPv4Neighbor) GetKey(dbHdl *sql.DB) (int64, error) {
+	return int64(0), nil
 }
