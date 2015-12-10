@@ -147,3 +147,11 @@ func (obj IPv4Neighbor) DeleteObjectFromDb(objId int64, dbHdl *sql.DB) error {
 func (obj IPv4Neighbor) GetKey() (int64, error) {
 	return int64(0), nil
 }
+
+func (obj BGPGlobalState) GetKey() (int64, error) {
+	return int64(0), nil
+}
+
+func (obj BGPNeighborState) GetKey() (int64, error) {
+	return int64(0), nil
+}
