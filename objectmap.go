@@ -8,4 +8,6 @@ var ConfigObjectMap = map[string]ConfigObj{"IPV4Route": &IPV4Route{},
 	"IPv4Intf":          &IPv4Intf{},
 	"IPv4Neighbor":      &IPv4Neighbor{},
 	"BGPGlobalConfig":   &BGPGlobalConfig{},
-	"BGPNeighborConfig": &BGPNeighborConfig{}}
+	"BGPGlobalState":    &BGPGlobalState{},
+	"BGPNeighborConfig": &BGPNeighborConfig{},
+	"BGPNeighborState":  &BGPNeighborState{}}
