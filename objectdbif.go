@@ -64,7 +64,7 @@ func (obj IPV4Route) DeleteObjectFromDb(objId int64, dbHdl *sql.DB) error {
 	return err
 }
 
-func (obj IPV4Route) GetKey(dbHdl *sql.DB) (int64, error) {
+func (obj IPV4Route) GetKey() (int64, error) {
 	return int64(0), nil
 }
 
@@ -80,7 +80,7 @@ func (obj BGPGlobalConfig) DeleteObjectFromDb(objId int64, dbHdl *sql.DB) error 
 	return nil
 }
 
-func (obj BGPGlobalConfig) GetKey(dbHdl *sql.DB) (int64, error) {
+func (obj BGPGlobalConfig) GetKey() (int64, error) {
 	return int64(0), nil
 }
 
@@ -96,7 +96,7 @@ func (obj BGPNeighborConfig) DeleteObjectFromDb(objId int64, dbHdl *sql.DB) erro
 	return nil
 }
 
-func (obj BGPNeighborConfig) GetKey(dbHdl *sql.DB) (int64, error) {
+func (obj BGPNeighborConfig) GetKey() (int64, error) {
 	return int64(0), nil
 }
 
@@ -112,7 +112,7 @@ func (obj Vlan) DeleteObjectFromDb(objId int64, dbHdl *sql.DB) error {
 	return nil
 }
 
-func (obj Vlan) GetKey(dbHdl *sql.DB) (int64, error) {
+func (obj Vlan) GetKey() (int64, error) {
 	return int64(0), nil
 }
 
@@ -128,7 +128,7 @@ func (obj IPv4Intf) DeleteObjectFromDb(objId int64, dbHdl *sql.DB) error {
 	return nil
 }
 
-func (obj IPv4Intf) GetKey(dbHdl *sql.DB) (int64, error) {
+func (obj IPv4Intf) GetKey() (int64, error) {
 	return int64(0), nil
 }
 
@@ -144,6 +144,6 @@ func (obj IPv4Neighbor) DeleteObjectFromDb(objId int64, dbHdl *sql.DB) error {
 	return nil
 }
 
-func (obj IPv4Neighbor) GetKey(dbHdl *sql.DB) (int64, error) {
+func (obj IPv4Neighbor) GetKey() (int64, error) {
 	return int64(0), nil
 }

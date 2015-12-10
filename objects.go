@@ -11,7 +11,7 @@ type ConfigObj interface {
 	CreateDBTable(dbHdl *sql.DB) error
 	StoreObjectInDb(dbHdl *sql.DB) (int64, error)
 	DeleteObjectFromDb(objId int64, dbHdl *sql.DB) error
-	GetKey(dbHdl *sql.DB) (int64, error)
+	GetKey() (int64, error)
 }
 
 //
@@ -159,4 +159,3 @@ func (obj IPv4Neighbor) UnmarshalObject(body []byte) (ConfigObj, error) {
 	}
 	return v4Nbr, err
 }
-
