@@ -2,30 +2,10 @@ package models
 
 import (
 	"database/sql"
-	"database/sql/driver"
 	"fmt"
 	//"strconv"
+	"utils/dbutils"
 )
-
-func ExecuteSQLStmt(dbCmd string, dbHdl *sql.DB) (driver.Result, error) {
-	var result driver.Result
-	txn, err := dbHdl.Begin()
-	if err != nil {
-		fmt.Println("### Failed to strart db transaction for command", dbCmd)
-		return result, err
-	}
-	result, err = dbHdl.Exec(dbCmd)
-	if err != nil {
-		fmt.Println("### Failed to execute command ", dbCmd, err)
-		return result, err
-	}
-	err = txn.Commit()
-	if err != nil {
-		fmt.Println("### Failed to Commit transaction for command", dbCmd, err)
-		return result, err
-	}
-	return result, err
-}
 
 func (obj IPV4Route) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS IPV4Routes " +
@@ -36,7 +16,7 @@ func (obj IPV4Route) CreateDBTable(dbHdl *sql.DB) error {
 		"OutgoingInterface varchar(255) ," +
 		"Protocol varchar(255) )"
 
-	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
+	_, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
 
@@ -45,7 +25,7 @@ func (obj IPV4Route) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	dbCmd := fmt.Sprintf(`INSERT INTO IPV4Routes (DestinationNw, NetworkMask, Cost, NextHopIp, OutgoingInterface, Protocol) VALUES ('%v', '%v', %v, '%v', '%v', '%s') ;`,
 		obj.DestinationNw, obj.NetworkMask, obj.Cost, obj.NextHopIp, obj.OutgoingInterface, obj.Protocol)
 
-	result, err := ExecuteSQLStmt(dbCmd, dbHdl)
+	result, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
 	if err != nil {
 		fmt.Println("### Failed to create IPV4Route ", err)
 		return objectId, err
@@ -60,106 +40,11 @@ func (obj IPV4Route) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 func (obj IPV4Route) DeleteObjectFromDb(objKey string, dbHdl *sql.DB) error {
 	dbCmd := "delete from " + "IPV4Routes" + " where " + objKey
 	fmt.Println("### DB Deleting IPV4Route")
-	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
+	_, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
 
 func (obj IPV4Route) GetKey() (string, error) {
 	v4RouteKey := "DestinationNw = " + "\"" + obj.DestinationNw + "\"" + " and NetworkMask = " + "\"" + obj.NetworkMask + "\""
 	return v4RouteKey, nil
-}
-
-func (obj BGPGlobalConfig) CreateDBTable(dbHdl *sql.DB) error {
-	return nil
-}
-
-func (obj BGPGlobalConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
-	return int64(0), nil
-}
-
-func (obj BGPGlobalConfig) DeleteObjectFromDb(objKey string, dbHdl *sql.DB) error {
-	return nil
-}
-
-func (obj BGPGlobalConfig) GetKey() (string, error) {
-	s := ""
-	return s, nil
-}
-
-func (obj BGPNeighborConfig) CreateDBTable(dbHdl *sql.DB) error {
-	return nil
-}
-
-func (obj BGPNeighborConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
-	return int64(0), nil
-}
-
-func (obj BGPNeighborConfig) DeleteObjectFromDb(objKey string, dbHdl *sql.DB) error {
-	return nil
-}
-
-func (obj BGPNeighborConfig) GetKey() (string, error) {
-	s := ""
-	return s, nil
-}
-
-func (obj Vlan) CreateDBTable(dbHdl *sql.DB) error {
-	return nil
-}
-
-func (obj Vlan) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
-	return int64(0), nil
-}
-
-func (obj Vlan) DeleteObjectFromDb(objKey string, dbHdl *sql.DB) error {
-	return nil
-}
-
-func (obj Vlan) GetKey() (string, error) {
-	s := ""
-	return s, nil
-}
-
-func (obj IPv4Intf) CreateDBTable(dbHdl *sql.DB) error {
-	return nil
-}
-
-func (obj IPv4Intf) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
-	return int64(0), nil
-}
-
-func (obj IPv4Intf) DeleteObjectFromDb(objKey string, dbHdl *sql.DB) error {
-	return nil
-}
-
-func (obj IPv4Intf) GetKey() (string, error) {
-	s := ""
-	return s, nil
-}
-
-func (obj IPv4Neighbor) CreateDBTable(dbHdl *sql.DB) error {
-	return nil
-}
-
-func (obj IPv4Neighbor) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
-	return int64(0), nil
-}
-
-func (obj IPv4Neighbor) DeleteObjectFromDb(objKey string, dbHdl *sql.DB) error {
-	return nil
-}
-
-func (obj IPv4Neighbor) GetKey() (string, error) {
-	s := ""
-	return s, nil
-}
-
-func (obj BGPGlobalState) GetKey() (string, error) {
-	s := ""
-	return s, nil
-}
-
-func (obj BGPNeighborState) GetKey() (string, error) {
-	s := ""
-	return s, nil
 }
