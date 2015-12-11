@@ -10,7 +10,8 @@ type ConfigObj interface {
 	UnmarshalObject(data []byte) (ConfigObj, error)
 	CreateDBTable(dbHdl *sql.DB) error
 	StoreObjectInDb(dbHdl *sql.DB) (int64, error)
-	DeleteObjectFromDb(objId int64, dbHdl *sql.DB) error
+	DeleteObjectFromDb(objKey string, dbHdl *sql.DB) error
+	GetKey() (string, error)
 }
 
 type BaseObj struct{}
@@ -23,7 +24,7 @@ func (b BaseObj) StoreObjectInDb(dbHdl *sql.DB) (objId int64, err error) {
 	return objId, err
 }
 
-func (b BaseObj) DeleteObjectFromDb(objId int64, dbHdl *sql.DB) error {
+func (b BaseObj) DeleteObjectFromDb(objKey string, dbHdl *sql.DB) error {
 	return nil
 }
 
