@@ -14,7 +14,13 @@
  "BGPGlobalConfig": {"Owner": "bgpd",
 					"Listeners": []},
 
+ "BGPGlobalState": {"Owner": "bgpd",
+					"Listeners": []},
+
  "BGPNeighborConfig": {"Owner": "bgpd",
+					  "Listeners": []},
+
+ "BGPNeighborState": {"Owner": "bgpd",
 					  "Listeners": []}
 
 }

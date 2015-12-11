@@ -14,7 +14,7 @@ type ConfigObj interface {
 	GetKey() (string, error)
 }
 
-type BaseObj struct {}
+type BaseObj struct{}
 
 func (b BaseObj) CreateDBTable(dbHdl *sql.DB) error {
 	return nil
@@ -45,8 +45,10 @@ type IPV4Route struct {
 func (obj IPV4Route) UnmarshalObject(body []byte) (ConfigObj, error) {
 	var v4Route IPV4Route
 	var err error
-	if err = json.Unmarshal(body, &v4Route); err != nil {
-		fmt.Println("### Trouble in unmarshaling IPV4Route from Json", body)
+	if len(body) > 0 {
+		if err = json.Unmarshal(body, &v4Route); err != nil {
+			fmt.Println("### Trouble in unmarshaling IPV4Route from Json", body)
+		}
 	}
 	return v4Route, err
 }
@@ -60,8 +62,10 @@ type BGPGlobalConfig struct {
 func (obj BGPGlobalConfig) UnmarshalObject(body []byte) (ConfigObj, error) {
 	var gConf BGPGlobalConfig
 	var err error
-	if err = json.Unmarshal(body, &gConf); err != nil {
-		fmt.Println("### Trouble in unmarshalling BPGlobalConfig from Json", body)
+	if len(body) > 0 {
+		if err = json.Unmarshal(body, &gConf); err != nil {
+			fmt.Println("### Trouble in unmarshalling BPGlobalConfig from Json", body)
+		}
 	}
 	return gConf, err
 }
@@ -77,8 +81,10 @@ type BGPGlobalState struct {
 func (obj BGPGlobalState) UnmarshalObject(body []byte) (ConfigObj, error) {
 	var gState BGPGlobalState
 	var err error
-	if err = json.Unmarshal(body, &gState); err != nil {
-		fmt.Println("### Trouble in unmarshalling BPGlobalConfig from Json", body)
+	if len(body) > 0 {
+		if err = json.Unmarshal(body, &gState); err != nil {
+			fmt.Println("### Trouble in unmarshalling BPGlobalConfig from Json", body)
+		}
 	}
 	return gState, err
 }
@@ -117,8 +123,10 @@ type BGPNeighborConfig struct {
 func (obj BGPNeighborConfig) UnmarshalObject(body []byte) (ConfigObj, error) {
 	var nConf BGPNeighborConfig
 	var err error
-	if err = json.Unmarshal(body, &nConf); err != nil {
-		fmt.Println("### Trouble in unmarshaling BGPNeighborConfig from Json", body)
+	if len(body) > 0 {
+		if err = json.Unmarshal(body, &nConf); err != nil {
+			fmt.Println("### Trouble in unmarshaling BGPNeighborConfig from Json", body)
+		}
 	}
 	return nConf, err
 }
@@ -139,8 +147,10 @@ type BGPNeighborState struct {
 func (obj BGPNeighborState) UnmarshalObject(body []byte) (ConfigObj, error) {
 	var nState BGPNeighborState
 	var err error
-	if err = json.Unmarshal(body, &nState); err != nil {
-		fmt.Println("### Trouble in unmarshaling BGPNeighborConfig from Json", body)
+	if len(body) > 0 {
+		if err = json.Unmarshal(body, &nState); err != nil {
+			fmt.Println("### Trouble in unmarshaling BGPNeighborConfig from Json", body)
+		}
 	}
 	return nState, err
 }
@@ -176,8 +186,10 @@ type IPv4Neighbor struct {
 func (obj Vlan) UnmarshalObject(body []byte) (ConfigObj, error) {
 	var vlanObj Vlan
 	var err error
-	if err = json.Unmarshal(body, &vlanObj); err != nil {
-		fmt.Println("### Trouble in unmarshaling Vlan from Json", body)
+	if len(body) > 0 {
+		if err = json.Unmarshal(body, &vlanObj); err != nil {
+			fmt.Println("### Trouble in unmarshaling Vlan from Json", body)
+		}
 	}
 	return vlanObj, err
 }
@@ -185,8 +197,10 @@ func (obj Vlan) UnmarshalObject(body []byte) (ConfigObj, error) {
 func (obj IPv4Intf) UnmarshalObject(body []byte) (ConfigObj, error) {
 	var v4Intf IPv4Intf
 	var err error
-	if err = json.Unmarshal(body, &v4Intf); err != nil {
-		fmt.Println("### Trouble in unmarshaling IPv4Intf from Json", body)
+	if len(body) > 0 {
+		if err = json.Unmarshal(body, &v4Intf); err != nil {
+			fmt.Println("### Trouble in unmarshaling IPv4Intf from Json", body)
+		}
 	}
 	return v4Intf, err
 }
@@ -194,8 +208,10 @@ func (obj IPv4Intf) UnmarshalObject(body []byte) (ConfigObj, error) {
 func (obj IPv4Neighbor) UnmarshalObject(body []byte) (ConfigObj, error) {
 	var v4Nbr IPv4Neighbor
 	var err error
-	if err = json.Unmarshal(body, &v4Nbr); err != nil {
-		fmt.Println("### Trouble in unmarshaling IPv4Neighbor from Json", body)
+	if len(body) > 0 {
+		if err = json.Unmarshal(body, &v4Nbr); err != nil {
+			fmt.Println("### Trouble in unmarshaling IPv4Neighbor from Json", body)
+		}
 	}
 	return v4Nbr, err
 }
