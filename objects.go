@@ -10,8 +10,8 @@ type ConfigObj interface {
 	UnmarshalObject(data []byte) (ConfigObj, error)
 	CreateDBTable(dbHdl *sql.DB) error
 	StoreObjectInDb(dbHdl *sql.DB) (int64, error)
-	DeleteObjectFromDb(objId int64, dbHdl *sql.DB) error
-	GetKey() (int64, error)
+	DeleteObjectFromDb(objKey string, dbHdl *sql.DB) error
+	GetKey() (string, error)
 }
 
 type BaseObj struct {}
