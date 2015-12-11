@@ -65,7 +65,7 @@ func (obj IPV4Route) DeleteObjectFromDb(objKey string, dbHdl *sql.DB) error {
 }
 
 func (obj IPV4Route) GetKey() (string, error) {
-	v4RouteKey := "DestinationNw = " + obj.DestinationNw + "NetworkMask = " + obj.NetworkMask
+	v4RouteKey := "DestinationNw = " + "\"" + obj.DestinationNw + "\"" + " and NetworkMask = " + "\"" + obj.NetworkMask + "\""
 	return v4RouteKey, nil
 }
 
