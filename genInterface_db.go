@@ -3,7 +3,6 @@ package models
 import (
 	"database/sql"
 	"fmt"
-	"strconv"
 )
 
 func (obj InterfaceConfig) CreateDBTable(dbHdl *sql.DB) error {
@@ -35,11 +34,14 @@ func (obj InterfaceConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	return objectId, err
 }
 
-func (obj InterfaceConfig) DeleteObjectFromDb(objId int64, dbHdl *sql.DB) error {
-	dbCmd := "delete from InterfaceConfig where rowid = " + strconv.FormatInt(objId, 10)
+func (obj InterfaceConfig) DeleteObjectFromDb(objId string, dbHdl *sql.DB) error {
+	dbCmd := "delete from InterfaceConfig where rowid = " + objId
 	fmt.Println("### DB Deleting InterfaceConfig\n")
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
+}
+func (obj InterfaceConfig) GetKey() (string, error) {
+	return "", nil
 }
 func (obj InterfaceStateCounters) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS InterfaceStateCounters " +
@@ -88,11 +90,14 @@ func (obj InterfaceStateCounters) StoreObjectInDb(dbHdl *sql.DB) (int64, error) 
 	return objectId, err
 }
 
-func (obj InterfaceStateCounters) DeleteObjectFromDb(objId int64, dbHdl *sql.DB) error {
-	dbCmd := "delete from InterfaceStateCounters where rowid = " + strconv.FormatInt(objId, 10)
+func (obj InterfaceStateCounters) DeleteObjectFromDb(objId string, dbHdl *sql.DB) error {
+	dbCmd := "delete from InterfaceStateCounters where rowid = " + objId
 	fmt.Println("### DB Deleting InterfaceStateCounters\n")
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
+}
+func (obj InterfaceStateCounters) GetKey() (string, error) {
+	return "", nil
 }
 func (obj HoldTimeConfig) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS HoldTimeConfig " +
@@ -125,12 +130,17 @@ func (obj HoldTimeConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	return objectId, err
 }
 
-func (obj HoldTimeConfig) DeleteObjectFromDb(objId int64, dbHdl *sql.DB) error {
-	dbCmd := "delete from HoldTimeConfig where rowid = " + strconv.FormatInt(objId, 10)
+func (obj HoldTimeConfig) DeleteObjectFromDb(objId string, dbHdl *sql.DB) error {
+	dbCmd := "delete from HoldTimeConfig where rowid = " + objId
 	fmt.Println("### DB Deleting HoldTimeConfig\n")
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
+func (obj HoldTimeConfig) GetKey() (string, error) {
+	key := "NameKey = " + string(obj.NameKey)
+	return key, nil
+}
+
 func (obj HoldTimeState) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS HoldTimeState " +
 		"( " +
@@ -162,12 +172,17 @@ func (obj HoldTimeState) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	return objectId, err
 }
 
-func (obj HoldTimeState) DeleteObjectFromDb(objId int64, dbHdl *sql.DB) error {
-	dbCmd := "delete from HoldTimeState where rowid = " + strconv.FormatInt(objId, 10)
+func (obj HoldTimeState) DeleteObjectFromDb(objId string, dbHdl *sql.DB) error {
+	dbCmd := "delete from HoldTimeState where rowid = " + objId
 	fmt.Println("### DB Deleting HoldTimeState\n")
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
+func (obj HoldTimeState) GetKey() (string, error) {
+	key := "NameKey = " + string(obj.NameKey)
+	return key, nil
+}
+
 func (obj SubinterfaceConfig) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS SubinterfaceConfig " +
 		"( " +
@@ -199,11 +214,14 @@ func (obj SubinterfaceConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	return objectId, err
 }
 
-func (obj SubinterfaceConfig) DeleteObjectFromDb(objId int64, dbHdl *sql.DB) error {
-	dbCmd := "delete from SubinterfaceConfig where rowid = " + strconv.FormatInt(objId, 10)
+func (obj SubinterfaceConfig) DeleteObjectFromDb(objId string, dbHdl *sql.DB) error {
+	dbCmd := "delete from SubinterfaceConfig where rowid = " + objId
 	fmt.Println("### DB Deleting SubinterfaceConfig\n")
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
+}
+func (obj SubinterfaceConfig) GetKey() (string, error) {
+	return "", nil
 }
 func (obj SubinterfaceStateCounters) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS SubinterfaceStateCounters " +
@@ -254,11 +272,14 @@ func (obj SubinterfaceStateCounters) StoreObjectInDb(dbHdl *sql.DB) (int64, erro
 	return objectId, err
 }
 
-func (obj SubinterfaceStateCounters) DeleteObjectFromDb(objId int64, dbHdl *sql.DB) error {
-	dbCmd := "delete from SubinterfaceStateCounters where rowid = " + strconv.FormatInt(objId, 10)
+func (obj SubinterfaceStateCounters) DeleteObjectFromDb(objId string, dbHdl *sql.DB) error {
+	dbCmd := "delete from SubinterfaceStateCounters where rowid = " + objId
 	fmt.Println("### DB Deleting SubinterfaceStateCounters\n")
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
+}
+func (obj SubinterfaceStateCounters) GetKey() (string, error) {
+	return "", nil
 }
 func (obj SubinterfaceVlanConfig) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS SubinterfaceVlanConfig " +
@@ -294,12 +315,17 @@ func (obj SubinterfaceVlanConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, error) 
 	return objectId, err
 }
 
-func (obj SubinterfaceVlanConfig) DeleteObjectFromDb(objId int64, dbHdl *sql.DB) error {
-	dbCmd := "delete from SubinterfaceVlanConfig where rowid = " + strconv.FormatInt(objId, 10)
+func (obj SubinterfaceVlanConfig) DeleteObjectFromDb(objId string, dbHdl *sql.DB) error {
+	dbCmd := "delete from SubinterfaceVlanConfig where rowid = " + objId
 	fmt.Println("### DB Deleting SubinterfaceVlanConfig\n")
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
+func (obj SubinterfaceVlanConfig) GetKey() (string, error) {
+	key := "IndexKey = " + string(obj.IndexKey)
+	return key, nil
+}
+
 func (obj SubinterfaceVlanState) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS SubinterfaceVlanState " +
 		"( " +
@@ -334,12 +360,17 @@ func (obj SubinterfaceVlanState) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	return objectId, err
 }
 
-func (obj SubinterfaceVlanState) DeleteObjectFromDb(objId int64, dbHdl *sql.DB) error {
-	dbCmd := "delete from SubinterfaceVlanState where rowid = " + strconv.FormatInt(objId, 10)
+func (obj SubinterfaceVlanState) DeleteObjectFromDb(objId string, dbHdl *sql.DB) error {
+	dbCmd := "delete from SubinterfaceVlanState where rowid = " + objId
 	fmt.Println("### DB Deleting SubinterfaceVlanState\n")
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
+func (obj SubinterfaceVlanState) GetKey() (string, error) {
+	key := "IndexKey = " + string(obj.IndexKey)
+	return key, nil
+}
+
 func (obj SubinterfaceIpv4AddressConfig) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS SubinterfaceIpv4AddressConfig " +
 		"( " +
@@ -373,12 +404,17 @@ func (obj SubinterfaceIpv4AddressConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, 
 	return objectId, err
 }
 
-func (obj SubinterfaceIpv4AddressConfig) DeleteObjectFromDb(objId int64, dbHdl *sql.DB) error {
-	dbCmd := "delete from SubinterfaceIpv4AddressConfig where rowid = " + strconv.FormatInt(objId, 10)
+func (obj SubinterfaceIpv4AddressConfig) DeleteObjectFromDb(objId string, dbHdl *sql.DB) error {
+	dbCmd := "delete from SubinterfaceIpv4AddressConfig where rowid = " + objId
 	fmt.Println("### DB Deleting SubinterfaceIpv4AddressConfig\n")
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
+func (obj SubinterfaceIpv4AddressConfig) GetKey() (string, error) {
+	key := "IndexKey = " + string(obj.IndexKey)
+	return key, nil
+}
+
 func (obj SubinterfaceIpv4AddressState) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS SubinterfaceIpv4AddressState " +
 		"( " +
@@ -413,12 +449,17 @@ func (obj SubinterfaceIpv4AddressState) StoreObjectInDb(dbHdl *sql.DB) (int64, e
 	return objectId, err
 }
 
-func (obj SubinterfaceIpv4AddressState) DeleteObjectFromDb(objId int64, dbHdl *sql.DB) error {
-	dbCmd := "delete from SubinterfaceIpv4AddressState where rowid = " + strconv.FormatInt(objId, 10)
+func (obj SubinterfaceIpv4AddressState) DeleteObjectFromDb(objId string, dbHdl *sql.DB) error {
+	dbCmd := "delete from SubinterfaceIpv4AddressState where rowid = " + objId
 	fmt.Println("### DB Deleting SubinterfaceIpv4AddressState\n")
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
+func (obj SubinterfaceIpv4AddressState) GetKey() (string, error) {
+	key := "IndexKey = " + string(obj.IndexKey)
+	return key, nil
+}
+
 func (obj SubinterfaceIpv4AddressVrrpVrrpGroupConfig) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS SubinterfaceIpv4AddressVrrpVrrpGroupConfig " +
 		"( " +
@@ -459,12 +500,17 @@ func (obj SubinterfaceIpv4AddressVrrpVrrpGroupConfig) StoreObjectInDb(dbHdl *sql
 	return objectId, err
 }
 
-func (obj SubinterfaceIpv4AddressVrrpVrrpGroupConfig) DeleteObjectFromDb(objId int64, dbHdl *sql.DB) error {
-	dbCmd := "delete from SubinterfaceIpv4AddressVrrpVrrpGroupConfig where rowid = " + strconv.FormatInt(objId, 10)
+func (obj SubinterfaceIpv4AddressVrrpVrrpGroupConfig) DeleteObjectFromDb(objId string, dbHdl *sql.DB) error {
+	dbCmd := "delete from SubinterfaceIpv4AddressVrrpVrrpGroupConfig where rowid = " + objId
 	fmt.Println("### DB Deleting SubinterfaceIpv4AddressVrrpVrrpGroupConfig\n")
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
+func (obj SubinterfaceIpv4AddressVrrpVrrpGroupConfig) GetKey() (string, error) {
+	key := "IndexKey = " + string(obj.IndexKey) + "and" + "IpKey = " + string(obj.IpKey)
+	return key, nil
+}
+
 func (obj SubinterfaceIpv4AddressVrrpVrrpGroupState) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS SubinterfaceIpv4AddressVrrpVrrpGroupState " +
 		"( " +
@@ -506,12 +552,17 @@ func (obj SubinterfaceIpv4AddressVrrpVrrpGroupState) StoreObjectInDb(dbHdl *sql.
 	return objectId, err
 }
 
-func (obj SubinterfaceIpv4AddressVrrpVrrpGroupState) DeleteObjectFromDb(objId int64, dbHdl *sql.DB) error {
-	dbCmd := "delete from SubinterfaceIpv4AddressVrrpVrrpGroupState where rowid = " + strconv.FormatInt(objId, 10)
+func (obj SubinterfaceIpv4AddressVrrpVrrpGroupState) DeleteObjectFromDb(objId string, dbHdl *sql.DB) error {
+	dbCmd := "delete from SubinterfaceIpv4AddressVrrpVrrpGroupState where rowid = " + objId
 	fmt.Println("### DB Deleting SubinterfaceIpv4AddressVrrpVrrpGroupState\n")
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
+func (obj SubinterfaceIpv4AddressVrrpVrrpGroupState) GetKey() (string, error) {
+	key := "IndexKey = " + string(obj.IndexKey) + "and" + "IpKey = " + string(obj.IpKey)
+	return key, nil
+}
+
 func (obj SubinterfaceIpv4AddressVrrpVrrpGroupInterfaceTrackingConfig) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS SubinterfaceIpv4AddressVrrpVrrpGroupInterfaceTrackingConfig " +
 		"( " +
@@ -554,12 +605,17 @@ func (obj SubinterfaceIpv4AddressVrrpVrrpGroupInterfaceTrackingConfig) StoreObje
 	return objectId, err
 }
 
-func (obj SubinterfaceIpv4AddressVrrpVrrpGroupInterfaceTrackingConfig) DeleteObjectFromDb(objId int64, dbHdl *sql.DB) error {
-	dbCmd := "delete from SubinterfaceIpv4AddressVrrpVrrpGroupInterfaceTrackingConfig where rowid = " + strconv.FormatInt(objId, 10)
+func (obj SubinterfaceIpv4AddressVrrpVrrpGroupInterfaceTrackingConfig) DeleteObjectFromDb(objId string, dbHdl *sql.DB) error {
+	dbCmd := "delete from SubinterfaceIpv4AddressVrrpVrrpGroupInterfaceTrackingConfig where rowid = " + objId
 	fmt.Println("### DB Deleting SubinterfaceIpv4AddressVrrpVrrpGroupInterfaceTrackingConfig\n")
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
+func (obj SubinterfaceIpv4AddressVrrpVrrpGroupInterfaceTrackingConfig) GetKey() (string, error) {
+	key := "IndexKey = " + string(obj.IndexKey) + "and" + "IpKey = " + string(obj.IpKey) + "and" + "VirtualRouterIdKey = " + string(obj.VirtualRouterIdKey)
+	return key, nil
+}
+
 func (obj SubinterfaceIpv4AddressVrrpVrrpGroupInterfaceTrackingState) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS SubinterfaceIpv4AddressVrrpVrrpGroupInterfaceTrackingState " +
 		"( " +
@@ -602,12 +658,17 @@ func (obj SubinterfaceIpv4AddressVrrpVrrpGroupInterfaceTrackingState) StoreObjec
 	return objectId, err
 }
 
-func (obj SubinterfaceIpv4AddressVrrpVrrpGroupInterfaceTrackingState) DeleteObjectFromDb(objId int64, dbHdl *sql.DB) error {
-	dbCmd := "delete from SubinterfaceIpv4AddressVrrpVrrpGroupInterfaceTrackingState where rowid = " + strconv.FormatInt(objId, 10)
+func (obj SubinterfaceIpv4AddressVrrpVrrpGroupInterfaceTrackingState) DeleteObjectFromDb(objId string, dbHdl *sql.DB) error {
+	dbCmd := "delete from SubinterfaceIpv4AddressVrrpVrrpGroupInterfaceTrackingState where rowid = " + objId
 	fmt.Println("### DB Deleting SubinterfaceIpv4AddressVrrpVrrpGroupInterfaceTrackingState\n")
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
+func (obj SubinterfaceIpv4AddressVrrpVrrpGroupInterfaceTrackingState) GetKey() (string, error) {
+	key := "IndexKey = " + string(obj.IndexKey) + "and" + "IpKey = " + string(obj.IpKey) + "and" + "VirtualRouterIdKey = " + string(obj.VirtualRouterIdKey)
+	return key, nil
+}
+
 func (obj SubinterfaceIpv4NeighborConfig) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS SubinterfaceIpv4NeighborConfig " +
 		"( " +
@@ -641,12 +702,17 @@ func (obj SubinterfaceIpv4NeighborConfig) StoreObjectInDb(dbHdl *sql.DB) (int64,
 	return objectId, err
 }
 
-func (obj SubinterfaceIpv4NeighborConfig) DeleteObjectFromDb(objId int64, dbHdl *sql.DB) error {
-	dbCmd := "delete from SubinterfaceIpv4NeighborConfig where rowid = " + strconv.FormatInt(objId, 10)
+func (obj SubinterfaceIpv4NeighborConfig) DeleteObjectFromDb(objId string, dbHdl *sql.DB) error {
+	dbCmd := "delete from SubinterfaceIpv4NeighborConfig where rowid = " + objId
 	fmt.Println("### DB Deleting SubinterfaceIpv4NeighborConfig\n")
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
+func (obj SubinterfaceIpv4NeighborConfig) GetKey() (string, error) {
+	key := "IndexKey = " + string(obj.IndexKey)
+	return key, nil
+}
+
 func (obj SubinterfaceIpv4NeighborState) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS SubinterfaceIpv4NeighborState " +
 		"( " +
@@ -681,12 +747,17 @@ func (obj SubinterfaceIpv4NeighborState) StoreObjectInDb(dbHdl *sql.DB) (int64, 
 	return objectId, err
 }
 
-func (obj SubinterfaceIpv4NeighborState) DeleteObjectFromDb(objId int64, dbHdl *sql.DB) error {
-	dbCmd := "delete from SubinterfaceIpv4NeighborState where rowid = " + strconv.FormatInt(objId, 10)
+func (obj SubinterfaceIpv4NeighborState) DeleteObjectFromDb(objId string, dbHdl *sql.DB) error {
+	dbCmd := "delete from SubinterfaceIpv4NeighborState where rowid = " + objId
 	fmt.Println("### DB Deleting SubinterfaceIpv4NeighborState\n")
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
+func (obj SubinterfaceIpv4NeighborState) GetKey() (string, error) {
+	key := "IndexKey = " + string(obj.IndexKey)
+	return key, nil
+}
+
 func (obj SubinterfaceIpv4Config) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS SubinterfaceIpv4Config " +
 		"( " +
@@ -718,12 +789,17 @@ func (obj SubinterfaceIpv4Config) StoreObjectInDb(dbHdl *sql.DB) (int64, error) 
 	return objectId, err
 }
 
-func (obj SubinterfaceIpv4Config) DeleteObjectFromDb(objId int64, dbHdl *sql.DB) error {
-	dbCmd := "delete from SubinterfaceIpv4Config where rowid = " + strconv.FormatInt(objId, 10)
+func (obj SubinterfaceIpv4Config) DeleteObjectFromDb(objId string, dbHdl *sql.DB) error {
+	dbCmd := "delete from SubinterfaceIpv4Config where rowid = " + objId
 	fmt.Println("### DB Deleting SubinterfaceIpv4Config\n")
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
+func (obj SubinterfaceIpv4Config) GetKey() (string, error) {
+	key := "IndexKey = " + string(obj.IndexKey)
+	return key, nil
+}
+
 func (obj SubinterfaceIpv4State) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS SubinterfaceIpv4State " +
 		"( " +
@@ -755,12 +831,17 @@ func (obj SubinterfaceIpv4State) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	return objectId, err
 }
 
-func (obj SubinterfaceIpv4State) DeleteObjectFromDb(objId int64, dbHdl *sql.DB) error {
-	dbCmd := "delete from SubinterfaceIpv4State where rowid = " + strconv.FormatInt(objId, 10)
+func (obj SubinterfaceIpv4State) DeleteObjectFromDb(objId string, dbHdl *sql.DB) error {
+	dbCmd := "delete from SubinterfaceIpv4State where rowid = " + objId
 	fmt.Println("### DB Deleting SubinterfaceIpv4State\n")
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
+func (obj SubinterfaceIpv4State) GetKey() (string, error) {
+	key := "IndexKey = " + string(obj.IndexKey)
+	return key, nil
+}
+
 func (obj SubinterfaceIpv6AddressConfig) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS SubinterfaceIpv6AddressConfig " +
 		"( " +
@@ -795,12 +876,17 @@ func (obj SubinterfaceIpv6AddressConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, 
 	return objectId, err
 }
 
-func (obj SubinterfaceIpv6AddressConfig) DeleteObjectFromDb(objId int64, dbHdl *sql.DB) error {
-	dbCmd := "delete from SubinterfaceIpv6AddressConfig where rowid = " + strconv.FormatInt(objId, 10)
+func (obj SubinterfaceIpv6AddressConfig) DeleteObjectFromDb(objId string, dbHdl *sql.DB) error {
+	dbCmd := "delete from SubinterfaceIpv6AddressConfig where rowid = " + objId
 	fmt.Println("### DB Deleting SubinterfaceIpv6AddressConfig\n")
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
+func (obj SubinterfaceIpv6AddressConfig) GetKey() (string, error) {
+	key := "IndexKey = " + string(obj.IndexKey)
+	return key, nil
+}
+
 func (obj SubinterfaceIpv6AddressState) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS SubinterfaceIpv6AddressState " +
 		"( " +
@@ -837,12 +923,17 @@ func (obj SubinterfaceIpv6AddressState) StoreObjectInDb(dbHdl *sql.DB) (int64, e
 	return objectId, err
 }
 
-func (obj SubinterfaceIpv6AddressState) DeleteObjectFromDb(objId int64, dbHdl *sql.DB) error {
-	dbCmd := "delete from SubinterfaceIpv6AddressState where rowid = " + strconv.FormatInt(objId, 10)
+func (obj SubinterfaceIpv6AddressState) DeleteObjectFromDb(objId string, dbHdl *sql.DB) error {
+	dbCmd := "delete from SubinterfaceIpv6AddressState where rowid = " + objId
 	fmt.Println("### DB Deleting SubinterfaceIpv6AddressState\n")
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
+func (obj SubinterfaceIpv6AddressState) GetKey() (string, error) {
+	key := "IndexKey = " + string(obj.IndexKey)
+	return key, nil
+}
+
 func (obj SubinterfaceIpv6AddressVrrpVrrpGroupConfig) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS SubinterfaceIpv6AddressVrrpVrrpGroupConfig " +
 		"( " +
@@ -885,12 +976,17 @@ func (obj SubinterfaceIpv6AddressVrrpVrrpGroupConfig) StoreObjectInDb(dbHdl *sql
 	return objectId, err
 }
 
-func (obj SubinterfaceIpv6AddressVrrpVrrpGroupConfig) DeleteObjectFromDb(objId int64, dbHdl *sql.DB) error {
-	dbCmd := "delete from SubinterfaceIpv6AddressVrrpVrrpGroupConfig where rowid = " + strconv.FormatInt(objId, 10)
+func (obj SubinterfaceIpv6AddressVrrpVrrpGroupConfig) DeleteObjectFromDb(objId string, dbHdl *sql.DB) error {
+	dbCmd := "delete from SubinterfaceIpv6AddressVrrpVrrpGroupConfig where rowid = " + objId
 	fmt.Println("### DB Deleting SubinterfaceIpv6AddressVrrpVrrpGroupConfig\n")
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
+func (obj SubinterfaceIpv6AddressVrrpVrrpGroupConfig) GetKey() (string, error) {
+	key := "IndexKey = " + string(obj.IndexKey) + "and" + "IpKey = " + string(obj.IpKey)
+	return key, nil
+}
+
 func (obj SubinterfaceIpv6AddressVrrpVrrpGroupState) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS SubinterfaceIpv6AddressVrrpVrrpGroupState " +
 		"( " +
@@ -934,12 +1030,17 @@ func (obj SubinterfaceIpv6AddressVrrpVrrpGroupState) StoreObjectInDb(dbHdl *sql.
 	return objectId, err
 }
 
-func (obj SubinterfaceIpv6AddressVrrpVrrpGroupState) DeleteObjectFromDb(objId int64, dbHdl *sql.DB) error {
-	dbCmd := "delete from SubinterfaceIpv6AddressVrrpVrrpGroupState where rowid = " + strconv.FormatInt(objId, 10)
+func (obj SubinterfaceIpv6AddressVrrpVrrpGroupState) DeleteObjectFromDb(objId string, dbHdl *sql.DB) error {
+	dbCmd := "delete from SubinterfaceIpv6AddressVrrpVrrpGroupState where rowid = " + objId
 	fmt.Println("### DB Deleting SubinterfaceIpv6AddressVrrpVrrpGroupState\n")
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
+func (obj SubinterfaceIpv6AddressVrrpVrrpGroupState) GetKey() (string, error) {
+	key := "IndexKey = " + string(obj.IndexKey) + "and" + "IpKey = " + string(obj.IpKey)
+	return key, nil
+}
+
 func (obj SubinterfaceIpv6AddressVrrpVrrpGroupInterfaceTrackingConfig) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS SubinterfaceIpv6AddressVrrpVrrpGroupInterfaceTrackingConfig " +
 		"( " +
@@ -984,12 +1085,17 @@ func (obj SubinterfaceIpv6AddressVrrpVrrpGroupInterfaceTrackingConfig) StoreObje
 	return objectId, err
 }
 
-func (obj SubinterfaceIpv6AddressVrrpVrrpGroupInterfaceTrackingConfig) DeleteObjectFromDb(objId int64, dbHdl *sql.DB) error {
-	dbCmd := "delete from SubinterfaceIpv6AddressVrrpVrrpGroupInterfaceTrackingConfig where rowid = " + strconv.FormatInt(objId, 10)
+func (obj SubinterfaceIpv6AddressVrrpVrrpGroupInterfaceTrackingConfig) DeleteObjectFromDb(objId string, dbHdl *sql.DB) error {
+	dbCmd := "delete from SubinterfaceIpv6AddressVrrpVrrpGroupInterfaceTrackingConfig where rowid = " + objId
 	fmt.Println("### DB Deleting SubinterfaceIpv6AddressVrrpVrrpGroupInterfaceTrackingConfig\n")
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
+func (obj SubinterfaceIpv6AddressVrrpVrrpGroupInterfaceTrackingConfig) GetKey() (string, error) {
+	key := "IndexKey = " + string(obj.IndexKey) + "and" + "IpKey = " + string(obj.IpKey) + "and" + "VirtualRouterIdKey = " + string(obj.VirtualRouterIdKey)
+	return key, nil
+}
+
 func (obj SubinterfaceIpv6AddressVrrpVrrpGroupInterfaceTrackingState) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS SubinterfaceIpv6AddressVrrpVrrpGroupInterfaceTrackingState " +
 		"( " +
@@ -1034,12 +1140,17 @@ func (obj SubinterfaceIpv6AddressVrrpVrrpGroupInterfaceTrackingState) StoreObjec
 	return objectId, err
 }
 
-func (obj SubinterfaceIpv6AddressVrrpVrrpGroupInterfaceTrackingState) DeleteObjectFromDb(objId int64, dbHdl *sql.DB) error {
-	dbCmd := "delete from SubinterfaceIpv6AddressVrrpVrrpGroupInterfaceTrackingState where rowid = " + strconv.FormatInt(objId, 10)
+func (obj SubinterfaceIpv6AddressVrrpVrrpGroupInterfaceTrackingState) DeleteObjectFromDb(objId string, dbHdl *sql.DB) error {
+	dbCmd := "delete from SubinterfaceIpv6AddressVrrpVrrpGroupInterfaceTrackingState where rowid = " + objId
 	fmt.Println("### DB Deleting SubinterfaceIpv6AddressVrrpVrrpGroupInterfaceTrackingState\n")
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
+func (obj SubinterfaceIpv6AddressVrrpVrrpGroupInterfaceTrackingState) GetKey() (string, error) {
+	key := "IndexKey = " + string(obj.IndexKey) + "and" + "IpKey = " + string(obj.IpKey) + "and" + "VirtualRouterIdKey = " + string(obj.VirtualRouterIdKey)
+	return key, nil
+}
+
 func (obj SubinterfaceIpv6NeighborConfig) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS SubinterfaceIpv6NeighborConfig " +
 		"( " +
@@ -1074,12 +1185,17 @@ func (obj SubinterfaceIpv6NeighborConfig) StoreObjectInDb(dbHdl *sql.DB) (int64,
 	return objectId, err
 }
 
-func (obj SubinterfaceIpv6NeighborConfig) DeleteObjectFromDb(objId int64, dbHdl *sql.DB) error {
-	dbCmd := "delete from SubinterfaceIpv6NeighborConfig where rowid = " + strconv.FormatInt(objId, 10)
+func (obj SubinterfaceIpv6NeighborConfig) DeleteObjectFromDb(objId string, dbHdl *sql.DB) error {
+	dbCmd := "delete from SubinterfaceIpv6NeighborConfig where rowid = " + objId
 	fmt.Println("### DB Deleting SubinterfaceIpv6NeighborConfig\n")
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
+func (obj SubinterfaceIpv6NeighborConfig) GetKey() (string, error) {
+	key := "IndexKey = " + string(obj.IndexKey)
+	return key, nil
+}
+
 func (obj SubinterfaceIpv6NeighborState) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS SubinterfaceIpv6NeighborState " +
 		"( " +
@@ -1117,12 +1233,17 @@ func (obj SubinterfaceIpv6NeighborState) StoreObjectInDb(dbHdl *sql.DB) (int64, 
 	return objectId, err
 }
 
-func (obj SubinterfaceIpv6NeighborState) DeleteObjectFromDb(objId int64, dbHdl *sql.DB) error {
-	dbCmd := "delete from SubinterfaceIpv6NeighborState where rowid = " + strconv.FormatInt(objId, 10)
+func (obj SubinterfaceIpv6NeighborState) DeleteObjectFromDb(objId string, dbHdl *sql.DB) error {
+	dbCmd := "delete from SubinterfaceIpv6NeighborState where rowid = " + objId
 	fmt.Println("### DB Deleting SubinterfaceIpv6NeighborState\n")
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
+func (obj SubinterfaceIpv6NeighborState) GetKey() (string, error) {
+	key := "IndexKey = " + string(obj.IndexKey)
+	return key, nil
+}
+
 func (obj SubinterfaceIpv6Config) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS SubinterfaceIpv6Config " +
 		"( " +
@@ -1155,12 +1276,17 @@ func (obj SubinterfaceIpv6Config) StoreObjectInDb(dbHdl *sql.DB) (int64, error) 
 	return objectId, err
 }
 
-func (obj SubinterfaceIpv6Config) DeleteObjectFromDb(objId int64, dbHdl *sql.DB) error {
-	dbCmd := "delete from SubinterfaceIpv6Config where rowid = " + strconv.FormatInt(objId, 10)
+func (obj SubinterfaceIpv6Config) DeleteObjectFromDb(objId string, dbHdl *sql.DB) error {
+	dbCmd := "delete from SubinterfaceIpv6Config where rowid = " + objId
 	fmt.Println("### DB Deleting SubinterfaceIpv6Config\n")
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
+func (obj SubinterfaceIpv6Config) GetKey() (string, error) {
+	key := "IndexKey = " + string(obj.IndexKey)
+	return key, nil
+}
+
 func (obj SubinterfaceIpv6State) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS SubinterfaceIpv6State " +
 		"( " +
@@ -1193,12 +1319,17 @@ func (obj SubinterfaceIpv6State) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	return objectId, err
 }
 
-func (obj SubinterfaceIpv6State) DeleteObjectFromDb(objId int64, dbHdl *sql.DB) error {
-	dbCmd := "delete from SubinterfaceIpv6State where rowid = " + strconv.FormatInt(objId, 10)
+func (obj SubinterfaceIpv6State) DeleteObjectFromDb(objId string, dbHdl *sql.DB) error {
+	dbCmd := "delete from SubinterfaceIpv6State where rowid = " + objId
 	fmt.Println("### DB Deleting SubinterfaceIpv6State\n")
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
+func (obj SubinterfaceIpv6State) GetKey() (string, error) {
+	key := "IndexKey = " + string(obj.IndexKey)
+	return key, nil
+}
+
 func (obj SubinterfaceIpv6AutoconfConfig) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS SubinterfaceIpv6AutoconfConfig " +
 		"( " +
@@ -1235,12 +1366,17 @@ func (obj SubinterfaceIpv6AutoconfConfig) StoreObjectInDb(dbHdl *sql.DB) (int64,
 	return objectId, err
 }
 
-func (obj SubinterfaceIpv6AutoconfConfig) DeleteObjectFromDb(objId int64, dbHdl *sql.DB) error {
-	dbCmd := "delete from SubinterfaceIpv6AutoconfConfig where rowid = " + strconv.FormatInt(objId, 10)
+func (obj SubinterfaceIpv6AutoconfConfig) DeleteObjectFromDb(objId string, dbHdl *sql.DB) error {
+	dbCmd := "delete from SubinterfaceIpv6AutoconfConfig where rowid = " + objId
 	fmt.Println("### DB Deleting SubinterfaceIpv6AutoconfConfig\n")
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
+func (obj SubinterfaceIpv6AutoconfConfig) GetKey() (string, error) {
+	key := "IndexKey = " + string(obj.IndexKey)
+	return key, nil
+}
+
 func (obj SubinterfaceIpv6AutoconfState) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS SubinterfaceIpv6AutoconfState " +
 		"( " +
@@ -1277,12 +1413,17 @@ func (obj SubinterfaceIpv6AutoconfState) StoreObjectInDb(dbHdl *sql.DB) (int64, 
 	return objectId, err
 }
 
-func (obj SubinterfaceIpv6AutoconfState) DeleteObjectFromDb(objId int64, dbHdl *sql.DB) error {
-	dbCmd := "delete from SubinterfaceIpv6AutoconfState where rowid = " + strconv.FormatInt(objId, 10)
+func (obj SubinterfaceIpv6AutoconfState) DeleteObjectFromDb(objId string, dbHdl *sql.DB) error {
+	dbCmd := "delete from SubinterfaceIpv6AutoconfState where rowid = " + objId
 	fmt.Println("### DB Deleting SubinterfaceIpv6AutoconfState\n")
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
+func (obj SubinterfaceIpv6AutoconfState) GetKey() (string, error) {
+	key := "IndexKey = " + string(obj.IndexKey)
+	return key, nil
+}
+
 func (obj EthernetConfig) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS EthernetConfig " +
 		"( " +
@@ -1318,12 +1459,17 @@ func (obj EthernetConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	return objectId, err
 }
 
-func (obj EthernetConfig) DeleteObjectFromDb(objId int64, dbHdl *sql.DB) error {
-	dbCmd := "delete from EthernetConfig where rowid = " + strconv.FormatInt(objId, 10)
+func (obj EthernetConfig) DeleteObjectFromDb(objId string, dbHdl *sql.DB) error {
+	dbCmd := "delete from EthernetConfig where rowid = " + objId
 	fmt.Println("### DB Deleting EthernetConfig\n")
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
+func (obj EthernetConfig) GetKey() (string, error) {
+	key := "NameKey = " + string(obj.NameKey)
+	return key, nil
+}
+
 func (obj EthernetStateCounters) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS EthernetStateCounters " +
 		"( " +
@@ -1367,12 +1513,17 @@ func (obj EthernetStateCounters) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	return objectId, err
 }
 
-func (obj EthernetStateCounters) DeleteObjectFromDb(objId int64, dbHdl *sql.DB) error {
-	dbCmd := "delete from EthernetStateCounters where rowid = " + strconv.FormatInt(objId, 10)
+func (obj EthernetStateCounters) DeleteObjectFromDb(objId string, dbHdl *sql.DB) error {
+	dbCmd := "delete from EthernetStateCounters where rowid = " + objId
 	fmt.Println("### DB Deleting EthernetStateCounters\n")
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
+func (obj EthernetStateCounters) GetKey() (string, error) {
+	key := "NameKey = " + string(obj.NameKey)
+	return key, nil
+}
+
 func (obj EthernetState) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS EthernetState " +
 		"( " +
@@ -1408,12 +1559,17 @@ func (obj EthernetState) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	return objectId, err
 }
 
-func (obj EthernetState) DeleteObjectFromDb(objId int64, dbHdl *sql.DB) error {
-	dbCmd := "delete from EthernetState where rowid = " + strconv.FormatInt(objId, 10)
+func (obj EthernetState) DeleteObjectFromDb(objId string, dbHdl *sql.DB) error {
+	dbCmd := "delete from EthernetState where rowid = " + objId
 	fmt.Println("### DB Deleting EthernetState\n")
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
+func (obj EthernetState) GetKey() (string, error) {
+	key := "NameKey = " + string(obj.NameKey)
+	return key, nil
+}
+
 func (obj EthernetVlanConfig) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS EthernetVlanConfig " +
 		"( " +
@@ -1456,12 +1612,17 @@ func (obj EthernetVlanConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	return objectId, err
 }
 
-func (obj EthernetVlanConfig) DeleteObjectFromDb(objId int64, dbHdl *sql.DB) error {
-	dbCmd := "delete from EthernetVlanConfig where rowid = " + strconv.FormatInt(objId, 10)
+func (obj EthernetVlanConfig) DeleteObjectFromDb(objId string, dbHdl *sql.DB) error {
+	dbCmd := "delete from EthernetVlanConfig where rowid = " + objId
 	fmt.Println("### DB Deleting EthernetVlanConfig\n")
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
+func (obj EthernetVlanConfig) GetKey() (string, error) {
+	key := "NameKey = " + string(obj.NameKey)
+	return key, nil
+}
+
 func (obj EthernetVlanState) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS EthernetVlanState " +
 		"( " +
@@ -1504,12 +1665,17 @@ func (obj EthernetVlanState) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	return objectId, err
 }
 
-func (obj EthernetVlanState) DeleteObjectFromDb(objId int64, dbHdl *sql.DB) error {
-	dbCmd := "delete from EthernetVlanState where rowid = " + strconv.FormatInt(objId, 10)
+func (obj EthernetVlanState) DeleteObjectFromDb(objId string, dbHdl *sql.DB) error {
+	dbCmd := "delete from EthernetVlanState where rowid = " + objId
 	fmt.Println("### DB Deleting EthernetVlanState\n")
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
+func (obj EthernetVlanState) GetKey() (string, error) {
+	key := "NameKey = " + string(obj.NameKey)
+	return key, nil
+}
+
 func (obj AggregationConfig) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS AggregationConfig " +
 		"( " +
@@ -1541,12 +1707,17 @@ func (obj AggregationConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	return objectId, err
 }
 
-func (obj AggregationConfig) DeleteObjectFromDb(objId int64, dbHdl *sql.DB) error {
-	dbCmd := "delete from AggregationConfig where rowid = " + strconv.FormatInt(objId, 10)
+func (obj AggregationConfig) DeleteObjectFromDb(objId string, dbHdl *sql.DB) error {
+	dbCmd := "delete from AggregationConfig where rowid = " + objId
 	fmt.Println("### DB Deleting AggregationConfig\n")
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
+func (obj AggregationConfig) GetKey() (string, error) {
+	key := "NameKey = " + string(obj.NameKey)
+	return key, nil
+}
+
 func (obj AggregationState) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS AggregationState " +
 		"( " +
@@ -1579,12 +1750,17 @@ func (obj AggregationState) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	return objectId, err
 }
 
-func (obj AggregationState) DeleteObjectFromDb(objId int64, dbHdl *sql.DB) error {
-	dbCmd := "delete from AggregationState where rowid = " + strconv.FormatInt(objId, 10)
+func (obj AggregationState) DeleteObjectFromDb(objId string, dbHdl *sql.DB) error {
+	dbCmd := "delete from AggregationState where rowid = " + objId
 	fmt.Println("### DB Deleting AggregationState\n")
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
+func (obj AggregationState) GetKey() (string, error) {
+	key := "NameKey = " + string(obj.NameKey)
+	return key, nil
+}
+
 func (obj AggregationLacpConfig) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS AggregationLacpConfig " +
 		"( " +
@@ -1620,12 +1796,17 @@ func (obj AggregationLacpConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	return objectId, err
 }
 
-func (obj AggregationLacpConfig) DeleteObjectFromDb(objId int64, dbHdl *sql.DB) error {
-	dbCmd := "delete from AggregationLacpConfig where rowid = " + strconv.FormatInt(objId, 10)
+func (obj AggregationLacpConfig) DeleteObjectFromDb(objId string, dbHdl *sql.DB) error {
+	dbCmd := "delete from AggregationLacpConfig where rowid = " + objId
 	fmt.Println("### DB Deleting AggregationLacpConfig\n")
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
+func (obj AggregationLacpConfig) GetKey() (string, error) {
+	key := "NameKey = " + string(obj.NameKey)
+	return key, nil
+}
+
 func (obj AggregationLacpState) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS AggregationLacpState " +
 		"( " +
@@ -1661,12 +1842,17 @@ func (obj AggregationLacpState) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	return objectId, err
 }
 
-func (obj AggregationLacpState) DeleteObjectFromDb(objId int64, dbHdl *sql.DB) error {
-	dbCmd := "delete from AggregationLacpState where rowid = " + strconv.FormatInt(objId, 10)
+func (obj AggregationLacpState) DeleteObjectFromDb(objId string, dbHdl *sql.DB) error {
+	dbCmd := "delete from AggregationLacpState where rowid = " + objId
 	fmt.Println("### DB Deleting AggregationLacpState\n")
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
+func (obj AggregationLacpState) GetKey() (string, error) {
+	key := "NameKey = " + string(obj.NameKey)
+	return key, nil
+}
+
 func (obj AggregationLacpMemberStateCounters) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS AggregationLacpMemberStateCounters " +
 		"( " +
@@ -1719,12 +1905,17 @@ func (obj AggregationLacpMemberStateCounters) StoreObjectInDb(dbHdl *sql.DB) (in
 	return objectId, err
 }
 
-func (obj AggregationLacpMemberStateCounters) DeleteObjectFromDb(objId int64, dbHdl *sql.DB) error {
-	dbCmd := "delete from AggregationLacpMemberStateCounters where rowid = " + strconv.FormatInt(objId, 10)
+func (obj AggregationLacpMemberStateCounters) DeleteObjectFromDb(objId string, dbHdl *sql.DB) error {
+	dbCmd := "delete from AggregationLacpMemberStateCounters where rowid = " + objId
 	fmt.Println("### DB Deleting AggregationLacpMemberStateCounters\n")
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
+func (obj AggregationLacpMemberStateCounters) GetKey() (string, error) {
+	key := "OperKey = " + string(obj.OperKey) + "and" + "PartnerKey = " + string(obj.PartnerKey) + "and" + "NameKey = " + string(obj.NameKey)
+	return key, nil
+}
+
 func (obj AggregationVlanConfig) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS AggregationVlanConfig " +
 		"( " +
@@ -1765,12 +1956,17 @@ func (obj AggregationVlanConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	return objectId, err
 }
 
-func (obj AggregationVlanConfig) DeleteObjectFromDb(objId int64, dbHdl *sql.DB) error {
-	dbCmd := "delete from AggregationVlanConfig where rowid = " + strconv.FormatInt(objId, 10)
+func (obj AggregationVlanConfig) DeleteObjectFromDb(objId string, dbHdl *sql.DB) error {
+	dbCmd := "delete from AggregationVlanConfig where rowid = " + objId
 	fmt.Println("### DB Deleting AggregationVlanConfig\n")
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
+func (obj AggregationVlanConfig) GetKey() (string, error) {
+	key := "NameKey = " + string(obj.NameKey)
+	return key, nil
+}
+
 func (obj AggregationVlanState) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS AggregationVlanState " +
 		"( " +
@@ -1811,12 +2007,17 @@ func (obj AggregationVlanState) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	return objectId, err
 }
 
-func (obj AggregationVlanState) DeleteObjectFromDb(objId int64, dbHdl *sql.DB) error {
-	dbCmd := "delete from AggregationVlanState where rowid = " + strconv.FormatInt(objId, 10)
+func (obj AggregationVlanState) DeleteObjectFromDb(objId string, dbHdl *sql.DB) error {
+	dbCmd := "delete from AggregationVlanState where rowid = " + objId
 	fmt.Println("### DB Deleting AggregationVlanState\n")
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
+func (obj AggregationVlanState) GetKey() (string, error) {
+	key := "NameKey = " + string(obj.NameKey)
+	return key, nil
+}
+
 func (obj RoutedVlanConfig) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS RoutedVlanConfig " +
 		"( " +
@@ -1848,12 +2049,17 @@ func (obj RoutedVlanConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	return objectId, err
 }
 
-func (obj RoutedVlanConfig) DeleteObjectFromDb(objId int64, dbHdl *sql.DB) error {
-	dbCmd := "delete from RoutedVlanConfig where rowid = " + strconv.FormatInt(objId, 10)
+func (obj RoutedVlanConfig) DeleteObjectFromDb(objId string, dbHdl *sql.DB) error {
+	dbCmd := "delete from RoutedVlanConfig where rowid = " + objId
 	fmt.Println("### DB Deleting RoutedVlanConfig\n")
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
+func (obj RoutedVlanConfig) GetKey() (string, error) {
+	key := "NameKey = " + string(obj.NameKey)
+	return key, nil
+}
+
 func (obj RoutedVlanState) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS RoutedVlanState " +
 		"( " +
@@ -1885,12 +2091,17 @@ func (obj RoutedVlanState) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	return objectId, err
 }
 
-func (obj RoutedVlanState) DeleteObjectFromDb(objId int64, dbHdl *sql.DB) error {
-	dbCmd := "delete from RoutedVlanState where rowid = " + strconv.FormatInt(objId, 10)
+func (obj RoutedVlanState) DeleteObjectFromDb(objId string, dbHdl *sql.DB) error {
+	dbCmd := "delete from RoutedVlanState where rowid = " + objId
 	fmt.Println("### DB Deleting RoutedVlanState\n")
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
+func (obj RoutedVlanState) GetKey() (string, error) {
+	key := "NameKey = " + string(obj.NameKey)
+	return key, nil
+}
+
 func (obj RoutedVlanIpv4AddressConfig) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS RoutedVlanIpv4AddressConfig " +
 		"( " +
@@ -1924,12 +2135,17 @@ func (obj RoutedVlanIpv4AddressConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, er
 	return objectId, err
 }
 
-func (obj RoutedVlanIpv4AddressConfig) DeleteObjectFromDb(objId int64, dbHdl *sql.DB) error {
-	dbCmd := "delete from RoutedVlanIpv4AddressConfig where rowid = " + strconv.FormatInt(objId, 10)
+func (obj RoutedVlanIpv4AddressConfig) DeleteObjectFromDb(objId string, dbHdl *sql.DB) error {
+	dbCmd := "delete from RoutedVlanIpv4AddressConfig where rowid = " + objId
 	fmt.Println("### DB Deleting RoutedVlanIpv4AddressConfig\n")
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
+func (obj RoutedVlanIpv4AddressConfig) GetKey() (string, error) {
+	key := "NameKey = " + string(obj.NameKey)
+	return key, nil
+}
+
 func (obj RoutedVlanIpv4AddressState) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS RoutedVlanIpv4AddressState " +
 		"( " +
@@ -1964,12 +2180,17 @@ func (obj RoutedVlanIpv4AddressState) StoreObjectInDb(dbHdl *sql.DB) (int64, err
 	return objectId, err
 }
 
-func (obj RoutedVlanIpv4AddressState) DeleteObjectFromDb(objId int64, dbHdl *sql.DB) error {
-	dbCmd := "delete from RoutedVlanIpv4AddressState where rowid = " + strconv.FormatInt(objId, 10)
+func (obj RoutedVlanIpv4AddressState) DeleteObjectFromDb(objId string, dbHdl *sql.DB) error {
+	dbCmd := "delete from RoutedVlanIpv4AddressState where rowid = " + objId
 	fmt.Println("### DB Deleting RoutedVlanIpv4AddressState\n")
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
+func (obj RoutedVlanIpv4AddressState) GetKey() (string, error) {
+	key := "NameKey = " + string(obj.NameKey)
+	return key, nil
+}
+
 func (obj RoutedVlanIpv4AddressVrrpVrrpGroupConfig) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS RoutedVlanIpv4AddressVrrpVrrpGroupConfig " +
 		"( " +
@@ -2010,12 +2231,17 @@ func (obj RoutedVlanIpv4AddressVrrpVrrpGroupConfig) StoreObjectInDb(dbHdl *sql.D
 	return objectId, err
 }
 
-func (obj RoutedVlanIpv4AddressVrrpVrrpGroupConfig) DeleteObjectFromDb(objId int64, dbHdl *sql.DB) error {
-	dbCmd := "delete from RoutedVlanIpv4AddressVrrpVrrpGroupConfig where rowid = " + strconv.FormatInt(objId, 10)
+func (obj RoutedVlanIpv4AddressVrrpVrrpGroupConfig) DeleteObjectFromDb(objId string, dbHdl *sql.DB) error {
+	dbCmd := "delete from RoutedVlanIpv4AddressVrrpVrrpGroupConfig where rowid = " + objId
 	fmt.Println("### DB Deleting RoutedVlanIpv4AddressVrrpVrrpGroupConfig\n")
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
+func (obj RoutedVlanIpv4AddressVrrpVrrpGroupConfig) GetKey() (string, error) {
+	key := "NameKey = " + string(obj.NameKey) + "and" + "IpKey = " + string(obj.IpKey)
+	return key, nil
+}
+
 func (obj RoutedVlanIpv4AddressVrrpVrrpGroupState) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS RoutedVlanIpv4AddressVrrpVrrpGroupState " +
 		"( " +
@@ -2057,12 +2283,17 @@ func (obj RoutedVlanIpv4AddressVrrpVrrpGroupState) StoreObjectInDb(dbHdl *sql.DB
 	return objectId, err
 }
 
-func (obj RoutedVlanIpv4AddressVrrpVrrpGroupState) DeleteObjectFromDb(objId int64, dbHdl *sql.DB) error {
-	dbCmd := "delete from RoutedVlanIpv4AddressVrrpVrrpGroupState where rowid = " + strconv.FormatInt(objId, 10)
+func (obj RoutedVlanIpv4AddressVrrpVrrpGroupState) DeleteObjectFromDb(objId string, dbHdl *sql.DB) error {
+	dbCmd := "delete from RoutedVlanIpv4AddressVrrpVrrpGroupState where rowid = " + objId
 	fmt.Println("### DB Deleting RoutedVlanIpv4AddressVrrpVrrpGroupState\n")
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
+func (obj RoutedVlanIpv4AddressVrrpVrrpGroupState) GetKey() (string, error) {
+	key := "IpKey = " + string(obj.IpKey) + "and" + "NameKey = " + string(obj.NameKey)
+	return key, nil
+}
+
 func (obj RoutedVlanIpv4AddressVrrpVrrpGroupInterfaceTrackingConfig) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS RoutedVlanIpv4AddressVrrpVrrpGroupInterfaceTrackingConfig " +
 		"( " +
@@ -2105,12 +2336,17 @@ func (obj RoutedVlanIpv4AddressVrrpVrrpGroupInterfaceTrackingConfig) StoreObject
 	return objectId, err
 }
 
-func (obj RoutedVlanIpv4AddressVrrpVrrpGroupInterfaceTrackingConfig) DeleteObjectFromDb(objId int64, dbHdl *sql.DB) error {
-	dbCmd := "delete from RoutedVlanIpv4AddressVrrpVrrpGroupInterfaceTrackingConfig where rowid = " + strconv.FormatInt(objId, 10)
+func (obj RoutedVlanIpv4AddressVrrpVrrpGroupInterfaceTrackingConfig) DeleteObjectFromDb(objId string, dbHdl *sql.DB) error {
+	dbCmd := "delete from RoutedVlanIpv4AddressVrrpVrrpGroupInterfaceTrackingConfig where rowid = " + objId
 	fmt.Println("### DB Deleting RoutedVlanIpv4AddressVrrpVrrpGroupInterfaceTrackingConfig\n")
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
+func (obj RoutedVlanIpv4AddressVrrpVrrpGroupInterfaceTrackingConfig) GetKey() (string, error) {
+	key := "IpKey = " + string(obj.IpKey) + "and" + "NameKey = " + string(obj.NameKey) + "and" + "VirtualRouterIdKey = " + string(obj.VirtualRouterIdKey)
+	return key, nil
+}
+
 func (obj RoutedVlanIpv4AddressVrrpVrrpGroupInterfaceTrackingState) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS RoutedVlanIpv4AddressVrrpVrrpGroupInterfaceTrackingState " +
 		"( " +
@@ -2153,12 +2389,17 @@ func (obj RoutedVlanIpv4AddressVrrpVrrpGroupInterfaceTrackingState) StoreObjectI
 	return objectId, err
 }
 
-func (obj RoutedVlanIpv4AddressVrrpVrrpGroupInterfaceTrackingState) DeleteObjectFromDb(objId int64, dbHdl *sql.DB) error {
-	dbCmd := "delete from RoutedVlanIpv4AddressVrrpVrrpGroupInterfaceTrackingState where rowid = " + strconv.FormatInt(objId, 10)
+func (obj RoutedVlanIpv4AddressVrrpVrrpGroupInterfaceTrackingState) DeleteObjectFromDb(objId string, dbHdl *sql.DB) error {
+	dbCmd := "delete from RoutedVlanIpv4AddressVrrpVrrpGroupInterfaceTrackingState where rowid = " + objId
 	fmt.Println("### DB Deleting RoutedVlanIpv4AddressVrrpVrrpGroupInterfaceTrackingState\n")
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
+func (obj RoutedVlanIpv4AddressVrrpVrrpGroupInterfaceTrackingState) GetKey() (string, error) {
+	key := "IpKey = " + string(obj.IpKey) + "and" + "NameKey = " + string(obj.NameKey) + "and" + "VirtualRouterIdKey = " + string(obj.VirtualRouterIdKey)
+	return key, nil
+}
+
 func (obj RoutedVlanIpv4NeighborConfig) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS RoutedVlanIpv4NeighborConfig " +
 		"( " +
@@ -2192,12 +2433,17 @@ func (obj RoutedVlanIpv4NeighborConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, e
 	return objectId, err
 }
 
-func (obj RoutedVlanIpv4NeighborConfig) DeleteObjectFromDb(objId int64, dbHdl *sql.DB) error {
-	dbCmd := "delete from RoutedVlanIpv4NeighborConfig where rowid = " + strconv.FormatInt(objId, 10)
+func (obj RoutedVlanIpv4NeighborConfig) DeleteObjectFromDb(objId string, dbHdl *sql.DB) error {
+	dbCmd := "delete from RoutedVlanIpv4NeighborConfig where rowid = " + objId
 	fmt.Println("### DB Deleting RoutedVlanIpv4NeighborConfig\n")
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
+func (obj RoutedVlanIpv4NeighborConfig) GetKey() (string, error) {
+	key := "NameKey = " + string(obj.NameKey)
+	return key, nil
+}
+
 func (obj RoutedVlanIpv4NeighborState) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS RoutedVlanIpv4NeighborState " +
 		"( " +
@@ -2232,12 +2478,17 @@ func (obj RoutedVlanIpv4NeighborState) StoreObjectInDb(dbHdl *sql.DB) (int64, er
 	return objectId, err
 }
 
-func (obj RoutedVlanIpv4NeighborState) DeleteObjectFromDb(objId int64, dbHdl *sql.DB) error {
-	dbCmd := "delete from RoutedVlanIpv4NeighborState where rowid = " + strconv.FormatInt(objId, 10)
+func (obj RoutedVlanIpv4NeighborState) DeleteObjectFromDb(objId string, dbHdl *sql.DB) error {
+	dbCmd := "delete from RoutedVlanIpv4NeighborState where rowid = " + objId
 	fmt.Println("### DB Deleting RoutedVlanIpv4NeighborState\n")
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
+func (obj RoutedVlanIpv4NeighborState) GetKey() (string, error) {
+	key := "NameKey = " + string(obj.NameKey)
+	return key, nil
+}
+
 func (obj RoutedVlanIpv4Config) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS RoutedVlanIpv4Config " +
 		"( " +
@@ -2269,12 +2520,17 @@ func (obj RoutedVlanIpv4Config) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	return objectId, err
 }
 
-func (obj RoutedVlanIpv4Config) DeleteObjectFromDb(objId int64, dbHdl *sql.DB) error {
-	dbCmd := "delete from RoutedVlanIpv4Config where rowid = " + strconv.FormatInt(objId, 10)
+func (obj RoutedVlanIpv4Config) DeleteObjectFromDb(objId string, dbHdl *sql.DB) error {
+	dbCmd := "delete from RoutedVlanIpv4Config where rowid = " + objId
 	fmt.Println("### DB Deleting RoutedVlanIpv4Config\n")
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
+func (obj RoutedVlanIpv4Config) GetKey() (string, error) {
+	key := "NameKey = " + string(obj.NameKey)
+	return key, nil
+}
+
 func (obj RoutedVlanIpv4State) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS RoutedVlanIpv4State " +
 		"( " +
@@ -2306,12 +2562,17 @@ func (obj RoutedVlanIpv4State) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	return objectId, err
 }
 
-func (obj RoutedVlanIpv4State) DeleteObjectFromDb(objId int64, dbHdl *sql.DB) error {
-	dbCmd := "delete from RoutedVlanIpv4State where rowid = " + strconv.FormatInt(objId, 10)
+func (obj RoutedVlanIpv4State) DeleteObjectFromDb(objId string, dbHdl *sql.DB) error {
+	dbCmd := "delete from RoutedVlanIpv4State where rowid = " + objId
 	fmt.Println("### DB Deleting RoutedVlanIpv4State\n")
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
+func (obj RoutedVlanIpv4State) GetKey() (string, error) {
+	key := "NameKey = " + string(obj.NameKey)
+	return key, nil
+}
+
 func (obj RoutedVlanIpv6AddressConfig) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS RoutedVlanIpv6AddressConfig " +
 		"( " +
@@ -2346,12 +2607,17 @@ func (obj RoutedVlanIpv6AddressConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, er
 	return objectId, err
 }
 
-func (obj RoutedVlanIpv6AddressConfig) DeleteObjectFromDb(objId int64, dbHdl *sql.DB) error {
-	dbCmd := "delete from RoutedVlanIpv6AddressConfig where rowid = " + strconv.FormatInt(objId, 10)
+func (obj RoutedVlanIpv6AddressConfig) DeleteObjectFromDb(objId string, dbHdl *sql.DB) error {
+	dbCmd := "delete from RoutedVlanIpv6AddressConfig where rowid = " + objId
 	fmt.Println("### DB Deleting RoutedVlanIpv6AddressConfig\n")
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
+func (obj RoutedVlanIpv6AddressConfig) GetKey() (string, error) {
+	key := "NameKey = " + string(obj.NameKey)
+	return key, nil
+}
+
 func (obj RoutedVlanIpv6AddressState) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS RoutedVlanIpv6AddressState " +
 		"( " +
@@ -2388,12 +2654,17 @@ func (obj RoutedVlanIpv6AddressState) StoreObjectInDb(dbHdl *sql.DB) (int64, err
 	return objectId, err
 }
 
-func (obj RoutedVlanIpv6AddressState) DeleteObjectFromDb(objId int64, dbHdl *sql.DB) error {
-	dbCmd := "delete from RoutedVlanIpv6AddressState where rowid = " + strconv.FormatInt(objId, 10)
+func (obj RoutedVlanIpv6AddressState) DeleteObjectFromDb(objId string, dbHdl *sql.DB) error {
+	dbCmd := "delete from RoutedVlanIpv6AddressState where rowid = " + objId
 	fmt.Println("### DB Deleting RoutedVlanIpv6AddressState\n")
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
+func (obj RoutedVlanIpv6AddressState) GetKey() (string, error) {
+	key := "NameKey = " + string(obj.NameKey)
+	return key, nil
+}
+
 func (obj RoutedVlanIpv6AddressVrrpVrrpGroupConfig) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS RoutedVlanIpv6AddressVrrpVrrpGroupConfig " +
 		"( " +
@@ -2436,12 +2707,17 @@ func (obj RoutedVlanIpv6AddressVrrpVrrpGroupConfig) StoreObjectInDb(dbHdl *sql.D
 	return objectId, err
 }
 
-func (obj RoutedVlanIpv6AddressVrrpVrrpGroupConfig) DeleteObjectFromDb(objId int64, dbHdl *sql.DB) error {
-	dbCmd := "delete from RoutedVlanIpv6AddressVrrpVrrpGroupConfig where rowid = " + strconv.FormatInt(objId, 10)
+func (obj RoutedVlanIpv6AddressVrrpVrrpGroupConfig) DeleteObjectFromDb(objId string, dbHdl *sql.DB) error {
+	dbCmd := "delete from RoutedVlanIpv6AddressVrrpVrrpGroupConfig where rowid = " + objId
 	fmt.Println("### DB Deleting RoutedVlanIpv6AddressVrrpVrrpGroupConfig\n")
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
+func (obj RoutedVlanIpv6AddressVrrpVrrpGroupConfig) GetKey() (string, error) {
+	key := "IpKey = " + string(obj.IpKey) + "and" + "NameKey = " + string(obj.NameKey)
+	return key, nil
+}
+
 func (obj RoutedVlanIpv6AddressVrrpVrrpGroupState) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS RoutedVlanIpv6AddressVrrpVrrpGroupState " +
 		"( " +
@@ -2485,12 +2761,17 @@ func (obj RoutedVlanIpv6AddressVrrpVrrpGroupState) StoreObjectInDb(dbHdl *sql.DB
 	return objectId, err
 }
 
-func (obj RoutedVlanIpv6AddressVrrpVrrpGroupState) DeleteObjectFromDb(objId int64, dbHdl *sql.DB) error {
-	dbCmd := "delete from RoutedVlanIpv6AddressVrrpVrrpGroupState where rowid = " + strconv.FormatInt(objId, 10)
+func (obj RoutedVlanIpv6AddressVrrpVrrpGroupState) DeleteObjectFromDb(objId string, dbHdl *sql.DB) error {
+	dbCmd := "delete from RoutedVlanIpv6AddressVrrpVrrpGroupState where rowid = " + objId
 	fmt.Println("### DB Deleting RoutedVlanIpv6AddressVrrpVrrpGroupState\n")
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
+func (obj RoutedVlanIpv6AddressVrrpVrrpGroupState) GetKey() (string, error) {
+	key := "IpKey = " + string(obj.IpKey) + "and" + "NameKey = " + string(obj.NameKey)
+	return key, nil
+}
+
 func (obj RoutedVlanIpv6AddressVrrpVrrpGroupInterfaceTrackingConfig) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS RoutedVlanIpv6AddressVrrpVrrpGroupInterfaceTrackingConfig " +
 		"( " +
@@ -2535,12 +2816,17 @@ func (obj RoutedVlanIpv6AddressVrrpVrrpGroupInterfaceTrackingConfig) StoreObject
 	return objectId, err
 }
 
-func (obj RoutedVlanIpv6AddressVrrpVrrpGroupInterfaceTrackingConfig) DeleteObjectFromDb(objId int64, dbHdl *sql.DB) error {
-	dbCmd := "delete from RoutedVlanIpv6AddressVrrpVrrpGroupInterfaceTrackingConfig where rowid = " + strconv.FormatInt(objId, 10)
+func (obj RoutedVlanIpv6AddressVrrpVrrpGroupInterfaceTrackingConfig) DeleteObjectFromDb(objId string, dbHdl *sql.DB) error {
+	dbCmd := "delete from RoutedVlanIpv6AddressVrrpVrrpGroupInterfaceTrackingConfig where rowid = " + objId
 	fmt.Println("### DB Deleting RoutedVlanIpv6AddressVrrpVrrpGroupInterfaceTrackingConfig\n")
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
+func (obj RoutedVlanIpv6AddressVrrpVrrpGroupInterfaceTrackingConfig) GetKey() (string, error) {
+	key := "NameKey = " + string(obj.NameKey) + "and" + "IpKey = " + string(obj.IpKey) + "and" + "VirtualRouterIdKey = " + string(obj.VirtualRouterIdKey)
+	return key, nil
+}
+
 func (obj RoutedVlanIpv6AddressVrrpVrrpGroupInterfaceTrackingState) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS RoutedVlanIpv6AddressVrrpVrrpGroupInterfaceTrackingState " +
 		"( " +
@@ -2585,12 +2871,17 @@ func (obj RoutedVlanIpv6AddressVrrpVrrpGroupInterfaceTrackingState) StoreObjectI
 	return objectId, err
 }
 
-func (obj RoutedVlanIpv6AddressVrrpVrrpGroupInterfaceTrackingState) DeleteObjectFromDb(objId int64, dbHdl *sql.DB) error {
-	dbCmd := "delete from RoutedVlanIpv6AddressVrrpVrrpGroupInterfaceTrackingState where rowid = " + strconv.FormatInt(objId, 10)
+func (obj RoutedVlanIpv6AddressVrrpVrrpGroupInterfaceTrackingState) DeleteObjectFromDb(objId string, dbHdl *sql.DB) error {
+	dbCmd := "delete from RoutedVlanIpv6AddressVrrpVrrpGroupInterfaceTrackingState where rowid = " + objId
 	fmt.Println("### DB Deleting RoutedVlanIpv6AddressVrrpVrrpGroupInterfaceTrackingState\n")
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
+func (obj RoutedVlanIpv6AddressVrrpVrrpGroupInterfaceTrackingState) GetKey() (string, error) {
+	key := "NameKey = " + string(obj.NameKey) + "and" + "IpKey = " + string(obj.IpKey) + "and" + "VirtualRouterIdKey = " + string(obj.VirtualRouterIdKey)
+	return key, nil
+}
+
 func (obj RoutedVlanIpv6NeighborConfig) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS RoutedVlanIpv6NeighborConfig " +
 		"( " +
@@ -2625,12 +2916,17 @@ func (obj RoutedVlanIpv6NeighborConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, e
 	return objectId, err
 }
 
-func (obj RoutedVlanIpv6NeighborConfig) DeleteObjectFromDb(objId int64, dbHdl *sql.DB) error {
-	dbCmd := "delete from RoutedVlanIpv6NeighborConfig where rowid = " + strconv.FormatInt(objId, 10)
+func (obj RoutedVlanIpv6NeighborConfig) DeleteObjectFromDb(objId string, dbHdl *sql.DB) error {
+	dbCmd := "delete from RoutedVlanIpv6NeighborConfig where rowid = " + objId
 	fmt.Println("### DB Deleting RoutedVlanIpv6NeighborConfig\n")
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
+func (obj RoutedVlanIpv6NeighborConfig) GetKey() (string, error) {
+	key := "NameKey = " + string(obj.NameKey)
+	return key, nil
+}
+
 func (obj RoutedVlanIpv6NeighborState) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS RoutedVlanIpv6NeighborState " +
 		"( " +
@@ -2668,12 +2964,17 @@ func (obj RoutedVlanIpv6NeighborState) StoreObjectInDb(dbHdl *sql.DB) (int64, er
 	return objectId, err
 }
 
-func (obj RoutedVlanIpv6NeighborState) DeleteObjectFromDb(objId int64, dbHdl *sql.DB) error {
-	dbCmd := "delete from RoutedVlanIpv6NeighborState where rowid = " + strconv.FormatInt(objId, 10)
+func (obj RoutedVlanIpv6NeighborState) DeleteObjectFromDb(objId string, dbHdl *sql.DB) error {
+	dbCmd := "delete from RoutedVlanIpv6NeighborState where rowid = " + objId
 	fmt.Println("### DB Deleting RoutedVlanIpv6NeighborState\n")
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
+func (obj RoutedVlanIpv6NeighborState) GetKey() (string, error) {
+	key := "NameKey = " + string(obj.NameKey)
+	return key, nil
+}
+
 func (obj RoutedVlanIpv6Config) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS RoutedVlanIpv6Config " +
 		"( " +
@@ -2706,12 +3007,17 @@ func (obj RoutedVlanIpv6Config) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	return objectId, err
 }
 
-func (obj RoutedVlanIpv6Config) DeleteObjectFromDb(objId int64, dbHdl *sql.DB) error {
-	dbCmd := "delete from RoutedVlanIpv6Config where rowid = " + strconv.FormatInt(objId, 10)
+func (obj RoutedVlanIpv6Config) DeleteObjectFromDb(objId string, dbHdl *sql.DB) error {
+	dbCmd := "delete from RoutedVlanIpv6Config where rowid = " + objId
 	fmt.Println("### DB Deleting RoutedVlanIpv6Config\n")
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
+func (obj RoutedVlanIpv6Config) GetKey() (string, error) {
+	key := "NameKey = " + string(obj.NameKey)
+	return key, nil
+}
+
 func (obj RoutedVlanIpv6State) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS RoutedVlanIpv6State " +
 		"( " +
@@ -2744,12 +3050,17 @@ func (obj RoutedVlanIpv6State) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	return objectId, err
 }
 
-func (obj RoutedVlanIpv6State) DeleteObjectFromDb(objId int64, dbHdl *sql.DB) error {
-	dbCmd := "delete from RoutedVlanIpv6State where rowid = " + strconv.FormatInt(objId, 10)
+func (obj RoutedVlanIpv6State) DeleteObjectFromDb(objId string, dbHdl *sql.DB) error {
+	dbCmd := "delete from RoutedVlanIpv6State where rowid = " + objId
 	fmt.Println("### DB Deleting RoutedVlanIpv6State\n")
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
+func (obj RoutedVlanIpv6State) GetKey() (string, error) {
+	key := "NameKey = " + string(obj.NameKey)
+	return key, nil
+}
+
 func (obj RoutedVlanIpv6AutoconfConfig) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS RoutedVlanIpv6AutoconfConfig " +
 		"( " +
@@ -2786,12 +3097,17 @@ func (obj RoutedVlanIpv6AutoconfConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, e
 	return objectId, err
 }
 
-func (obj RoutedVlanIpv6AutoconfConfig) DeleteObjectFromDb(objId int64, dbHdl *sql.DB) error {
-	dbCmd := "delete from RoutedVlanIpv6AutoconfConfig where rowid = " + strconv.FormatInt(objId, 10)
+func (obj RoutedVlanIpv6AutoconfConfig) DeleteObjectFromDb(objId string, dbHdl *sql.DB) error {
+	dbCmd := "delete from RoutedVlanIpv6AutoconfConfig where rowid = " + objId
 	fmt.Println("### DB Deleting RoutedVlanIpv6AutoconfConfig\n")
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
+func (obj RoutedVlanIpv6AutoconfConfig) GetKey() (string, error) {
+	key := "NameKey = " + string(obj.NameKey)
+	return key, nil
+}
+
 func (obj RoutedVlanIpv6AutoconfState) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS RoutedVlanIpv6AutoconfState " +
 		"( " +
@@ -2828,9 +3144,13 @@ func (obj RoutedVlanIpv6AutoconfState) StoreObjectInDb(dbHdl *sql.DB) (int64, er
 	return objectId, err
 }
 
-func (obj RoutedVlanIpv6AutoconfState) DeleteObjectFromDb(objId int64, dbHdl *sql.DB) error {
-	dbCmd := "delete from RoutedVlanIpv6AutoconfState where rowid = " + strconv.FormatInt(objId, 10)
+func (obj RoutedVlanIpv6AutoconfState) DeleteObjectFromDb(objId string, dbHdl *sql.DB) error {
+	dbCmd := "delete from RoutedVlanIpv6AutoconfState where rowid = " + objId
 	fmt.Println("### DB Deleting RoutedVlanIpv6AutoconfState\n")
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
+}
+func (obj RoutedVlanIpv6AutoconfState) GetKey() (string, error) {
+	key := "NameKey = " + string(obj.NameKey)
+	return key, nil
 }
