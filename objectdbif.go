@@ -39,7 +39,6 @@ func (obj IPV4Route) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 
 func (obj IPV4Route) DeleteObjectFromDb(objKey string, dbHdl *sql.DB) error {
 	dbCmd := "delete from " + "IPV4Routes" + " where " + objKey
-	fmt.Println("### DB Deleting IPV4Route")
 	_, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
