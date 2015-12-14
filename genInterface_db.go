@@ -8,11 +8,11 @@ import (
 func (obj InterfaceConfig) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS InterfaceConfig " +
 		"( " +
-		" Enabled bool " +
-		" Description TEXT " +
-		" Type TEXT " +
-		" Name TEXT " +
-		" Mtu INTEGER " +
+		" Enabled bool, " +
+		" Description TEXT, " +
+		" Type TEXT, " +
+		" Name TEXT, " +
+		" Mtu INTEGER, " +
 		"PRIMARY KEY( ) "
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
@@ -46,29 +46,29 @@ func (obj InterfaceConfig) GetKey() (string, error) {
 func (obj InterfaceStateCounters) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS InterfaceStateCounters " +
 		"( " +
-		" Name TEXT " +
-		" InMulticastPkts INTEGER " +
-		" OutBroadcastPkts INTEGER " +
-		" OperStatus INTEGER " +
-		" InBroadcastPkts INTEGER " +
-		" Enabled bool " +
-		" OutDiscards INTEGER " +
-		" Mtu INTEGER " +
-		" OutOctets INTEGER " +
-		" Ifindex INTEGER " +
-		" InDiscards INTEGER " +
-		" Type TEXT " +
-		" InUnicastPkts INTEGER " +
-		" LastClear TEXT " +
-		" AdminStatus INTEGER " +
-		" OutUnicastPkts INTEGER " +
-		" Description TEXT " +
-		" InOctets INTEGER " +
-		" InUnknownProtos INTEGER " +
-		" OutErrors INTEGER " +
-		" LastChange INTEGER " +
-		" InErrors INTEGER " +
-		" OutMulticastPkts INTEGER " +
+		" Name TEXT, " +
+		" InMulticastPkts INTEGER, " +
+		" OutBroadcastPkts INTEGER, " +
+		" OperStatus INTEGER, " +
+		" InBroadcastPkts INTEGER, " +
+		" Enabled bool, " +
+		" OutDiscards INTEGER, " +
+		" Mtu INTEGER, " +
+		" OutOctets INTEGER, " +
+		" Ifindex INTEGER, " +
+		" InDiscards INTEGER, " +
+		" Type TEXT, " +
+		" InUnicastPkts INTEGER, " +
+		" LastClear TEXT, " +
+		" AdminStatus INTEGER, " +
+		" OutUnicastPkts INTEGER, " +
+		" Description TEXT, " +
+		" InOctets INTEGER, " +
+		" InUnknownProtos INTEGER, " +
+		" OutErrors INTEGER, " +
+		" LastChange INTEGER, " +
+		" InErrors INTEGER, " +
+		" OutMulticastPkts INTEGER, " +
 		"PRIMARY KEY( ) "
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
@@ -102,13 +102,13 @@ func (obj InterfaceStateCounters) GetKey() (string, error) {
 func (obj HoldTimeConfig) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS HoldTimeConfig " +
 		"( " +
-		" Down INTEGER " +
-		" Description TEXT " +
-		" Enabled bool " +
-		" NameKey TEXT " +
-		" Type TEXT " +
-		" Up INTEGER " +
-		" Mtu INTEGER " +
+		" Down INTEGER, " +
+		" Description TEXT, " +
+		" Enabled bool, " +
+		" NameKey TEXT, " +
+		" Type TEXT, " +
+		" Up INTEGER, " +
+		" Mtu INTEGER, " +
 		"PRIMARY KEY(NameKey) ) "
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
@@ -144,13 +144,13 @@ func (obj HoldTimeConfig) GetKey() (string, error) {
 func (obj HoldTimeState) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS HoldTimeState " +
 		"( " +
-		" Down INTEGER " +
-		" Description TEXT " +
-		" Enabled bool " +
-		" NameKey TEXT " +
-		" Type TEXT " +
-		" Up INTEGER " +
-		" Mtu INTEGER " +
+		" Down INTEGER, " +
+		" Description TEXT, " +
+		" Enabled bool, " +
+		" NameKey TEXT, " +
+		" Type TEXT, " +
+		" Up INTEGER, " +
+		" Mtu INTEGER, " +
 		"PRIMARY KEY(NameKey) ) "
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
@@ -186,13 +186,13 @@ func (obj HoldTimeState) GetKey() (string, error) {
 func (obj SubinterfaceConfig) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS SubinterfaceConfig " +
 		"( " +
-		" Index INTEGER " +
-		" Name TEXT " +
-		" Enabled bool " +
-		" Description TEXT " +
-		" Unnumbered bool " +
-		" Type TEXT " +
-		" Mtu INTEGER " +
+		" Index INTEGER, " +
+		" Name TEXT, " +
+		" Enabled bool, " +
+		" Description TEXT, " +
+		" Unnumbered bool, " +
+		" Type TEXT, " +
+		" Mtu INTEGER, " +
 		"PRIMARY KEY( ) "
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
@@ -226,31 +226,31 @@ func (obj SubinterfaceConfig) GetKey() (string, error) {
 func (obj SubinterfaceStateCounters) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS SubinterfaceStateCounters " +
 		"( " +
-		" Index INTEGER " +
-		" Name TEXT " +
-		" InMulticastPkts INTEGER " +
-		" OutBroadcastPkts INTEGER " +
-		" OperStatus INTEGER " +
-		" InBroadcastPkts INTEGER " +
-		" Enabled bool " +
-		" OutDiscards INTEGER " +
-		" Mtu INTEGER " +
-		" OutOctets INTEGER " +
-		" Ifindex INTEGER " +
-		" InDiscards INTEGER " +
-		" Type TEXT " +
-		" InUnicastPkts INTEGER " +
-		" LastClear TEXT " +
-		" AdminStatus INTEGER " +
-		" OutUnicastPkts INTEGER " +
-		" Description TEXT " +
-		" InOctets INTEGER " +
-		" InUnknownProtos INTEGER " +
-		" OutErrors INTEGER " +
-		" LastChange INTEGER " +
-		" InErrors INTEGER " +
-		" OutMulticastPkts INTEGER " +
-		" Unnumbered bool " +
+		" Index INTEGER, " +
+		" Name TEXT, " +
+		" InMulticastPkts INTEGER, " +
+		" OutBroadcastPkts INTEGER, " +
+		" OperStatus INTEGER, " +
+		" InBroadcastPkts INTEGER, " +
+		" Enabled bool, " +
+		" OutDiscards INTEGER, " +
+		" Mtu INTEGER, " +
+		" OutOctets INTEGER, " +
+		" Ifindex INTEGER, " +
+		" InDiscards INTEGER, " +
+		" Type TEXT, " +
+		" InUnicastPkts INTEGER, " +
+		" LastClear TEXT, " +
+		" AdminStatus INTEGER, " +
+		" OutUnicastPkts INTEGER, " +
+		" Description TEXT, " +
+		" InOctets INTEGER, " +
+		" InUnknownProtos INTEGER, " +
+		" OutErrors INTEGER, " +
+		" LastChange INTEGER, " +
+		" InErrors INTEGER, " +
+		" OutMulticastPkts INTEGER, " +
+		" Unnumbered bool, " +
 		"PRIMARY KEY( ) "
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
@@ -284,16 +284,16 @@ func (obj SubinterfaceStateCounters) GetKey() (string, error) {
 func (obj SubinterfaceVlanConfig) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS SubinterfaceVlanConfig " +
 		"( " +
-		" VlanId_VlanId_QinqId TEXT " +
-		" IndexKey TEXT " +
-		" Name TEXT " +
-		" VlanId_VlanId INTEGER " +
-		" Enabled bool " +
-		" Unnumbered bool " +
-		" Type TEXT " +
-		" GlobalVlanId TEXT " +
-		" Description TEXT " +
-		" Mtu INTEGER " +
+		" VlanId_VlanId_QinqId TEXT, " +
+		" IndexKey TEXT, " +
+		" Name TEXT, " +
+		" VlanId_VlanId INTEGER, " +
+		" Enabled bool, " +
+		" Unnumbered bool, " +
+		" Type TEXT, " +
+		" GlobalVlanId TEXT, " +
+		" Description TEXT, " +
+		" Mtu INTEGER, " +
 		"PRIMARY KEY(IndexKey) ) "
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
@@ -329,16 +329,16 @@ func (obj SubinterfaceVlanConfig) GetKey() (string, error) {
 func (obj SubinterfaceVlanState) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS SubinterfaceVlanState " +
 		"( " +
-		" VlanId_VlanId_QinqId TEXT " +
-		" IndexKey TEXT " +
-		" Name TEXT " +
-		" VlanId_VlanId INTEGER " +
-		" Enabled bool " +
-		" Unnumbered bool " +
-		" Type TEXT " +
-		" GlobalVlanId TEXT " +
-		" Description TEXT " +
-		" Mtu INTEGER " +
+		" VlanId_VlanId_QinqId TEXT, " +
+		" IndexKey TEXT, " +
+		" Name TEXT, " +
+		" VlanId_VlanId INTEGER, " +
+		" Enabled bool, " +
+		" Unnumbered bool, " +
+		" Type TEXT, " +
+		" GlobalVlanId TEXT, " +
+		" Description TEXT, " +
+		" Mtu INTEGER, " +
 		"PRIMARY KEY(IndexKey) ) "
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
@@ -374,15 +374,15 @@ func (obj SubinterfaceVlanState) GetKey() (string, error) {
 func (obj SubinterfaceIpv4AddressConfig) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS SubinterfaceIpv4AddressConfig " +
 		"( " +
-		" IndexKey TEXT " +
-		" Mtu INTEGER " +
-		" Name TEXT " +
-		" Ip TEXT " +
-		" Enabled bool " +
-		" Unnumbered bool " +
-		" Type TEXT " +
-		" PrefixLength INTEGER " +
-		" Description TEXT " +
+		" IndexKey TEXT, " +
+		" Mtu INTEGER, " +
+		" Name TEXT, " +
+		" Ip TEXT, " +
+		" Enabled bool, " +
+		" Unnumbered bool, " +
+		" Type TEXT, " +
+		" PrefixLength INTEGER, " +
+		" Description TEXT, " +
 		"PRIMARY KEY(IndexKey) ) "
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
@@ -418,16 +418,16 @@ func (obj SubinterfaceIpv4AddressConfig) GetKey() (string, error) {
 func (obj SubinterfaceIpv4AddressState) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS SubinterfaceIpv4AddressState " +
 		"( " +
-		" Origin INTEGER " +
-		" IndexKey TEXT " +
-		" Mtu INTEGER " +
-		" Name TEXT " +
-		" Ip TEXT " +
-		" Enabled bool " +
-		" Unnumbered bool " +
-		" Type TEXT " +
-		" PrefixLength INTEGER " +
-		" Description TEXT " +
+		" Origin INTEGER, " +
+		" IndexKey TEXT, " +
+		" Mtu INTEGER, " +
+		" Name TEXT, " +
+		" Ip TEXT, " +
+		" Enabled bool, " +
+		" Unnumbered bool, " +
+		" Type TEXT, " +
+		" PrefixLength INTEGER, " +
+		" Description TEXT, " +
 		"PRIMARY KEY(IndexKey) ) "
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
@@ -463,22 +463,22 @@ func (obj SubinterfaceIpv4AddressState) GetKey() (string, error) {
 func (obj SubinterfaceIpv4AddressVrrpVrrpGroupConfig) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS SubinterfaceIpv4AddressVrrpVrrpGroupConfig " +
 		"( " +
-		" IndexKey TEXT " +
-		" Description TEXT " +
-		" PreemptDelay INTEGER " +
-		" PrefixLength INTEGER " +
-		" Enabled bool " +
-		" IpKey TEXT " +
-		" VirtualRouterId INTEGER " +
-		" Mtu INTEGER " +
-		" Priority INTEGER " +
-		" AdvertisementInterval INTEGER " +
-		" Preempt bool " +
-		" AcceptMode bool " +
-		" Unnumbered bool " +
-		" Type TEXT " +
-		" VirtualAddress TEXT " +
-		" Name TEXT " +
+		" IndexKey TEXT, " +
+		" Description TEXT, " +
+		" PreemptDelay INTEGER, " +
+		" PrefixLength INTEGER, " +
+		" Enabled bool, " +
+		" IpKey TEXT, " +
+		" VirtualRouterId INTEGER, " +
+		" Mtu INTEGER, " +
+		" Priority INTEGER, " +
+		" AdvertisementInterval INTEGER, " +
+		" Preempt bool, " +
+		" AcceptMode bool, " +
+		" Unnumbered bool, " +
+		" Type TEXT, " +
+		" VirtualAddress TEXT, " +
+		" Name TEXT, " +
 		"PRIMARY KEY(IndexKey, IpKey) ) "
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
@@ -514,23 +514,23 @@ func (obj SubinterfaceIpv4AddressVrrpVrrpGroupConfig) GetKey() (string, error) {
 func (obj SubinterfaceIpv4AddressVrrpVrrpGroupState) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS SubinterfaceIpv4AddressVrrpVrrpGroupState " +
 		"( " +
-		" IndexKey TEXT " +
-		" Name TEXT " +
-		" PreemptDelay INTEGER " +
-		" PrefixLength INTEGER " +
-		" Enabled bool " +
-		" IpKey TEXT " +
-		" VirtualRouterId INTEGER " +
-		" Mtu INTEGER " +
-		" Priority INTEGER " +
-		" AdvertisementInterval INTEGER " +
-		" Preempt bool " +
-		" AcceptMode bool " +
-		" CurrentPriority INTEGER " +
-		" Unnumbered bool " +
-		" Type TEXT " +
-		" VirtualAddress TEXT " +
-		" Description TEXT " +
+		" IndexKey TEXT, " +
+		" Name TEXT, " +
+		" PreemptDelay INTEGER, " +
+		" PrefixLength INTEGER, " +
+		" Enabled bool, " +
+		" IpKey TEXT, " +
+		" VirtualRouterId INTEGER, " +
+		" Mtu INTEGER, " +
+		" Priority INTEGER, " +
+		" AdvertisementInterval INTEGER, " +
+		" Preempt bool, " +
+		" AcceptMode bool, " +
+		" CurrentPriority INTEGER, " +
+		" Unnumbered bool, " +
+		" Type TEXT, " +
+		" VirtualAddress TEXT, " +
+		" Description TEXT, " +
 		"PRIMARY KEY(IndexKey, IpKey) ) "
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
@@ -566,24 +566,24 @@ func (obj SubinterfaceIpv4AddressVrrpVrrpGroupState) GetKey() (string, error) {
 func (obj SubinterfaceIpv4AddressVrrpVrrpGroupInterfaceTrackingConfig) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS SubinterfaceIpv4AddressVrrpVrrpGroupInterfaceTrackingConfig " +
 		"( " +
-		" IndexKey TEXT " +
-		" Type TEXT " +
-		" Name TEXT " +
-		" PreemptDelay INTEGER " +
-		" PrefixLength INTEGER " +
-		" PriorityDecrement INTEGER " +
-		" Enabled bool " +
-		" IpKey TEXT " +
-		" Mtu INTEGER " +
-		" Priority INTEGER " +
-		" AdvertisementInterval INTEGER " +
-		" Preempt bool " +
-		" AcceptMode bool " +
-		" TrackInterface TEXT " +
-		" Unnumbered bool " +
-		" VirtualRouterIdKey TEXT " +
-		" VirtualAddress TEXT " +
-		" Description TEXT " +
+		" IndexKey TEXT, " +
+		" Type TEXT, " +
+		" Name TEXT, " +
+		" PreemptDelay INTEGER, " +
+		" PrefixLength INTEGER, " +
+		" PriorityDecrement INTEGER, " +
+		" Enabled bool, " +
+		" IpKey TEXT, " +
+		" Mtu INTEGER, " +
+		" Priority INTEGER, " +
+		" AdvertisementInterval INTEGER, " +
+		" Preempt bool, " +
+		" AcceptMode bool, " +
+		" TrackInterface TEXT, " +
+		" Unnumbered bool, " +
+		" VirtualRouterIdKey TEXT, " +
+		" VirtualAddress TEXT, " +
+		" Description TEXT, " +
 		"PRIMARY KEY(IndexKey, IpKey, VirtualRouterIdKey) ) "
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
@@ -619,24 +619,24 @@ func (obj SubinterfaceIpv4AddressVrrpVrrpGroupInterfaceTrackingConfig) GetKey() 
 func (obj SubinterfaceIpv4AddressVrrpVrrpGroupInterfaceTrackingState) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS SubinterfaceIpv4AddressVrrpVrrpGroupInterfaceTrackingState " +
 		"( " +
-		" IndexKey TEXT " +
-		" Type TEXT " +
-		" Name TEXT " +
-		" PreemptDelay INTEGER " +
-		" PrefixLength INTEGER " +
-		" PriorityDecrement INTEGER " +
-		" Enabled bool " +
-		" IpKey TEXT " +
-		" Mtu INTEGER " +
-		" Priority INTEGER " +
-		" AdvertisementInterval INTEGER " +
-		" Preempt bool " +
-		" AcceptMode bool " +
-		" TrackInterface TEXT " +
-		" Unnumbered bool " +
-		" VirtualRouterIdKey TEXT " +
-		" VirtualAddress TEXT " +
-		" Description TEXT " +
+		" IndexKey TEXT, " +
+		" Type TEXT, " +
+		" Name TEXT, " +
+		" PreemptDelay INTEGER, " +
+		" PrefixLength INTEGER, " +
+		" PriorityDecrement INTEGER, " +
+		" Enabled bool, " +
+		" IpKey TEXT, " +
+		" Mtu INTEGER, " +
+		" Priority INTEGER, " +
+		" AdvertisementInterval INTEGER, " +
+		" Preempt bool, " +
+		" AcceptMode bool, " +
+		" TrackInterface TEXT, " +
+		" Unnumbered bool, " +
+		" VirtualRouterIdKey TEXT, " +
+		" VirtualAddress TEXT, " +
+		" Description TEXT, " +
 		"PRIMARY KEY(IndexKey, IpKey, VirtualRouterIdKey) ) "
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
@@ -672,15 +672,15 @@ func (obj SubinterfaceIpv4AddressVrrpVrrpGroupInterfaceTrackingState) GetKey() (
 func (obj SubinterfaceIpv4NeighborConfig) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS SubinterfaceIpv4NeighborConfig " +
 		"( " +
-		" IndexKey TEXT " +
-		" Mtu INTEGER " +
-		" LinkLayerAddress TEXT " +
-		" Name TEXT " +
-		" Ip TEXT " +
-		" Enabled bool " +
-		" Unnumbered bool " +
-		" Type TEXT " +
-		" Description TEXT " +
+		" IndexKey TEXT, " +
+		" Mtu INTEGER, " +
+		" LinkLayerAddress TEXT, " +
+		" Name TEXT, " +
+		" Ip TEXT, " +
+		" Enabled bool, " +
+		" Unnumbered bool, " +
+		" Type TEXT, " +
+		" Description TEXT, " +
 		"PRIMARY KEY(IndexKey) ) "
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
@@ -716,16 +716,16 @@ func (obj SubinterfaceIpv4NeighborConfig) GetKey() (string, error) {
 func (obj SubinterfaceIpv4NeighborState) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS SubinterfaceIpv4NeighborState " +
 		"( " +
-		" Origin INTEGER " +
-		" IndexKey TEXT " +
-		" Mtu INTEGER " +
-		" LinkLayerAddress TEXT " +
-		" Name TEXT " +
-		" Ip TEXT " +
-		" Enabled bool " +
-		" Unnumbered bool " +
-		" Type TEXT " +
-		" Description TEXT " +
+		" Origin INTEGER, " +
+		" IndexKey TEXT, " +
+		" Mtu INTEGER, " +
+		" LinkLayerAddress TEXT, " +
+		" Name TEXT, " +
+		" Ip TEXT, " +
+		" Enabled bool, " +
+		" Unnumbered bool, " +
+		" Type TEXT, " +
+		" Description TEXT, " +
 		"PRIMARY KEY(IndexKey) ) "
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
@@ -761,13 +761,13 @@ func (obj SubinterfaceIpv4NeighborState) GetKey() (string, error) {
 func (obj SubinterfaceIpv4Config) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS SubinterfaceIpv4Config " +
 		"( " +
-		" IndexKey TEXT " +
-		" Mtu INTEGER " +
-		" Name TEXT " +
-		" Enabled bool " +
-		" Unnumbered bool " +
-		" Type TEXT " +
-		" Description TEXT " +
+		" IndexKey TEXT, " +
+		" Mtu INTEGER, " +
+		" Name TEXT, " +
+		" Enabled bool, " +
+		" Unnumbered bool, " +
+		" Type TEXT, " +
+		" Description TEXT, " +
 		"PRIMARY KEY(IndexKey) ) "
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
@@ -803,13 +803,13 @@ func (obj SubinterfaceIpv4Config) GetKey() (string, error) {
 func (obj SubinterfaceIpv4State) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS SubinterfaceIpv4State " +
 		"( " +
-		" IndexKey TEXT " +
-		" Mtu INTEGER " +
-		" Name TEXT " +
-		" Enabled bool " +
-		" Unnumbered bool " +
-		" Type TEXT " +
-		" Description TEXT " +
+		" IndexKey TEXT, " +
+		" Mtu INTEGER, " +
+		" Name TEXT, " +
+		" Enabled bool, " +
+		" Unnumbered bool, " +
+		" Type TEXT, " +
+		" Description TEXT, " +
 		"PRIMARY KEY(IndexKey) ) "
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
@@ -845,16 +845,16 @@ func (obj SubinterfaceIpv4State) GetKey() (string, error) {
 func (obj SubinterfaceIpv6AddressConfig) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS SubinterfaceIpv6AddressConfig " +
 		"( " +
-		" IndexKey TEXT " +
-		" Mtu INTEGER " +
-		" Name TEXT " +
-		" Ip TEXT " +
-		" DupAddrDetectTransmits INTEGER " +
-		" Enabled bool " +
-		" Unnumbered bool " +
-		" Type TEXT " +
-		" PrefixLength INTEGER " +
-		" Description TEXT " +
+		" IndexKey TEXT, " +
+		" Mtu INTEGER, " +
+		" Name TEXT, " +
+		" Ip TEXT, " +
+		" DupAddrDetectTransmits INTEGER, " +
+		" Enabled bool, " +
+		" Unnumbered bool, " +
+		" Type TEXT, " +
+		" PrefixLength INTEGER, " +
+		" Description TEXT, " +
 		"PRIMARY KEY(IndexKey) ) "
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
@@ -890,18 +890,18 @@ func (obj SubinterfaceIpv6AddressConfig) GetKey() (string, error) {
 func (obj SubinterfaceIpv6AddressState) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS SubinterfaceIpv6AddressState " +
 		"( " +
-		" Origin INTEGER " +
-		" IndexKey TEXT " +
-		" Status INTEGER " +
-		" Name TEXT " +
-		" Ip TEXT " +
-		" Enabled bool " +
-		" Mtu INTEGER " +
-		" PrefixLength INTEGER " +
-		" DupAddrDetectTransmits INTEGER " +
-		" Unnumbered bool " +
-		" Type TEXT " +
-		" Description TEXT " +
+		" Origin INTEGER, " +
+		" IndexKey TEXT, " +
+		" Status INTEGER, " +
+		" Name TEXT, " +
+		" Ip TEXT, " +
+		" Enabled bool, " +
+		" Mtu INTEGER, " +
+		" PrefixLength INTEGER, " +
+		" DupAddrDetectTransmits INTEGER, " +
+		" Unnumbered bool, " +
+		" Type TEXT, " +
+		" Description TEXT, " +
 		"PRIMARY KEY(IndexKey) ) "
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
@@ -937,24 +937,24 @@ func (obj SubinterfaceIpv6AddressState) GetKey() (string, error) {
 func (obj SubinterfaceIpv6AddressVrrpVrrpGroupConfig) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS SubinterfaceIpv6AddressVrrpVrrpGroupConfig " +
 		"( " +
-		" IndexKey TEXT " +
-		" Name TEXT " +
-		" PreemptDelay INTEGER " +
-		" PrefixLength INTEGER " +
-		" Enabled bool " +
-		" IpKey TEXT " +
-		" VirtualRouterId INTEGER " +
-		" Mtu INTEGER " +
-		" Priority INTEGER " +
-		" AdvertisementInterval INTEGER " +
-		" Preempt bool " +
-		" AcceptMode bool " +
-		" DupAddrDetectTransmits INTEGER " +
-		" VirtualLinkLocal TEXT " +
-		" Unnumbered bool " +
-		" Type TEXT " +
-		" VirtualAddress TEXT " +
-		" Description TEXT " +
+		" IndexKey TEXT, " +
+		" Name TEXT, " +
+		" PreemptDelay INTEGER, " +
+		" PrefixLength INTEGER, " +
+		" Enabled bool, " +
+		" IpKey TEXT, " +
+		" VirtualRouterId INTEGER, " +
+		" Mtu INTEGER, " +
+		" Priority INTEGER, " +
+		" AdvertisementInterval INTEGER, " +
+		" Preempt bool, " +
+		" AcceptMode bool, " +
+		" DupAddrDetectTransmits INTEGER, " +
+		" VirtualLinkLocal TEXT, " +
+		" Unnumbered bool, " +
+		" Type TEXT, " +
+		" VirtualAddress TEXT, " +
+		" Description TEXT, " +
 		"PRIMARY KEY(IndexKey, IpKey) ) "
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
@@ -990,25 +990,25 @@ func (obj SubinterfaceIpv6AddressVrrpVrrpGroupConfig) GetKey() (string, error) {
 func (obj SubinterfaceIpv6AddressVrrpVrrpGroupState) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS SubinterfaceIpv6AddressVrrpVrrpGroupState " +
 		"( " +
-		" IndexKey TEXT " +
-		" Name TEXT " +
-		" PreemptDelay INTEGER " +
-		" PrefixLength INTEGER " +
-		" Enabled bool " +
-		" IpKey TEXT " +
-		" VirtualRouterId INTEGER " +
-		" Mtu INTEGER " +
-		" Priority INTEGER " +
-		" AdvertisementInterval INTEGER " +
-		" Preempt bool " +
-		" AcceptMode bool " +
-		" CurrentPriority INTEGER " +
-		" DupAddrDetectTransmits INTEGER " +
-		" VirtualLinkLocal TEXT " +
-		" Unnumbered bool " +
-		" Type TEXT " +
-		" VirtualAddress TEXT " +
-		" Description TEXT " +
+		" IndexKey TEXT, " +
+		" Name TEXT, " +
+		" PreemptDelay INTEGER, " +
+		" PrefixLength INTEGER, " +
+		" Enabled bool, " +
+		" IpKey TEXT, " +
+		" VirtualRouterId INTEGER, " +
+		" Mtu INTEGER, " +
+		" Priority INTEGER, " +
+		" AdvertisementInterval INTEGER, " +
+		" Preempt bool, " +
+		" AcceptMode bool, " +
+		" CurrentPriority INTEGER, " +
+		" DupAddrDetectTransmits INTEGER, " +
+		" VirtualLinkLocal TEXT, " +
+		" Unnumbered bool, " +
+		" Type TEXT, " +
+		" VirtualAddress TEXT, " +
+		" Description TEXT, " +
 		"PRIMARY KEY(IndexKey, IpKey) ) "
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
@@ -1044,26 +1044,26 @@ func (obj SubinterfaceIpv6AddressVrrpVrrpGroupState) GetKey() (string, error) {
 func (obj SubinterfaceIpv6AddressVrrpVrrpGroupInterfaceTrackingConfig) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS SubinterfaceIpv6AddressVrrpVrrpGroupInterfaceTrackingConfig " +
 		"( " +
-		" IndexKey TEXT " +
-		" Type TEXT " +
-		" TrackInterface TEXT " +
-		" Name TEXT " +
-		" PreemptDelay INTEGER " +
-		" PrefixLength INTEGER " +
-		" PriorityDecrement INTEGER " +
-		" Enabled bool " +
-		" IpKey TEXT " +
-		" Mtu INTEGER " +
-		" Priority INTEGER " +
-		" AdvertisementInterval INTEGER " +
-		" Preempt bool " +
-		" AcceptMode bool " +
-		" DupAddrDetectTransmits INTEGER " +
-		" VirtualLinkLocal TEXT " +
-		" Unnumbered bool " +
-		" VirtualRouterIdKey TEXT " +
-		" VirtualAddress TEXT " +
-		" Description TEXT " +
+		" IndexKey TEXT, " +
+		" Type TEXT, " +
+		" TrackInterface TEXT, " +
+		" Name TEXT, " +
+		" PreemptDelay INTEGER, " +
+		" PrefixLength INTEGER, " +
+		" PriorityDecrement INTEGER, " +
+		" Enabled bool, " +
+		" IpKey TEXT, " +
+		" Mtu INTEGER, " +
+		" Priority INTEGER, " +
+		" AdvertisementInterval INTEGER, " +
+		" Preempt bool, " +
+		" AcceptMode bool, " +
+		" DupAddrDetectTransmits INTEGER, " +
+		" VirtualLinkLocal TEXT, " +
+		" Unnumbered bool, " +
+		" VirtualRouterIdKey TEXT, " +
+		" VirtualAddress TEXT, " +
+		" Description TEXT, " +
 		"PRIMARY KEY(IndexKey, IpKey, VirtualRouterIdKey) ) "
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
@@ -1099,26 +1099,26 @@ func (obj SubinterfaceIpv6AddressVrrpVrrpGroupInterfaceTrackingConfig) GetKey() 
 func (obj SubinterfaceIpv6AddressVrrpVrrpGroupInterfaceTrackingState) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS SubinterfaceIpv6AddressVrrpVrrpGroupInterfaceTrackingState " +
 		"( " +
-		" IndexKey TEXT " +
-		" Type TEXT " +
-		" TrackInterface TEXT " +
-		" Name TEXT " +
-		" PreemptDelay INTEGER " +
-		" PrefixLength INTEGER " +
-		" PriorityDecrement INTEGER " +
-		" Enabled bool " +
-		" IpKey TEXT " +
-		" Mtu INTEGER " +
-		" Priority INTEGER " +
-		" AdvertisementInterval INTEGER " +
-		" Preempt bool " +
-		" AcceptMode bool " +
-		" DupAddrDetectTransmits INTEGER " +
-		" VirtualLinkLocal TEXT " +
-		" Unnumbered bool " +
-		" VirtualRouterIdKey TEXT " +
-		" VirtualAddress TEXT " +
-		" Description TEXT " +
+		" IndexKey TEXT, " +
+		" Type TEXT, " +
+		" TrackInterface TEXT, " +
+		" Name TEXT, " +
+		" PreemptDelay INTEGER, " +
+		" PrefixLength INTEGER, " +
+		" PriorityDecrement INTEGER, " +
+		" Enabled bool, " +
+		" IpKey TEXT, " +
+		" Mtu INTEGER, " +
+		" Priority INTEGER, " +
+		" AdvertisementInterval INTEGER, " +
+		" Preempt bool, " +
+		" AcceptMode bool, " +
+		" DupAddrDetectTransmits INTEGER, " +
+		" VirtualLinkLocal TEXT, " +
+		" Unnumbered bool, " +
+		" VirtualRouterIdKey TEXT, " +
+		" VirtualAddress TEXT, " +
+		" Description TEXT, " +
 		"PRIMARY KEY(IndexKey, IpKey, VirtualRouterIdKey) ) "
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
@@ -1154,16 +1154,16 @@ func (obj SubinterfaceIpv6AddressVrrpVrrpGroupInterfaceTrackingState) GetKey() (
 func (obj SubinterfaceIpv6NeighborConfig) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS SubinterfaceIpv6NeighborConfig " +
 		"( " +
-		" IndexKey TEXT " +
-		" Mtu INTEGER " +
-		" LinkLayerAddress TEXT " +
-		" Name TEXT " +
-		" Ip TEXT " +
-		" DupAddrDetectTransmits INTEGER " +
-		" Enabled bool " +
-		" Unnumbered bool " +
-		" Type TEXT " +
-		" Description TEXT " +
+		" IndexKey TEXT, " +
+		" Mtu INTEGER, " +
+		" LinkLayerAddress TEXT, " +
+		" Name TEXT, " +
+		" Ip TEXT, " +
+		" DupAddrDetectTransmits INTEGER, " +
+		" Enabled bool, " +
+		" Unnumbered bool, " +
+		" Type TEXT, " +
+		" Description TEXT, " +
 		"PRIMARY KEY(IndexKey) ) "
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
@@ -1199,19 +1199,19 @@ func (obj SubinterfaceIpv6NeighborConfig) GetKey() (string, error) {
 func (obj SubinterfaceIpv6NeighborState) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS SubinterfaceIpv6NeighborState " +
 		"( " +
-		" Origin INTEGER " +
-		" IndexKey TEXT " +
-		" Name TEXT " +
-		" LinkLayerAddress TEXT " +
-		" Ip TEXT " +
-		" Enabled bool " +
-		" Mtu INTEGER " +
-		" NeighborState INTEGER " +
-		" IsRouter bool " +
-		" DupAddrDetectTransmits INTEGER " +
-		" Unnumbered bool " +
-		" Type TEXT " +
-		" Description TEXT " +
+		" Origin INTEGER, " +
+		" IndexKey TEXT, " +
+		" Name TEXT, " +
+		" LinkLayerAddress TEXT, " +
+		" Ip TEXT, " +
+		" Enabled bool, " +
+		" Mtu INTEGER, " +
+		" NeighborState INTEGER, " +
+		" IsRouter bool, " +
+		" DupAddrDetectTransmits INTEGER, " +
+		" Unnumbered bool, " +
+		" Type TEXT, " +
+		" Description TEXT, " +
 		"PRIMARY KEY(IndexKey) ) "
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
@@ -1247,14 +1247,14 @@ func (obj SubinterfaceIpv6NeighborState) GetKey() (string, error) {
 func (obj SubinterfaceIpv6Config) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS SubinterfaceIpv6Config " +
 		"( " +
-		" IndexKey TEXT " +
-		" Mtu INTEGER " +
-		" Name TEXT " +
-		" DupAddrDetectTransmits INTEGER " +
-		" Enabled bool " +
-		" Unnumbered bool " +
-		" Type TEXT " +
-		" Description TEXT " +
+		" IndexKey TEXT, " +
+		" Mtu INTEGER, " +
+		" Name TEXT, " +
+		" DupAddrDetectTransmits INTEGER, " +
+		" Enabled bool, " +
+		" Unnumbered bool, " +
+		" Type TEXT, " +
+		" Description TEXT, " +
 		"PRIMARY KEY(IndexKey) ) "
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
@@ -1290,14 +1290,14 @@ func (obj SubinterfaceIpv6Config) GetKey() (string, error) {
 func (obj SubinterfaceIpv6State) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS SubinterfaceIpv6State " +
 		"( " +
-		" IndexKey TEXT " +
-		" Mtu INTEGER " +
-		" Name TEXT " +
-		" DupAddrDetectTransmits INTEGER " +
-		" Enabled bool " +
-		" Unnumbered bool " +
-		" Type TEXT " +
-		" Description TEXT " +
+		" IndexKey TEXT, " +
+		" Mtu INTEGER, " +
+		" Name TEXT, " +
+		" DupAddrDetectTransmits INTEGER, " +
+		" Enabled bool, " +
+		" Unnumbered bool, " +
+		" Type TEXT, " +
+		" Description TEXT, " +
 		"PRIMARY KEY(IndexKey) ) "
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
@@ -1333,18 +1333,18 @@ func (obj SubinterfaceIpv6State) GetKey() (string, error) {
 func (obj SubinterfaceIpv6AutoconfConfig) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS SubinterfaceIpv6AutoconfConfig " +
 		"( " +
-		" IndexKey TEXT " +
-		" CreateGlobalAddresses bool " +
-		" Name TEXT " +
-		" CreateTemporaryAddresses bool " +
-		" Enabled bool " +
-		" Mtu INTEGER " +
-		" DupAddrDetectTransmits INTEGER " +
-		" TemporaryPreferredLifetime INTEGER " +
-		" Unnumbered bool " +
-		" Type TEXT " +
-		" TemporaryValidLifetime INTEGER " +
-		" Description TEXT " +
+		" IndexKey TEXT, " +
+		" CreateGlobalAddresses bool, " +
+		" Name TEXT, " +
+		" CreateTemporaryAddresses bool, " +
+		" Enabled bool, " +
+		" Mtu INTEGER, " +
+		" DupAddrDetectTransmits INTEGER, " +
+		" TemporaryPreferredLifetime INTEGER, " +
+		" Unnumbered bool, " +
+		" Type TEXT, " +
+		" TemporaryValidLifetime INTEGER, " +
+		" Description TEXT, " +
 		"PRIMARY KEY(IndexKey) ) "
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
@@ -1380,18 +1380,18 @@ func (obj SubinterfaceIpv6AutoconfConfig) GetKey() (string, error) {
 func (obj SubinterfaceIpv6AutoconfState) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS SubinterfaceIpv6AutoconfState " +
 		"( " +
-		" IndexKey TEXT " +
-		" CreateGlobalAddresses bool " +
-		" Name TEXT " +
-		" CreateTemporaryAddresses bool " +
-		" Enabled bool " +
-		" Mtu INTEGER " +
-		" DupAddrDetectTransmits INTEGER " +
-		" TemporaryPreferredLifetime INTEGER " +
-		" Unnumbered bool " +
-		" Type TEXT " +
-		" TemporaryValidLifetime INTEGER " +
-		" Description TEXT " +
+		" IndexKey TEXT, " +
+		" CreateGlobalAddresses bool, " +
+		" Name TEXT, " +
+		" CreateTemporaryAddresses bool, " +
+		" Enabled bool, " +
+		" Mtu INTEGER, " +
+		" DupAddrDetectTransmits INTEGER, " +
+		" TemporaryPreferredLifetime INTEGER, " +
+		" Unnumbered bool, " +
+		" Type TEXT, " +
+		" TemporaryValidLifetime INTEGER, " +
+		" Description TEXT, " +
 		"PRIMARY KEY(IndexKey) ) "
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
@@ -1427,17 +1427,17 @@ func (obj SubinterfaceIpv6AutoconfState) GetKey() (string, error) {
 func (obj EthernetConfig) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS EthernetConfig " +
 		"( " +
-		" MacAddress TEXT " +
-		" Description TEXT " +
-		" AggregateId TEXT " +
-		" NameKey TEXT " +
-		" Enabled bool " +
-		" Speed TEXT " +
-		" Mtu INTEGER " +
-		" DuplexMode INTEGER " +
-		" EnableFlowControl bool " +
-		" Auto bool " +
-		" Type TEXT " +
+		" MacAddress TEXT, " +
+		" Description TEXT, " +
+		" AggregateId TEXT, " +
+		" NameKey TEXT, " +
+		" Enabled bool, " +
+		" Speed TEXT, " +
+		" Mtu INTEGER, " +
+		" DuplexMode INTEGER, " +
+		" EnableFlowControl bool, " +
+		" Auto bool, " +
+		" Type TEXT, " +
 		"PRIMARY KEY(NameKey) ) "
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
@@ -1473,25 +1473,25 @@ func (obj EthernetConfig) GetKey() (string, error) {
 func (obj EthernetStateCounters) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS EthernetStateCounters " +
 		"( " +
-		" MacAddress TEXT " +
-		" InCrcErrors INTEGER " +
-		" Description TEXT " +
-		" AggregateId TEXT " +
-		" NameKey TEXT " +
-		" InFragmentFrames INTEGER " +
-		" Enabled bool " +
-		" InMacControlFrames INTEGER " +
-		" OutMacPauseFrames INTEGER " +
-		" Mtu INTEGER " +
-		" Out8021qFrames INTEGER " +
-		" DuplexMode INTEGER " +
-		" InMacPauseFrames INTEGER " +
-		" In8021qFrames INTEGER " +
-		" EnableFlowControl bool " +
-		" InJabberFrames INTEGER " +
-		" InOversizeFrames INTEGER " +
-		" Type TEXT " +
-		" OutMacControlFrames INTEGER " +
+		" MacAddress TEXT, " +
+		" InCrcErrors INTEGER, " +
+		" Description TEXT, " +
+		" AggregateId TEXT, " +
+		" NameKey TEXT, " +
+		" InFragmentFrames INTEGER, " +
+		" Enabled bool, " +
+		" InMacControlFrames INTEGER, " +
+		" OutMacPauseFrames INTEGER, " +
+		" Mtu INTEGER, " +
+		" Out8021qFrames INTEGER, " +
+		" DuplexMode INTEGER, " +
+		" InMacPauseFrames INTEGER, " +
+		" In8021qFrames INTEGER, " +
+		" EnableFlowControl bool, " +
+		" InJabberFrames INTEGER, " +
+		" InOversizeFrames INTEGER, " +
+		" Type TEXT, " +
+		" OutMacControlFrames INTEGER, " +
 		"PRIMARY KEY(NameKey) ) "
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
@@ -1527,17 +1527,17 @@ func (obj EthernetStateCounters) GetKey() (string, error) {
 func (obj EthernetState) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS EthernetState " +
 		"( " +
-		" AggregateId TEXT " +
-		" Description TEXT " +
-		" MacAddress TEXT " +
-		" Auto bool " +
-		" Enabled bool " +
-		" Speed TEXT " +
-		" Mtu INTEGER " +
-		" DuplexMode INTEGER " +
-		" EnableFlowControl bool " +
-		" NameKey TEXT " +
-		" Type TEXT " +
+		" AggregateId TEXT, " +
+		" Description TEXT, " +
+		" MacAddress TEXT, " +
+		" Auto bool, " +
+		" Enabled bool, " +
+		" Speed TEXT, " +
+		" Mtu INTEGER, " +
+		" DuplexMode INTEGER, " +
+		" EnableFlowControl bool, " +
+		" NameKey TEXT, " +
+		" Type TEXT, " +
 		"PRIMARY KEY(NameKey) ) "
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
@@ -1573,24 +1573,24 @@ func (obj EthernetState) GetKey() (string, error) {
 func (obj EthernetVlanConfig) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS EthernetVlanConfig " +
 		"( " +
-		" MacAddress TEXT " +
-		" Description TEXT " +
-		" NativeVlan_VlanId_QinqId TEXT " +
-		" AggregateId TEXT " +
-		" NativeVlan_VlanId INTEGER " +
-		" NameKey TEXT " +
-		" TrunkVlans_VlanId_VlanRange_QinqId TEXT " +
-		" Enabled bool " +
-		" Mtu INTEGER " +
-		" DuplexMode INTEGER " +
-		" TrunkVlans_VlanId INTEGER " +
-		" EnableFlowControl bool " +
-		" AccessVlan_VlanId INTEGER " +
-		" TrunkVlans_VlanId_VlanRange_QinqId_QinqIdRange TEXT " +
-		" InterfaceMode INTEGER " +
-		" Type TEXT " +
-		" AccessVlan_VlanId_QinqId TEXT " +
-		" TrunkVlans_VlanId_VlanRange TEXT " +
+		" MacAddress TEXT, " +
+		" Description TEXT, " +
+		" NativeVlan_VlanId_QinqId TEXT, " +
+		" AggregateId TEXT, " +
+		" NativeVlan_VlanId INTEGER, " +
+		" NameKey TEXT, " +
+		" TrunkVlans_VlanId_VlanRange_QinqId TEXT, " +
+		" Enabled bool, " +
+		" Mtu INTEGER, " +
+		" DuplexMode INTEGER, " +
+		" TrunkVlans_VlanId INTEGER, " +
+		" EnableFlowControl bool, " +
+		" AccessVlan_VlanId INTEGER, " +
+		" TrunkVlans_VlanId_VlanRange_QinqId_QinqIdRange TEXT, " +
+		" InterfaceMode INTEGER, " +
+		" Type TEXT, " +
+		" AccessVlan_VlanId_QinqId TEXT, " +
+		" TrunkVlans_VlanId_VlanRange TEXT, " +
 		"PRIMARY KEY(NameKey) ) "
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
@@ -1626,24 +1626,24 @@ func (obj EthernetVlanConfig) GetKey() (string, error) {
 func (obj EthernetVlanState) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS EthernetVlanState " +
 		"( " +
-		" MacAddress TEXT " +
-		" Description TEXT " +
-		" NativeVlan_VlanId_QinqId TEXT " +
-		" AggregateId TEXT " +
-		" NativeVlan_VlanId INTEGER " +
-		" NameKey TEXT " +
-		" TrunkVlans_VlanId_VlanRange_QinqId TEXT " +
-		" Enabled bool " +
-		" Mtu INTEGER " +
-		" DuplexMode INTEGER " +
-		" TrunkVlans_VlanId INTEGER " +
-		" EnableFlowControl bool " +
-		" AccessVlan_VlanId INTEGER " +
-		" TrunkVlans_VlanId_VlanRange_QinqId_QinqIdRange TEXT " +
-		" InterfaceMode INTEGER " +
-		" Type TEXT " +
-		" AccessVlan_VlanId_QinqId TEXT " +
-		" TrunkVlans_VlanId_VlanRange TEXT " +
+		" MacAddress TEXT, " +
+		" Description TEXT, " +
+		" NativeVlan_VlanId_QinqId TEXT, " +
+		" AggregateId TEXT, " +
+		" NativeVlan_VlanId INTEGER, " +
+		" NameKey TEXT, " +
+		" TrunkVlans_VlanId_VlanRange_QinqId TEXT, " +
+		" Enabled bool, " +
+		" Mtu INTEGER, " +
+		" DuplexMode INTEGER, " +
+		" TrunkVlans_VlanId INTEGER, " +
+		" EnableFlowControl bool, " +
+		" AccessVlan_VlanId INTEGER, " +
+		" TrunkVlans_VlanId_VlanRange_QinqId_QinqIdRange TEXT, " +
+		" InterfaceMode INTEGER, " +
+		" Type TEXT, " +
+		" AccessVlan_VlanId_QinqId TEXT, " +
+		" TrunkVlans_VlanId_VlanRange TEXT, " +
 		"PRIMARY KEY(NameKey) ) "
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
@@ -1679,13 +1679,13 @@ func (obj EthernetVlanState) GetKey() (string, error) {
 func (obj AggregationConfig) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS AggregationConfig " +
 		"( " +
-		" Description TEXT " +
-		" LagType INTEGER " +
-		" Enabled bool " +
-		" NameKey TEXT " +
-		" MinLinks INTEGER " +
-		" Type TEXT " +
-		" Mtu INTEGER " +
+		" Description TEXT, " +
+		" LagType INTEGER, " +
+		" Enabled bool, " +
+		" NameKey TEXT, " +
+		" MinLinks INTEGER, " +
+		" Type TEXT, " +
+		" Mtu INTEGER, " +
 		"PRIMARY KEY(NameKey) ) "
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
@@ -1721,14 +1721,14 @@ func (obj AggregationConfig) GetKey() (string, error) {
 func (obj AggregationState) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS AggregationState " +
 		"( " +
-		" Description TEXT " +
-		" Members TEXT " +
-		" LagType INTEGER " +
-		" Enabled bool " +
-		" NameKey TEXT " +
-		" MinLinks INTEGER " +
-		" Type TEXT " +
-		" Mtu INTEGER " +
+		" Description TEXT, " +
+		" Members TEXT, " +
+		" LagType INTEGER, " +
+		" Enabled bool, " +
+		" NameKey TEXT, " +
+		" MinLinks INTEGER, " +
+		" Type TEXT, " +
+		" Mtu INTEGER, " +
 		"PRIMARY KEY(NameKey) ) "
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
@@ -1764,17 +1764,17 @@ func (obj AggregationState) GetKey() (string, error) {
 func (obj AggregationLacpConfig) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS AggregationLacpConfig " +
 		"( " +
-		" Description TEXT " +
-		" MinLinks INTEGER " +
-		" SystemPriority INTEGER " +
-		" NameKey TEXT " +
-		" Interval INTEGER " +
-		" Enabled bool " +
-		" Mtu INTEGER " +
-		" SystemIdMac TEXT " +
-		" LagType INTEGER " +
-		" Type TEXT " +
-		" LacpMode INTEGER " +
+		" Description TEXT, " +
+		" MinLinks INTEGER, " +
+		" SystemPriority INTEGER, " +
+		" NameKey TEXT, " +
+		" Interval INTEGER, " +
+		" Enabled bool, " +
+		" Mtu INTEGER, " +
+		" SystemIdMac TEXT, " +
+		" LagType INTEGER, " +
+		" Type TEXT, " +
+		" LacpMode INTEGER, " +
 		"PRIMARY KEY(NameKey) ) "
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
@@ -1810,17 +1810,17 @@ func (obj AggregationLacpConfig) GetKey() (string, error) {
 func (obj AggregationLacpState) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS AggregationLacpState " +
 		"( " +
-		" Description TEXT " +
-		" MinLinks INTEGER " +
-		" SystemPriority INTEGER " +
-		" NameKey TEXT " +
-		" Interval INTEGER " +
-		" Enabled bool " +
-		" Mtu INTEGER " +
-		" SystemIdMac TEXT " +
-		" LagType INTEGER " +
-		" Type TEXT " +
-		" LacpMode INTEGER " +
+		" Description TEXT, " +
+		" MinLinks INTEGER, " +
+		" SystemPriority INTEGER, " +
+		" NameKey TEXT, " +
+		" Interval INTEGER, " +
+		" Enabled bool, " +
+		" Mtu INTEGER, " +
+		" SystemIdMac TEXT, " +
+		" LagType INTEGER, " +
+		" Type TEXT, " +
+		" LacpMode INTEGER, " +
 		"PRIMARY KEY(NameKey) ) "
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
@@ -1856,34 +1856,34 @@ func (obj AggregationLacpState) GetKey() (string, error) {
 func (obj AggregationLacpMemberStateCounters) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS AggregationLacpMemberStateCounters " +
 		"( " +
-		" SystemIdMac TEXT " +
-		" MinLinks INTEGER " +
-		" SystemPriority INTEGER " +
-		" LacpUnknownErrors INTEGER " +
-		" Interval INTEGER " +
-		" Enabled bool " +
-		" Aggregatable bool " +
-		" OperKey INTEGER " +
-		" Mtu INTEGER " +
-		" Distributing bool " +
-		" PartnerKey INTEGER " +
-		" LacpErrors INTEGER " +
-		" SystemId TEXT " +
-		" Timeout INTEGER " +
-		" Activity INTEGER " +
-		" LacpRxErrors INTEGER " +
-		" Type TEXT " +
-		" Collecting bool " +
-		" LagType INTEGER " +
-		" Description TEXT " +
-		" LacpTxErrors INTEGER " +
-		" LacpOutPkts INTEGER " +
-		" LacpInPkts INTEGER " +
-		" Synchronization INTEGER " +
-		" PartnerId TEXT " +
-		" NameKey TEXT " +
-		" Interface TEXT " +
-		" LacpMode INTEGER " +
+		" SystemIdMac TEXT, " +
+		" MinLinks INTEGER, " +
+		" SystemPriority INTEGER, " +
+		" LacpUnknownErrors INTEGER, " +
+		" Interval INTEGER, " +
+		" Enabled bool, " +
+		" Aggregatable bool, " +
+		" OperKey INTEGER, " +
+		" Mtu INTEGER, " +
+		" Distributing bool, " +
+		" PartnerKey INTEGER, " +
+		" LacpErrors INTEGER, " +
+		" SystemId TEXT, " +
+		" Timeout INTEGER, " +
+		" Activity INTEGER, " +
+		" LacpRxErrors INTEGER, " +
+		" Type TEXT, " +
+		" Collecting bool, " +
+		" LagType INTEGER, " +
+		" Description TEXT, " +
+		" LacpTxErrors INTEGER, " +
+		" LacpOutPkts INTEGER, " +
+		" LacpInPkts INTEGER, " +
+		" Synchronization INTEGER, " +
+		" PartnerId TEXT, " +
+		" NameKey TEXT, " +
+		" Interface TEXT, " +
+		" LacpMode INTEGER, " +
 		"PRIMARY KEY(OperKey, PartnerKey, NameKey) ) "
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
@@ -1919,22 +1919,22 @@ func (obj AggregationLacpMemberStateCounters) GetKey() (string, error) {
 func (obj AggregationVlanConfig) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS AggregationVlanConfig " +
 		"( " +
-		" Description TEXT " +
-		" NativeVlan_VlanId_QinqId TEXT " +
-		" MinLinks INTEGER " +
-		" NativeVlan_VlanId INTEGER " +
-		" NameKey TEXT " +
-		" TrunkVlans_VlanId_VlanRange_QinqId TEXT " +
-		" Enabled bool " +
-		" Mtu INTEGER " +
-		" AccessVlan_VlanId INTEGER " +
-		" TrunkVlans_VlanId INTEGER " +
-		" LagType INTEGER " +
-		" TrunkVlans_VlanId_VlanRange_QinqId_QinqIdRange TEXT " +
-		" InterfaceMode INTEGER " +
-		" Type TEXT " +
-		" AccessVlan_VlanId_QinqId TEXT " +
-		" TrunkVlans_VlanId_VlanRange TEXT " +
+		" Description TEXT, " +
+		" NativeVlan_VlanId_QinqId TEXT, " +
+		" MinLinks INTEGER, " +
+		" NativeVlan_VlanId INTEGER, " +
+		" NameKey TEXT, " +
+		" TrunkVlans_VlanId_VlanRange_QinqId TEXT, " +
+		" Enabled bool, " +
+		" Mtu INTEGER, " +
+		" AccessVlan_VlanId INTEGER, " +
+		" TrunkVlans_VlanId INTEGER, " +
+		" LagType INTEGER, " +
+		" TrunkVlans_VlanId_VlanRange_QinqId_QinqIdRange TEXT, " +
+		" InterfaceMode INTEGER, " +
+		" Type TEXT, " +
+		" AccessVlan_VlanId_QinqId TEXT, " +
+		" TrunkVlans_VlanId_VlanRange TEXT, " +
 		"PRIMARY KEY(NameKey) ) "
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
@@ -1970,22 +1970,22 @@ func (obj AggregationVlanConfig) GetKey() (string, error) {
 func (obj AggregationVlanState) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS AggregationVlanState " +
 		"( " +
-		" Description TEXT " +
-		" NativeVlan_VlanId_QinqId TEXT " +
-		" MinLinks INTEGER " +
-		" NativeVlan_VlanId INTEGER " +
-		" NameKey TEXT " +
-		" TrunkVlans_VlanId_VlanRange_QinqId TEXT " +
-		" Enabled bool " +
-		" Mtu INTEGER " +
-		" AccessVlan_VlanId INTEGER " +
-		" TrunkVlans_VlanId INTEGER " +
-		" LagType INTEGER " +
-		" TrunkVlans_VlanId_VlanRange_QinqId_QinqIdRange TEXT " +
-		" InterfaceMode INTEGER " +
-		" Type TEXT " +
-		" AccessVlan_VlanId_QinqId TEXT " +
-		" TrunkVlans_VlanId_VlanRange TEXT " +
+		" Description TEXT, " +
+		" NativeVlan_VlanId_QinqId TEXT, " +
+		" MinLinks INTEGER, " +
+		" NativeVlan_VlanId INTEGER, " +
+		" NameKey TEXT, " +
+		" TrunkVlans_VlanId_VlanRange_QinqId TEXT, " +
+		" Enabled bool, " +
+		" Mtu INTEGER, " +
+		" AccessVlan_VlanId INTEGER, " +
+		" TrunkVlans_VlanId INTEGER, " +
+		" LagType INTEGER, " +
+		" TrunkVlans_VlanId_VlanRange_QinqId_QinqIdRange TEXT, " +
+		" InterfaceMode INTEGER, " +
+		" Type TEXT, " +
+		" AccessVlan_VlanId_QinqId TEXT, " +
+		" TrunkVlans_VlanId_VlanRange TEXT, " +
 		"PRIMARY KEY(NameKey) ) "
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
@@ -2021,13 +2021,13 @@ func (obj AggregationVlanState) GetKey() (string, error) {
 func (obj RoutedVlanConfig) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS RoutedVlanConfig " +
 		"( " +
-		" Vlan_Uint16 INTEGER " +
-		" Description TEXT " +
-		" Vlan_Uint16_String TEXT " +
-		" Enabled bool " +
-		" NameKey TEXT " +
-		" Type TEXT " +
-		" Mtu INTEGER " +
+		" Vlan_Uint16 INTEGER, " +
+		" Description TEXT, " +
+		" Vlan_Uint16_String TEXT, " +
+		" Enabled bool, " +
+		" NameKey TEXT, " +
+		" Type TEXT, " +
+		" Mtu INTEGER, " +
 		"PRIMARY KEY(NameKey) ) "
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
@@ -2063,13 +2063,13 @@ func (obj RoutedVlanConfig) GetKey() (string, error) {
 func (obj RoutedVlanState) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS RoutedVlanState " +
 		"( " +
-		" Vlan_Uint16 INTEGER " +
-		" Description TEXT " +
-		" Vlan_Uint16_String TEXT " +
-		" Enabled bool " +
-		" NameKey TEXT " +
-		" Type TEXT " +
-		" Mtu INTEGER " +
+		" Vlan_Uint16 INTEGER, " +
+		" Description TEXT, " +
+		" Vlan_Uint16_String TEXT, " +
+		" Enabled bool, " +
+		" NameKey TEXT, " +
+		" Type TEXT, " +
+		" Mtu INTEGER, " +
 		"PRIMARY KEY(NameKey) ) "
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
@@ -2105,15 +2105,15 @@ func (obj RoutedVlanState) GetKey() (string, error) {
 func (obj RoutedVlanIpv4AddressConfig) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS RoutedVlanIpv4AddressConfig " +
 		"( " +
-		" PrefixLength INTEGER " +
-		" Type TEXT " +
-		" Description TEXT " +
-		" vlan_String TEXT " +
-		" Ip TEXT " +
-		" Enabled bool " +
-		" NameKey TEXT " +
-		" vlan_Uint16 INTEGER " +
-		" Mtu INTEGER " +
+		" PrefixLength INTEGER, " +
+		" Type TEXT, " +
+		" Description TEXT, " +
+		" vlan_String TEXT, " +
+		" Ip TEXT, " +
+		" Enabled bool, " +
+		" NameKey TEXT, " +
+		" vlan_Uint16 INTEGER, " +
+		" Mtu INTEGER, " +
 		"PRIMARY KEY(NameKey) ) "
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
@@ -2149,16 +2149,16 @@ func (obj RoutedVlanIpv4AddressConfig) GetKey() (string, error) {
 func (obj RoutedVlanIpv4AddressState) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS RoutedVlanIpv4AddressState " +
 		"( " +
-		" Origin INTEGER " +
-		" PrefixLength INTEGER " +
-		" Type TEXT " +
-		" Description TEXT " +
-		" vlan_String TEXT " +
-		" Ip TEXT " +
-		" Enabled bool " +
-		" NameKey TEXT " +
-		" vlan_Uint16 INTEGER " +
-		" Mtu INTEGER " +
+		" Origin INTEGER, " +
+		" PrefixLength INTEGER, " +
+		" Type TEXT, " +
+		" Description TEXT, " +
+		" vlan_String TEXT, " +
+		" Ip TEXT, " +
+		" Enabled bool, " +
+		" NameKey TEXT, " +
+		" vlan_Uint16 INTEGER, " +
+		" Mtu INTEGER, " +
 		"PRIMARY KEY(NameKey) ) "
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
@@ -2194,22 +2194,22 @@ func (obj RoutedVlanIpv4AddressState) GetKey() (string, error) {
 func (obj RoutedVlanIpv4AddressVrrpVrrpGroupConfig) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS RoutedVlanIpv4AddressVrrpVrrpGroupConfig " +
 		"( " +
-		" PrefixLength INTEGER " +
-		" Description TEXT " +
-		" vlan_String TEXT " +
-		" PreemptDelay INTEGER " +
-		" NameKey TEXT " +
-		" Enabled bool " +
-		" IpKey TEXT " +
-		" VirtualRouterId INTEGER " +
-		" Mtu INTEGER " +
-		" Priority INTEGER " +
-		" vlan_Uint16 INTEGER " +
-		" Preempt bool " +
-		" AcceptMode bool " +
-		" AdvertisementInterval INTEGER " +
-		" Type TEXT " +
-		" VirtualAddress TEXT " +
+		" PrefixLength INTEGER, " +
+		" Description TEXT, " +
+		" vlan_String TEXT, " +
+		" PreemptDelay INTEGER, " +
+		" NameKey TEXT, " +
+		" Enabled bool, " +
+		" IpKey TEXT, " +
+		" VirtualRouterId INTEGER, " +
+		" Mtu INTEGER, " +
+		" Priority INTEGER, " +
+		" vlan_Uint16 INTEGER, " +
+		" Preempt bool, " +
+		" AcceptMode bool, " +
+		" AdvertisementInterval INTEGER, " +
+		" Type TEXT, " +
+		" VirtualAddress TEXT, " +
 		"PRIMARY KEY(NameKey, IpKey) ) "
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
@@ -2245,23 +2245,23 @@ func (obj RoutedVlanIpv4AddressVrrpVrrpGroupConfig) GetKey() (string, error) {
 func (obj RoutedVlanIpv4AddressVrrpVrrpGroupState) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS RoutedVlanIpv4AddressVrrpVrrpGroupState " +
 		"( " +
-		" Description TEXT " +
-		" vlan_String TEXT " +
-		" PreemptDelay INTEGER " +
-		" PrefixLength INTEGER " +
-		" Enabled bool " +
-		" IpKey TEXT " +
-		" VirtualRouterId INTEGER " +
-		" Mtu INTEGER " +
-		" Priority INTEGER " +
-		" vlan_Uint16 INTEGER " +
-		" Preempt bool " +
-		" AcceptMode bool " +
-		" CurrentPriority INTEGER " +
-		" NameKey TEXT " +
-		" Type TEXT " +
-		" VirtualAddress TEXT " +
-		" AdvertisementInterval INTEGER " +
+		" Description TEXT, " +
+		" vlan_String TEXT, " +
+		" PreemptDelay INTEGER, " +
+		" PrefixLength INTEGER, " +
+		" Enabled bool, " +
+		" IpKey TEXT, " +
+		" VirtualRouterId INTEGER, " +
+		" Mtu INTEGER, " +
+		" Priority INTEGER, " +
+		" vlan_Uint16 INTEGER, " +
+		" Preempt bool, " +
+		" AcceptMode bool, " +
+		" CurrentPriority INTEGER, " +
+		" NameKey TEXT, " +
+		" Type TEXT, " +
+		" VirtualAddress TEXT, " +
+		" AdvertisementInterval INTEGER, " +
 		"PRIMARY KEY(IpKey, NameKey) ) "
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
@@ -2297,24 +2297,24 @@ func (obj RoutedVlanIpv4AddressVrrpVrrpGroupState) GetKey() (string, error) {
 func (obj RoutedVlanIpv4AddressVrrpVrrpGroupInterfaceTrackingConfig) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS RoutedVlanIpv4AddressVrrpVrrpGroupInterfaceTrackingConfig " +
 		"( " +
-		" PrefixLength INTEGER " +
-		" Type TEXT " +
-		" PreemptDelay INTEGER " +
-		" vlan_String TEXT " +
-		" vlan_Uint16 INTEGER " +
-		" PriorityDecrement INTEGER " +
-		" Enabled bool " +
-		" IpKey TEXT " +
-		" Mtu INTEGER " +
-		" Priority INTEGER " +
-		" AdvertisementInterval INTEGER " +
-		" Preempt bool " +
-		" AcceptMode bool " +
-		" NameKey TEXT " +
-		" TrackInterface TEXT " +
-		" VirtualRouterIdKey TEXT " +
-		" VirtualAddress TEXT " +
-		" Description TEXT " +
+		" PrefixLength INTEGER, " +
+		" Type TEXT, " +
+		" PreemptDelay INTEGER, " +
+		" vlan_String TEXT, " +
+		" vlan_Uint16 INTEGER, " +
+		" PriorityDecrement INTEGER, " +
+		" Enabled bool, " +
+		" IpKey TEXT, " +
+		" Mtu INTEGER, " +
+		" Priority INTEGER, " +
+		" AdvertisementInterval INTEGER, " +
+		" Preempt bool, " +
+		" AcceptMode bool, " +
+		" NameKey TEXT, " +
+		" TrackInterface TEXT, " +
+		" VirtualRouterIdKey TEXT, " +
+		" VirtualAddress TEXT, " +
+		" Description TEXT, " +
 		"PRIMARY KEY(IpKey, NameKey, VirtualRouterIdKey) ) "
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
@@ -2350,24 +2350,24 @@ func (obj RoutedVlanIpv4AddressVrrpVrrpGroupInterfaceTrackingConfig) GetKey() (s
 func (obj RoutedVlanIpv4AddressVrrpVrrpGroupInterfaceTrackingState) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS RoutedVlanIpv4AddressVrrpVrrpGroupInterfaceTrackingState " +
 		"( " +
-		" PrefixLength INTEGER " +
-		" Type TEXT " +
-		" PreemptDelay INTEGER " +
-		" vlan_String TEXT " +
-		" vlan_Uint16 INTEGER " +
-		" PriorityDecrement INTEGER " +
-		" Enabled bool " +
-		" IpKey TEXT " +
-		" Mtu INTEGER " +
-		" Priority INTEGER " +
-		" AdvertisementInterval INTEGER " +
-		" Preempt bool " +
-		" AcceptMode bool " +
-		" NameKey TEXT " +
-		" TrackInterface TEXT " +
-		" VirtualRouterIdKey TEXT " +
-		" VirtualAddress TEXT " +
-		" Description TEXT " +
+		" PrefixLength INTEGER, " +
+		" Type TEXT, " +
+		" PreemptDelay INTEGER, " +
+		" vlan_String TEXT, " +
+		" vlan_Uint16 INTEGER, " +
+		" PriorityDecrement INTEGER, " +
+		" Enabled bool, " +
+		" IpKey TEXT, " +
+		" Mtu INTEGER, " +
+		" Priority INTEGER, " +
+		" AdvertisementInterval INTEGER, " +
+		" Preempt bool, " +
+		" AcceptMode bool, " +
+		" NameKey TEXT, " +
+		" TrackInterface TEXT, " +
+		" VirtualRouterIdKey TEXT, " +
+		" VirtualAddress TEXT, " +
+		" Description TEXT, " +
 		"PRIMARY KEY(IpKey, NameKey, VirtualRouterIdKey) ) "
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
@@ -2403,15 +2403,15 @@ func (obj RoutedVlanIpv4AddressVrrpVrrpGroupInterfaceTrackingState) GetKey() (st
 func (obj RoutedVlanIpv4NeighborConfig) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS RoutedVlanIpv4NeighborConfig " +
 		"( " +
-		" LinkLayerAddress TEXT " +
-		" Type TEXT " +
-		" Description TEXT " +
-		" vlan_String TEXT " +
-		" Ip TEXT " +
-		" Enabled bool " +
-		" NameKey TEXT " +
-		" vlan_Uint16 INTEGER " +
-		" Mtu INTEGER " +
+		" LinkLayerAddress TEXT, " +
+		" Type TEXT, " +
+		" Description TEXT, " +
+		" vlan_String TEXT, " +
+		" Ip TEXT, " +
+		" Enabled bool, " +
+		" NameKey TEXT, " +
+		" vlan_Uint16 INTEGER, " +
+		" Mtu INTEGER, " +
 		"PRIMARY KEY(NameKey) ) "
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
@@ -2447,16 +2447,16 @@ func (obj RoutedVlanIpv4NeighborConfig) GetKey() (string, error) {
 func (obj RoutedVlanIpv4NeighborState) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS RoutedVlanIpv4NeighborState " +
 		"( " +
-		" Origin INTEGER " +
-		" LinkLayerAddress TEXT " +
-		" Type TEXT " +
-		" Description TEXT " +
-		" vlan_String TEXT " +
-		" Ip TEXT " +
-		" Enabled bool " +
-		" NameKey TEXT " +
-		" vlan_Uint16 INTEGER " +
-		" Mtu INTEGER " +
+		" Origin INTEGER, " +
+		" LinkLayerAddress TEXT, " +
+		" Type TEXT, " +
+		" Description TEXT, " +
+		" vlan_String TEXT, " +
+		" Ip TEXT, " +
+		" Enabled bool, " +
+		" NameKey TEXT, " +
+		" vlan_Uint16 INTEGER, " +
+		" Mtu INTEGER, " +
 		"PRIMARY KEY(NameKey) ) "
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
@@ -2492,13 +2492,13 @@ func (obj RoutedVlanIpv4NeighborState) GetKey() (string, error) {
 func (obj RoutedVlanIpv4Config) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS RoutedVlanIpv4Config " +
 		"( " +
-		" vlan_Uint16 INTEGER " +
-		" Description TEXT " +
-		" vlan_String TEXT " +
-		" Enabled bool " +
-		" NameKey TEXT " +
-		" Type TEXT " +
-		" Mtu INTEGER " +
+		" vlan_Uint16 INTEGER, " +
+		" Description TEXT, " +
+		" vlan_String TEXT, " +
+		" Enabled bool, " +
+		" NameKey TEXT, " +
+		" Type TEXT, " +
+		" Mtu INTEGER, " +
 		"PRIMARY KEY(NameKey) ) "
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
@@ -2534,13 +2534,13 @@ func (obj RoutedVlanIpv4Config) GetKey() (string, error) {
 func (obj RoutedVlanIpv4State) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS RoutedVlanIpv4State " +
 		"( " +
-		" vlan_Uint16 INTEGER " +
-		" Description TEXT " +
-		" vlan_String TEXT " +
-		" Enabled bool " +
-		" NameKey TEXT " +
-		" Type TEXT " +
-		" Mtu INTEGER " +
+		" vlan_Uint16 INTEGER, " +
+		" Description TEXT, " +
+		" vlan_String TEXT, " +
+		" Enabled bool, " +
+		" NameKey TEXT, " +
+		" Type TEXT, " +
+		" Mtu INTEGER, " +
 		"PRIMARY KEY(NameKey) ) "
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
@@ -2576,16 +2576,16 @@ func (obj RoutedVlanIpv4State) GetKey() (string, error) {
 func (obj RoutedVlanIpv6AddressConfig) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS RoutedVlanIpv6AddressConfig " +
 		"( " +
-		" PrefixLength INTEGER " +
-		" Type TEXT " +
-		" Enabled bool " +
-		" Description TEXT " +
-		" vlan_String TEXT " +
-		" Ip TEXT " +
-		" DupAddrDetectTransmits INTEGER " +
-		" NameKey TEXT " +
-		" vlan_Uint16 INTEGER " +
-		" Mtu INTEGER " +
+		" PrefixLength INTEGER, " +
+		" Type TEXT, " +
+		" Enabled bool, " +
+		" Description TEXT, " +
+		" vlan_String TEXT, " +
+		" Ip TEXT, " +
+		" DupAddrDetectTransmits INTEGER, " +
+		" NameKey TEXT, " +
+		" vlan_Uint16 INTEGER, " +
+		" Mtu INTEGER, " +
 		"PRIMARY KEY(NameKey) ) "
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
@@ -2621,18 +2621,18 @@ func (obj RoutedVlanIpv6AddressConfig) GetKey() (string, error) {
 func (obj RoutedVlanIpv6AddressState) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS RoutedVlanIpv6AddressState " +
 		"( " +
-		" Origin INTEGER " +
-		" PrefixLength INTEGER " +
-		" Status INTEGER " +
-		" Description TEXT " +
-		" vlan_String TEXT " +
-		" NameKey TEXT " +
-		" Type TEXT " +
-		" Enabled bool " +
-		" Mtu INTEGER " +
-		" Ip TEXT " +
-		" DupAddrDetectTransmits INTEGER " +
-		" vlan_Uint16 INTEGER " +
+		" Origin INTEGER, " +
+		" PrefixLength INTEGER, " +
+		" Status INTEGER, " +
+		" Description TEXT, " +
+		" vlan_String TEXT, " +
+		" NameKey TEXT, " +
+		" Type TEXT, " +
+		" Enabled bool, " +
+		" Mtu INTEGER, " +
+		" Ip TEXT, " +
+		" DupAddrDetectTransmits INTEGER, " +
+		" vlan_Uint16 INTEGER, " +
 		"PRIMARY KEY(NameKey) ) "
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
@@ -2668,24 +2668,24 @@ func (obj RoutedVlanIpv6AddressState) GetKey() (string, error) {
 func (obj RoutedVlanIpv6AddressVrrpVrrpGroupConfig) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS RoutedVlanIpv6AddressVrrpVrrpGroupConfig " +
 		"( " +
-		" Description TEXT " +
-		" vlan_String TEXT " +
-		" PreemptDelay INTEGER " +
-		" PrefixLength INTEGER " +
-		" Enabled bool " +
-		" IpKey TEXT " +
-		" VirtualRouterId INTEGER " +
-		" Mtu INTEGER " +
-		" Priority INTEGER " +
-		" vlan_Uint16 INTEGER " +
-		" Preempt bool " +
-		" AcceptMode bool " +
-		" NameKey TEXT " +
-		" DupAddrDetectTransmits INTEGER " +
-		" VirtualLinkLocal TEXT " +
-		" Type TEXT " +
-		" VirtualAddress TEXT " +
-		" AdvertisementInterval INTEGER " +
+		" Description TEXT, " +
+		" vlan_String TEXT, " +
+		" PreemptDelay INTEGER, " +
+		" PrefixLength INTEGER, " +
+		" Enabled bool, " +
+		" IpKey TEXT, " +
+		" VirtualRouterId INTEGER, " +
+		" Mtu INTEGER, " +
+		" Priority INTEGER, " +
+		" vlan_Uint16 INTEGER, " +
+		" Preempt bool, " +
+		" AcceptMode bool, " +
+		" NameKey TEXT, " +
+		" DupAddrDetectTransmits INTEGER, " +
+		" VirtualLinkLocal TEXT, " +
+		" Type TEXT, " +
+		" VirtualAddress TEXT, " +
+		" AdvertisementInterval INTEGER, " +
 		"PRIMARY KEY(IpKey, NameKey) ) "
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
@@ -2721,25 +2721,25 @@ func (obj RoutedVlanIpv6AddressVrrpVrrpGroupConfig) GetKey() (string, error) {
 func (obj RoutedVlanIpv6AddressVrrpVrrpGroupState) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS RoutedVlanIpv6AddressVrrpVrrpGroupState " +
 		"( " +
-		" Description TEXT " +
-		" vlan_String TEXT " +
-		" PreemptDelay INTEGER " +
-		" PrefixLength INTEGER " +
-		" Enabled bool " +
-		" IpKey TEXT " +
-		" VirtualRouterId INTEGER " +
-		" Mtu INTEGER " +
-		" Priority INTEGER " +
-		" vlan_Uint16 INTEGER " +
-		" Preempt bool " +
-		" AcceptMode bool " +
-		" CurrentPriority INTEGER " +
-		" NameKey TEXT " +
-		" DupAddrDetectTransmits INTEGER " +
-		" VirtualLinkLocal TEXT " +
-		" Type TEXT " +
-		" VirtualAddress TEXT " +
-		" AdvertisementInterval INTEGER " +
+		" Description TEXT, " +
+		" vlan_String TEXT, " +
+		" PreemptDelay INTEGER, " +
+		" PrefixLength INTEGER, " +
+		" Enabled bool, " +
+		" IpKey TEXT, " +
+		" VirtualRouterId INTEGER, " +
+		" Mtu INTEGER, " +
+		" Priority INTEGER, " +
+		" vlan_Uint16 INTEGER, " +
+		" Preempt bool, " +
+		" AcceptMode bool, " +
+		" CurrentPriority INTEGER, " +
+		" NameKey TEXT, " +
+		" DupAddrDetectTransmits INTEGER, " +
+		" VirtualLinkLocal TEXT, " +
+		" Type TEXT, " +
+		" VirtualAddress TEXT, " +
+		" AdvertisementInterval INTEGER, " +
 		"PRIMARY KEY(IpKey, NameKey) ) "
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
@@ -2775,26 +2775,26 @@ func (obj RoutedVlanIpv6AddressVrrpVrrpGroupState) GetKey() (string, error) {
 func (obj RoutedVlanIpv6AddressVrrpVrrpGroupInterfaceTrackingConfig) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS RoutedVlanIpv6AddressVrrpVrrpGroupInterfaceTrackingConfig " +
 		"( " +
-		" TrackInterface TEXT " +
-		" Type TEXT " +
-		" PrefixLength INTEGER " +
-		" vlan_String TEXT " +
-		" PreemptDelay INTEGER " +
-		" NameKey TEXT " +
-		" PriorityDecrement INTEGER " +
-		" Enabled bool " +
-		" IpKey TEXT " +
-		" vlan_Uint16 INTEGER " +
-		" Mtu INTEGER " +
-		" Priority INTEGER " +
-		" AdvertisementInterval INTEGER " +
-		" Preempt bool " +
-		" AcceptMode bool " +
-		" DupAddrDetectTransmits INTEGER " +
-		" VirtualLinkLocal TEXT " +
-		" VirtualRouterIdKey TEXT " +
-		" VirtualAddress TEXT " +
-		" Description TEXT " +
+		" TrackInterface TEXT, " +
+		" Type TEXT, " +
+		" PrefixLength INTEGER, " +
+		" vlan_String TEXT, " +
+		" PreemptDelay INTEGER, " +
+		" NameKey TEXT, " +
+		" PriorityDecrement INTEGER, " +
+		" Enabled bool, " +
+		" IpKey TEXT, " +
+		" vlan_Uint16 INTEGER, " +
+		" Mtu INTEGER, " +
+		" Priority INTEGER, " +
+		" AdvertisementInterval INTEGER, " +
+		" Preempt bool, " +
+		" AcceptMode bool, " +
+		" DupAddrDetectTransmits INTEGER, " +
+		" VirtualLinkLocal TEXT, " +
+		" VirtualRouterIdKey TEXT, " +
+		" VirtualAddress TEXT, " +
+		" Description TEXT, " +
 		"PRIMARY KEY(NameKey, IpKey, VirtualRouterIdKey) ) "
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
@@ -2830,26 +2830,26 @@ func (obj RoutedVlanIpv6AddressVrrpVrrpGroupInterfaceTrackingConfig) GetKey() (s
 func (obj RoutedVlanIpv6AddressVrrpVrrpGroupInterfaceTrackingState) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS RoutedVlanIpv6AddressVrrpVrrpGroupInterfaceTrackingState " +
 		"( " +
-		" TrackInterface TEXT " +
-		" Type TEXT " +
-		" PrefixLength INTEGER " +
-		" vlan_String TEXT " +
-		" PreemptDelay INTEGER " +
-		" NameKey TEXT " +
-		" PriorityDecrement INTEGER " +
-		" Enabled bool " +
-		" IpKey TEXT " +
-		" vlan_Uint16 INTEGER " +
-		" Mtu INTEGER " +
-		" Priority INTEGER " +
-		" AdvertisementInterval INTEGER " +
-		" Preempt bool " +
-		" AcceptMode bool " +
-		" DupAddrDetectTransmits INTEGER " +
-		" VirtualLinkLocal TEXT " +
-		" VirtualRouterIdKey TEXT " +
-		" VirtualAddress TEXT " +
-		" Description TEXT " +
+		" TrackInterface TEXT, " +
+		" Type TEXT, " +
+		" PrefixLength INTEGER, " +
+		" vlan_String TEXT, " +
+		" PreemptDelay INTEGER, " +
+		" NameKey TEXT, " +
+		" PriorityDecrement INTEGER, " +
+		" Enabled bool, " +
+		" IpKey TEXT, " +
+		" vlan_Uint16 INTEGER, " +
+		" Mtu INTEGER, " +
+		" Priority INTEGER, " +
+		" AdvertisementInterval INTEGER, " +
+		" Preempt bool, " +
+		" AcceptMode bool, " +
+		" DupAddrDetectTransmits INTEGER, " +
+		" VirtualLinkLocal TEXT, " +
+		" VirtualRouterIdKey TEXT, " +
+		" VirtualAddress TEXT, " +
+		" Description TEXT, " +
 		"PRIMARY KEY(NameKey, IpKey, VirtualRouterIdKey) ) "
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
@@ -2885,16 +2885,16 @@ func (obj RoutedVlanIpv6AddressVrrpVrrpGroupInterfaceTrackingState) GetKey() (st
 func (obj RoutedVlanIpv6NeighborConfig) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS RoutedVlanIpv6NeighborConfig " +
 		"( " +
-		" LinkLayerAddress TEXT " +
-		" Type TEXT " +
-		" Enabled bool " +
-		" Description TEXT " +
-		" vlan_String TEXT " +
-		" Ip TEXT " +
-		" DupAddrDetectTransmits INTEGER " +
-		" NameKey TEXT " +
-		" vlan_Uint16 INTEGER " +
-		" Mtu INTEGER " +
+		" LinkLayerAddress TEXT, " +
+		" Type TEXT, " +
+		" Enabled bool, " +
+		" Description TEXT, " +
+		" vlan_String TEXT, " +
+		" Ip TEXT, " +
+		" DupAddrDetectTransmits INTEGER, " +
+		" NameKey TEXT, " +
+		" vlan_Uint16 INTEGER, " +
+		" Mtu INTEGER, " +
 		"PRIMARY KEY(NameKey) ) "
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
@@ -2930,19 +2930,19 @@ func (obj RoutedVlanIpv6NeighborConfig) GetKey() (string, error) {
 func (obj RoutedVlanIpv6NeighborState) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS RoutedVlanIpv6NeighborState " +
 		"( " +
-		" Origin INTEGER " +
-		" LinkLayerAddress TEXT " +
-		" Description TEXT " +
-		" vlan_String TEXT " +
-		" NameKey TEXT " +
-		" Type TEXT " +
-		" Enabled bool " +
-		" Mtu INTEGER " +
-		" NeighborState INTEGER " +
-		" Ip TEXT " +
-		" DupAddrDetectTransmits INTEGER " +
-		" vlan_Uint16 INTEGER " +
-		" IsRouter bool " +
+		" Origin INTEGER, " +
+		" LinkLayerAddress TEXT, " +
+		" Description TEXT, " +
+		" vlan_String TEXT, " +
+		" NameKey TEXT, " +
+		" Type TEXT, " +
+		" Enabled bool, " +
+		" Mtu INTEGER, " +
+		" NeighborState INTEGER, " +
+		" Ip TEXT, " +
+		" DupAddrDetectTransmits INTEGER, " +
+		" vlan_Uint16 INTEGER, " +
+		" IsRouter bool, " +
 		"PRIMARY KEY(NameKey) ) "
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
@@ -2978,14 +2978,14 @@ func (obj RoutedVlanIpv6NeighborState) GetKey() (string, error) {
 func (obj RoutedVlanIpv6Config) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS RoutedVlanIpv6Config " +
 		"( " +
-		" DupAddrDetectTransmits INTEGER " +
-		" Type TEXT " +
-		" Description TEXT " +
-		" vlan_String TEXT " +
-		" Enabled bool " +
-		" NameKey TEXT " +
-		" vlan_Uint16 INTEGER " +
-		" Mtu INTEGER " +
+		" DupAddrDetectTransmits INTEGER, " +
+		" Type TEXT, " +
+		" Description TEXT, " +
+		" vlan_String TEXT, " +
+		" Enabled bool, " +
+		" NameKey TEXT, " +
+		" vlan_Uint16 INTEGER, " +
+		" Mtu INTEGER, " +
 		"PRIMARY KEY(NameKey) ) "
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
@@ -3021,14 +3021,14 @@ func (obj RoutedVlanIpv6Config) GetKey() (string, error) {
 func (obj RoutedVlanIpv6State) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS RoutedVlanIpv6State " +
 		"( " +
-		" DupAddrDetectTransmits INTEGER " +
-		" Type TEXT " +
-		" Description TEXT " +
-		" vlan_String TEXT " +
-		" Enabled bool " +
-		" NameKey TEXT " +
-		" vlan_Uint16 INTEGER " +
-		" Mtu INTEGER " +
+		" DupAddrDetectTransmits INTEGER, " +
+		" Type TEXT, " +
+		" Description TEXT, " +
+		" vlan_String TEXT, " +
+		" Enabled bool, " +
+		" NameKey TEXT, " +
+		" vlan_Uint16 INTEGER, " +
+		" Mtu INTEGER, " +
 		"PRIMARY KEY(NameKey) ) "
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
@@ -3064,18 +3064,18 @@ func (obj RoutedVlanIpv6State) GetKey() (string, error) {
 func (obj RoutedVlanIpv6AutoconfConfig) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS RoutedVlanIpv6AutoconfConfig " +
 		"( " +
-		" CreateGlobalAddresses bool " +
-		" Description TEXT " +
-		" vlan_String TEXT " +
-		" CreateTemporaryAddresses bool " +
-		" Type TEXT " +
-		" Enabled bool " +
-		" Mtu INTEGER " +
-		" NameKey TEXT " +
-		" DupAddrDetectTransmits INTEGER " +
-		" vlan_Uint16 INTEGER " +
-		" TemporaryValidLifetime INTEGER " +
-		" TemporaryPreferredLifetime INTEGER " +
+		" CreateGlobalAddresses bool, " +
+		" Description TEXT, " +
+		" vlan_String TEXT, " +
+		" CreateTemporaryAddresses bool, " +
+		" Type TEXT, " +
+		" Enabled bool, " +
+		" Mtu INTEGER, " +
+		" NameKey TEXT, " +
+		" DupAddrDetectTransmits INTEGER, " +
+		" vlan_Uint16 INTEGER, " +
+		" TemporaryValidLifetime INTEGER, " +
+		" TemporaryPreferredLifetime INTEGER, " +
 		"PRIMARY KEY(NameKey) ) "
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
@@ -3111,18 +3111,18 @@ func (obj RoutedVlanIpv6AutoconfConfig) GetKey() (string, error) {
 func (obj RoutedVlanIpv6AutoconfState) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS RoutedVlanIpv6AutoconfState " +
 		"( " +
-		" CreateGlobalAddresses bool " +
-		" Description TEXT " +
-		" vlan_String TEXT " +
-		" CreateTemporaryAddresses bool " +
-		" Type TEXT " +
-		" Enabled bool " +
-		" Mtu INTEGER " +
-		" NameKey TEXT " +
-		" DupAddrDetectTransmits INTEGER " +
-		" vlan_Uint16 INTEGER " +
-		" TemporaryValidLifetime INTEGER " +
-		" TemporaryPreferredLifetime INTEGER " +
+		" CreateGlobalAddresses bool, " +
+		" Description TEXT, " +
+		" vlan_String TEXT, " +
+		" CreateTemporaryAddresses bool, " +
+		" Type TEXT, " +
+		" Enabled bool, " +
+		" Mtu INTEGER, " +
+		" NameKey TEXT, " +
+		" DupAddrDetectTransmits INTEGER, " +
+		" vlan_Uint16 INTEGER, " +
+		" TemporaryValidLifetime INTEGER, " +
+		" TemporaryPreferredLifetime INTEGER, " +
 		"PRIMARY KEY(NameKey) ) "
 	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
