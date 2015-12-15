@@ -5,6 +5,7 @@ import (
 	"fmt"
 	//"strconv"
 	"utils/dbutils"
+	"strings"
 )
 
 func (obj IPV4Route) CreateDBTable(dbHdl *sql.DB) error {
@@ -24,7 +25,6 @@ func (obj IPV4Route) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	var objectId int64
 	dbCmd := fmt.Sprintf(`INSERT INTO IPV4Routes (DestinationNw, NetworkMask, Cost, NextHopIp, OutgoingInterface, Protocol) VALUES ('%v', '%v', %v, '%v', '%v', '%s') ;`,
 		obj.DestinationNw, obj.NetworkMask, obj.Cost, obj.NextHopIp, obj.OutgoingInterface, obj.Protocol)
-
 	result, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
 	if err != nil {
 		fmt.Println("### Failed to create IPV4Route ", err)
@@ -44,6 +44,13 @@ func (obj IPV4Route) DeleteObjectFromDb(objKey string, dbHdl *sql.DB) error {
 }
 
 func (obj IPV4Route) GetKey() (string, error) {
-	v4RouteKey := "DestinationNw = " + "\"" + obj.DestinationNw + "\"" + " and NetworkMask = " + "\"" + obj.NetworkMask + "\""
+	v4RouteKey := obj.DestinationNw + ":" + obj.NetworkMask
 	return v4RouteKey, nil
+}
+
+func (obj IPV4Route) GetSqlKeyStr(objKey string) (string, error) {
+	str := strings.Split(objKey, ":")
+	destNw, netMask := str[0], str[1]
+	v4RouteSqlKey := "DestinationNw = " + "\"" + destNw + "\"" + " and NetworkMask = " + "\"" + netMask + "\""
+	return v4RouteSqlKey, nil
 }
