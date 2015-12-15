@@ -31,8 +31,8 @@
         "Listeners": []
     },     
 	"EthernetConfig": {
-        "Owner": "", 
-        "Listeners": ["lacpd"]
+        "Owner": "lacpd", 
+        "Listeners": []
     }
 
 }
