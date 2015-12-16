@@ -12,6 +12,7 @@ type ConfigObj interface {
 	StoreObjectInDb(dbHdl *sql.DB) (int64, error)
 	DeleteObjectFromDb(objKey string, dbHdl *sql.DB) error
 	GetKey() (string, error)
+	GetSqlKeyStr (string) (string, error)
 }
 
 type BaseObj struct{}
@@ -29,6 +30,10 @@ func (b BaseObj) DeleteObjectFromDb(objKey string, dbHdl *sql.DB) error {
 }
 
 func (b BaseObj) GetKey() (string, error) {
+	s := ""
+	return s, nil
+}
+func (b BaseObj) GetSqlKeyStr (objKey string) (string, error) {
 	s := ""
 	return s, nil
 }
@@ -177,7 +182,7 @@ type IPv4Intf struct {
 	BaseObj
 	IpAddr      string
 	RouterIf    int32
-	VlanEnabled int32
+	IfType      int32
 }
 
 type IPv4Neighbor struct {
