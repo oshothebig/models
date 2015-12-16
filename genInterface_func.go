@@ -578,7 +578,7 @@ func (obj EthernetConfig) UnmarshalObject(body []byte) (ConfigObj, error) {
 	var Obj EthernetConfig
 	var err error
 	if err = json.Unmarshal(body, &Obj); err != nil {
-		fmt.Println("### EthernetConfig create called, unmarshal failed", Obj)
+		fmt.Println("### EthernetConfig create called, unmarshal failed", Obj, err)
 	}
 	return Obj, err
 }
