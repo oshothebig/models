@@ -182,7 +182,7 @@ type IPv4Intf struct {
 	BaseObj
 	IpAddr      string
 	RouterIf    int32
-	VlanEnabled int32
+	IfType      int32
 }
 
 type IPv4Neighbor struct {
