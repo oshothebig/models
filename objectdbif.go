@@ -37,7 +37,7 @@ func (obj IPV4Route) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	return objectId, err
 }
 
-func (obj IPV4Route) GetObjectFromDb(dbHdl *sql.DB) (ConfigObj, bool) {
+func (obj IPV4Route) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, bool) {
 	var v4Route IPV4Route
 	v4RouteKey, err := obj.GetKey()
 	if err == nil {
@@ -72,37 +72,27 @@ func (obj IPV4Route) GetSqlKeyStr(objKey string) (string, error) {
 	return v4RouteSqlKey, nil
 }
 
-func (obj Vlan) GetObjectFromDb(dbHdl *sql.DB) (ConfigObj, bool) {
+func (obj Vlan) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, bool) {
 	var vlan Vlan
 	return vlan, false
 }
 
-func (obj IPv4Intf) GetObjectFromDb(dbHdl *sql.DB) (ConfigObj, bool) {
+func (obj IPv4Intf) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, bool) {
 	var v4Intf IPv4Intf
 	return v4Intf, false
 }
 
-func (obj IPv4Neighbor) GetObjectFromDb(dbHdl *sql.DB) (ConfigObj, bool) {
+func (obj IPv4Neighbor) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, bool) {
 	var v4Neighbor IPv4Neighbor
 	return v4Neighbor, false
 }
 
-func (obj BGPGlobalConfig) GetObjectFromDb(dbHdl *sql.DB) (ConfigObj, bool) {
-	var bgpGlobalConfig BGPGlobalConfig
-	return bgpGlobalConfig, false
-}
-
-func (obj BGPGlobalState) GetObjectFromDb(dbHdl *sql.DB) (ConfigObj, bool) {
+func (obj BGPGlobalState) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, bool) {
 	var bgpGlobalState BGPGlobalState
 	return bgpGlobalState, false
 }
 
-func (obj BGPNeighborConfig) GetObjectFromDb(dbHdl *sql.DB) (ConfigObj, bool) {
-	var bgpNeighborConfig BGPNeighborConfig
-	return bgpNeighborConfig, false
-}
-
-func (obj BGPNeighborState) GetObjectFromDb(dbHdl *sql.DB) (ConfigObj, bool) {
+func (obj BGPNeighborState) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, bool) {
 	var bgpNeighborState BGPNeighborState
 	return bgpNeighborState, false
 }

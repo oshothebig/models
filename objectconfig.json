@@ -21,6 +21,14 @@
 					  "Listeners": []},
 
  "BGPNeighborState": {"Owner": "bgpd",
-					  "Listeners": []}
+					  "Listeners": []},
+    "AggregationLacpConfig": {
+        "Owner": "lacpd", 
+        "Listeners": []
+    },
+	"EthernetConfig": {
+        "Owner": "lacpd", 
+        "Listeners": []
+    }
 
 }

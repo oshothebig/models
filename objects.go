@@ -13,7 +13,7 @@ type ConfigObj interface {
 	DeleteObjectFromDb(objKey string, dbHdl *sql.DB) error
 	GetKey() (string, error)
 	GetSqlKeyStr (string) (string, error)
-	GetObjectFromDb(dbHdl *sql.DB) (ConfigObj, bool)
+	GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, bool)
 }
 
 type BaseObj struct{}
@@ -34,7 +34,7 @@ func (b BaseObj) GetKey() (string, error) {
 	s := ""
 	return s, nil
 }
-func (b BaseObj) GetSqlKeyStr (objKey string) (string, error) {
+func (b BaseObj) GetSqlKeyStr(objKey string) (string, error) {
 	s := ""
 	return s, nil
 }
@@ -68,7 +68,7 @@ func (obj IPV4Route) UnmarshalObject(body []byte) (ConfigObj, error) {
 type BGPGlobalConfig struct {
 	BaseObj
 	AS       uint32
-	RouterId string    'SNAPROUTE: "KEY"'
+	RouterId string `SNAPROUTE: "KEY"`
 }
 
 func (obj BGPGlobalConfig) UnmarshalObject(body []byte) (ConfigObj, error) {
@@ -129,7 +129,7 @@ type BGPNeighborConfig struct {
 	LocalAS         uint32
 	AuthPassword    string
 	Description     string
-	NeighborAddress string    'SNAPROUTE: "KEY"'
+	NeighborAddress string `SNAPROUTE: "KEY"`
 }
 
 func (obj BGPNeighborConfig) UnmarshalObject(body []byte) (ConfigObj, error) {
@@ -182,9 +182,9 @@ type Vlan struct {
  */
 type IPv4Intf struct {
 	BaseObj
-	IpAddr      string
-	RouterIf    int32
-	IfType      int32
+	IpAddr   string
+	RouterIf int32
+	IfType   int32
 }
 
 type IPv4Neighbor struct {

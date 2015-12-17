@@ -4,26 +4,27 @@ import (
 	"database/sql"
 	"fmt"
 	"strings"
+	"utils/dbutils"
 )
 
 func (obj BGPGlobalConfig) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS BGPGlobalConfig " +
 		"( " +
-		" RouterId TEXT " +
 		" AS INTEGER " +
+		" RouterId TEXT " +
 		"PRIMARY KEY(RouterId) ) "
 
-	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
+	_, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
 
 func (obj BGPGlobalConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	var objectId int64
-	dbCmd := fmt.Sprintf("INSERT INTO BGPGlobalConfig (RouterId, AS) VALUES (%v, %v);",
-		obj.RouterId, obj.AS)
+	dbCmd := fmt.Sprintf("INSERT INTO BGPGlobalConfig (AS, RouterId) VALUES (%v, %v);",
+		obj.AS, obj.RouterId)
 	fmt.Println("**** Create Object called with ", obj)
 
-	result, err := ExecuteSQLStmt(dbCmd, dbHdl)
+	result, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
 	if err != nil {
 		fmt.Println("**** Failed to Create table", err)
 	}
@@ -37,29 +38,30 @@ func (obj BGPGlobalConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 }
 
 func (obj BGPGlobalConfig) DeleteObjectFromDb(objKey string, dbHdl *sql.DB) error {
-	sqlKey, err := obj.GetSqlKey(objKey)
+	sqlKey, err := obj.GetSqlKeyStr(objKey)
 	if err != nil {
 		fmt.Println("GetSqlKeyStr for BGPGlobalConfig with key", objKey, "failed with error", err)
-		return nil, err
+		return err
 	}
 
 	dbCmd := "delete from BGPGlobalConfig where " + sqlKey
 	fmt.Println("### DB Deleting BGPGlobalConfig\n")
-	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
+	_, err = dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
 
 func (obj BGPGlobalConfig) GetObjectFromDb(objKey string, dbHdl *sql.DB) (BGPGlobalConfig, error) {
-	sqlKey, err := obj.GetSqlKey(objKey)
+	var object BGPGlobalConfig
+	sqlKey, err := obj.GetSqlKeyStr(objKey)
 	if err != nil {
 		fmt.Println("GetSqlKeyStr for object key", objKey, "failed with error", err)
-		return nil, err
+		return object, err
 	}
 
 	dbCmd := "query from BGPGlobalConfig where " + sqlKey
 	fmt.Println("### DB Get BGPGlobalConfig\n")
-	obj, err := ExecuteSQLStmt(dbCmd, dbHdl)
-	return obj, err
+	err = dbHdl.QueryRow(dbCmd).Scan(&object.AS, &object.RouterId)
+	return object, err
 }
 
 func (obj BGPGlobalConfig) GetKey() (string, error) {
@@ -67,7 +69,7 @@ func (obj BGPGlobalConfig) GetKey() (string, error) {
 	return key, nil
 }
 
-func (obj BGPGlobalConfig) GetSqlKey(objKey string) (string, error) {
+func (obj BGPGlobalConfig) GetSqlKeyStr(objKey string) (string, error) {
 	keys := strings.Split(objKey, "#")
 	sqlKey := "RouterId = " + "\"" + keys[0] + "\""
 	return sqlKey, nil

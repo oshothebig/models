@@ -4,29 +4,30 @@ import (
 	"database/sql"
 	"fmt"
 	"strings"
+	"utils/dbutils"
 )
 
 func (obj BGPNeighborConfig) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS BGPNeighborConfig " +
 		"( " +
-		" NeighborAddress TEXT " +
-		" Description TEXT " +
 		" PeerAS INTEGER " +
 		" LocalAS INTEGER " +
 		" AuthPassword TEXT " +
+		" Description TEXT " +
+		" NeighborAddress TEXT " +
 		"PRIMARY KEY(NeighborAddress) ) "
 
-	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
+	_, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
 
 func (obj BGPNeighborConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	var objectId int64
-	dbCmd := fmt.Sprintf("INSERT INTO BGPNeighborConfig (NeighborAddress, Description, PeerAS, LocalAS, AuthPassword) VALUES (%v, %v, %v, %v, %v);",
-		obj.NeighborAddress, obj.Description, obj.PeerAS, obj.LocalAS, obj.AuthPassword)
+	dbCmd := fmt.Sprintf("INSERT INTO BGPNeighborConfig (PeerAS, LocalAS, AuthPassword, Description, NeighborAddress) VALUES (%v, %v, %v, %v, %v);",
+		obj.PeerAS, obj.LocalAS, obj.AuthPassword, obj.Description, obj.NeighborAddress)
 	fmt.Println("**** Create Object called with ", obj)
 
-	result, err := ExecuteSQLStmt(dbCmd, dbHdl)
+	result, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
 	if err != nil {
 		fmt.Println("**** Failed to Create table", err)
 	}
@@ -40,29 +41,30 @@ func (obj BGPNeighborConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 }
 
 func (obj BGPNeighborConfig) DeleteObjectFromDb(objKey string, dbHdl *sql.DB) error {
-	sqlKey, err := obj.GetSqlKey(objKey)
+	sqlKey, err := obj.GetSqlKeyStr(objKey)
 	if err != nil {
 		fmt.Println("GetSqlKeyStr for BGPNeighborConfig with key", objKey, "failed with error", err)
-		return nil, err
+		return err
 	}
 
 	dbCmd := "delete from BGPNeighborConfig where " + sqlKey
 	fmt.Println("### DB Deleting BGPNeighborConfig\n")
-	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
+	_, err = dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
 
 func (obj BGPNeighborConfig) GetObjectFromDb(objKey string, dbHdl *sql.DB) (BGPNeighborConfig, error) {
-	sqlKey, err := obj.GetSqlKey(objKey)
+	var object BGPNeighborConfig
+	sqlKey, err := obj.GetSqlKeyStr(objKey)
 	if err != nil {
 		fmt.Println("GetSqlKeyStr for object key", objKey, "failed with error", err)
-		return nil, err
+		return object, err
 	}
 
 	dbCmd := "query from BGPNeighborConfig where " + sqlKey
 	fmt.Println("### DB Get BGPNeighborConfig\n")
-	obj, err := ExecuteSQLStmt(dbCmd, dbHdl)
-	return obj, err
+	err = dbHdl.QueryRow(dbCmd).Scan(&object.PeerAS, &object.LocalAS, &object.AuthPassword, &object.Description, &object.NeighborAddress)
+	return object, err
 }
 
 func (obj BGPNeighborConfig) GetKey() (string, error) {
@@ -70,7 +72,7 @@ func (obj BGPNeighborConfig) GetKey() (string, error) {
 	return key, nil
 }
 
-func (obj BGPNeighborConfig) GetSqlKey(objKey string) (string, error) {
+func (obj BGPNeighborConfig) GetSqlKeyStr(objKey string) (string, error) {
 	keys := strings.Split(objKey, "#")
 	sqlKey := "NeighborAddress = " + "\"" + keys[0] + "\""
 	return sqlKey, nil
