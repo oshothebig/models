@@ -60,7 +60,7 @@ func (obj AggregationLacpConfig) DeleteObjectFromDb(objKey string, dbHdl *sql.DB
 	return err
 }
 
-func (obj AggregationLacpConfig) GetObjectFromDb(objKey string, dbHdl *sql.DB) (AggregationLacpConfig, error) {
+func (obj AggregationLacpConfig) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, error) {
 	var object AggregationLacpConfig
 	sqlKey, err := obj.GetSqlKeyStr(objKey)
 	if err != nil {

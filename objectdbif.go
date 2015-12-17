@@ -37,20 +37,14 @@ func (obj IPV4Route) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	return objectId, err
 }
 
-func (obj IPV4Route) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, bool) {
+func (obj IPV4Route) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, error) {
 	var v4Route IPV4Route
-	v4RouteKey, err := obj.GetKey()
-	if err == nil {
-		v4RouteSqlKey, err := obj.GetSqlKeyStr(v4RouteKey)
-		if err == nil {
-			dbCmd := "select * from IPV4Routes where " + v4RouteSqlKey
-			err = dbHdl.QueryRow(dbCmd).Scan(&v4Route.DestinationNw, &v4Route.NetworkMask, &v4Route.Cost, &v4Route.NextHopIp, &v4Route.OutgoingInterface, &v4Route.Protocol)
-		}
-	}
+	dbCmd := "select * from IPV4Routes where " + objKey
+	err := dbHdl.QueryRow(dbCmd).Scan(&v4Route.DestinationNw, &v4Route.NetworkMask, &v4Route.Cost, &v4Route.NextHopIp, &v4Route.OutgoingInterface, &v4Route.Protocol)
 	if v4Route.DestinationNw != "" && v4Route.NetworkMask != "" {
-		return v4Route, true
+		return v4Route, err
 	} else {
-		return v4Route,false
+		return v4Route, nil
 	}
 }
 
@@ -72,27 +66,27 @@ func (obj IPV4Route) GetSqlKeyStr(objKey string) (string, error) {
 	return v4RouteSqlKey, nil
 }
 
-func (obj Vlan) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, bool) {
+func (obj Vlan) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, error) {
 	var vlan Vlan
-	return vlan, false
+	return vlan, nil
 }
 
-func (obj IPv4Intf) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, bool) {
+func (obj IPv4Intf) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, error) {
 	var v4Intf IPv4Intf
-	return v4Intf, false
+	return v4Intf, nil
 }
 
-func (obj IPv4Neighbor) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, bool) {
+func (obj IPv4Neighbor) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, error) {
 	var v4Neighbor IPv4Neighbor
-	return v4Neighbor, false
+	return v4Neighbor, nil
 }
 
-func (obj BGPGlobalState) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, bool) {
+func (obj BGPGlobalState) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, error) {
 	var bgpGlobalState BGPGlobalState
-	return bgpGlobalState, false
+	return bgpGlobalState, nil
 }
 
-func (obj BGPNeighborState) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, bool) {
+func (obj BGPNeighborState) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, error) {
 	var bgpNeighborState BGPNeighborState
-	return bgpNeighborState, false
+	return bgpNeighborState, nil
 }

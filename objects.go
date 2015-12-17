@@ -13,7 +13,7 @@ type ConfigObj interface {
 	DeleteObjectFromDb(objKey string, dbHdl *sql.DB) error
 	GetKey() (string, error)
 	GetSqlKeyStr (string) (string, error)
-	GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, bool)
+	GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, error)
 }
 
 type BaseObj struct{}
