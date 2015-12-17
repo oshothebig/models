@@ -37,6 +37,23 @@ func (obj IPV4Route) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	return objectId, err
 }
 
+func (obj IPV4Route) GetObjectFromDb(dbHdl *sql.DB) (ConfigObj, bool) {
+	var v4Route IPV4Route
+	v4RouteKey, err := obj.GetKey()
+	if err == nil {
+		v4RouteSqlKey, err := obj.GetSqlKeyStr(v4RouteKey)
+		if err == nil {
+			dbCmd := "select * from IPV4Routes where " + v4RouteSqlKey
+			err = dbHdl.QueryRow(dbCmd).Scan(&v4Route.DestinationNw, &v4Route.NetworkMask, &v4Route.Cost, &v4Route.NextHopIp, &v4Route.OutgoingInterface, &v4Route.Protocol)
+		}
+	}
+	if v4Route.DestinationNw != "" && v4Route.NetworkMask != "" {
+		return v4Route, true
+	} else {
+		return v4Route,false
+	}
+}
+
 func (obj IPV4Route) DeleteObjectFromDb(objKey string, dbHdl *sql.DB) error {
 	dbCmd := "delete from " + "IPV4Routes" + " where " + objKey
 	_, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
@@ -53,4 +70,39 @@ func (obj IPV4Route) GetSqlKeyStr(objKey string) (string, error) {
 	destNw, netMask := str[0], str[1]
 	v4RouteSqlKey := "DestinationNw = " + "\"" + destNw + "\"" + " and NetworkMask = " + "\"" + netMask + "\""
 	return v4RouteSqlKey, nil
+}
+
+func (obj Vlan) GetObjectFromDb(dbHdl *sql.DB) (ConfigObj, bool) {
+	var vlan Vlan
+	return vlan, false
+}
+
+func (obj IPv4Intf) GetObjectFromDb(dbHdl *sql.DB) (ConfigObj, bool) {
+	var v4Intf IPv4Intf
+	return v4Intf, false
+}
+
+func (obj IPv4Neighbor) GetObjectFromDb(dbHdl *sql.DB) (ConfigObj, bool) {
+	var v4Neighbor IPv4Neighbor
+	return v4Neighbor, false
+}
+
+func (obj BGPGlobalConfig) GetObjectFromDb(dbHdl *sql.DB) (ConfigObj, bool) {
+	var bgpGlobalConfig BGPGlobalConfig
+	return bgpGlobalConfig, false
+}
+
+func (obj BGPGlobalState) GetObjectFromDb(dbHdl *sql.DB) (ConfigObj, bool) {
+	var bgpGlobalState BGPGlobalState
+	return bgpGlobalState, false
+}
+
+func (obj BGPNeighborConfig) GetObjectFromDb(dbHdl *sql.DB) (ConfigObj, bool) {
+	var bgpNeighborConfig BGPNeighborConfig
+	return bgpNeighborConfig, false
+}
+
+func (obj BGPNeighborState) GetObjectFromDb(dbHdl *sql.DB) (ConfigObj, bool) {
+	var bgpNeighborState BGPNeighborState
+	return bgpNeighborState, false
 }
