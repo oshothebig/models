@@ -10,18 +10,19 @@ import (
 func (obj AggregationLacpConfig) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS AggregationLacpConfig " +
 		"( " +
-		" LagType INTEGER " +
-		" Description TEXT " +
-		" Enabled bool " +
-		" Mtu INTEGER " +
-		" MinLinks INTEGER " +
-		" Type TEXT " +
-		" NameKey TEXT " +
-		" Interval INTEGER " +
-		" LacpMode INTEGER " +
-		" SystemIdMac TEXT " +
-		" SystemPriority INTEGER " +
-		"PRIMARY KEY(NameKey) ) "
+		"LagType INTEGER, " +
+		"Description TEXT, " +
+		"Enabled bool, " +
+		"Mtu INTEGER, " +
+		"MinLinks INTEGER, " +
+		"Type TEXT, " +
+		"NameKey TEXT, " +
+		"Interval INTEGER, " +
+		"LacpMode INTEGER, " +
+		"SystemIdMac TEXT, " +
+		"SystemPriority INTEGER, " +
+		"PRIMARY KEY(NameKey) " +
+		")"
 
 	_, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
