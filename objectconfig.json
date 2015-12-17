@@ -25,11 +25,7 @@
     "AggregationLacpConfig": {
         "Owner": "lacpd", 
         "Listeners": []
-    }, 
-    "AggregationConfig": {
-        "Owner": "lacpd", 
-        "Listeners": []
-    },     
+    },
 	"EthernetConfig": {
         "Owner": "lacpd", 
         "Listeners": []
