@@ -43,12 +43,12 @@ func (obj BGPNeighborConfig) DeleteObjectFromDb(objKey string, dbHdl *sql.DB) er
 	sqlKey, err := obj.GetSqlKey(objKey)
 	if err != nil {
 		fmt.Println("GetSqlKeyStr for BGPNeighborConfig with key", objKey, "failed with error", err)
-		return nil, err
+		return err
 	}
 
 	dbCmd := "delete from BGPNeighborConfig where " + sqlKey
 	fmt.Println("### DB Deleting BGPNeighborConfig\n")
-	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
+	_, err = ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
 
@@ -56,13 +56,13 @@ func (obj BGPNeighborConfig) GetObjectFromDb(objKey string, dbHdl *sql.DB) (BGPN
 	sqlKey, err := obj.GetSqlKey(objKey)
 	if err != nil {
 		fmt.Println("GetSqlKeyStr for object key", objKey, "failed with error", err)
-		return nil, err
+		return BGPNeighborConfig{}, err
 	}
 
 	dbCmd := "query from BGPNeighborConfig where " + sqlKey
 	fmt.Println("### DB Get BGPNeighborConfig\n")
-	obj, err := ExecuteSQLStmt(dbCmd, dbHdl)
-	return obj, err
+	sqlobj, err := ExecuteSQLStmt(dbCmd, dbHdl)
+	return sqlobj, err
 }
 
 func (obj BGPNeighborConfig) GetKey() (string, error) {

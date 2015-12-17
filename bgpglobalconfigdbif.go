@@ -40,12 +40,12 @@ func (obj BGPGlobalConfig) DeleteObjectFromDb(objKey string, dbHdl *sql.DB) erro
 	sqlKey, err := obj.GetSqlKey(objKey)
 	if err != nil {
 		fmt.Println("GetSqlKeyStr for BGPGlobalConfig with key", objKey, "failed with error", err)
-		return nil, err
+		return err
 	}
 
 	dbCmd := "delete from BGPGlobalConfig where " + sqlKey
 	fmt.Println("### DB Deleting BGPGlobalConfig\n")
-	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
+	_, err = ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
 
@@ -53,13 +53,13 @@ func (obj BGPGlobalConfig) GetObjectFromDb(objKey string, dbHdl *sql.DB) (BGPGlo
 	sqlKey, err := obj.GetSqlKey(objKey)
 	if err != nil {
 		fmt.Println("GetSqlKeyStr for object key", objKey, "failed with error", err)
-		return nil, err
+		return BGPGlobalConfig{}, err
 	}
 
 	dbCmd := "query from BGPGlobalConfig where " + sqlKey
 	fmt.Println("### DB Get BGPGlobalConfig\n")
-	obj, err := ExecuteSQLStmt(dbCmd, dbHdl)
-	return obj, err
+	sqlobj, err2 := ExecuteSQLStmt(dbCmd, dbHdl)
+	return sqlobj, err2
 }
 
 func (obj BGPGlobalConfig) GetKey() (string, error) {
