@@ -2,6 +2,7 @@ package models
 
 import (
 	"database/sql"
+	"utils/dbutils"
 	"fmt"
 	"strings"
 )
@@ -16,7 +17,7 @@ func (obj BGPNeighborConfig) CreateDBTable(dbHdl *sql.DB) error {
 		" AuthPassword TEXT " +
 		"PRIMARY KEY(NeighborAddress) ) "
 
-	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
+	_, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
 
@@ -26,7 +27,7 @@ func (obj BGPNeighborConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 		obj.NeighborAddress, obj.Description, obj.PeerAS, obj.LocalAS, obj.AuthPassword)
 	fmt.Println("**** Create Object called with ", obj)
 
-	result, err := ExecuteSQLStmt(dbCmd, dbHdl)
+	result, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
 	if err != nil {
 		fmt.Println("**** Failed to Create table", err)
 	}
@@ -48,7 +49,7 @@ func (obj BGPNeighborConfig) DeleteObjectFromDb(objKey string, dbHdl *sql.DB) er
 
 	dbCmd := "delete from BGPNeighborConfig where " + sqlKey
 	fmt.Println("### DB Deleting BGPNeighborConfig\n")
-	_, err = ExecuteSQLStmt(dbCmd, dbHdl)
+	_, err = dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
 
@@ -61,8 +62,9 @@ func (obj BGPNeighborConfig) GetObjectFromDb(objKey string, dbHdl *sql.DB) (BGPN
 
 	dbCmd := "query from BGPNeighborConfig where " + sqlKey
 	fmt.Println("### DB Get BGPNeighborConfig\n")
-	sqlobj, err := ExecuteSQLStmt(dbCmd, dbHdl)
-	return sqlobj, err
+	_, err2 := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
+	//return sqlobj, err // FIXME
+	return BGPNeighborConfig{}, err2
 }
 
 func (obj BGPNeighborConfig) GetKey() (string, error) {

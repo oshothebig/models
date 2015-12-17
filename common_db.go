@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-func ExecuteSQLStmt(dbCmd string, dbHdl *sql.DB) (driver.Result, error) {
+func Deprecated_ExecuteSQLStmt(dbCmd string, dbHdl *sql.DB) (driver.Result, error) {
 	var result driver.Result
 	txn, err := dbHdl.Begin()
 	if err != nil {

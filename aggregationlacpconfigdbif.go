@@ -2,6 +2,7 @@ package models
 
 import (
 	"database/sql"
+	"utils/dbutils"
 	"fmt"
 	"strings"
 )
@@ -22,7 +23,7 @@ func (obj AggregationLacpConfig) CreateDBTable(dbHdl *sql.DB) error {
 		" LacpMode INTEGER " +
 		"PRIMARY KEY(NameKey) ) "
 
-	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
+	_, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
 
@@ -32,7 +33,7 @@ func (obj AggregationLacpConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 		obj.Description, obj.MinLinks, obj.SystemPriority, obj.NameKey, obj.Interval, obj.Enabled, obj.Mtu, obj.SystemIdMac, obj.LagType, obj.Type, obj.LacpMode)
 	fmt.Println("**** Create Object called with ", obj)
 
-	result, err := ExecuteSQLStmt(dbCmd, dbHdl)
+	result, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
 	if err != nil {
 		fmt.Println("**** Failed to Create table", err)
 	}
@@ -54,7 +55,7 @@ func (obj AggregationLacpConfig) DeleteObjectFromDb(objKey string, dbHdl *sql.DB
 
 	dbCmd := "delete from AggregationLacpConfig where " + sqlKey
 	fmt.Println("### DB Deleting AggregationLacpConfig\n")
-	_, err = ExecuteSQLStmt(dbCmd, dbHdl)
+	_, err = dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
 
@@ -67,8 +68,9 @@ func (obj AggregationLacpConfig) GetObjectFromDb(objKey string, dbHdl *sql.DB) (
 
 	dbCmd := "query from AggregationLacpConfig where " + sqlKey
 	fmt.Println("### DB Get AggregationLacpConfig\n")
-	sqlobj, err2 := ExecuteSQLStmt(dbCmd, dbHdl)
-	return sqlobj, err2
+	_, err2 := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
+	//return sqlobj, err2 //FIXME
+   return AggregationLacpConfig{}, err2
 }
 
 func (obj AggregationLacpConfig) GetKey() (string, error) {
