@@ -60,7 +60,7 @@ func (obj EthernetConfig) DeleteObjectFromDb(objKey string, dbHdl *sql.DB) error
 	return err
 }
 
-func (obj EthernetConfig) GetObjectFromDb(objKey string, dbHdl *sql.DB) (EthernetConfig, error) {
+func (obj EthernetConfig) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, error) {
 	var object EthernetConfig
 	sqlKey, err := obj.GetSqlKeyStr(objKey)
 	if err != nil {

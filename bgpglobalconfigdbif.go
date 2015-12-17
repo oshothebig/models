@@ -51,7 +51,7 @@ func (obj BGPGlobalConfig) DeleteObjectFromDb(objKey string, dbHdl *sql.DB) erro
 	return err
 }
 
-func (obj BGPGlobalConfig) GetObjectFromDb(objKey string, dbHdl *sql.DB) (BGPGlobalConfig, error) {
+func (obj BGPGlobalConfig) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, error) {
 	var object BGPGlobalConfig
 	sqlKey, err := obj.GetSqlKeyStr(objKey)
 	if err != nil {

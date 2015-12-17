@@ -37,6 +37,17 @@ func (obj IPV4Route) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	return objectId, err
 }
 
+func (obj IPV4Route) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, error) {
+	var v4Route IPV4Route
+	dbCmd := "select * from IPV4Routes where " + objKey
+	err := dbHdl.QueryRow(dbCmd).Scan(&v4Route.DestinationNw, &v4Route.NetworkMask, &v4Route.Cost, &v4Route.NextHopIp, &v4Route.OutgoingInterface, &v4Route.Protocol)
+	if v4Route.DestinationNw != "" && v4Route.NetworkMask != "" {
+		return v4Route, err
+	} else {
+		return v4Route, nil
+	}
+}
+
 func (obj IPV4Route) DeleteObjectFromDb(objKey string, dbHdl *sql.DB) error {
 	dbCmd := "delete from " + "IPV4Routes" + " where " + objKey
 	_, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
@@ -53,4 +64,29 @@ func (obj IPV4Route) GetSqlKeyStr(objKey string) (string, error) {
 	destNw, netMask := str[0], str[1]
 	v4RouteSqlKey := "DestinationNw = " + "\"" + destNw + "\"" + " and NetworkMask = " + "\"" + netMask + "\""
 	return v4RouteSqlKey, nil
+}
+
+func (obj Vlan) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, error) {
+	var vlan Vlan
+	return vlan, nil
+}
+
+func (obj IPv4Intf) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, error) {
+	var v4Intf IPv4Intf
+	return v4Intf, nil
+}
+
+func (obj IPv4Neighbor) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, error) {
+	var v4Neighbor IPv4Neighbor
+	return v4Neighbor, nil
+}
+
+func (obj BGPGlobalState) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, error) {
+	var bgpGlobalState BGPGlobalState
+	return bgpGlobalState, nil
+}
+
+func (obj BGPNeighborState) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, error) {
+	var bgpNeighborState BGPNeighborState
+	return bgpNeighborState, nil
 }

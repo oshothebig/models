@@ -54,7 +54,7 @@ func (obj BGPNeighborConfig) DeleteObjectFromDb(objKey string, dbHdl *sql.DB) er
 	return err
 }
 
-func (obj BGPNeighborConfig) GetObjectFromDb(objKey string, dbHdl *sql.DB) (BGPNeighborConfig, error) {
+func (obj BGPNeighborConfig) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, error) {
 	var object BGPNeighborConfig
 	sqlKey, err := obj.GetSqlKeyStr(objKey)
 	if err != nil {
