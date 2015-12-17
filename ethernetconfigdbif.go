@@ -10,18 +10,19 @@ import (
 func (obj EthernetConfig) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS EthernetConfig " +
 		"( " +
-		" NameKey TEXT " +
-		" Enabled bool " +
-		" Description TEXT " +
-		" Mtu INTEGER " +
-		" Type TEXT " +
-		" MacAddress TEXT " +
-		" DuplexMode INTEGER " +
-		" Auto bool " +
-		" Speed TEXT " +
-		" EnableFlowControl bool " +
-		" AggregateId TEXT " +
-		"PRIMARY KEY(NameKey) ) "
+		"NameKey TEXT, " +
+		"Enabled bool, " +
+		"Description TEXT, " +
+		"Mtu INTEGER, " +
+		"Type TEXT, " +
+		"MacAddress TEXT, " +
+		"DuplexMode INTEGER, " +
+		"Auto bool, " +
+		"Speed TEXT, " +
+		"EnableFlowControl bool, " +
+		"AggregateId TEXT, " +
+		"PRIMARY KEY(NameKey) " +
+		")"
 
 	_, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
 	return err

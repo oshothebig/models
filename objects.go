@@ -65,7 +65,7 @@ func (obj IPV4Route) UnmarshalObject(body []byte) (ConfigObj, error) {
 
 type BGPGlobalConfig struct {
 	BaseObj
-	AS       uint32
+	ASNum    uint32
 	RouterId string `SNAPROUTE: "KEY"`
 }
 

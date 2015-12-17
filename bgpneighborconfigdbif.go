@@ -10,12 +10,13 @@ import (
 func (obj BGPNeighborConfig) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS BGPNeighborConfig " +
 		"( " +
-		" PeerAS INTEGER " +
-		" LocalAS INTEGER " +
-		" AuthPassword TEXT " +
-		" Description TEXT " +
-		" NeighborAddress TEXT " +
-		"PRIMARY KEY(NeighborAddress) ) "
+		"PeerAS INTEGER, " +
+		"LocalAS INTEGER, " +
+		"AuthPassword TEXT, " +
+		"Description TEXT, " +
+		"NeighborAddress TEXT, " +
+		"PRIMARY KEY(NeighborAddress) " +
+		")"
 
 	_, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
