@@ -2,6 +2,7 @@ package models
 
 import (
 	"database/sql"
+	"utils/dbutils"
 	"fmt"
 	"strings"
 )
@@ -13,7 +14,7 @@ func (obj BGPGlobalConfig) CreateDBTable(dbHdl *sql.DB) error {
 		" AS INTEGER " +
 		"PRIMARY KEY(RouterId) ) "
 
-	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
+	_, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
 
@@ -23,7 +24,7 @@ func (obj BGPGlobalConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 		obj.RouterId, obj.AS)
 	fmt.Println("**** Create Object called with ", obj)
 
-	result, err := ExecuteSQLStmt(dbCmd, dbHdl)
+	result, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
 	if err != nil {
 		fmt.Println("**** Failed to Create table", err)
 	}
@@ -45,7 +46,7 @@ func (obj BGPGlobalConfig) DeleteObjectFromDb(objKey string, dbHdl *sql.DB) erro
 
 	dbCmd := "delete from BGPGlobalConfig where " + sqlKey
 	fmt.Println("### DB Deleting BGPGlobalConfig\n")
-	_, err = ExecuteSQLStmt(dbCmd, dbHdl)
+	_, err = dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
 
@@ -58,8 +59,9 @@ func (obj BGPGlobalConfig) GetObjectFromDb(objKey string, dbHdl *sql.DB) (BGPGlo
 
 	dbCmd := "query from BGPGlobalConfig where " + sqlKey
 	fmt.Println("### DB Get BGPGlobalConfig\n")
-	sqlobj, err2 := ExecuteSQLStmt(dbCmd, dbHdl)
-	return sqlobj, err2
+	_, err2 := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
+	//return sqlobj, err2 //FIXME
+	return BGPGlobalConfig{}, err2
 }
 
 func (obj BGPGlobalConfig) GetKey() (string, error) {

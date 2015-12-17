@@ -2,6 +2,7 @@ package models
 
 import (
 	"database/sql"
+	"utils/dbutils"
 	"fmt"
 	"strings"
 )
@@ -22,7 +23,7 @@ func (obj EthernetConfig) CreateDBTable(dbHdl *sql.DB) error {
 		" Type TEXT " +
 		"PRIMARY KEY(NameKey) ) "
 
-	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
+	_, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
 
@@ -32,7 +33,7 @@ func (obj EthernetConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 		obj.MacAddress, obj.Description, obj.AggregateId, obj.NameKey, obj.Enabled, obj.Speed, obj.Mtu, obj.DuplexMode, obj.EnableFlowControl, obj.Auto, obj.Type)
 	fmt.Println("**** Create Object called with ", obj)
 
-	result, err := ExecuteSQLStmt(dbCmd, dbHdl)
+	result, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
 	if err != nil {
 		fmt.Println("**** Failed to Create table", err)
 	}
@@ -54,7 +55,7 @@ func (obj EthernetConfig) DeleteObjectFromDb(objKey string, dbHdl *sql.DB) error
 
 	dbCmd := "delete from EthernetConfig where " + sqlKey
 	fmt.Println("### DB Deleting EthernetConfig\n")
-	_, err = ExecuteSQLStmt(dbCmd, dbHdl)
+	_, err = dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
 
@@ -67,8 +68,9 @@ func (obj EthernetConfig) GetObjectFromDb(objKey string, dbHdl *sql.DB) (Etherne
 
 	dbCmd := "query from EthernetConfig where " + sqlKey
 	fmt.Println("### DB Get EthernetConfig\n")
-	sqlobj, err2 := ExecuteSQLStmt(dbCmd, dbHdl)
-	return sqlobj, err2
+	_, err2 := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
+	//return sqlobj, err2 // FIXME
+   return EthernetConfig{}, err2
 }
 
 func (obj EthernetConfig) GetKey() (string, error) {
