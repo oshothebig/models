@@ -2,16 +2,16 @@ package models
 
 import (
 	"database/sql"
-	"utils/dbutils"
 	"fmt"
 	"strings"
+	"utils/dbutils"
 )
 
 func (obj BGPGlobalConfig) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS BGPGlobalConfig " +
 		"( " +
-		" RouterId TEXT " +
 		" AS INTEGER " +
+		" RouterId TEXT " +
 		"PRIMARY KEY(RouterId) ) "
 
 	_, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
@@ -20,8 +20,8 @@ func (obj BGPGlobalConfig) CreateDBTable(dbHdl *sql.DB) error {
 
 func (obj BGPGlobalConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	var objectId int64
-	dbCmd := fmt.Sprintf("INSERT INTO BGPGlobalConfig (RouterId, AS) VALUES (%v, %v);",
-		obj.RouterId, obj.AS)
+	dbCmd := fmt.Sprintf("INSERT INTO BGPGlobalConfig (AS, RouterId) VALUES (%v, %v);",
+		obj.AS, obj.RouterId)
 	fmt.Println("**** Create Object called with ", obj)
 
 	result, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
@@ -38,7 +38,7 @@ func (obj BGPGlobalConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 }
 
 func (obj BGPGlobalConfig) DeleteObjectFromDb(objKey string, dbHdl *sql.DB) error {
-	sqlKey, err := obj.GetSqlKey(objKey)
+	sqlKey, err := obj.GetSqlKeyStr(objKey)
 	if err != nil {
 		fmt.Println("GetSqlKeyStr for BGPGlobalConfig with key", objKey, "failed with error", err)
 		return err
@@ -51,17 +51,17 @@ func (obj BGPGlobalConfig) DeleteObjectFromDb(objKey string, dbHdl *sql.DB) erro
 }
 
 func (obj BGPGlobalConfig) GetObjectFromDb(objKey string, dbHdl *sql.DB) (BGPGlobalConfig, error) {
-	sqlKey, err := obj.GetSqlKey(objKey)
+	var object BGPGlobalConfig
+	sqlKey, err := obj.GetSqlKeyStr(objKey)
 	if err != nil {
 		fmt.Println("GetSqlKeyStr for object key", objKey, "failed with error", err)
-		return BGPGlobalConfig{}, err
+		return object, err
 	}
 
 	dbCmd := "query from BGPGlobalConfig where " + sqlKey
 	fmt.Println("### DB Get BGPGlobalConfig\n")
-	_, err2 := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
-	//return sqlobj, err2 //FIXME
-	return BGPGlobalConfig{}, err2
+	err = dbHdl.QueryRow(dbCmd).Scan(&object.AS, &object.RouterId)
+	return object, err
 }
 
 func (obj BGPGlobalConfig) GetKey() (string, error) {
@@ -69,7 +69,7 @@ func (obj BGPGlobalConfig) GetKey() (string, error) {
 	return key, nil
 }
 
-func (obj BGPGlobalConfig) GetSqlKey(objKey string) (string, error) {
+func (obj BGPGlobalConfig) GetSqlKeyStr(objKey string) (string, error) {
 	keys := strings.Split(objKey, "#")
 	sqlKey := "RouterId = " + "\"" + keys[0] + "\""
 	return sqlKey, nil
