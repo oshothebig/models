@@ -4,35 +4,36 @@ import (
 	"database/sql"
 	"fmt"
 	"strings"
+	"utils/dbutils"
 )
 
 func (obj AggregationLacpConfig) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS AggregationLacpConfig " +
 		"( " +
+		" LagType INTEGER " +
 		" Description TEXT " +
-		" MinLinks INTEGER " +
-		" SystemPriority INTEGER " +
-		" NameKey TEXT " +
-		" Interval INTEGER " +
 		" Enabled bool " +
 		" Mtu INTEGER " +
-		" SystemIdMac TEXT " +
-		" LagType INTEGER " +
+		" MinLinks INTEGER " +
 		" Type TEXT " +
+		" NameKey TEXT " +
+		" Interval INTEGER " +
 		" LacpMode INTEGER " +
+		" SystemIdMac TEXT " +
+		" SystemPriority INTEGER " +
 		"PRIMARY KEY(NameKey) ) "
 
-	_, err := ExecuteSQLStmt(dbCmd, dbHdl)
+	_, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
 
 func (obj AggregationLacpConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	var objectId int64
-	dbCmd := fmt.Sprintf("INSERT INTO AggregationLacpConfig (Description, MinLinks, SystemPriority, NameKey, Interval, Enabled, Mtu, SystemIdMac, LagType, Type, LacpMode) VALUES (%v, %v, %v, %v, %v, %v, %v, %v, %v, %v, %v);",
-		obj.Description, obj.MinLinks, obj.SystemPriority, obj.NameKey, obj.Interval, obj.Enabled, obj.Mtu, obj.SystemIdMac, obj.LagType, obj.Type, obj.LacpMode)
+	dbCmd := fmt.Sprintf("INSERT INTO AggregationLacpConfig (LagType, Description, Enabled, Mtu, MinLinks, Type, NameKey, Interval, LacpMode, SystemIdMac, SystemPriority) VALUES (%v, %v, %v, %v, %v, %v, %v, %v, %v, %v, %v);",
+		obj.LagType, obj.Description, obj.Enabled, obj.Mtu, obj.MinLinks, obj.Type, obj.NameKey, obj.Interval, obj.LacpMode, obj.SystemIdMac, obj.SystemPriority)
 	fmt.Println("**** Create Object called with ", obj)
 
-	result, err := ExecuteSQLStmt(dbCmd, dbHdl)
+	result, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
 	if err != nil {
 		fmt.Println("**** Failed to Create table", err)
 	}
@@ -54,21 +55,22 @@ func (obj AggregationLacpConfig) DeleteObjectFromDb(objKey string, dbHdl *sql.DB
 
 	dbCmd := "delete from AggregationLacpConfig where " + sqlKey
 	fmt.Println("### DB Deleting AggregationLacpConfig\n")
-	_, err = ExecuteSQLStmt(dbCmd, dbHdl)
+	_, err = dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
 
 func (obj AggregationLacpConfig) GetObjectFromDb(objKey string, dbHdl *sql.DB) (AggregationLacpConfig, error) {
+	var object AggregationLacpConfig
 	sqlKey, err := obj.GetSqlKeyStr(objKey)
 	if err != nil {
 		fmt.Println("GetSqlKeyStr for object key", objKey, "failed with error", err)
-		return AggregationLacpConfig{}, err
+		return object, err
 	}
 
 	dbCmd := "query from AggregationLacpConfig where " + sqlKey
 	fmt.Println("### DB Get AggregationLacpConfig\n")
-	sqlobj, err2 := ExecuteSQLStmt(dbCmd, dbHdl)
-	return sqlobj, err2
+	err = dbHdl.QueryRow(dbCmd).Scan(&object.LagType, &object.Description, &object.Enabled, &object.Mtu, &object.MinLinks, &object.Type, &object.NameKey, &object.Interval, &object.LacpMode, &object.SystemIdMac, &object.SystemPriority)
+	return object, err
 }
 
 func (obj AggregationLacpConfig) GetKey() (string, error) {
