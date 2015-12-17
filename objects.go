@@ -68,7 +68,7 @@ func (obj IPV4Route) UnmarshalObject(body []byte) (ConfigObj, error) {
 type BGPGlobalConfig struct {
 	BaseObj
 	AS       uint32
-	RouterId string
+	RouterId string    'SNAPROUTE: "KEY"'
 }
 
 func (obj BGPGlobalConfig) UnmarshalObject(body []byte) (ConfigObj, error) {
@@ -129,7 +129,7 @@ type BGPNeighborConfig struct {
 	LocalAS         uint32
 	AuthPassword    string
 	Description     string
-	NeighborAddress string
+	NeighborAddress string    'SNAPROUTE: "KEY"'
 }
 
 func (obj BGPNeighborConfig) UnmarshalObject(body []byte) (ConfigObj, error) {
@@ -184,7 +184,7 @@ type IPv4Intf struct {
 	BaseObj
 	IpAddr      string
 	RouterIf    int32
-	VlanEnabled int32
+	IfType      int32
 }
 
 type IPv4Neighbor struct {
