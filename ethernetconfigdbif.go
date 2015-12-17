@@ -2,7 +2,6 @@ package models
 
 import (
 	"database/sql"
-	"utils/dbutils"
 	"fmt"
 	"strings"
 	"utils/dbutils"
