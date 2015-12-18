@@ -59,7 +59,7 @@ func (obj BGPGlobalConfig) GetObjectFromDb(objKey string, dbHdl *sql.DB) (Config
 		return object, err
 	}
 
-	dbCmd := "query from BGPGlobalConfig where " + sqlKey
+	dbCmd := "SELECT * from BGPGlobalConfig where " + sqlKey
 	fmt.Println("### DB Get BGPGlobalConfig\n")
 	err = dbHdl.QueryRow(dbCmd).Scan(&object.ASNum, &object.RouterId)
 	return object, err
