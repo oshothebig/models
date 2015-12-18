@@ -21,7 +21,7 @@ func (obj BGPGlobalConfig) CreateDBTable(dbHdl *sql.DB) error {
 
 func (obj BGPGlobalConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	var objectId int64
-	dbCmd := fmt.Sprintf("INSERT INTO BGPGlobalConfig (ASNum, RouterId) VALUES (%v, %v);",
+	dbCmd := fmt.Sprintf("INSERT INTO BGPGlobalConfig (ASNum, RouterId) VALUES ('%v', '%v') ;",
 		obj.ASNum, obj.RouterId)
 	fmt.Println("**** Create Object called with ", obj)
 
