@@ -84,3 +84,8 @@ func (obj EthernetConfig) GetSqlKeyStr(objKey string) (string, error) {
 	sqlKey := "NameKey = " + "\"" + keys[0] + "\""
 	return sqlKey, nil
 }
+
+func (obj EthernetConfig) CompareObjectsAndDiff(dbObj ConfigObj) ([]byte, error) {
+	var arr []byte
+	return arr, nil
+}

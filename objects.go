@@ -14,6 +14,7 @@ type ConfigObj interface {
 	GetKey() (string, error)
 	GetSqlKeyStr (string) (string, error)
 	GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, error)
+	CompareObjectsAndDiff(dbObj ConfigObj) ([]byte, error)
 }
 
 type BaseObj struct{}
@@ -37,6 +38,11 @@ func (b BaseObj) GetKey() (string, error) {
 func (b BaseObj) GetSqlKeyStr(objKey string) (string, error) {
 	s := ""
 	return s, nil
+}
+
+func (b BaseObj) CompareObjectsAndDiff(dbObj ConfigObj) ([]byte, error) {
+	var arr []byte
+	return arr, nil
 }
 
 //
