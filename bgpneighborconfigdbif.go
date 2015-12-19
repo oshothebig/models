@@ -24,7 +24,7 @@ func (obj BGPNeighborConfig) CreateDBTable(dbHdl *sql.DB) error {
 
 func (obj BGPNeighborConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	var objectId int64
-	dbCmd := fmt.Sprintf("INSERT INTO BGPNeighborConfig (PeerAS, LocalAS, AuthPassword, Description, NeighborAddress) VALUES (%v, %v, %v, %v, %v);",
+	dbCmd := fmt.Sprintf("INSERT INTO BGPNeighborConfig (PeerAS, LocalAS, AuthPassword, Description, NeighborAddress) VALUES ('%v', '%v', '%v', '%v', '%v') ;",
 		obj.PeerAS, obj.LocalAS, obj.AuthPassword, obj.Description, obj.NeighborAddress)
 	fmt.Println("**** Create Object called with ", obj)
 
@@ -62,7 +62,7 @@ func (obj BGPNeighborConfig) GetObjectFromDb(objKey string, dbHdl *sql.DB) (Conf
 		return object, err
 	}
 
-	dbCmd := "query from BGPNeighborConfig where " + sqlKey
+	dbCmd := "SELECT * from BGPNeighborConfig where " + sqlKey
 	fmt.Println("### DB Get BGPNeighborConfig\n")
 	err = dbHdl.QueryRow(dbCmd).Scan(&object.PeerAS, &object.LocalAS, &object.AuthPassword, &object.Description, &object.NeighborAddress)
 	return object, err
