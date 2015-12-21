@@ -43,6 +43,7 @@ func (b BaseObj) GetSqlKeyStr(objKey string) (string, error) {
 
 func (b BaseObj) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, error) {
 	return nil, nil
+}
 
 func (b BaseObj) CompareObjectsAndDiff(dbObj ConfigObj) ([]byte, error) {
 	var arr []byte
