@@ -40,13 +40,7 @@ func (b BaseObj) GetSqlKeyStr(objKey string) (string, error) {
 }
 
 func (b BaseObj) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, error) {
-	var obj BaseObj
-	return obj, nil
-}
-
-func (b BaseObj) UnmarshalObject(body []byte) (obj ConfigObj, err error) {
-	var Obj BaseObj
-	return Obj, err
+	return nil, nil
 }
 
 //
