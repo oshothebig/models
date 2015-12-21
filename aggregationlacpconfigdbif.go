@@ -84,12 +84,3 @@ func (obj AggregationLacpConfig) GetSqlKeyStr(objKey string) (string, error) {
 	sqlKey := "NameKey = " + "\"" + keys[0] + "\""
 	return sqlKey, nil
 }
-
-func (obj AggregationLacpConfig) CompareObjectsAndDiff(dbObj ConfigObj) ([]byte, error) {
-	var arr []byte
-	return arr, nil
-}
-
-func (obj AggregationLacpConfig) UpdateObjectInDb(dbV4Route ConfigObj, attrSet []byte, dbHdl *sql.DB) error {
-	return nil
-}
