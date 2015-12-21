@@ -90,3 +90,6 @@ func (obj AggregationLacpConfig) CompareObjectsAndDiff(dbObj ConfigObj) ([]byte,
 	return arr, nil
 }
 
+func (obj AggregationLacpConfig) UpdateObjectInDb(dbV4Route ConfigObj, attrSet []byte, dbHdl *sql.DB) error {
+	return nil
+}

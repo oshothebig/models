@@ -89,3 +89,7 @@ func (obj EthernetConfig) CompareObjectsAndDiff(dbObj ConfigObj) ([]byte, error)
 	var arr []byte
 	return arr, nil
 }
+
+func (obj EthernetConfig) UpdateObjectInDb(dbV4Route ConfigObj, attrSet []byte, dbHdl *sql.DB) error {
+	return nil
+}

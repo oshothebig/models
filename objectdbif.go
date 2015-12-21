@@ -72,61 +72,48 @@ func (obj IPV4Route) CompareObjectsAndDiff(dbObj ConfigObj) ([]byte, error) {
 	dbV4Route := dbObj.(IPV4Route)
 	objTyp := reflect.TypeOf(obj)
 	objVal := reflect.ValueOf(obj)
-	dbObjTyp := reflect.TypeOf(dbV4Route)
 	dbObjVal := reflect.ValueOf(dbV4Route)
-	attrIds := []byte{0, 0, 0, 0, 0, 0, 0}
-	//attrs := make(map[string]reflect.Value)
-	for i:=1; i<objTyp.NumField(); i++ {
-		objTyp := objTyp.Field(i)
+	attrIds := make([]byte, objTyp.NumField())
+	for i:=0; i<objTyp.NumField(); i++ {
 		objVal := objVal.Field(i)
-		dbObjTyp := dbObjTyp.Field(i)
 		dbObjVal := dbObjVal.Field(i)
 		if objVal.Kind() == reflect.Int {
 			if int(objVal.Int()) != 0 && int(objVal.Int()) != int(dbObjVal.Int()) {
 				attrIds[i] = 1
-				fmt.Println("\n", objTyp.Name, objTyp.Type, int(objVal.Int()))
-				fmt.Println("\n", dbObjTyp.Name, dbObjTyp.Type, int(dbObjVal.Int()))
 			}
 		} else {
 			if objVal.String() != "" && objVal.String() != dbObjVal.String() {
 				attrIds[i] = 1
-				fmt.Println("\n", objTyp.Name, objTyp.Type, objVal.String())
-				fmt.Println("\n", dbObjTyp.Name, dbObjTyp.Type, dbObjVal.String())
 			}
 		}
 	}
-
-/*
-	if obj.DestinationNw != "" && obj.DestinationNw != dbV4Route.DestinationNw {
-		attrIds[0] = 1
-	}
-	if obj.NetworkMask != "" && obj.NetworkMask != dbV4Route.NetworkMask {
-		attrIds[1] = 1
-	}
-	if obj.Cost != 0 && obj.Cost != dbV4Route.Cost {
-		attrIds[2] = 1
-	}
-	if obj.NextHopIp != "" && obj.NextHopIp != dbV4Route.NextHopIp {
-		attrIds[3] = 1
-	}
-	if obj.OutgoingIntfType != "" && obj.OutgoingIntfType != dbV4Route.OutgoingIntfType {
-		attrIds[4] = 1
-	}
-	if obj.OutgoingInterface != "" && obj.OutgoingInterface != dbV4Route.OutgoingInterface {
-		attrIds[5] = 1
-	}
-	if obj.Protocol != "" && obj.Protocol != dbV4Route.Protocol {
-		attrIds[6] = 1
-	}
-*/
 	return attrIds, nil
 }
 
-/*
-func (obj IPV4Route) UpdateObjectInDb(dbHdl *sql.DB) error {
-	dbCmd := "update " + "IPV4Routes" + " set" + " name" + " value" .... + " DestinationNw = " + "value" + " NetworkMask = " + "value"
+func (obj IPV4Route) UpdateObjectInDb(dbObj ConfigObj, attrSet []byte, dbHdl *sql.DB) error {
+	var fieldSqlStr string
+	dbV4Route := dbObj.(IPV4Route)
+	objKey, err := dbV4Route.GetKey()
+	objSqlKey, err := dbV4Route.GetSqlKeyStr(objKey)
+	dbCmd := "update " + "IPV4Routes" + " set"
+	objTyp := reflect.TypeOf(obj)
+	objVal := reflect.ValueOf(obj)
+	for i:=0; i<objTyp.NumField(); i++ {
+		if attrSet[i] == 1 {
+			fieldTyp := objTyp.Field(i)
+			fieldVal := objVal.Field(i)
+			if fieldVal.Kind() == reflect.Int {
+				fieldSqlStr = fmt.Sprintf(" %s = '%d' ", fieldTyp.Name, int(fieldVal.Int()))
+			} else {
+				fieldSqlStr = fmt.Sprintf(" %s = '%s' ", fieldTyp.Name, fieldVal.String())
+			}
+			dbCmd += fieldSqlStr
+		}
+	}
+	dbCmd += " where " + objSqlKey
+	_, err = dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
+	return err
 }
-*/
 
 func (obj Vlan) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, error) {
 	var vlan Vlan

@@ -15,6 +15,7 @@ type ConfigObj interface {
 	GetSqlKeyStr (string) (string, error)
 	GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, error)
 	CompareObjectsAndDiff(dbObj ConfigObj) ([]byte, error)
+	UpdateObjectInDb(dbV4Route ConfigObj, attrSet []byte, dbHdl *sql.DB) error
 }
 
 type BaseObj struct{}
@@ -43,6 +44,10 @@ func (b BaseObj) GetSqlKeyStr(objKey string) (string, error) {
 func (b BaseObj) CompareObjectsAndDiff(dbObj ConfigObj) ([]byte, error) {
 	var arr []byte
 	return arr, nil
+}
+
+func (b BaseObj) UpdateObjectInDb(dbV4Route ConfigObj, attrSet []byte, dbHdl *sql.DB) error {
+	return nil
 }
 
 //
