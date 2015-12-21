@@ -26,6 +26,14 @@
         "Owner": "lacpd", 
         "Listeners": []
     },
+	"AggregationLacpState": {
+		"Owner": "lacpd",
+		"Listeners": []
+	},
+	"AggregationLacpMemberStateCounters": {
+		"Owner": "lacpd",
+		"Listeners": []
+	},
 	"EthernetConfig": {
         "Owner": "lacpd", 
         "Listeners": []

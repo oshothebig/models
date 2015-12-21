@@ -12,7 +12,7 @@ type ConfigObj interface {
 	StoreObjectInDb(dbHdl *sql.DB) (int64, error)
 	DeleteObjectFromDb(objKey string, dbHdl *sql.DB) error
 	GetKey() (string, error)
-	GetSqlKeyStr (string) (string, error)
+	GetSqlKeyStr(string) (string, error)
 	GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, error)
 	CompareObjectsAndDiff(dbObj ConfigObj) ([]byte, error)
 	UpdateObjectInDb(dbV4Route ConfigObj, attrSet []byte, dbHdl *sql.DB) error
@@ -40,6 +40,9 @@ func (b BaseObj) GetSqlKeyStr(objKey string) (string, error) {
 	s := ""
 	return s, nil
 }
+
+func (b BaseObj) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, error) {
+	return nil, nil
 
 func (b BaseObj) CompareObjectsAndDiff(dbObj ConfigObj) ([]byte, error) {
 	var arr []byte
