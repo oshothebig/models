@@ -62,7 +62,7 @@ func (obj BGPNeighborConfig) GetObjectFromDb(objKey string, dbHdl *sql.DB) (Conf
 		return object, err
 	}
 
-	dbCmd := "query from BGPNeighborConfig where " + sqlKey
+	dbCmd := "SELECT * from BGPNeighborConfig where " + sqlKey
 	fmt.Println("### DB Get BGPNeighborConfig\n")
 	err = dbHdl.QueryRow(dbCmd).Scan(&object.PeerAS, &object.LocalAS, &object.AuthPassword, &object.Description, &object.NeighborAddress)
 	return object, err
