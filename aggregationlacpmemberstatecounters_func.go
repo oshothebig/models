@@ -7,15 +7,16 @@ import (
 )
 
 func NewAggregationLacpMemberStateCounters() *AggregationLacpMemberStateCounters {
-	new := &AggregationLacpMemberStateCounters{}
-	return new
+	newObj := &AggregationLacpMemberStateCounters{}
+	return newObj
 }
 
 func (obj AggregationLacpMemberStateCounters) UnmarshalObject(body []byte) (ConfigObj, error) {
-	var Obj AggregationLacpMemberStateCounters
 	var err error
-	if err = json.Unmarshal(body, &Obj); err != nil {
-		fmt.Println("### AggregationLacpMemberStateCounters create called, unmarshal failed", Obj, err)
+	if len(body) > 0 {
+		if err = json.Unmarshal(body, &obj); err != nil {
+			fmt.Println("### AggregationLacpMemberStateCounters called, unmarshal failed", obj, err)
+		}
 	}
-	return Obj, err
+	return obj, err
 }

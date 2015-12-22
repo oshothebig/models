@@ -7,19 +7,20 @@ import (
 )
 
 func NewEthernetConfig() *EthernetConfig {
-	new := &EthernetConfig{
+	newObj := &EthernetConfig{
 		EnableFlowControl: false,
 	}
-	return new
+	return newObj
 }
 
 func (obj EthernetConfig) UnmarshalObject(body []byte) (ConfigObj, error) {
-	var Obj EthernetConfig
 	var err error
-	if err = json.Unmarshal(body, &Obj); err != nil {
-		fmt.Println("### EthernetConfig create called, unmarshal failed", Obj, err)
+	if len(body) > 0 {
+		if err = json.Unmarshal(body, &obj); err != nil {
+			fmt.Println("### EthernetConfig called, unmarshal failed", obj, err)
+		}
 	}
-	return Obj, err
+	return obj, err
 }
 func (d *EthernetConfig) MacAddress_Set(value string) bool {
 	d.MacAddress = value
