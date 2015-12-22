@@ -7,6 +7,7 @@ var ConfigObjectMap = map[string]ConfigObj{"IPV4Route": &IPV4Route{},
 	"Vlan":                  &Vlan{},              // manually merged no YANG defined
 	"IPv4Intf":              &IPv4Intf{},          // manually merged no YANG defined
 	"IPv4Neighbor":          &IPv4Neighbor{},      // manually merged no YANG defined
+        "ArpTimeout":            &ArpTimeout{},        // created before auto YANG
 	"BGPGlobalConfig":       &BGPGlobalConfig{},   // created before auto YANG
 	"BGPGlobalState":        &BGPGlobalState{},    // created before auto YANG
 	"BGPNeighborConfig":     &BGPNeighborConfig{}, // created before auto YANG

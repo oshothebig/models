@@ -245,3 +245,21 @@ func (obj IPv4Neighbor) UnmarshalObject(body []byte) (ConfigObj, error) {
 	}
 	return v4Nbr, err
 }
+
+/* ARP */
+type ArpTimeout struct {
+    BaseObj
+    Timeout int32
+}
+
+func (obj ArpTimeout) UnmarshalObject(body []byte) (ConfigObj, error) {
+    var arpTimeoutObj ArpTimeout
+    var err error
+    if len(body) > 0 {
+        if err = json.Unmarshal(body, &arpTimeoutObj); err != nil {
+            fmt.Println("### Trouble in unmarshaling ArpTimeout from Json", body)
+        }
+    }
+
+    return arpTimeoutObj, err
+}
