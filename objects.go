@@ -149,6 +149,8 @@ type BGPNeighborConfig struct {
 	AuthPassword    string
 	Description     string
 	NeighborAddress string `SNAPROUTE: "KEY"`
+	RouteReflectorClusterId string
+	RouteReflectorClient bool
 }
 
 func (obj BGPNeighborConfig) UnmarshalObject(body []byte) (ConfigObj, error) {
@@ -173,6 +175,8 @@ type BGPNeighborState struct {
 	SessionState    uint32
 	Messages        BGPMessages
 	Queues          BGPQueues
+	RouteReflectorClusterId string
+	RouteReflectorClient bool
 }
 
 func (obj BGPNeighborState) UnmarshalObject(body []byte) (ConfigObj, error) {
