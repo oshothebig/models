@@ -7,17 +7,18 @@ import (
 )
 
 func NewAggregationLacpConfig() *AggregationLacpConfig {
-	new := &AggregationLacpConfig{}
-	return new
+	newObj := &AggregationLacpConfig{}
+	return newObj
 }
 
 func (obj AggregationLacpConfig) UnmarshalObject(body []byte) (ConfigObj, error) {
-	var Obj AggregationLacpConfig
 	var err error
-	if err = json.Unmarshal(body, &Obj); err != nil {
-		fmt.Println("### AggregationLacpConfig create called, unmarshal failed", Obj)
+	if len(body) > 0 {
+		if err = json.Unmarshal(body, &obj); err != nil {
+			fmt.Println("### AggregationLacpConfig called, unmarshal failed", obj, err)
+		}
 	}
-	return Obj, err
+	return obj, err
 }
 func (d *AggregationLacpConfig) Interval_Set(value int32) bool {
 	d.Interval = value
