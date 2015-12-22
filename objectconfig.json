@@ -8,7 +8,7 @@
  "IPv4Neighbor" : {"Owner" : "portd",
                    "Listeners" : ["asicd"]},
 
- "ArpTimeout" : {"Owner": "arpd",
+ "ArpConfig" : {"Owner": "arpd",
                    "Listeners":["arpd"]},
 
  "IPV4Route": {"Owner": "ribd",

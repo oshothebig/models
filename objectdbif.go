@@ -140,7 +140,7 @@ func (obj BGPNeighborState) GetObjectFromDb(objKey string, dbHdl *sql.DB) (Confi
 	return bgpNeighborState, nil
 }
 
-func (obj ArpTimeout) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, error) {
-        var arpTimeout ArpTimeout
-        return arpTimeout, nil
+func (obj ArpConfig) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, error) {
+        var arpConfig ArpConfig
+        return arpConfig, nil
 }
