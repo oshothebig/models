@@ -1,5 +1,5 @@
 {
- 	"Vlan"     : {
+	"Vlan"     : {
 		"Owner": "portd",
 		"Listeners":["asicd"]
 	},
@@ -11,6 +11,10 @@
 		"Owner" : "portd",
 		"Listeners" : ["asicd"]
 	},
+        "ArpConfig" : {
+                "Owner": "arpd",
+                "Listeners":[]
+        },
  	"IPV4Route": {
 		"Owner": "ribd",
 		"Listeners": ["asicd","bgpd"]
@@ -31,10 +35,10 @@
 		"Owner": "bgpd",
 		"Listeners": []
 	},
-    "AggregationLacpConfig": {
-        "Owner": "lacpd", 
-        "Listeners": []
-    },
+        "AggregationLacpConfig": {
+                "Owner": "lacpd", 
+                "Listeners": []
+        },
 	"AggregationLacpState": {
 		"Owner": "lacpd",
 		"Listeners": []
@@ -44,8 +48,8 @@
 		"Listeners": []
 	},
 	"EthernetConfig": {
-        "Owner": "lacpd", 
-        "Listeners": []
-    }
+                "Owner": "lacpd", 
+                "Listeners": []
+        }
 
 }

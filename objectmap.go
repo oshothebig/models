@@ -8,6 +8,7 @@ var ConfigObjectMap = map[string]ConfigObj{
 	"Vlan":                               &Vlan{},              // created before auto YANG
 	"IPv4Intf":                           &IPv4Intf{},          // created before auto YANG
 	"IPv4Neighbor":                       &IPv4Neighbor{},      // created before auto YANG
+        "ArpConfig":                          &ArpConfig{},         // created before auto YANG
 	"BGPGlobalConfig":                    &BGPGlobalConfig{},   // created before auto YANG
 	"BGPGlobalState":                     &BGPGlobalState{},    // created before auto YANG
 	"BGPNeighborConfig":                  &BGPNeighborConfig{}, // created before auto YANG
@@ -15,4 +16,5 @@ var ConfigObjectMap = map[string]ConfigObj{
 	"AggregationLacpConfig":              &AggregationLacpConfig{},
 	"EthernetConfig":                     &EthernetConfig{},
 	"AggregationLacpMemberStateCounters": &AggregationLacpMemberStateCounters{},
-	"AggregationLacpState":               &AggregationLacpState{}}
+	"AggregationLacpState":               &AggregationLacpState{},
+}

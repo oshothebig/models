@@ -15,6 +15,8 @@ func (obj BGPNeighborConfig) CreateDBTable(dbHdl *sql.DB) error {
 		"AuthPassword TEXT, " +
 		"Description TEXT, " +
 		"NeighborAddress TEXT, " +
+		"RouteReflectorClusterId TEXT, " +
+		"RouteReflectorClient bool, " +
 		"PRIMARY KEY(NeighborAddress) " +
 		")"
 
@@ -24,8 +26,8 @@ func (obj BGPNeighborConfig) CreateDBTable(dbHdl *sql.DB) error {
 
 func (obj BGPNeighborConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	var objectId int64
-	dbCmd := fmt.Sprintf("INSERT INTO BGPNeighborConfig (PeerAS, LocalAS, AuthPassword, Description, NeighborAddress) VALUES ('%v', '%v', '%v', '%v', '%v') ;",
-		obj.PeerAS, obj.LocalAS, obj.AuthPassword, obj.Description, obj.NeighborAddress)
+	dbCmd := fmt.Sprintf("INSERT INTO BGPNeighborConfig (PeerAS, LocalAS, AuthPassword, Description, NeighborAddress, RouteReflectorClusterId, RouteReflectorClient) VALUES ('%v', '%v', '%v', '%v', '%v', '%v', '%v') ;",
+		obj.PeerAS, obj.LocalAS, obj.AuthPassword, obj.Description, obj.NeighborAddress, obj.RouteReflectorClusterId, obj.RouteReflectorClient)
 	fmt.Println("**** Create Object called with ", obj)
 
 	result, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
@@ -64,7 +66,7 @@ func (obj BGPNeighborConfig) GetObjectFromDb(objKey string, dbHdl *sql.DB) (Conf
 
 	dbCmd := "SELECT * from BGPNeighborConfig where " + sqlKey
 	fmt.Println("### DB Get BGPNeighborConfig\n")
-	err = dbHdl.QueryRow(dbCmd).Scan(&object.PeerAS, &object.LocalAS, &object.AuthPassword, &object.Description, &object.NeighborAddress)
+	err = dbHdl.QueryRow(dbCmd).Scan(&object.PeerAS, &object.LocalAS, &object.AuthPassword, &object.Description, &object.NeighborAddress, &object.RouteReflectorClusterId, &object.RouteReflectorClient)
 	return object, err
 }
 

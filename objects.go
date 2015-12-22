@@ -15,6 +15,7 @@ type ConfigObj interface {
 	GetSqlKeyStr(string) (string, error)
 	GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, error)
 	CompareObjectsAndDiff(dbObj ConfigObj) ([]byte, error)
+	MergeDbAndConfigObj(dbObj ConfigObj, attrSet []byte) (ConfigObj, error)
 	UpdateObjectInDb(dbV4Route ConfigObj, attrSet []byte, dbHdl *sql.DB) error
 }
 
@@ -48,6 +49,10 @@ func (b BaseObj) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, error
 func (b BaseObj) CompareObjectsAndDiff(dbObj ConfigObj) ([]byte, error) {
 	var arr []byte
 	return arr, nil
+}
+
+func (b BaseObj) MergeDbAndConfigObj(dbObj ConfigObj, attrSet []byte) (ConfigObj, error) {
+	return nil, nil
 }
 
 func (b BaseObj) UpdateObjectInDb(dbV4Route ConfigObj, attrSet []byte, dbHdl *sql.DB) error {
@@ -144,6 +149,8 @@ type BGPNeighborConfig struct {
 	AuthPassword    string
 	Description     string
 	NeighborAddress string `SNAPROUTE: "KEY"`
+	RouteReflectorClusterId string
+	RouteReflectorClient bool
 }
 
 func (obj BGPNeighborConfig) UnmarshalObject(body []byte) (ConfigObj, error) {
@@ -168,6 +175,8 @@ type BGPNeighborState struct {
 	SessionState    uint32
 	Messages        BGPMessages
 	Queues          BGPQueues
+	RouteReflectorClusterId string
+	RouteReflectorClient bool
 }
 
 func (obj BGPNeighborState) UnmarshalObject(body []byte) (ConfigObj, error) {
@@ -240,4 +249,22 @@ func (obj IPv4Neighbor) UnmarshalObject(body []byte) (ConfigObj, error) {
 		}
 	}
 	return v4Nbr, err
+}
+
+/* ARP */
+type ArpConfig struct {
+    BaseObj
+    Timeout int32
+}
+
+func (obj ArpConfig) UnmarshalObject(body []byte) (ConfigObj, error) {
+    var arpConfigObj ArpConfig
+    var err error
+    if len(body) > 0 {
+        if err = json.Unmarshal(body, &arpConfigObj); err != nil {
+            fmt.Println("### Trouble in unmarshaling ArpConfig from Json", body)
+        }
+    }
+
+    return arpConfigObj, err
 }

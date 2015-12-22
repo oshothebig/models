@@ -90,6 +90,32 @@ func (obj IPV4Route) CompareObjectsAndDiff(dbObj ConfigObj) ([]byte, error) {
 	return attrIds, nil
 }
 
+func (obj IPV4Route) MergeDbAndConfigObj(dbObj ConfigObj, attrSet []byte) (ConfigObj, error) {
+	var mergedV4Route IPV4Route
+	objTyp := reflect.TypeOf(obj)
+	objVal := reflect.ValueOf(obj)
+	dbObjVal := reflect.ValueOf(dbObj)
+	mergedObjVal := reflect.ValueOf(&mergedV4Route)
+	for i:=1; i<objTyp.NumField(); i++ {
+		objField := objVal.Field(i)
+		dbObjField := dbObjVal.Field(i)
+		if  attrSet[i] ==1 {
+			if dbObjField.Kind() == reflect.Int {
+				mergedObjVal.Elem().Field(i).SetInt(objField.Int())
+			} else {
+				mergedObjVal.Elem().Field(i).SetString(objField.String())
+			}
+		} else {
+			if dbObjField.Kind() == reflect.Int {
+				mergedObjVal.Elem().Field(i).SetInt(dbObjField.Int())
+			} else {
+				mergedObjVal.Elem().Field(i).SetString(dbObjField.String())
+			}
+		}
+	}
+	return mergedV4Route, nil
+}
+
 func (obj IPV4Route) UpdateObjectInDb(dbObj ConfigObj, attrSet []byte, dbHdl *sql.DB) error {
 	var fieldSqlStr string
 	dbV4Route := dbObj.(IPV4Route)
@@ -138,4 +164,9 @@ func (obj BGPGlobalState) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigO
 func (obj BGPNeighborState) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, error) {
 	var bgpNeighborState BGPNeighborState
 	return bgpNeighborState, nil
+}
+
+func (obj ArpConfig) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, error) {
+        var arpConfig ArpConfig
+        return arpConfig, nil
 }
