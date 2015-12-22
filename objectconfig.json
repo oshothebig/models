@@ -1,27 +1,36 @@
 {
- "Vlan"     : {"Owner": "portd",
-	           "Listeners":["asicd"]},
-
- "IPv4Intf" : {"Owner": "portd",
-               "Listeners" : ["asicd"]},
-
- "IPv4Neighbor" : {"Owner" : "portd",
-                   "Listeners" : ["asicd"]},
-
- "IPV4Route": {"Owner": "ribd",
-	           "Listeners": ["asicd","bgpd"]},
-
- "BGPGlobalConfig": {"Owner": "bgpd",
-					"Listeners": []},
-
- "BGPGlobalState": {"Owner": "bgpd",
-					"Listeners": []},
-
- "BGPNeighborConfig": {"Owner": "bgpd",
-					  "Listeners": []},
-
- "BGPNeighborState": {"Owner": "bgpd",
-					  "Listeners": []},
+ 	"Vlan"     : {
+		"Owner": "portd",
+		"Listeners":["asicd"]
+	},
+ 	"IPv4Intf" : {
+		"Owner": "portd",
+		"Listeners" : ["asicd"]
+	},
+ 	"IPv4Neighbor" : {
+		"Owner" : "portd",
+		"Listeners" : ["asicd"]
+	},
+ 	"IPV4Route": {
+		"Owner": "ribd",
+		"Listeners": ["asicd","bgpd"]
+	},
+ 	"BGPGlobalConfig": {
+		"Owner": "bgpd",
+		"Listeners": []
+	},
+ 	"BGPGlobalState": {
+		"Owner": "bgpd",
+		"Listeners": []
+	},
+ 	"BGPNeighborConfig": {
+		"Owner": "bgpd",
+		"Listeners": []
+	},
+ 	"BGPNeighborState": {
+		"Owner": "bgpd",
+		"Listeners": []
+	},
     "AggregationLacpConfig": {
         "Owner": "lacpd", 
         "Listeners": []
