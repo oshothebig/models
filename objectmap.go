@@ -13,4 +13,5 @@ var ConfigObjectMap = map[string]ConfigObj{"IPV4Route": &IPV4Route{},
 	"BGPNeighborConfig":     &BGPNeighborConfig{}, // created before auto YANG
 	"BGPNeighborState":      &BGPNeighborState{},  // created before auto YANG
 	"AggregationLacpConfig": &AggregationLacpConfig{},
-	"EthernetConfig":        &EthernetConfig{}}
+	"EthernetConfig":        &EthernetConfig{},
+	"PortIntfConfig":        &PortIntfConfig{}}
