@@ -7,15 +7,16 @@ import (
 )
 
 func NewAggregationLacpState() *AggregationLacpState {
-	new := &AggregationLacpState{}
-	return new
+	newObj := &AggregationLacpState{}
+	return newObj
 }
 
 func (obj AggregationLacpState) UnmarshalObject(body []byte) (ConfigObj, error) {
-	var Obj AggregationLacpState
 	var err error
-	if err = json.Unmarshal(body, &Obj); err != nil {
-		fmt.Println("### AggregationLacpState create called, unmarshal failed", Obj, err)
+	if len(body) > 0 {
+		if err = json.Unmarshal(body, &obj); err != nil {
+			fmt.Println("### AggregationLacpState called, unmarshal failed", obj, err)
+		}
 	}
-	return Obj, err
+	return obj, err
 }

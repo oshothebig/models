@@ -1,43 +1,58 @@
 {
- "Vlan"     : {"Owner": "portd",
-               "Listeners":["asicd"]},
+	"Vlan"     : {
+		"Owner": "portd",
+		"Listeners":["asicd"]
+	},
+ 	"IPv4Intf" : {
+		"Owner": "portd",
+		"Listeners" : ["asicd"]
+	},
+ 	"IPv4Neighbor" : {
+		"Owner" : "portd",
+		"Listeners" : ["asicd"]
+	},
+        "ArpConfig" : {
+                "Owner": "arpd",
+                "Listeners":[]
+        },
+ 	"IPV4Route": {
+		"Owner": "ribd",
+		"Listeners": ["asicd","bgpd"]
+	},
+ 	"BGPGlobalConfig": {
+		"Owner": "bgpd",
+		"Listeners": []
+	},
+ 	"BGPGlobalState": {
+		"Owner": "bgpd",
+		"Listeners": []
+	},
+ 	"BGPNeighborConfig": {
+		"Owner": "bgpd",
+		"Listeners": []
+	},
+ 	"BGPNeighborState": {
+		"Owner": "bgpd",
+		"Listeners": []
+	},
+        "AggregationLacpConfig": {
+                "Owner": "lacpd", 
+                "Listeners": []
+        },
+	"AggregationLacpState": {
+		"Owner": "lacpd",
+		"Listeners": []
+	},
+	"AggregationLacpMemberStateCounters": {
+		"Owner": "lacpd",
+		"Listeners": []
+	},
+	"EthernetConfig": {
+                "Owner": "lacpd", 
+	        "Listeners": []
+        },
 
- "IPv4Intf" : {"Owner": "portd",
-               "Listeners" : ["asicd"]},
-
- "IPv4Neighbor" : {"Owner" : "portd",
-                   "Listeners" : ["asicd"]},
-
- "ArpConfig" : {"Owner": "arpd",
-                "Listeners":["arpd"]},
-
- "IPV4Route": {"Owner": "ribd",
-               "Listeners": ["asicd","bgpd"]},
-
- "BGPGlobalConfig": {"Owner": "bgpd",
-                     "Listeners": []},
-
- "BGPGlobalState": {"Owner": "bgpd",
-                    "Listeners": []},
-
- "BGPNeighborConfig": {"Owner": "bgpd",
-                       "Listeners": []},
-
- "BGPNeighborState": {"Owner": "bgpd",
-                      "Listeners": []},
-
- "AggregationLacpConfig": {"Owner": "lacpd", 
-                           "Listeners": []},
-
- "AggregationLacpState": {"Owner": "lacpd",
-                          "Listeners": []},
-
- "AggregationLacpMemberStateCounters": {"Owner": "lacpd",
-                                        "Listeners": []},
-
- "EthernetConfig": {"Owner": "lacpd", 
-                    "Listeners": []},
-
- "PortIntfConfig" : {"Owner": "confd",
-                     "Listeners" : []}
+	"PortIntfConfig" : {
+	         "Owner": "confd",
+	         "Listeners" : []}
 }
