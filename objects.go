@@ -269,6 +269,26 @@ func (obj ArpConfig) UnmarshalObject(body []byte) (ConfigObj, error) {
     return arpConfigObj, err
 }
 
+type ArpEntry struct {
+    BaseObj
+    IpAddr  string
+    MacAddr string
+    Vlan    int
+    Intf    string
+}
+
+
+func (obj ArpEntry) UnmarshalObject(body []byte) (ConfigObj, error) {
+    var arpEntryObj ArpEntry
+    var err error
+    if len(body) > 0 {
+        if err = json.Unmarshal(body, &arpEntryObj); err != nil {
+            fmt.Println("### Trouble in unmarshaling ArpConfig from Json", body)
+        }
+    }
+    return arpEntryObj, err
+}
+
 /* PortInterface */
 type PortIntfConfig struct {
 	BaseObj
