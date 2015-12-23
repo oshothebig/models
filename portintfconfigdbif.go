@@ -12,6 +12,17 @@ func (obj PortIntfConfig) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS PortIntfConfig " +
 		"( " +
 		"PortNum INTEGER, " +
+		"Name TEXT, " +
+		"Description TEXT, " +
+		"Type TEXT, " +
+		"AdminState TEXT, " +
+		"OperState TEXT, " +
+		"MacAddr TEXT, " +
+		"Speed INTEGER, " +
+		"Duplex TEXT, " +
+		"Autoneg TEXT, " +
+		"MediaType TEXT, " +
+		"Mtu INTEGER, " +
 		"PRIMARY KEY(PortNum) " +
 		")"
 
@@ -21,8 +32,8 @@ func (obj PortIntfConfig) CreateDBTable(dbHdl *sql.DB) error {
 
 func (obj PortIntfConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	var objectId int64
-	dbCmd := fmt.Sprintf("INSERT INTO PortIntfConfig (PortNum) VALUES ('%v') ;",
-		obj.PortNum)
+	dbCmd := fmt.Sprintf("INSERT INTO PortIntfConfig (PortNum, Name, Description, Type, AdminState, OperState, MacAddr, Speed, Duplex, Autoneg, MediaType, Mtu) VALUES ('%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v') ;",
+		obj.PortNum, obj.Name, obj.Description, obj.Type, obj.AdminState, obj.OperState, obj.MacAddr, obj.Speed, obj.Duplex, obj.Autoneg, obj.MediaType, obj.Mtu)
 	fmt.Println("**** Create Object called with ", obj)
 
 	result, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
@@ -61,7 +72,7 @@ func (obj PortIntfConfig) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigO
 
 	dbCmd := "select * from PortIntfConfig where " + sqlKey
 	fmt.Println("### DB Get PortIntfConfig\n")
-	err = dbHdl.QueryRow(dbCmd).Scan(&object.PortNum)
+	err = dbHdl.QueryRow(dbCmd).Scan(&object.PortNum, &object.Name, &object.Description, &object.Type, &object.AdminState, &object.OperState, &object.MacAddr, &object.Speed, &object.Duplex, &object.Autoneg, &object.MediaType, &object.Mtu)
 	return object, err
 }
 
