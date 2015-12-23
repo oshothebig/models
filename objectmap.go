@@ -17,5 +17,5 @@ var ConfigObjectMap = map[string]ConfigObj{
 	"EthernetConfig":                     &EthernetConfig{},
 	"AggregationLacpMemberStateCounters": &AggregationLacpMemberStateCounters{},
 	"AggregationLacpState":               &AggregationLacpState{},
-	"PortIntfConfig":                     &PortIntfConfig{}}
+	"PortIntfConfig":                     &PortIntfConfig{},
 }
