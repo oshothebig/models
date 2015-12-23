@@ -49,7 +49,10 @@
 	},
 	"EthernetConfig": {
                 "Owner": "lacpd", 
-                "Listeners": []
-        }
+	        "Listeners": []
+        },
 
+	"PortIntfConfig" : {
+	         "Owner": "confd",
+	         "Listeners" : []}
 }
