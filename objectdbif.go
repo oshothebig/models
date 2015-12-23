@@ -170,3 +170,8 @@ func (obj ArpConfig) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, e
         var arpConfig ArpConfig
         return arpConfig, nil
 }
+
+func (obj ArpEntry) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, error) {
+        var arpEntry ArpEntry
+        return arpEntry, nil
+}

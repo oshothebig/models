@@ -15,6 +15,10 @@
                 "Owner": "arpd",
                 "Listeners":[]
         },
+        "ArpEntry" : {
+                "Owner": "arpd",
+                "Listeners":[]
+        },
  	"IPV4Route": {
 		"Owner": "ribd",
 		"Listeners": ["asicd","bgpd"]
