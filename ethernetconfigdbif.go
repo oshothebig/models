@@ -99,7 +99,7 @@ func (obj EthernetConfig) CompareObjectsAndDiff(dbObj ConfigObj) ([]byte, error)
 			if int(objVal.Int()) != 0 && int(objVal.Int()) != int(dbObjVal.Int()) {
 				attrIds[i] = 1
 			}
-		} else if objVal.Kind() == relfect.Bool {
+		} else if objVal.Kind() == reflect.Bool {
 			if bool(objVal.Bool()) != bool(dbObjVal.Bool()) {
 				attrIds[i] = 1
 			}
@@ -132,6 +132,8 @@ func (obj EthernetConfig) MergeDbAndConfigObj(dbObj ConfigObj, attrSet []byte) (
 		} else {
 			if dbObjField.Kind() == reflect.Int {
 				mergedObjVal.Elem().Field(i).SetInt(dbObjField.Int())
+			} else if dbObjField.Kind() == reflect.Bool {
+				mergedObjVal.Elem().Field(i).SetBool(dbObjField.Bool())
 			} else {
 				mergedObjVal.Elem().Field(i).SetString(dbObjField.String())
 			}
@@ -154,6 +156,8 @@ func (obj EthernetConfig) UpdateObjectInDb(dbObj ConfigObj, attrSet []byte, dbHd
 			fieldVal := objVal.Field(i)
 			if fieldVal.Kind() == reflect.Int {
 				fieldSqlStr = fmt.Sprintf(" %s = '%d' ", fieldTyp.Name, int(fieldVal.Int()))
+			} else if objVal.Kind() == reflect.Bool {
+				fieldSqlStr = fmt.Sprintf(" %s = '%t' ", fieldTyp.Name, bool(fieldVal.Bool()))
 			} else {
 				fieldSqlStr = fmt.Sprintf(" %s = '%s' ", fieldTyp.Name, fieldVal.String())
 			}
