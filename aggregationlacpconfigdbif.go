@@ -158,52 +158,36 @@ func (obj AggregationLacpConfig) MergeDbAndConfigObj(dbObj ConfigObj, attrSet []
 		objField := objVal.Field(i)
 		dbObjField := dbObjVal.Field(i)
 		if attrSet[i] == 1 {
-			if dbObjField.Kind() == reflect.Int {
+			if dbObjField.Kind() == reflect.Int ||
+				dbObjField.Kind() == reflect.Int8 ||
+				dbObjField.Kind() == reflect.Int16 ||
+				dbObjField.Kind() == reflect.Int32 ||
+				dbObjField.Kind() == reflect.Int64 {
 				mergedObjVal.Elem().Field(i).SetInt(objField.Int())
-			} else if dbObjField.Kind() == reflect.Int8 {
-				mergedObjVal.Elem().Field(i).SetInt(objField.Int8())
-			} else if dbObjField.Kind() == reflect.Int16 {
-				mergedObjVal.Elem().Field(i).SetInt(objField.Int16())
-			} else if dbObjField.Kind() == reflect.Int32 {
-				mergedObjVal.Elem().Field(i).SetInt(objField.Int32())
-			} else if dbObjField.Kind() == reflect.Int64 {
-				mergedObjVal.Elem().Field(i).SetInt(objField.Int64())
-			} else if dbObjField.Kind() == reflect.Uint {
+			} else if dbObjField.Kind() == reflect.Uint ||
+				dbObjField.Kind() == reflect.Uint8 ||
+				dbObjField.Kind() == reflect.Uint16 ||
+				dbObjField.Kind() == reflect.Uint32 ||
+				dbObjField.Kind() == reflect.Uint64 {
 				mergedObjVal.Elem().Field(i).SetUint(objField.Uint())
-			} else if dbObjField.Kind() == reflect.Uint8 {
-				mergedObjVal.Elem().Field(i).SetUint(objField.Uint8())
-			} else if dbObjField.Kind() == reflect.Uint16 {
-				mergedObjVal.Elem().Field(i).SetUint(objField.Uint16())
-			} else if dbObjField.Kind() == reflect.Uint32 {
-				mergedObjVal.Elem().Field(i).SetUint(objField.Uint32())
-			} else if dbObjField.Kind() == reflect.Uint64 {
-				mergedObjVal.Elem().Field(i).SetUint(objField.Uint64())
 			} else if dbObjField.Kind() == reflect.Bool {
 				mergedObjVal.Elem().Field(i).SetBool(objField.Bool())
 			} else {
 				mergedObjVal.Elem().Field(i).SetString(objField.String())
 			}
 		} else {
-			if dbObjField.Kind() == reflect.Int {
+			if dbObjField.Kind() == reflect.Int ||
+				dbObjField.Kind() == reflect.Int8 ||
+				dbObjField.Kind() == reflect.Int16 ||
+				dbObjField.Kind() == reflect.Int32 ||
+				dbObjField.Kind() == reflect.Int64 {
 				mergedObjVal.Elem().Field(i).SetInt(dbObjField.Int())
-			} else if dbObjField.Kind() == reflect.Int8 {
-				mergedObjVal.Elem().Field(i).SetInt(dbObjField.Int8())
-			} else if dbObjField.Kind() == reflect.Int16 {
-				mergedObjVal.Elem().Field(i).SetInt(dbObjField.Int16())
-			} else if dbObjField.Kind() == reflect.Int32 {
-				mergedObjVal.Elem().Field(i).SetInt(dbObjField.Int32())
-			} else if dbObjField.Kind() == reflect.Int64 {
-				mergedObjVal.Elem().Field(i).SetInt(dbObjField.Int64())
-			} else if dbObjField.Kind() == reflect.Uint {
+			} else if dbObjField.Kind() == reflect.Uint ||
+				dbObjField.Kind() == reflect.Uint ||
+				dbObjField.Kind() == reflect.Uint8 ||
+				dbObjField.Kind() == reflect.Uint16 ||
+				dbObjField.Kind() == reflect.Uint32 {
 				mergedObjVal.Elem().Field(i).SetUint(dbObjField.Uint())
-			} else if dbObjField.Kind() == reflect.Uint8 {
-				mergedObjVal.Elem().Field(i).SetUint(dbObjField.Uint8())
-			} else if dbObjField.Kind() == reflect.Uint16 {
-				mergedObjVal.Elem().Field(i).SetUint(dbObjField.Uint16())
-			} else if dbObjField.Kind() == reflect.Uint32 {
-				mergedObjVal.Elem().Field(i).SetUint(dbObjField.Uint32())
-			} else if dbObjField.Kind() == reflect.Uint64 {
-				mergedObjVal.Elem().Field(i).SetUint(dbObjField.Uint64())
 			} else if dbObjField.Kind() == reflect.Bool {
 				mergedObjVal.Elem().Field(i).SetBool(dbObjField.Bool())
 			} else {
