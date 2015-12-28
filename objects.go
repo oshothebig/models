@@ -305,21 +305,8 @@ type PortIntfConfig struct {
 	Autoneg      string
 	MediaType    string
 	Mtu          int32
+    PortStat     []int64
 }
-/*
-	PortNum      int32 `SNAPROUTE: "KEY"`
-	Name         string //fp-01, fp-02, ...
-	Description  string //text description
-	Type         string //T, SR. LR, ...
-	AdminState   string //enabled or disabled
-	OperState    string //up or down
-	MacAddr      string //MAC address
-	Speed        int32  //auto, 10, 40, 100, ...
-	Duplex       string //half, full, auto
-	Autoneg      string //enabled or disabled
-	MediaType    string //sfp, rj45, ...
-	Mtu          int32  //1500, ...
-*/
 
 func (obj PortIntfConfig) UnmarshalObject(body []byte) (ConfigObj, error) {
     var portIntfConfigObj PortIntfConfig
