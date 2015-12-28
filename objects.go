@@ -294,6 +294,20 @@ func (obj ArpEntry) UnmarshalObject(body []byte) (ConfigObj, error) {
 type PortIntfConfig struct {
 	BaseObj
 	PortNum      int32 `SNAPROUTE: "KEY"`
+	Name         string
+	Description  string
+	Type         string
+	AdminState   string
+	OperState    string
+	MacAddr      string
+	Speed        int32
+	Duplex       string
+	Autoneg      string
+	MediaType    string
+	Mtu          int32
+}
+/*
+	PortNum      int32 `SNAPROUTE: "KEY"`
 	Name         string //fp-01, fp-02, ...
 	Description  string //text description
 	Type         string //T, SR. LR, ...
@@ -305,7 +319,7 @@ type PortIntfConfig struct {
 	Autoneg      string //enabled or disabled
 	MediaType    string //sfp, rj45, ...
 	Mtu          int32  //1500, ...
-}
+*/
 
 func (obj PortIntfConfig) UnmarshalObject(body []byte) (ConfigObj, error) {
     var portIntfConfigObj PortIntfConfig
