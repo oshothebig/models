@@ -82,6 +82,7 @@ func (obj AggregationLacpConfig) GetKey() (string, error) {
 
 func (obj AggregationLacpConfig) GetSqlKeyStr(objKey string) (string, error) {
 	keys := strings.Split(objKey, "#")
+	fmt.Println("Aggregation sqlKey", objKey, keys)
 	sqlKey := "NameKey = " + "\"" + keys[0] + "\""
 	return sqlKey, nil
 }
@@ -216,11 +217,11 @@ func (obj AggregationLacpConfig) UpdateObjectInDb(dbObj ConfigObj, attrSet []byt
 				fieldVal.Kind() == reflect.Int32 ||
 				fieldVal.Kind() == reflect.Int64 {
 				fieldSqlStr = fmt.Sprintf(" %s = '%d' ", fieldTyp.Name, int(fieldVal.Int()))
-			} else if objVal.Kind() == reflect.Uint ||
-				objVal.Kind() == reflect.Uint8 ||
-				objVal.Kind() == reflect.Uint16 ||
-				objVal.Kind() == reflect.Uint32 ||
-				objVal.Kind() == reflect.Uint64 {
+			} else if fieldVal.Kind() == reflect.Uint ||
+				fieldVal.Kind() == reflect.Uint8 ||
+				fieldVal.Kind() == reflect.Uint16 ||
+				fieldVal.Kind() == reflect.Uint32 ||
+				fieldVal.Kind() == reflect.Uint64 {
 				fieldSqlStr = fmt.Sprintf(" %s = '%d' ", fieldTyp.Name, int(fieldVal.Uint()))
 			} else if objVal.Kind() == reflect.Bool {
 				fieldSqlStr = fmt.Sprintf(" %s = '%t' ", fieldTyp.Name, bool(fieldVal.Bool()))
