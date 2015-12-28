@@ -271,10 +271,11 @@ func (obj ArpConfig) UnmarshalObject(body []byte) (ConfigObj, error) {
 
 type ArpEntry struct {
     BaseObj
-    IpAddr  string
-    MacAddr string
-    Vlan    int
-    Intf    string
+    IpAddr          string
+    MacAddr         string
+    Vlan            int
+    Intf            string
+    ExpiryTimeLeft  string
 }
 
 
