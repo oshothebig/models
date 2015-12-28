@@ -100,7 +100,7 @@ func (obj AggregationLacpConfig) CompareObjectsAndDiff(dbObj ConfigObj) ([]byte,
 				attrIds[i] = 1
 			}
 		} else if objVal.Kind() == reflect.Uint {
-			if int(objVal.Uint()) != 0 && uint(objVal.Uint()) != int(dbObjVal.Uint()) {
+			if uint(objVal.Uint()) != 0 && uint(objVal.Uint()) != uint(dbObjVal.Uint()) {
 				attrIds[i] = 1
 			}
 		} else if objVal.Kind() == reflect.Bool {
@@ -128,7 +128,7 @@ func (obj AggregationLacpConfig) MergeDbAndConfigObj(dbObj ConfigObj, attrSet []
 		if attrSet[i] == 1 {
 			if dbObjField.Kind() == reflect.Int {
 				mergedObjVal.Elem().Field(i).SetInt(objField.Int())
-			} else if dbObjField.Kind() == reflect.Bool {
+			} else if dbObjField.Kind() == reflect.Uint {
 				mergedObjVal.Elem().Field(i).SetUint(objField.Uint())
 			} else if dbObjField.Kind() == reflect.Bool {
 				mergedObjVal.Elem().Field(i).SetBool(objField.Bool())
@@ -164,6 +164,8 @@ func (obj AggregationLacpConfig) UpdateObjectInDb(dbObj ConfigObj, attrSet []byt
 			fieldVal := objVal.Field(i)
 			if fieldVal.Kind() == reflect.Int {
 				fieldSqlStr = fmt.Sprintf(" %s = '%d' ", fieldTyp.Name, int(fieldVal.Int()))
+			} else if objVal.Kind() == reflect.Uint {
+				fieldSqlStr = fmt.Sprintf(" %s = '%d' ", fieldTyp.Name, int(fieldVal.Uint()))
 			} else if objVal.Kind() == reflect.Bool {
 				fieldSqlStr = fmt.Sprintf(" %s = '%t' ", fieldTyp.Name, bool(fieldVal.Bool()))
 			} else {
