@@ -57,6 +57,6 @@
         },
 
 	"PortIntfConfig" : {
-	         "Owner": "confd",
+	         "Owner": "asicd",
 	         "Listeners" : []}
 }
