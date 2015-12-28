@@ -160,8 +160,24 @@ func (obj AggregationLacpConfig) MergeDbAndConfigObj(dbObj ConfigObj, attrSet []
 		if attrSet[i] == 1 {
 			if dbObjField.Kind() == reflect.Int {
 				mergedObjVal.Elem().Field(i).SetInt(objField.Int())
+			} else if dbObjField.Kind() == reflect.Int8 {
+				mergedObjVal.Elem().Field(i).SetInt(objField.Int8())
+			} else if dbObjField.Kind() == reflect.Int16 {
+				mergedObjVal.Elem().Field(i).SetInt(objField.Int16())
+			} else if dbObjField.Kind() == reflect.Int32 {
+				mergedObjVal.Elem().Field(i).SetInt(objField.Int32())
+			} else if dbObjField.Kind() == reflect.Int64 {
+				mergedObjVal.Elem().Field(i).SetInt(objField.Int64())
 			} else if dbObjField.Kind() == reflect.Uint {
 				mergedObjVal.Elem().Field(i).SetUint(objField.Uint())
+			} else if dbObjField.Kind() == reflect.Uint8 {
+				mergedObjVal.Elem().Field(i).SetUint(objField.Uint8())
+			} else if dbObjField.Kind() == reflect.Uint16 {
+				mergedObjVal.Elem().Field(i).SetUint(objField.Uint16())
+			} else if dbObjField.Kind() == reflect.Uint32 {
+				mergedObjVal.Elem().Field(i).SetUint(objField.Uint32())
+			} else if dbObjField.Kind() == reflect.Uint64 {
+				mergedObjVal.Elem().Field(i).SetUint(objField.Uint64())
 			} else if dbObjField.Kind() == reflect.Bool {
 				mergedObjVal.Elem().Field(i).SetBool(objField.Bool())
 			} else {
@@ -170,8 +186,24 @@ func (obj AggregationLacpConfig) MergeDbAndConfigObj(dbObj ConfigObj, attrSet []
 		} else {
 			if dbObjField.Kind() == reflect.Int {
 				mergedObjVal.Elem().Field(i).SetInt(dbObjField.Int())
+			} else if dbObjField.Kind() == reflect.Int8 {
+				mergedObjVal.Elem().Field(i).SetInt(dbObjField.Int8())
+			} else if dbObjField.Kind() == reflect.Int16 {
+				mergedObjVal.Elem().Field(i).SetInt(dbObjField.Int16())
+			} else if dbObjField.Kind() == reflect.Int32 {
+				mergedObjVal.Elem().Field(i).SetInt(dbObjField.Int32())
+			} else if dbObjField.Kind() == reflect.Int64 {
+				mergedObjVal.Elem().Field(i).SetInt(dbObjField.Int64())
 			} else if dbObjField.Kind() == reflect.Uint {
 				mergedObjVal.Elem().Field(i).SetUint(dbObjField.Uint())
+			} else if dbObjField.Kind() == reflect.Uint8 {
+				mergedObjVal.Elem().Field(i).SetUint(dbObjField.Uint8())
+			} else if dbObjField.Kind() == reflect.Uint16 {
+				mergedObjVal.Elem().Field(i).SetUint(dbObjField.Uint16())
+			} else if dbObjField.Kind() == reflect.Uint32 {
+				mergedObjVal.Elem().Field(i).SetUint(dbObjField.Uint32())
+			} else if dbObjField.Kind() == reflect.Uint64 {
+				mergedObjVal.Elem().Field(i).SetUint(dbObjField.Uint64())
 			} else if dbObjField.Kind() == reflect.Bool {
 				mergedObjVal.Elem().Field(i).SetBool(dbObjField.Bool())
 			} else {
@@ -194,9 +226,17 @@ func (obj AggregationLacpConfig) UpdateObjectInDb(dbObj ConfigObj, attrSet []byt
 		if attrSet[i] == 1 {
 			fieldTyp := objTyp.Field(i)
 			fieldVal := objVal.Field(i)
-			if fieldVal.Kind() == reflect.Int {
+			if fieldVal.Kind() == reflect.Int ||
+				fieldVal.Kind() == reflect.Int8 ||
+				fieldVal.Kind() == reflect.Int16 ||
+				fieldVal.Kind() == reflect.Int32 ||
+				fieldVal.Kind() == reflect.Int64 {
 				fieldSqlStr = fmt.Sprintf(" %s = '%d' ", fieldTyp.Name, int(fieldVal.Int()))
-			} else if objVal.Kind() == reflect.Uint {
+			} else if objVal.Kind() == reflect.Uint ||
+				objVal.Kind() == reflect.Uint8 ||
+				objVal.Kind() == reflect.Uint16 ||
+				objVal.Kind() == reflect.Uint32 ||
+				objVal.Kind() == reflect.Uint64 {
 				fieldSqlStr = fmt.Sprintf(" %s = '%d' ", fieldTyp.Name, int(fieldVal.Uint()))
 			} else if objVal.Kind() == reflect.Bool {
 				fieldSqlStr = fmt.Sprintf(" %s = '%t' ", fieldTyp.Name, bool(fieldVal.Bool()))
