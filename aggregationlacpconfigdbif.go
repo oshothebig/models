@@ -99,6 +99,10 @@ func (obj AggregationLacpConfig) CompareObjectsAndDiff(dbObj ConfigObj) ([]byte,
 			if int(objVal.Int()) != 0 && int(objVal.Int()) != int(dbObjVal.Int()) {
 				attrIds[i] = 1
 			}
+		} else if objVal.Kind() == reflect.Uint {
+			if int(objVal.Uint()) != 0 && uint(objVal.Uint()) != int(dbObjVal.Uint()) {
+				attrIds[i] = 1
+			}
 		} else if objVal.Kind() == reflect.Bool {
 			if bool(objVal.Bool()) != bool(dbObjVal.Bool()) {
 				attrIds[i] = 1
@@ -125,6 +129,8 @@ func (obj AggregationLacpConfig) MergeDbAndConfigObj(dbObj ConfigObj, attrSet []
 			if dbObjField.Kind() == reflect.Int {
 				mergedObjVal.Elem().Field(i).SetInt(objField.Int())
 			} else if dbObjField.Kind() == reflect.Bool {
+				mergedObjVal.Elem().Field(i).SetUint(objField.Uint())
+			} else if dbObjField.Kind() == reflect.Bool {
 				mergedObjVal.Elem().Field(i).SetBool(objField.Bool())
 			} else {
 				mergedObjVal.Elem().Field(i).SetString(objField.String())
@@ -132,6 +138,8 @@ func (obj AggregationLacpConfig) MergeDbAndConfigObj(dbObj ConfigObj, attrSet []
 		} else {
 			if dbObjField.Kind() == reflect.Int {
 				mergedObjVal.Elem().Field(i).SetInt(dbObjField.Int())
+			} else if dbObjField.Kind() == reflect.Uint {
+				mergedObjVal.Elem().Field(i).SetUint(dbObjField.Uint())
 			} else if dbObjField.Kind() == reflect.Bool {
 				mergedObjVal.Elem().Field(i).SetBool(dbObjField.Bool())
 			} else {
