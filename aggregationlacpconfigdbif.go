@@ -61,17 +61,10 @@ func (obj AggregationLacpConfig) DeleteObjectFromDb(objKey string, dbHdl *sql.DB
 	return err
 }
 
-func (obj AggregationLacpConfig) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, error) {
+func (obj AggregationLacpConfig) GetObjectFromDb(objSqlKey string, dbHdl *sql.DB) (ConfigObj, error) {
 	var object AggregationLacpConfig
-	sqlKey, err := obj.GetSqlKeyStr(objKey)
-	if err != nil {
-		fmt.Println("GetSqlKeyStr for object key", objKey, "failed with error", err)
-		return object, err
-	}
-
-	dbCmd := "SELECT * from AggregationLacpConfig where " + sqlKey
-
-	err = dbHdl.QueryRow(dbCmd).Scan(&object.LagType, &object.Description, &object.Enabled, &object.Mtu, &object.MinLinks, &object.Type, &object.NameKey, &object.Interval, &object.LacpMode, &object.SystemIdMac, &object.SystemPriority)
+	dbCmd := "select * from AggregationLacpConfig where " + objSqlKey
+	err := dbHdl.QueryRow(dbCmd).Scan(&object.LagType, &object.Description, &object.Enabled, &object.Mtu, &object.MinLinks, &object.Type, &object.NameKey, &object.Interval, &object.LacpMode, &object.SystemIdMac, &object.SystemPriority)
 	fmt.Println("### DB Get AggregationLacpConfig\n", err)
 	return object, err
 }
