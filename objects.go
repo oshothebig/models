@@ -305,7 +305,6 @@ type PortIntfConfig struct {
 	Autoneg      string
 	MediaType    string
 	Mtu          int32
-    PortStat     []int64
 }
 
 func (obj PortIntfConfig) UnmarshalObject(body []byte) (ConfigObj, error) {
@@ -318,4 +317,22 @@ func (obj PortIntfConfig) UnmarshalObject(body []byte) (ConfigObj, error) {
     }
 
     return portIntfConfigObj, err
+}
+
+type PortIntfState struct {
+	BaseObj
+	PortNum      int32
+    PortStats    []int64
+}
+
+func (obj PortIntfState) UnmarshalObject(body []byte) (ConfigObj, error) {
+    var portIntfStateObj PortIntfState
+    var err error
+    if len(body) > 0 {
+        if err = json.Unmarshal(body, &portIntfStateObj); err != nil {
+            fmt.Println("### Trouble in unmarshaling PortIntfState from Json", body)
+        }
+    }
+
+    return portIntfStateObj, err
 }
