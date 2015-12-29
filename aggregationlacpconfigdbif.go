@@ -78,14 +78,12 @@ func (obj AggregationLacpConfig) GetObjectFromDb(objKey string, dbHdl *sql.DB) (
 
 func (obj AggregationLacpConfig) GetKey() (string, error) {
 	key := string(obj.NameKey)
-	fmt.Println("AggregationLacpConfig GetKey: ", obj.NameKey)
 	return key, nil
 }
 
 func (obj AggregationLacpConfig) GetSqlKeyStr(objKey string) (string, error) {
 	keys := strings.Split(objKey, "#")
 	sqlKey := "NameKey = " + "\"" + keys[0] + "\""
-	fmt.Println("Aggregation objKey, keys, sqlKey", objKey, keys, sqlKey)
 	return sqlKey, nil
 }
 
@@ -96,8 +94,10 @@ func (obj AggregationLacpConfig) CompareObjectsAndDiff(dbObj ConfigObj) ([]byte,
 	dbObjVal := reflect.ValueOf(dbV4Route)
 	attrIds := make([]byte, objTyp.NumField())
 	for i := 0; i < objTyp.NumField(); i++ {
+		fieldTyp := objTyp.Field(i)
 		objVal := objVal.Field(i)
 		dbObjVal := dbObjVal.Field(i)
+		fmt.Println("attr (index, name)", i, fieldTyp.Name)
 		if objVal.Kind() == reflect.Int {
 			if int(objVal.Int()) != 0 && int(objVal.Int()) != int(dbObjVal.Int()) {
 				attrIds[i] = 1
@@ -146,6 +146,9 @@ func (obj AggregationLacpConfig) CompareObjectsAndDiff(dbObj ConfigObj) ([]byte,
 			if objVal.String() != "" && objVal.String() != dbObjVal.String() {
 				attrIds[i] = 1
 			}
+		}
+		if attrIds[i] == 1 {
+			fmt.Println("attribute changed ", fieldTyp.Name)
 		}
 	}
 	return attrIds, nil
