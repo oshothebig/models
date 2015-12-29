@@ -70,8 +70,9 @@ func (obj AggregationLacpConfig) GetObjectFromDb(objKey string, dbHdl *sql.DB) (
 	}
 
 	dbCmd := "SELECT * from AggregationLacpConfig where " + sqlKey
-	fmt.Println("### DB Get AggregationLacpConfig\n")
+
 	err = dbHdl.QueryRow(dbCmd).Scan(&object.LagType, &object.Description, &object.Enabled, &object.Mtu, &object.MinLinks, &object.Type, &object.NameKey, &object.Interval, &object.LacpMode, &object.SystemIdMac, &object.SystemPriority)
+	fmt.Println("### DB Get AggregationLacpConfig\n", err)
 	return object, err
 }
 
