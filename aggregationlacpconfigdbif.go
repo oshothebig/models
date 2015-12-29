@@ -77,13 +77,14 @@ func (obj AggregationLacpConfig) GetObjectFromDb(objKey string, dbHdl *sql.DB) (
 
 func (obj AggregationLacpConfig) GetKey() (string, error) {
 	key := string(obj.NameKey)
+	fmt.Println("AggregationLacpConfig GetKey: ", obj.NameKey)
 	return key, nil
 }
 
 func (obj AggregationLacpConfig) GetSqlKeyStr(objKey string) (string, error) {
 	keys := strings.Split(objKey, "#")
-	fmt.Println("Aggregation sqlKey", objKey, keys)
 	sqlKey := "NameKey = " + "\"" + keys[0] + "\""
+	fmt.Println("Aggregation objKey, keys, sqlKey", objKey, keys, sqlKey)
 	return sqlKey, nil
 }
 
