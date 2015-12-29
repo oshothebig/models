@@ -268,3 +268,54 @@ func (obj ArpConfig) UnmarshalObject(body []byte) (ConfigObj, error) {
 
     return arpConfigObj, err
 }
+
+type ArpEntry struct {
+    BaseObj
+    IpAddr          string
+    MacAddr         string
+    Vlan            int
+    Intf            string
+    ExpiryTimeLeft  string
+}
+
+
+func (obj ArpEntry) UnmarshalObject(body []byte) (ConfigObj, error) {
+    var arpEntryObj ArpEntry
+    var err error
+    if len(body) > 0 {
+        if err = json.Unmarshal(body, &arpEntryObj); err != nil {
+            fmt.Println("### Trouble in unmarshaling ArpConfig from Json", body)
+        }
+    }
+    return arpEntryObj, err
+}
+
+/* PortInterface */
+type PortIntfConfig struct {
+	BaseObj
+	PortNum      int32 `SNAPROUTE: "KEY"`
+	Name         string
+	Description  string
+	Type         string
+	AdminState   string
+	OperState    string
+	MacAddr      string
+	Speed        int32
+	Duplex       string
+	Autoneg      string
+	MediaType    string
+	Mtu          int32
+    PortStat     []int64
+}
+
+func (obj PortIntfConfig) UnmarshalObject(body []byte) (ConfigObj, error) {
+    var portIntfConfigObj PortIntfConfig
+    var err error
+    if len(body) > 0 {
+        if err = json.Unmarshal(body, &portIntfConfigObj); err != nil {
+            fmt.Println("### Trouble in unmarshaling PortIntfConfig from Json", body)
+        }
+    }
+
+    return portIntfConfigObj, err
+}
