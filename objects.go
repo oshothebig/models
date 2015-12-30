@@ -14,7 +14,7 @@ type ConfigObj interface {
 	GetKey() (string, error)
 	GetSqlKeyStr(string) (string, error)
 	GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, error)
-	CompareObjectsAndDiff(dbObj ConfigObj) ([]byte, error)
+	CompareObjectsAndDiff(updateKeys map[string]bool, dbObj ConfigObj) ([]byte, error)
 	MergeDbAndConfigObj(dbObj ConfigObj, attrSet []byte) (ConfigObj, error)
 	UpdateObjectInDb(dbV4Route ConfigObj, attrSet []byte, dbHdl *sql.DB) error
 }
@@ -46,7 +46,7 @@ func (b BaseObj) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, error
 	return nil, nil
 }
 
-func (b BaseObj) CompareObjectsAndDiff(dbObj ConfigObj) ([]byte, error) {
+func (b BaseObj) CompareObjectsAndDiff(updateKeys map[string]bool, dbObj ConfigObj) ([]byte, error) {
 	var arr []byte
 	return arr, nil
 }
@@ -144,13 +144,13 @@ type BGPQueues struct {
 
 type BGPNeighborConfig struct {
 	BaseObj
-	PeerAS          uint32
-	LocalAS         uint32
-	AuthPassword    string
-	Description     string
-	NeighborAddress string `SNAPROUTE: "KEY"`
+	PeerAS                  uint32
+	LocalAS                 uint32
+	AuthPassword            string
+	Description             string
+	NeighborAddress         string `SNAPROUTE: "KEY"`
 	RouteReflectorClusterId uint32
-	RouteReflectorClient bool
+	RouteReflectorClient    bool
 }
 
 func (obj BGPNeighborConfig) UnmarshalObject(body []byte) (ConfigObj, error) {
@@ -166,17 +166,17 @@ func (obj BGPNeighborConfig) UnmarshalObject(body []byte) (ConfigObj, error) {
 
 type BGPNeighborState struct {
 	BaseObj
-	PeerAS          uint32
-	LocalAS         uint32
-	PeerType        PeerType
-	AuthPassword    string
-	Description     string
-	NeighborAddress string
-	SessionState    uint32
-	Messages        BGPMessages
-	Queues          BGPQueues
+	PeerAS                  uint32
+	LocalAS                 uint32
+	PeerType                PeerType
+	AuthPassword            string
+	Description             string
+	NeighborAddress         string
+	SessionState            uint32
+	Messages                BGPMessages
+	Queues                  BGPQueues
 	RouteReflectorClusterId uint32
-	RouteReflectorClient bool
+	RouteReflectorClient    bool
 }
 
 func (obj BGPNeighborState) UnmarshalObject(body []byte) (ConfigObj, error) {
@@ -253,86 +253,85 @@ func (obj IPv4Neighbor) UnmarshalObject(body []byte) (ConfigObj, error) {
 
 /* ARP */
 type ArpConfig struct {
-    BaseObj
-    Timeout int32
+	BaseObj
+	Timeout int32
 }
 
 func (obj ArpConfig) UnmarshalObject(body []byte) (ConfigObj, error) {
-    var arpConfigObj ArpConfig
-    var err error
-    if len(body) > 0 {
-        if err = json.Unmarshal(body, &arpConfigObj); err != nil {
-            fmt.Println("### Trouble in unmarshaling ArpConfig from Json", body)
-        }
-    }
+	var arpConfigObj ArpConfig
+	var err error
+	if len(body) > 0 {
+		if err = json.Unmarshal(body, &arpConfigObj); err != nil {
+			fmt.Println("### Trouble in unmarshaling ArpConfig from Json", body)
+		}
+	}
 
-    return arpConfigObj, err
+	return arpConfigObj, err
 }
 
 type ArpEntry struct {
-    BaseObj
-    IpAddr          string
-    MacAddr         string
-    Vlan            int
-    Intf            string
-    ExpiryTimeLeft  string
+	BaseObj
+	IpAddr         string
+	MacAddr        string
+	Vlan           int
+	Intf           string
+	ExpiryTimeLeft string
 }
 
-
 func (obj ArpEntry) UnmarshalObject(body []byte) (ConfigObj, error) {
-    var arpEntryObj ArpEntry
-    var err error
-    if len(body) > 0 {
-        if err = json.Unmarshal(body, &arpEntryObj); err != nil {
-            fmt.Println("### Trouble in unmarshaling ArpConfig from Json", body)
-        }
-    }
-    return arpEntryObj, err
+	var arpEntryObj ArpEntry
+	var err error
+	if len(body) > 0 {
+		if err = json.Unmarshal(body, &arpEntryObj); err != nil {
+			fmt.Println("### Trouble in unmarshaling ArpConfig from Json", body)
+		}
+	}
+	return arpEntryObj, err
 }
 
 /* PortInterface */
 type PortIntfConfig struct {
 	BaseObj
-	PortNum      int32 `SNAPROUTE: "KEY"`
-	Name         string
-	Description  string
-	Type         string
-	AdminState   string
-	OperState    string
-	MacAddr      string
-	Speed        int32
-	Duplex       string
-	Autoneg      string
-	MediaType    string
-	Mtu          int32
+	PortNum     int32 `SNAPROUTE: "KEY"`
+	Name        string
+	Description string
+	Type        string
+	AdminState  string
+	OperState   string
+	MacAddr     string
+	Speed       int32
+	Duplex      string
+	Autoneg     string
+	MediaType   string
+	Mtu         int32
 }
 
 func (obj PortIntfConfig) UnmarshalObject(body []byte) (ConfigObj, error) {
-    var portIntfConfigObj PortIntfConfig
-    var err error
-    if len(body) > 0 {
-        if err = json.Unmarshal(body, &portIntfConfigObj); err != nil {
-            fmt.Println("### Trouble in unmarshaling PortIntfConfig from Json", body)
-        }
-    }
+	var portIntfConfigObj PortIntfConfig
+	var err error
+	if len(body) > 0 {
+		if err = json.Unmarshal(body, &portIntfConfigObj); err != nil {
+			fmt.Println("### Trouble in unmarshaling PortIntfConfig from Json", body)
+		}
+	}
 
-    return portIntfConfigObj, err
+	return portIntfConfigObj, err
 }
 
 type PortIntfState struct {
 	BaseObj
-	PortNum      int32
-    PortStats    []int64
+	PortNum   int32
+	PortStats []int64
 }
 
 func (obj PortIntfState) UnmarshalObject(body []byte) (ConfigObj, error) {
-    var portIntfStateObj PortIntfState
-    var err error
-    if len(body) > 0 {
-        if err = json.Unmarshal(body, &portIntfStateObj); err != nil {
-            fmt.Println("### Trouble in unmarshaling PortIntfState from Json", body)
-        }
-    }
+	var portIntfStateObj PortIntfState
+	var err error
+	if len(body) > 0 {
+		if err = json.Unmarshal(body, &portIntfStateObj); err != nil {
+			fmt.Println("### Trouble in unmarshaling PortIntfState from Json", body)
+		}
+	}
 
-    return portIntfStateObj, err
+	return portIntfStateObj, err
 }

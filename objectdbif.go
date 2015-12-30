@@ -4,9 +4,9 @@ import (
 	"database/sql"
 	"fmt"
 	//"strconv"
-	"utils/dbutils"
-	"strings"
 	"reflect"
+	"strings"
+	"utils/dbutils"
 )
 
 func (obj IPV4Route) CreateDBTable(dbHdl *sql.DB) error {
@@ -68,13 +68,13 @@ func (obj IPV4Route) GetSqlKeyStr(objKey string) (string, error) {
 	return v4RouteSqlKey, nil
 }
 
-func (obj IPV4Route) CompareObjectsAndDiff(dbObj ConfigObj) ([]byte, error) {
+func (obj IPV4Route) CompareObjectsAndDiff(updateKeys map[string]bool, dbObj ConfigObj) ([]byte, error) {
 	dbV4Route := dbObj.(IPV4Route)
 	objTyp := reflect.TypeOf(obj)
 	objVal := reflect.ValueOf(obj)
 	dbObjVal := reflect.ValueOf(dbV4Route)
 	attrIds := make([]byte, objTyp.NumField())
-	for i:=0; i<objTyp.NumField(); i++ {
+	for i := 0; i < objTyp.NumField(); i++ {
 		objVal := objVal.Field(i)
 		dbObjVal := dbObjVal.Field(i)
 		if objVal.Kind() == reflect.Int {
@@ -96,10 +96,10 @@ func (obj IPV4Route) MergeDbAndConfigObj(dbObj ConfigObj, attrSet []byte) (Confi
 	objVal := reflect.ValueOf(obj)
 	dbObjVal := reflect.ValueOf(dbObj)
 	mergedObjVal := reflect.ValueOf(&mergedV4Route)
-	for i:=1; i<objTyp.NumField(); i++ {
+	for i := 1; i < objTyp.NumField(); i++ {
 		objField := objVal.Field(i)
 		dbObjField := dbObjVal.Field(i)
-		if  attrSet[i] ==1 {
+		if attrSet[i] == 1 {
 			if dbObjField.Kind() == reflect.Int {
 				mergedObjVal.Elem().Field(i).SetInt(objField.Int())
 			} else {
@@ -124,7 +124,7 @@ func (obj IPV4Route) UpdateObjectInDb(dbObj ConfigObj, attrSet []byte, dbHdl *sq
 	dbCmd := "update " + "IPV4Routes" + " set"
 	objTyp := reflect.TypeOf(obj)
 	objVal := reflect.ValueOf(obj)
-	for i:=0; i<objTyp.NumField(); i++ {
+	for i := 0; i < objTyp.NumField(); i++ {
 		if attrSet[i] == 1 {
 			fieldTyp := objTyp.Field(i)
 			fieldVal := objVal.Field(i)
@@ -167,11 +167,11 @@ func (obj BGPNeighborState) GetObjectFromDb(objKey string, dbHdl *sql.DB) (Confi
 }
 
 func (obj ArpConfig) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, error) {
-        var arpConfig ArpConfig
-        return arpConfig, nil
+	var arpConfig ArpConfig
+	return arpConfig, nil
 }
 
 func (obj ArpEntry) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, error) {
-        var arpEntry ArpEntry
-        return arpEntry, nil
+	var arpEntry ArpEntry
+	return arpEntry, nil
 }
