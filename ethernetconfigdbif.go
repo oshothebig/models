@@ -32,7 +32,7 @@ func (obj EthernetConfig) CreateDBTable(dbHdl *sql.DB) error {
 func (obj EthernetConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	var objectId int64
 	dbCmd := fmt.Sprintf("INSERT INTO EthernetConfig (NameKey, Enabled, Description, Mtu, Type, MacAddress, DuplexMode, Auto, Speed, EnableFlowControl, AggregateId) VALUES ('%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v') ;",
-		obj.NameKey, obj.Enabled, obj.Description, obj.Mtu, obj.Type, obj.MacAddress, obj.DuplexMode, obj.Auto, obj.Speed, obj.EnableFlowControl, obj.AggregateId)
+		obj.NameKey, dbutils.ConvertBoolToInt(obj.Enabled), obj.Description, obj.Mtu, obj.Type, obj.MacAddress, obj.DuplexMode, dbutils.ConvertBoolToInt(obj.Auto), obj.Speed, dbutils.ConvertBoolToInt(obj.EnableFlowControl), obj.AggregateId)
 	fmt.Println("**** Create Object called with ", obj)
 
 	result, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
@@ -217,7 +217,7 @@ func (obj EthernetConfig) UpdateObjectInDb(dbObj ConfigObj, attrSet []byte, dbHd
 				fieldVal.Kind() == reflect.Uint64 {
 				fieldSqlStr = fmt.Sprintf(" %s = '%d' ", fieldTyp.Name, int(fieldVal.Uint()))
 			} else if objVal.Kind() == reflect.Bool {
-				fieldSqlStr = fmt.Sprintf(" %s = '%t' ", fieldTyp.Name, bool(fieldVal.Bool()))
+				fieldSqlStr = fmt.Sprintf(" %s = '%d' ", fieldTyp.Name, dbutils.ConvertBoolToInt(bool(fieldVal.Bool())))
 			} else {
 				fieldSqlStr = fmt.Sprintf(" %s = '%s' ", fieldTyp.Name, fieldVal.String())
 			}
