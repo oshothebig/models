@@ -305,7 +305,7 @@ type PortIntfConfig struct {
 	Autoneg      string
 	MediaType    string
 	Mtu          int32
-    PortStat     []int64
+	PortStat     []int64
 }
 
 func (obj PortIntfConfig) UnmarshalObject(body []byte) (ConfigObj, error) {
