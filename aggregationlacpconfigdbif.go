@@ -38,13 +38,13 @@ func (obj AggregationLacpConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	result, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
 	if err != nil {
 		fmt.Println("**** Failed to Create table", err)
-	}
+	} else {
+		objectId, err = result.LastInsertId()
+		if err != nil {
+			fmt.Println("### Failed to return last object id", err)
+		}
 
-	objectId, err = result.LastInsertId()
-	if err != nil {
-		fmt.Println("### Failed to return last object id", err)
 	}
-
 	return objectId, err
 }
 
