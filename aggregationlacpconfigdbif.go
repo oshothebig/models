@@ -32,7 +32,7 @@ func (obj AggregationLacpConfig) CreateDBTable(dbHdl *sql.DB) error {
 func (obj AggregationLacpConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	var objectId int64
 	dbCmd := fmt.Sprintf("INSERT INTO AggregationLacpConfig (LagType, Description, Enabled, Mtu, MinLinks, Type, NameKey, Interval, LacpMode, SystemIdMac, SystemPriority) VALUES ('%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v') ;",
-		obj.LagType, obj.Description, obj.Enabled, obj.Mtu, obj.MinLinks, obj.Type, obj.NameKey, obj.Interval, obj.LacpMode, obj.SystemIdMac, obj.SystemPriority)
+		obj.LagType, obj.Description, dbutils.ConvertBoolToInt(obj.Enabled), obj.Mtu, obj.MinLinks, obj.Type, obj.NameKey, obj.Interval, obj.LacpMode, obj.SystemIdMac, obj.SystemPriority)
 	fmt.Println("**** Create Object called with ", obj)
 
 	result, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
@@ -80,7 +80,7 @@ func (obj AggregationLacpConfig) GetSqlKeyStr(objKey string) (string, error) {
 	return sqlKey, nil
 }
 
-func (obj AggregationLacpConfig) CompareObjectsAndDiff(dbObj ConfigObj) ([]byte, error) {
+func (obj AggregationLacpConfig) CompareObjectsAndDiff(updateKeys map[string]bool, dbObj ConfigObj) ([]byte, error) {
 	dbV4Route := dbObj.(AggregationLacpConfig)
 	objTyp := reflect.TypeOf(obj)
 	objVal := reflect.ValueOf(obj)
@@ -90,58 +90,59 @@ func (obj AggregationLacpConfig) CompareObjectsAndDiff(dbObj ConfigObj) ([]byte,
 		fieldTyp := objTyp.Field(i)
 		objVal := objVal.Field(i)
 		dbObjVal := dbObjVal.Field(i)
-		fmt.Println("attr (index, name)", i, fieldTyp.Name)
-		if objVal.Kind() == reflect.Int {
-			if int(objVal.Int()) != 0 && int(objVal.Int()) != int(dbObjVal.Int()) {
-				attrIds[i] = 1
+		if _, ok := updateKeys[fieldTyp.Name]; ok {
+			if objVal.Kind() == reflect.Int {
+				if int(objVal.Int()) != int(dbObjVal.Int()) {
+					attrIds[i] = 1
+				}
+			} else if objVal.Kind() == reflect.Int8 {
+				if int8(objVal.Int()) != int8(dbObjVal.Int()) {
+					attrIds[i] = 1
+				}
+			} else if objVal.Kind() == reflect.Int16 {
+				if int16(objVal.Int()) != int16(dbObjVal.Int()) {
+					attrIds[i] = 1
+				}
+			} else if objVal.Kind() == reflect.Int32 {
+				if int32(objVal.Int()) != int32(dbObjVal.Int()) {
+					attrIds[i] = 1
+				}
+			} else if objVal.Kind() == reflect.Int64 {
+				if int64(objVal.Int()) != int64(dbObjVal.Int()) {
+					attrIds[i] = 1
+				}
+			} else if objVal.Kind() == reflect.Uint {
+				if uint(objVal.Uint()) != uint(dbObjVal.Uint()) {
+					attrIds[i] = 1
+				}
+			} else if objVal.Kind() == reflect.Uint8 {
+				if uint8(objVal.Uint()) != uint8(dbObjVal.Uint()) {
+					attrIds[i] = 1
+				}
+			} else if objVal.Kind() == reflect.Uint16 {
+				if uint16(objVal.Uint()) != uint16(dbObjVal.Uint()) {
+					attrIds[i] = 1
+				}
+			} else if objVal.Kind() == reflect.Uint32 {
+				if uint16(objVal.Uint()) != uint16(dbObjVal.Uint()) {
+					attrIds[i] = 1
+				}
+			} else if objVal.Kind() == reflect.Uint64 {
+				if uint16(objVal.Uint()) != uint16(dbObjVal.Uint()) {
+					attrIds[i] = 1
+				}
+			} else if objVal.Kind() == reflect.Bool {
+				if bool(objVal.Bool()) != bool(dbObjVal.Bool()) {
+					attrIds[i] = 1
+				}
+			} else {
+				if objVal.String() != dbObjVal.String() {
+					attrIds[i] = 1
+				}
 			}
-		} else if objVal.Kind() == reflect.Int8 {
-			if int8(objVal.Int()) != 0 && int8(objVal.Int()) != int8(dbObjVal.Int()) {
-				attrIds[i] = 1
+			if attrIds[i] == 1 {
+				fmt.Println("attribute changed ", fieldTyp.Name)
 			}
-		} else if objVal.Kind() == reflect.Int16 {
-			if int16(objVal.Int()) != 0 && int16(objVal.Int()) != int16(dbObjVal.Int()) {
-				attrIds[i] = 1
-			}
-		} else if objVal.Kind() == reflect.Int32 {
-			if int32(objVal.Int()) != 0 && int32(objVal.Int()) != int32(dbObjVal.Int()) {
-				attrIds[i] = 1
-			}
-		} else if objVal.Kind() == reflect.Int64 {
-			if int64(objVal.Int()) != 0 && int64(objVal.Int()) != int64(dbObjVal.Int()) {
-				attrIds[i] = 1
-			}
-		} else if objVal.Kind() == reflect.Uint {
-			if uint(objVal.Uint()) != 0 && uint(objVal.Uint()) != uint(dbObjVal.Uint()) {
-				attrIds[i] = 1
-			}
-		} else if objVal.Kind() == reflect.Uint8 {
-			if uint8(objVal.Uint()) != 0 && uint8(objVal.Uint()) != uint8(dbObjVal.Uint()) {
-				attrIds[i] = 1
-			}
-		} else if objVal.Kind() == reflect.Uint16 {
-			if uint16(objVal.Uint()) != 0 && uint16(objVal.Uint()) != uint16(dbObjVal.Uint()) {
-				attrIds[i] = 1
-			}
-		} else if objVal.Kind() == reflect.Uint32 {
-			if uint16(objVal.Uint()) != 0 && uint16(objVal.Uint()) != uint16(dbObjVal.Uint()) {
-				attrIds[i] = 1
-			}
-		} else if objVal.Kind() == reflect.Uint64 {
-			if uint16(objVal.Uint()) != 0 && uint16(objVal.Uint()) != uint16(dbObjVal.Uint()) {
-				attrIds[i] = 1
-			}
-		} else if objVal.Kind() == reflect.Bool {
-			if bool(objVal.Bool()) != bool(dbObjVal.Bool()) {
-				attrIds[i] = 1
-			}
-		} else {
-			if objVal.String() != "" && objVal.String() != dbObjVal.String() {
-				attrIds[i] = 1
-			}
-		}
-		if attrIds[i] == 1 {
-			fmt.Println("attribute changed ", fieldTyp.Name)
 		}
 	}
 	return attrIds, nil
@@ -222,7 +223,7 @@ func (obj AggregationLacpConfig) UpdateObjectInDb(dbObj ConfigObj, attrSet []byt
 				fieldVal.Kind() == reflect.Uint64 {
 				fieldSqlStr = fmt.Sprintf(" %s = '%d' ", fieldTyp.Name, int(fieldVal.Uint()))
 			} else if objVal.Kind() == reflect.Bool {
-				fieldSqlStr = fmt.Sprintf(" %s = '%t' ", fieldTyp.Name, bool(fieldVal.Bool()))
+				fieldSqlStr = fmt.Sprintf(" %s = '%d' ", fieldTyp.Name, dbutils.ConvertBoolToInt(bool(fieldVal.Bool())))
 			} else {
 				fieldSqlStr = fmt.Sprintf(" %s = '%s' ", fieldTyp.Name, fieldVal.String())
 			}
