@@ -38,13 +38,13 @@ func (obj EthernetConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	result, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
 	if err != nil {
 		fmt.Println("**** Failed to Create table", err)
-	}
+	} else {
+		objectId, err = result.LastInsertId()
+		if err != nil {
+			fmt.Println("### Failed to return last object id", err)
+		}
 
-	objectId, err = result.LastInsertId()
-	if err != nil {
-		fmt.Println("### Failed to return last object id", err)
 	}
-
 	return objectId, err
 }
 
@@ -61,17 +61,11 @@ func (obj EthernetConfig) DeleteObjectFromDb(objKey string, dbHdl *sql.DB) error
 	return err
 }
 
-func (obj EthernetConfig) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, error) {
+func (obj EthernetConfig) GetObjectFromDb(objSqlKey string, dbHdl *sql.DB) (ConfigObj, error) {
 	var object EthernetConfig
-	sqlKey, err := obj.GetSqlKeyStr(objKey)
-	if err != nil {
-		fmt.Println("GetSqlKeyStr for object key", objKey, "failed with error", err)
-		return object, err
-	}
-
-	dbCmd := "SELECT * from EthernetConfig where " + sqlKey
+	dbCmd := "select * from EthernetConfig where " + objSqlKey
 	fmt.Println("### DB Get EthernetConfig\n")
-	err = dbHdl.QueryRow(dbCmd).Scan(&object.NameKey, &object.Enabled, &object.Description, &object.Mtu, &object.Type, &object.MacAddress, &object.DuplexMode, &object.Auto, &object.Speed, &object.EnableFlowControl, &object.AggregateId)
+	err := dbHdl.QueryRow(dbCmd).Scan(&object.NameKey, &object.Enabled, &object.Description, &object.Mtu, &object.Type, &object.MacAddress, &object.DuplexMode, &object.Auto, &object.Speed, &object.EnableFlowControl, &object.AggregateId)
 	return object, err
 }
 
