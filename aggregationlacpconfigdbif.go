@@ -90,7 +90,6 @@ func (obj AggregationLacpConfig) CompareObjectsAndDiff(updateKeys map[string]boo
 		fieldTyp := objTyp.Field(i)
 		objVal := objVal.Field(i)
 		dbObjVal := dbObjVal.Field(i)
-		fmt.Println("attr (index, name)", i, fieldTyp.Name)
 		if _, ok := updateKeys[fieldTyp.Name]; ok {
 			if objVal.Kind() == reflect.Int {
 				if int(objVal.Int()) != int(dbObjVal.Int()) {
