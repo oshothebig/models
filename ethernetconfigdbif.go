@@ -80,7 +80,7 @@ func (obj EthernetConfig) GetSqlKeyStr(objKey string) (string, error) {
 	return sqlKey, nil
 }
 
-func (obj EthernetConfig) CompareObjectsAndDiff(dbObj ConfigObj) ([]byte, error) {
+func (obj EthernetConfig) CompareObjectsAndDiff(updateKeys map[string]bool, dbObj ConfigObj) ([]byte, error) {
 	dbV4Route := dbObj.(EthernetConfig)
 	objTyp := reflect.TypeOf(obj)
 	objVal := reflect.ValueOf(obj)

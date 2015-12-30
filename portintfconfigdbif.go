@@ -87,7 +87,7 @@ func (obj PortIntfConfig) GetSqlKeyStr(objKey string) (string, error) {
 	return sqlKey, nil
 }
 
-func (obj PortIntfConfig) CompareObjectsAndDiff(dbObj ConfigObj) ([]byte, error) {
+func (obj PortIntfConfig) CompareObjectsAndDiff(updateKeys map[string]bool, dbObj ConfigObj) ([]byte, error) {
 	dbStruct := dbObj.(PortIntfConfig)
 	objTyp := reflect.TypeOf(obj)
 	objVal := reflect.ValueOf(obj)

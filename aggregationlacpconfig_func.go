@@ -20,6 +20,7 @@ func (obj AggregationLacpConfig) UnmarshalObject(body []byte) (ConfigObj, error)
 	}
 	return obj, err
 }
+
 func (d *AggregationLacpConfig) Interval_Set(value int32) bool {
 	d.Interval = value
 	return true
