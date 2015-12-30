@@ -149,7 +149,7 @@ type BGPNeighborConfig struct {
 	AuthPassword    string
 	Description     string
 	NeighborAddress string `SNAPROUTE: "KEY"`
-	RouteReflectorClusterId string
+	RouteReflectorClusterId uint32
 	RouteReflectorClient bool
 }
 
@@ -175,7 +175,7 @@ type BGPNeighborState struct {
 	SessionState    uint32
 	Messages        BGPMessages
 	Queues          BGPQueues
-	RouteReflectorClusterId string
+	RouteReflectorClusterId uint32
 	RouteReflectorClient bool
 }
 
