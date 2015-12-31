@@ -16,7 +16,7 @@ func (obj BGPNeighborConfig) CreateDBTable(dbHdl *sql.DB) error {
 		"AuthPassword TEXT, " +
 		"Description TEXT, " +
 		"NeighborAddress TEXT, " +
-		"RouteReflectorClusterId TEXT, " +
+		"RouteReflectorClusterId INTEGER, " +
 		"RouteReflectorClient INTEGER, " +
 		"PRIMARY KEY(NeighborAddress) " +
 		")"
@@ -60,8 +60,10 @@ func (obj BGPNeighborConfig) DeleteObjectFromDb(objKey string, dbHdl *sql.DB) er
 func (obj BGPNeighborConfig) GetObjectFromDb(objSqlKey string, dbHdl *sql.DB) (ConfigObj, error) {
 	var object BGPNeighborConfig
 	dbCmd := "select * from BGPNeighborConfig where " + objSqlKey
-	fmt.Println("### DB Get BGPNeighborConfig\n")
-	err := dbHdl.QueryRow(dbCmd).Scan(&object.PeerAS, &object.LocalAS, &object.AuthPassword, &object.Description, &object.NeighborAddress, &object.RouteReflectorClusterId, &object.RouteReflectorClient)
+	var tmp6 int
+	err := dbHdl.QueryRow(dbCmd).Scan(&object.PeerAS, &object.LocalAS, &object.AuthPassword, &object.Description, &object.NeighborAddress, &object.RouteReflectorClusterId, &tmp6)
+	fmt.Println("### DB Get BGPNeighborConfig\n", err)
+	object.RouteReflectorClient = dbutils.ConvertIntToBool(tmp6)
 	return object, err
 }
 

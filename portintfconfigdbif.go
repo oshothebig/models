@@ -65,8 +65,8 @@ func (obj PortIntfConfig) DeleteObjectFromDb(objKey string, dbHdl *sql.DB) error
 func (obj PortIntfConfig) GetObjectFromDb(objSqlKey string, dbHdl *sql.DB) (ConfigObj, error) {
 	var object PortIntfConfig
 	dbCmd := "select * from PortIntfConfig where " + objSqlKey
-	fmt.Println("### DB Get PortIntfConfig\n")
 	err := dbHdl.QueryRow(dbCmd).Scan(&object.PortNum, &object.Name, &object.Description, &object.Type, &object.AdminState, &object.OperState, &object.MacAddr, &object.Speed, &object.Duplex, &object.Autoneg, &object.MediaType, &object.Mtu)
+	fmt.Println("### DB Get PortIntfConfig\n", err)
 	return object, err
 }
 
