@@ -13,7 +13,7 @@ func (obj AggregationLacpConfig) CreateDBTable(dbHdl *sql.DB) error {
 		"( " +
 		"LagType INTEGER, " +
 		"Description TEXT, " +
-		"Enabled bool, " +
+		"Enabled INTEGER, " +
 		"Mtu INTEGER, " +
 		"MinLinks INTEGER, " +
 		"Type TEXT, " +

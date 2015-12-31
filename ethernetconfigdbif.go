@@ -12,15 +12,15 @@ func (obj EthernetConfig) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS EthernetConfig " +
 		"( " +
 		"NameKey TEXT, " +
-		"Enabled bool, " +
+		"Enabled INTEGER, " +
 		"Description TEXT, " +
 		"Mtu INTEGER, " +
 		"Type TEXT, " +
 		"MacAddress TEXT, " +
 		"DuplexMode INTEGER, " +
-		"Auto bool, " +
+		"Auto INTEGER, " +
 		"Speed TEXT, " +
-		"EnableFlowControl bool, " +
+		"EnableFlowControl INTEGER, " +
 		"AggregateId TEXT, " +
 		"PRIMARY KEY(NameKey) " +
 		")"
