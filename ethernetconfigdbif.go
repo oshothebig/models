@@ -64,14 +64,14 @@ func (obj EthernetConfig) DeleteObjectFromDb(objKey string, dbHdl *sql.DB) error
 func (obj EthernetConfig) GetObjectFromDb(objSqlKey string, dbHdl *sql.DB) (ConfigObj, error) {
 	var object EthernetConfig
 	dbCmd := "select * from EthernetConfig where " + objSqlKey
-	var tmp1 int
-	var tmp7 int
-	var tmp9 int
+	var tmp1 string
+	var tmp7 string
+	var tmp9 string
 	err := dbHdl.QueryRow(dbCmd).Scan(&object.NameKey, &tmp1, &object.Description, &object.Mtu, &object.Type, &object.MacAddress, &object.DuplexMode, &tmp7, &object.Speed, &tmp9, &object.AggregateId)
 	fmt.Println("### DB Get EthernetConfig\n", err)
-	object.Enabled = dbutils.ConvertIntToBool(tmp1)
-	object.Auto = dbutils.ConvertIntToBool(tmp7)
-	object.EnableFlowControl = dbutils.ConvertIntToBool(tmp9)
+	object.Enabled = dbutils.ConvertStrBoolIntToBool(tmp1)
+	object.Auto = dbutils.ConvertStrBoolIntToBool(tmp7)
+	object.EnableFlowControl = dbutils.ConvertStrBoolIntToBool(tmp9)
 	return object, err
 }
 
