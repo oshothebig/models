@@ -39,13 +39,13 @@ func (obj PortIntfConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	result, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
 	if err != nil {
 		fmt.Println("**** Failed to Create table", err)
-	}
+	} else {
+		objectId, err = result.LastInsertId()
+		if err != nil {
+			fmt.Println("### Failed to return last object id", err)
+		}
 
-	objectId, err = result.LastInsertId()
-	if err != nil {
-		fmt.Println("### Failed to return last object id", err)
 	}
-
 	return objectId, err
 }
 
@@ -62,17 +62,11 @@ func (obj PortIntfConfig) DeleteObjectFromDb(objKey string, dbHdl *sql.DB) error
 	return err
 }
 
-func (obj PortIntfConfig) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, error) {
+func (obj PortIntfConfig) GetObjectFromDb(objSqlKey string, dbHdl *sql.DB) (ConfigObj, error) {
 	var object PortIntfConfig
-	sqlKey, err := obj.GetSqlKeyStr(objKey)
-	if err != nil {
-		fmt.Println("GetSqlKeyStr for object key", objKey, "failed with error", err)
-		return object, err
-	}
-
-	dbCmd := "select * from PortIntfConfig where " + sqlKey
-	fmt.Println("### DB Get PortIntfConfig\n")
-	err = dbHdl.QueryRow(dbCmd).Scan(&object.PortNum, &object.Name, &object.Description, &object.Type, &object.AdminState, &object.OperState, &object.MacAddr, &object.Speed, &object.Duplex, &object.Autoneg, &object.MediaType, &object.Mtu)
+	dbCmd := "select * from PortIntfConfig where " + objSqlKey
+	err := dbHdl.QueryRow(dbCmd).Scan(&object.PortNum, &object.Name, &object.Description, &object.Type, &object.AdminState, &object.OperState, &object.MacAddr, &object.Speed, &object.Duplex, &object.Autoneg, &object.MediaType, &object.Mtu)
+	fmt.Println("### DB Get PortIntfConfig\n", err)
 	return object, err
 }
 
@@ -88,56 +82,128 @@ func (obj PortIntfConfig) GetSqlKeyStr(objKey string) (string, error) {
 }
 
 func (obj PortIntfConfig) CompareObjectsAndDiff(updateKeys map[string]bool, dbObj ConfigObj) ([]byte, error) {
-	dbStruct := dbObj.(PortIntfConfig)
+	dbV4Route := dbObj.(PortIntfConfig)
 	objTyp := reflect.TypeOf(obj)
 	objVal := reflect.ValueOf(obj)
-	dbObjVal := reflect.ValueOf(dbStruct)
+	dbObjVal := reflect.ValueOf(dbV4Route)
 	attrIds := make([]byte, objTyp.NumField())
 	for i := 0; i < objTyp.NumField(); i++ {
+		fieldTyp := objTyp.Field(i)
 		objVal := objVal.Field(i)
 		dbObjVal := dbObjVal.Field(i)
-		if objVal.Kind() == reflect.Int {
-			if (int(objVal.Int()) != 0) && (int(objVal.Int()) != int(dbObjVal.Int())) {
-				attrIds[i] = 1
+		if _, ok := updateKeys[fieldTyp.Name]; ok {
+			if objVal.Kind() == reflect.Int {
+				if int(objVal.Int()) != int(dbObjVal.Int()) {
+					attrIds[i] = 1
+				}
+			} else if objVal.Kind() == reflect.Int8 {
+				if int8(objVal.Int()) != int8(dbObjVal.Int()) {
+					attrIds[i] = 1
+				}
+			} else if objVal.Kind() == reflect.Int16 {
+				if int16(objVal.Int()) != int16(dbObjVal.Int()) {
+					attrIds[i] = 1
+				}
+			} else if objVal.Kind() == reflect.Int32 {
+				if int32(objVal.Int()) != int32(dbObjVal.Int()) {
+					attrIds[i] = 1
+				}
+			} else if objVal.Kind() == reflect.Int64 {
+				if int64(objVal.Int()) != int64(dbObjVal.Int()) {
+					attrIds[i] = 1
+				}
+			} else if objVal.Kind() == reflect.Uint {
+				if uint(objVal.Uint()) != uint(dbObjVal.Uint()) {
+					attrIds[i] = 1
+				}
+			} else if objVal.Kind() == reflect.Uint8 {
+				if uint8(objVal.Uint()) != uint8(dbObjVal.Uint()) {
+					attrIds[i] = 1
+				}
+			} else if objVal.Kind() == reflect.Uint16 {
+				if uint16(objVal.Uint()) != uint16(dbObjVal.Uint()) {
+					attrIds[i] = 1
+				}
+			} else if objVal.Kind() == reflect.Uint32 {
+				if uint16(objVal.Uint()) != uint16(dbObjVal.Uint()) {
+					attrIds[i] = 1
+				}
+			} else if objVal.Kind() == reflect.Uint64 {
+				if uint16(objVal.Uint()) != uint16(dbObjVal.Uint()) {
+					attrIds[i] = 1
+				}
+			} else if objVal.Kind() == reflect.Bool {
+				if bool(objVal.Bool()) != bool(dbObjVal.Bool()) {
+					attrIds[i] = 1
+				}
+			} else {
+				if objVal.String() != dbObjVal.String() {
+					attrIds[i] = 1
+				}
 			}
-		} else {
-			if objVal.String() != "" && objVal.String() != dbObjVal.String() {
-				attrIds[i] = 1
+			if attrIds[i] == 1 {
+				fmt.Println("attribute changed ", fieldTyp.Name)
 			}
 		}
 	}
 	return attrIds, nil
 }
+
 func (obj PortIntfConfig) MergeDbAndConfigObj(dbObj ConfigObj, attrSet []byte) (ConfigObj, error) {
-	var mergedStruct PortIntfConfig
+	var mergedPortIntfConfig PortIntfConfig
 	objTyp := reflect.TypeOf(obj)
 	objVal := reflect.ValueOf(obj)
 	dbObjVal := reflect.ValueOf(dbObj)
-	mergedObjVal := reflect.ValueOf(&mergedStruct)
+	mergedObjVal := reflect.ValueOf(&mergedPortIntfConfig)
 	for i := 1; i < objTyp.NumField(); i++ {
 		objField := objVal.Field(i)
 		dbObjField := dbObjVal.Field(i)
 		if attrSet[i] == 1 {
-			if dbObjField.Kind() == reflect.Int {
+			if dbObjField.Kind() == reflect.Int ||
+				dbObjField.Kind() == reflect.Int8 ||
+				dbObjField.Kind() == reflect.Int16 ||
+				dbObjField.Kind() == reflect.Int32 ||
+				dbObjField.Kind() == reflect.Int64 {
 				mergedObjVal.Elem().Field(i).SetInt(objField.Int())
+			} else if dbObjField.Kind() == reflect.Uint ||
+				dbObjField.Kind() == reflect.Uint8 ||
+				dbObjField.Kind() == reflect.Uint16 ||
+				dbObjField.Kind() == reflect.Uint32 ||
+				dbObjField.Kind() == reflect.Uint64 {
+				mergedObjVal.Elem().Field(i).SetUint(objField.Uint())
+			} else if dbObjField.Kind() == reflect.Bool {
+				mergedObjVal.Elem().Field(i).SetBool(objField.Bool())
 			} else {
 				mergedObjVal.Elem().Field(i).SetString(objField.String())
 			}
 		} else {
-			if dbObjField.Kind() == reflect.Int {
+			if dbObjField.Kind() == reflect.Int ||
+				dbObjField.Kind() == reflect.Int8 ||
+				dbObjField.Kind() == reflect.Int16 ||
+				dbObjField.Kind() == reflect.Int32 ||
+				dbObjField.Kind() == reflect.Int64 {
 				mergedObjVal.Elem().Field(i).SetInt(dbObjField.Int())
+			} else if dbObjField.Kind() == reflect.Uint ||
+				dbObjField.Kind() == reflect.Uint ||
+				dbObjField.Kind() == reflect.Uint8 ||
+				dbObjField.Kind() == reflect.Uint16 ||
+				dbObjField.Kind() == reflect.Uint32 {
+				mergedObjVal.Elem().Field(i).SetUint(dbObjField.Uint())
+			} else if dbObjField.Kind() == reflect.Bool {
+				mergedObjVal.Elem().Field(i).SetBool(dbObjField.Bool())
 			} else {
 				mergedObjVal.Elem().Field(i).SetString(dbObjField.String())
 			}
 		}
 	}
-	return mergedStruct, nil
+	return mergedPortIntfConfig, nil
 }
+
 func (obj PortIntfConfig) UpdateObjectInDb(dbObj ConfigObj, attrSet []byte, dbHdl *sql.DB) error {
 	var fieldSqlStr string
-	dbStruct := dbObj.(PortIntfConfig)
-	objKey, err := dbStruct.GetKey()
-	objSqlKey, err := dbStruct.GetSqlKeyStr(objKey)
+	dbPortIntfConfig := dbObj.(PortIntfConfig)
+	objKey, err := dbPortIntfConfig.GetKey()
+	objSqlKey, err := dbPortIntfConfig.GetSqlKeyStr(objKey)
 	dbCmd := "update " + "PortIntfConfig" + " set"
 	objTyp := reflect.TypeOf(obj)
 	objVal := reflect.ValueOf(obj)
@@ -145,10 +211,22 @@ func (obj PortIntfConfig) UpdateObjectInDb(dbObj ConfigObj, attrSet []byte, dbHd
 		if attrSet[i] == 1 {
 			fieldTyp := objTyp.Field(i)
 			fieldVal := objVal.Field(i)
-			if fieldVal.Kind() == reflect.Int {
-				fieldSqlStr = fmt.Sprintf(" %s = %d ", fieldTyp.Name, int(fieldVal.Int()))
+			if fieldVal.Kind() == reflect.Int ||
+				fieldVal.Kind() == reflect.Int8 ||
+				fieldVal.Kind() == reflect.Int16 ||
+				fieldVal.Kind() == reflect.Int32 ||
+				fieldVal.Kind() == reflect.Int64 {
+				fieldSqlStr = fmt.Sprintf(" %s = '%d' ", fieldTyp.Name, int(fieldVal.Int()))
+			} else if fieldVal.Kind() == reflect.Uint ||
+				fieldVal.Kind() == reflect.Uint8 ||
+				fieldVal.Kind() == reflect.Uint16 ||
+				fieldVal.Kind() == reflect.Uint32 ||
+				fieldVal.Kind() == reflect.Uint64 {
+				fieldSqlStr = fmt.Sprintf(" %s = '%d' ", fieldTyp.Name, int(fieldVal.Uint()))
+			} else if objVal.Kind() == reflect.Bool {
+				fieldSqlStr = fmt.Sprintf(" %s = '%d' ", fieldTyp.Name, dbutils.ConvertBoolToInt(bool(fieldVal.Bool())))
 			} else {
-				fieldSqlStr = fmt.Sprintf(" %s = %s ", fieldTyp.Name, fieldVal.String())
+				fieldSqlStr = fmt.Sprintf(" %s = '%s' ", fieldTyp.Name, fieldVal.String())
 			}
 			dbCmd += fieldSqlStr
 		}

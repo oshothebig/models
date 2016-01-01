@@ -12,15 +12,15 @@ func (obj EthernetConfig) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS EthernetConfig " +
 		"( " +
 		"NameKey TEXT, " +
-		"Enabled bool, " +
+		"Enabled INTEGER, " +
 		"Description TEXT, " +
 		"Mtu INTEGER, " +
 		"Type TEXT, " +
 		"MacAddress TEXT, " +
 		"DuplexMode INTEGER, " +
-		"Auto bool, " +
+		"Auto INTEGER, " +
 		"Speed TEXT, " +
-		"EnableFlowControl bool, " +
+		"EnableFlowControl INTEGER, " +
 		"AggregateId TEXT, " +
 		"PRIMARY KEY(NameKey) " +
 		")"
@@ -64,8 +64,14 @@ func (obj EthernetConfig) DeleteObjectFromDb(objKey string, dbHdl *sql.DB) error
 func (obj EthernetConfig) GetObjectFromDb(objSqlKey string, dbHdl *sql.DB) (ConfigObj, error) {
 	var object EthernetConfig
 	dbCmd := "select * from EthernetConfig where " + objSqlKey
-	fmt.Println("### DB Get EthernetConfig\n")
-	err := dbHdl.QueryRow(dbCmd).Scan(&object.NameKey, &object.Enabled, &object.Description, &object.Mtu, &object.Type, &object.MacAddress, &object.DuplexMode, &object.Auto, &object.Speed, &object.EnableFlowControl, &object.AggregateId)
+	var tmp1 string
+	var tmp7 string
+	var tmp9 string
+	err := dbHdl.QueryRow(dbCmd).Scan(&object.NameKey, &tmp1, &object.Description, &object.Mtu, &object.Type, &object.MacAddress, &object.DuplexMode, &tmp7, &object.Speed, &tmp9, &object.AggregateId)
+	fmt.Println("### DB Get EthernetConfig\n", err)
+	object.Enabled = dbutils.ConvertStrBoolIntToBool(tmp1)
+	object.Auto = dbutils.ConvertStrBoolIntToBool(tmp7)
+	object.EnableFlowControl = dbutils.ConvertStrBoolIntToBool(tmp9)
 	return object, err
 }
 
