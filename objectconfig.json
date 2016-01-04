@@ -60,7 +60,7 @@
 		"Listeners": []
 	},
 	"AggregationLacpMemberStateCounters": {
-		"access": "rw",	
+		"access": "r",	
 		"Owner": "lacpd",
 		"Listeners": []
 	},
