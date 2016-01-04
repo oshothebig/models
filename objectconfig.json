@@ -1,62 +1,76 @@
 {
 	"Vlan"     : {
+		"access": "w",
 		"Owner": "portd",
 		"Listeners":["asicd"]
 	},
  	"IPv4Intf" : {
+		"access": "w",
 		"Owner": "portd",
 		"Listeners" : ["asicd"]
 	},
  	"IPv4Neighbor" : {
+		"access": "w",
 		"Owner" : "portd",
 		"Listeners" : ["asicd"]
 	},
-        "ArpConfig" : {
-                "Owner": "arpd",
-                "Listeners":[]
-        },
-        "ArpEntry" : {
-                "Owner": "arpd",
-                "Listeners":[]
-        },
+    "ArpConfig" : {
+		"access": "w",
+        "Owner": "arpd",
+        "Listeners":[]
+    },
+    "ArpEntry" : {
+		"access": "r",
+        "Owner": "arpd",
+        "Listeners":[]
+    },
  	"IPV4Route": {
+		"access": "rw",
 		"Owner": "ribd",
 		"Listeners": ["asicd","bgpd"]
 	},
  	"BGPGlobalConfig": {
+		"access": "w",
 		"Owner": "bgpd",
 		"Listeners": []
 	},
  	"BGPGlobalState": {
+		"access": "r",
 		"Owner": "bgpd",
 		"Listeners": []
 	},
  	"BGPNeighborConfig": {
+		"access": "w",		
 		"Owner": "bgpd",
 		"Listeners": []
 	},
  	"BGPNeighborState": {
+		"access": "r",			
 		"Owner": "bgpd",
 		"Listeners": []
 	},
-        "AggregationLacpConfig": {
-                "Owner": "lacpd", 
-                "Listeners": []
-        },
+    "AggregationLacpConfig": {
+		"access": "w",		
+		"Owner": "lacpd", 
+		"Listeners": []
+    },
 	"AggregationLacpState": {
+			"access": "r",	
 		"Owner": "lacpd",
 		"Listeners": []
 	},
 	"AggregationLacpMemberStateCounters": {
+		"access": "rw",	
 		"Owner": "lacpd",
 		"Listeners": []
 	},
 	"EthernetConfig": {
-                "Owner": "lacpd", 
-	        "Listeners": []
+		"access": "w",	
+		"Owner": "lacpd", 
+		"Listeners": []
         },
-
 	"PortIntfConfig" : {
-	         "Owner": "asicd",
-	         "Listeners" : []}
+		"access": "w",	
+		"Owner": "asicd",
+		"Listeners" : []}
 }
