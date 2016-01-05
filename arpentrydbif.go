@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	"reflect"
-	"strings"
+	//"strings"
 	"utils/dbutils"
 )
 
@@ -62,7 +62,7 @@ func (obj ArpEntry) GetObjectFromDb(objSqlKey string, dbHdl *sql.DB) (ConfigObj,
 }
 
 func (obj ArpEntry) GetKey() (string, error) {
-	return key, nil
+	return "", nil
 }
 
 func (obj ArpEntry) GetSqlKeyStr(objKey string) (string, error) {

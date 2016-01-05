@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	"reflect"
-	"strings"
+	//"strings"
 	"utils/dbutils"
 )
 
@@ -61,7 +61,7 @@ func (obj IPv4Intf) GetObjectFromDb(objSqlKey string, dbHdl *sql.DB) (ConfigObj,
 }
 
 func (obj IPv4Intf) GetKey() (string, error) {
-	return key, nil
+	return "", nil
 }
 
 func (obj IPv4Intf) GetSqlKeyStr(objKey string) (string, error) {

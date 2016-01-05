@@ -4,34 +4,26 @@ import (
 	"database/sql"
 	"fmt"
 	"reflect"
-	"strings"
+	//"strings"
 	"utils/dbutils"
 )
 
-func (obj SubinterfaceVlanConfig) CreateDBTable(dbHdl *sql.DB) error {
-	dbCmd := "CREATE TABLE IF NOT EXISTS SubinterfaceVlanConfig " +
+func (obj Vlan) CreateDBTable(dbHdl *sql.DB) error {
+	dbCmd := "CREATE TABLE IF NOT EXISTS Vlan " +
 		"( " +
-		"IndexKey TEXT, " +
-		"Mtu INTEGER, " +
-		"Name TEXT, " +
-		"Type TEXT, " +
-		"Unnumbered INTEGER, " +
-		"Enabled INTEGER, " +
-		"Description TEXT, " +
-		"GlobalVlanId TEXT, " +
-		"VlanId_VlanId INTEGER, " +
-		"VlanId_VlanId_QinqId TEXT, " +
-		"PRIMARY KEY(IndexKey) " +
+		"VlanId INTEGER, " +
+		"Ports TEXT, " +
+		"PortTagType TEXT, " +
 		")"
 
 	_, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
 
-func (obj SubinterfaceVlanConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
+func (obj Vlan) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	var objectId int64
-	dbCmd := fmt.Sprintf("INSERT INTO SubinterfaceVlanConfig (IndexKey, Mtu, Name, Type, Unnumbered, Enabled, Description, GlobalVlanId, VlanId_VlanId, VlanId_VlanId_QinqId) VALUES ('%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v') ;",
-		obj.IndexKey, obj.Mtu, obj.Name, obj.Type, dbutils.ConvertBoolToInt(obj.Unnumbered), dbutils.ConvertBoolToInt(obj.Enabled), obj.Description, obj.GlobalVlanId, obj.VlanId_VlanId, obj.VlanId_VlanId_QinqId)
+	dbCmd := fmt.Sprintf("INSERT INTO Vlan (VlanId, Ports, PortTagType) VALUES ('%v', '%v', '%v') ;",
+		obj.VlanId, obj.Ports, obj.PortTagType)
 	fmt.Println("**** Create Object called with ", obj)
 
 	result, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
@@ -47,44 +39,38 @@ func (obj SubinterfaceVlanConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, error) 
 	return objectId, err
 }
 
-func (obj SubinterfaceVlanConfig) DeleteObjectFromDb(objKey string, dbHdl *sql.DB) error {
+func (obj Vlan) DeleteObjectFromDb(objKey string, dbHdl *sql.DB) error {
 	sqlKey, err := obj.GetSqlKeyStr(objKey)
 	if err != nil {
-		fmt.Println("GetSqlKeyStr for SubinterfaceVlanConfig with key", objKey, "failed with error", err)
+		fmt.Println("GetSqlKeyStr for Vlan with key", objKey, "failed with error", err)
 		return err
 	}
 
-	dbCmd := "delete from SubinterfaceVlanConfig where " + sqlKey
-	fmt.Println("### DB Deleting SubinterfaceVlanConfig\n")
+	dbCmd := "delete from Vlan where " + sqlKey
+	fmt.Println("### DB Deleting Vlan\n")
 	_, err = dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
 
-func (obj SubinterfaceVlanConfig) GetObjectFromDb(objSqlKey string, dbHdl *sql.DB) (ConfigObj, error) {
-	var object SubinterfaceVlanConfig
-	dbCmd := "select * from SubinterfaceVlanConfig where " + objSqlKey
-	var tmp4 string
-	var tmp5 string
-	err := dbHdl.QueryRow(dbCmd).Scan(&object.IndexKey, &object.Mtu, &object.Name, &object.Type, &tmp4, &tmp5, &object.Description, &object.GlobalVlanId, &object.VlanId_VlanId, &object.VlanId_VlanId_QinqId)
-	fmt.Println("### DB Get SubinterfaceVlanConfig\n", err)
-	object.Unnumbered = dbutils.ConvertStrBoolIntToBool(tmp4)
-	object.Enabled = dbutils.ConvertStrBoolIntToBool(tmp5)
+func (obj Vlan) GetObjectFromDb(objSqlKey string, dbHdl *sql.DB) (ConfigObj, error) {
+	var object Vlan
+	dbCmd := "select * from Vlan where " + objSqlKey
+	err := dbHdl.QueryRow(dbCmd).Scan(&object.VlanId, &object.Ports, &object.PortTagType)
+	fmt.Println("### DB Get Vlan\n", err)
 	return object, err
 }
 
-func (obj SubinterfaceVlanConfig) GetKey() (string, error) {
-	key := string(obj.IndexKey)
-	return key, nil
+func (obj Vlan) GetKey() (string, error) {
+	return "", nil
 }
 
-func (obj SubinterfaceVlanConfig) GetSqlKeyStr(objKey string) (string, error) {
-	keys := strings.Split(objKey, "#")
-	sqlKey := "IndexKey = " + "\"" + keys[0] + "\""
-	return sqlKey, nil
+func (obj Vlan) GetSqlKeyStr(objKey string) (string, error) {
+
+	return "", nil
 }
 
-func (obj SubinterfaceVlanConfig) CompareObjectsAndDiff(updateKeys map[string]bool, dbObj ConfigObj) ([]byte, error) {
-	dbV4Route := dbObj.(SubinterfaceVlanConfig)
+func (obj Vlan) CompareObjectsAndDiff(updateKeys map[string]bool, dbObj ConfigObj) ([]byte, error) {
+	dbV4Route := dbObj.(Vlan)
 	objTyp := reflect.TypeOf(obj)
 	objVal := reflect.ValueOf(obj)
 	dbObjVal := reflect.ValueOf(dbV4Route)
@@ -151,12 +137,12 @@ func (obj SubinterfaceVlanConfig) CompareObjectsAndDiff(updateKeys map[string]bo
 	return attrIds, nil
 }
 
-func (obj SubinterfaceVlanConfig) MergeDbAndConfigObj(dbObj ConfigObj, attrSet []byte) (ConfigObj, error) {
-	var mergedSubinterfaceVlanConfig SubinterfaceVlanConfig
+func (obj Vlan) MergeDbAndConfigObj(dbObj ConfigObj, attrSet []byte) (ConfigObj, error) {
+	var mergedVlan Vlan
 	objTyp := reflect.TypeOf(obj)
 	objVal := reflect.ValueOf(obj)
 	dbObjVal := reflect.ValueOf(dbObj)
-	mergedObjVal := reflect.ValueOf(&mergedSubinterfaceVlanConfig)
+	mergedObjVal := reflect.ValueOf(&mergedVlan)
 	for i := 1; i < objTyp.NumField(); i++ {
 		objField := objVal.Field(i)
 		dbObjField := dbObjVal.Field(i)
@@ -198,15 +184,15 @@ func (obj SubinterfaceVlanConfig) MergeDbAndConfigObj(dbObj ConfigObj, attrSet [
 			}
 		}
 	}
-	return mergedSubinterfaceVlanConfig, nil
+	return mergedVlan, nil
 }
 
-func (obj SubinterfaceVlanConfig) UpdateObjectInDb(dbObj ConfigObj, attrSet []byte, dbHdl *sql.DB) error {
+func (obj Vlan) UpdateObjectInDb(dbObj ConfigObj, attrSet []byte, dbHdl *sql.DB) error {
 	var fieldSqlStr string
-	dbSubinterfaceVlanConfig := dbObj.(SubinterfaceVlanConfig)
-	objKey, err := dbSubinterfaceVlanConfig.GetKey()
-	objSqlKey, err := dbSubinterfaceVlanConfig.GetSqlKeyStr(objKey)
-	dbCmd := "update " + "SubinterfaceVlanConfig" + " set"
+	dbVlan := dbObj.(Vlan)
+	objKey, err := dbVlan.GetKey()
+	objSqlKey, err := dbVlan.GetSqlKeyStr(objKey)
+	dbCmd := "update " + "Vlan" + " set"
 	objTyp := reflect.TypeOf(obj)
 	objVal := reflect.ValueOf(obj)
 	for i := 0; i < objTyp.NumField(); i++ {
