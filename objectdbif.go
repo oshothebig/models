@@ -1,5 +1,6 @@
 package models
 
+/*
 import (
 	"database/sql"
 	"fmt"
@@ -175,3 +176,4 @@ func (obj ArpEntry) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, er
 	var arpEntry ArpEntry
 	return arpEntry, nil
 }
+*/

@@ -64,8 +64,8 @@ func (b BaseObj) UpdateObjectInDb(dbV4Route ConfigObj, attrSet []byte, dbHdl *sq
 //
 type IPV4Route struct {
 	BaseObj
-	DestinationNw     string
-	NetworkMask       string
+	DestinationNw     string `SNAPROUTE: "KEY"`
+	NetworkMask       string `SNAPROUTE: "KEY"`
 	Cost              int
 	NextHopIp         string
 	OutgoingIntfType  string
