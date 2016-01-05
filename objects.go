@@ -193,7 +193,7 @@ func (obj BGPNeighborState) UnmarshalObject(body []byte) (ConfigObj, error) {
 /* Start - Asicd objects */
 type Vlan struct {
 	BaseObj
-	VlanId      int32
+	VlanId      int32 `SNAPROUTE: "KEY"`
 	Ports       string
 	PortTagType string
 }
@@ -205,14 +205,14 @@ type Vlan struct {
  */
 type IPv4Intf struct {
 	BaseObj
-	IpAddr   string
+	IpAddr   string `SNAPROUTE: "KEY"`
 	RouterIf int32
 	IfType   int32
 }
 
 type IPv4Neighbor struct {
 	BaseObj
-	IpAddr   string
+	IpAddr   string `SNAPROUTE: "KEY"`
 	MacAddr  string
 	VlanId   int32
 	RouterIf int32
@@ -254,7 +254,9 @@ func (obj IPv4Neighbor) UnmarshalObject(body []byte) (ConfigObj, error) {
 /* ARP */
 type ArpConfig struct {
 	BaseObj
-	Timeout int32
+	// placeholder to create a key
+	ArpConfigKey string `SNAPROUTE: "KEY"`
+	Timeout      int32
 }
 
 func (obj ArpConfig) UnmarshalObject(body []byte) (ConfigObj, error) {
@@ -271,7 +273,7 @@ func (obj ArpConfig) UnmarshalObject(body []byte) (ConfigObj, error) {
 
 type ArpEntry struct {
 	BaseObj
-	IpAddr         string
+	IpAddr         string `SNAPROUTE: "KEY"`
 	MacAddr        string
 	Vlan           int
 	Intf           string

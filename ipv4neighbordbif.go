@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	"reflect"
-	//"strings"
+	"strings"
 	"utils/dbutils"
 )
 
@@ -15,6 +15,7 @@ func (obj IPv4Neighbor) CreateDBTable(dbHdl *sql.DB) error {
 		"MacAddr TEXT, " +
 		"VlanId INTEGER, " +
 		"RouterIf INTEGER, " +
+		"PRIMARY KEY(IpAddr) " +
 		")"
 
 	_, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
@@ -62,12 +63,14 @@ func (obj IPv4Neighbor) GetObjectFromDb(objSqlKey string, dbHdl *sql.DB) (Config
 }
 
 func (obj IPv4Neighbor) GetKey() (string, error) {
-	return "", nil
+	key := string(obj.IpAddr)
+	return key, nil
 }
 
 func (obj IPv4Neighbor) GetSqlKeyStr(objKey string) (string, error) {
-
-	return "", nil
+	keys := strings.Split(objKey, "#")
+	sqlKey := "IpAddr = " + "\"" + keys[0] + "\""
+	return sqlKey, nil
 }
 
 func (obj IPv4Neighbor) CompareObjectsAndDiff(updateKeys map[string]bool, dbObj ConfigObj) ([]byte, error) {
