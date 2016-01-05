@@ -4,14 +4,16 @@ import (
 	"database/sql"
 	"fmt"
 	"reflect"
-	//"strings"
+	"strings"
 	"utils/dbutils"
 )
 
 func (obj ArpConfig) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS ArpConfig " +
 		"( " +
+		"ArpConfigKey TEXT, " +
 		"Timeout INTEGER, " +
+		"PRIMARY KEY(ArpConfigKey) " +
 		")"
 
 	_, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
@@ -20,8 +22,8 @@ func (obj ArpConfig) CreateDBTable(dbHdl *sql.DB) error {
 
 func (obj ArpConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	var objectId int64
-	dbCmd := fmt.Sprintf("INSERT INTO ArpConfig (Timeout) VALUES ('%v') ;",
-		obj.Timeout)
+	dbCmd := fmt.Sprintf("INSERT INTO ArpConfig (ArpConfigKey, Timeout) VALUES ('%v', '%v') ;",
+		obj.ArpConfigKey, obj.Timeout)
 	fmt.Println("**** Create Object called with ", obj)
 
 	result, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
@@ -53,18 +55,20 @@ func (obj ArpConfig) DeleteObjectFromDb(objKey string, dbHdl *sql.DB) error {
 func (obj ArpConfig) GetObjectFromDb(objSqlKey string, dbHdl *sql.DB) (ConfigObj, error) {
 	var object ArpConfig
 	dbCmd := "select * from ArpConfig where " + objSqlKey
-	err := dbHdl.QueryRow(dbCmd).Scan(&object.Timeout)
+	err := dbHdl.QueryRow(dbCmd).Scan(&object.ArpConfigKey, &object.Timeout)
 	fmt.Println("### DB Get ArpConfig\n", err)
 	return object, err
 }
 
 func (obj ArpConfig) GetKey() (string, error) {
-	return "", nil
+	key := string(obj.ArpConfigKey)
+	return key, nil
 }
 
 func (obj ArpConfig) GetSqlKeyStr(objKey string) (string, error) {
-
-	return "", nil
+	keys := strings.Split(objKey, "#")
+	sqlKey := "ArpConfigKey = " + "\"" + keys[0] + "\""
+	return sqlKey, nil
 }
 
 func (obj ArpConfig) CompareObjectsAndDiff(updateKeys map[string]bool, dbObj ConfigObj) ([]byte, error) {

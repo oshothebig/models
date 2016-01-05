@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	"reflect"
-	//"strings"
+	"strings"
 	"utils/dbutils"
 )
 
@@ -15,6 +15,7 @@ func (obj ArpEntry) CreateDBTable(dbHdl *sql.DB) error {
 		"MacAddr TEXT, " +
 		"Intf TEXT, " +
 		"ExpiryTimeLeft TEXT, " +
+		"PRIMARY KEY(IpAddr) " +
 		")"
 
 	_, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
@@ -62,12 +63,14 @@ func (obj ArpEntry) GetObjectFromDb(objSqlKey string, dbHdl *sql.DB) (ConfigObj,
 }
 
 func (obj ArpEntry) GetKey() (string, error) {
-	return "", nil
+	key := string(obj.IpAddr)
+	return key, nil
 }
 
 func (obj ArpEntry) GetSqlKeyStr(objKey string) (string, error) {
-
-	return "", nil
+	keys := strings.Split(objKey, "#")
+	sqlKey := "IpAddr = " + "\"" + keys[0] + "\""
+	return sqlKey, nil
 }
 
 func (obj ArpEntry) CompareObjectsAndDiff(updateKeys map[string]bool, dbObj ConfigObj) ([]byte, error) {

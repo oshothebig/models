@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	"reflect"
-	//"strings"
+	"strings"
 	"utils/dbutils"
 )
 
@@ -14,6 +14,7 @@ func (obj Vlan) CreateDBTable(dbHdl *sql.DB) error {
 		"VlanId INTEGER, " +
 		"Ports TEXT, " +
 		"PortTagType TEXT, " +
+		"PRIMARY KEY(VlanId) " +
 		")"
 
 	_, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
@@ -61,12 +62,14 @@ func (obj Vlan) GetObjectFromDb(objSqlKey string, dbHdl *sql.DB) (ConfigObj, err
 }
 
 func (obj Vlan) GetKey() (string, error) {
-	return "", nil
+	key := string(obj.VlanId)
+	return key, nil
 }
 
 func (obj Vlan) GetSqlKeyStr(objKey string) (string, error) {
-
-	return "", nil
+	keys := strings.Split(objKey, "#")
+	sqlKey := "VlanId = " + "\"" + keys[0] + "\""
+	return sqlKey, nil
 }
 
 func (obj Vlan) CompareObjectsAndDiff(updateKeys map[string]bool, dbObj ConfigObj) ([]byte, error) {
