@@ -75,12 +75,12 @@ func (obj IPV4Route) GetSqlKeyStr(objKey string) (string, error) {
 	return sqlKey, nil
 }
 
-func (obj IPV4Route) CompareObjectsAndDiff(updateKeys map[string]bool, dbObj ConfigObj) ([]byte, error) {
+func (obj IPV4Route) CompareObjectsAndDiff(updateKeys map[string]bool, dbObj ConfigObj) ([]bool, error) {
 	dbV4Route := dbObj.(IPV4Route)
 	objTyp := reflect.TypeOf(obj)
 	objVal := reflect.ValueOf(obj)
 	dbObjVal := reflect.ValueOf(dbV4Route)
-	attrIds := make([]byte, objTyp.NumField())
+	attrIds := make([]bool, objTyp.NumField())
 	idx := 0
 	for i := 0; i < objTyp.NumField(); i++ {
 		fieldTyp := objTyp.Field(i)
@@ -93,54 +93,54 @@ func (obj IPV4Route) CompareObjectsAndDiff(updateKeys map[string]bool, dbObj Con
 		if _, ok := updateKeys[fieldTyp.Name]; ok {
 			if objVal.Kind() == reflect.Int {
 				if int(objVal.Int()) != int(dbObjVal.Int()) {
-					attrIds[idx] = 1
+					attrIds[idx] = true
 				}
 			} else if objVal.Kind() == reflect.Int8 {
 				if int8(objVal.Int()) != int8(dbObjVal.Int()) {
-					attrIds[idx] = 1
+					attrIds[idx] = true
 				}
 			} else if objVal.Kind() == reflect.Int16 {
 				if int16(objVal.Int()) != int16(dbObjVal.Int()) {
-					attrIds[idx] = 1
+					attrIds[idx] = true
 				}
 			} else if objVal.Kind() == reflect.Int32 {
 				if int32(objVal.Int()) != int32(dbObjVal.Int()) {
-					attrIds[idx] = 1
+					attrIds[idx] = true
 				}
 			} else if objVal.Kind() == reflect.Int64 {
 				if int64(objVal.Int()) != int64(dbObjVal.Int()) {
-					attrIds[idx] = 1
+					attrIds[idx] = true
 				}
 			} else if objVal.Kind() == reflect.Uint {
 				if uint(objVal.Uint()) != uint(dbObjVal.Uint()) {
-					attrIds[idx] = 1
+					attrIds[idx] = true
 				}
 			} else if objVal.Kind() == reflect.Uint8 {
 				if uint8(objVal.Uint()) != uint8(dbObjVal.Uint()) {
-					attrIds[idx] = 1
+					attrIds[idx] = true
 				}
 			} else if objVal.Kind() == reflect.Uint16 {
 				if uint16(objVal.Uint()) != uint16(dbObjVal.Uint()) {
-					attrIds[idx] = 1
+					attrIds[idx] = true
 				}
 			} else if objVal.Kind() == reflect.Uint32 {
 				if uint16(objVal.Uint()) != uint16(dbObjVal.Uint()) {
-					attrIds[idx] = 1
+					attrIds[idx] = true
 				}
 			} else if objVal.Kind() == reflect.Uint64 {
 				if uint16(objVal.Uint()) != uint16(dbObjVal.Uint()) {
-					attrIds[idx] = 1
+					attrIds[idx] = true
 				}
 			} else if objVal.Kind() == reflect.Bool {
 				if bool(objVal.Bool()) != bool(dbObjVal.Bool()) {
-					attrIds[idx] = 1
+					attrIds[idx] = true
 				}
 			} else {
 				if objVal.String() != dbObjVal.String() {
-					attrIds[idx] = 1
+					attrIds[idx] = true
 				}
 			}
-			if attrIds[idx] == 1 {
+			if attrIds[idx] {
 				fmt.Println("attribute changed ", fieldTyp.Name)
 			}
 		}
@@ -150,7 +150,7 @@ func (obj IPV4Route) CompareObjectsAndDiff(updateKeys map[string]bool, dbObj Con
 	return attrIds[:idx], nil
 }
 
-func (obj IPV4Route) MergeDbAndConfigObj(dbObj ConfigObj, attrSet []byte) (ConfigObj, error) {
+func (obj IPV4Route) MergeDbAndConfigObj(dbObj ConfigObj, attrSet []bool) (ConfigObj, error) {
 	var mergedIPV4Route IPV4Route
 	objTyp := reflect.TypeOf(obj)
 	objVal := reflect.ValueOf(obj)
@@ -164,7 +164,7 @@ func (obj IPV4Route) MergeDbAndConfigObj(dbObj ConfigObj, attrSet []byte) (Confi
 
 		objField := objVal.Field(i)
 		dbObjField := dbObjVal.Field(i)
-		if attrSet[idx] == 1 {
+		if attrSet[idx] {
 			if dbObjField.Kind() == reflect.Int ||
 				dbObjField.Kind() == reflect.Int8 ||
 				dbObjField.Kind() == reflect.Int16 ||
@@ -207,7 +207,7 @@ func (obj IPV4Route) MergeDbAndConfigObj(dbObj ConfigObj, attrSet []byte) (Confi
 	return mergedIPV4Route, nil
 }
 
-func (obj IPV4Route) UpdateObjectInDb(dbObj ConfigObj, attrSet []byte, dbHdl *sql.DB) error {
+func (obj IPV4Route) UpdateObjectInDb(dbObj ConfigObj, attrSet []bool, dbHdl *sql.DB) error {
 	var fieldSqlStr string
 	dbIPV4Route := dbObj.(IPV4Route)
 	objKey, err := dbIPV4Route.GetKey()
@@ -221,7 +221,7 @@ func (obj IPV4Route) UpdateObjectInDb(dbObj ConfigObj, attrSet []byte, dbHdl *sq
 			continue
 		}
 
-		if attrSet[idx] == 1 {
+		if attrSet[idx] {
 			fieldTyp := objTyp.Field(i)
 			fieldVal := objVal.Field(i)
 			if fieldVal.Kind() == reflect.Int ||
