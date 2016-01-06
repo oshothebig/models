@@ -14,9 +14,9 @@ type ConfigObj interface {
 	GetKey() (string, error)
 	GetSqlKeyStr(string) (string, error)
 	GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, error)
-	CompareObjectsAndDiff(updateKeys map[string]bool, dbObj ConfigObj) ([]byte, error)
-	MergeDbAndConfigObj(dbObj ConfigObj, attrSet []byte) (ConfigObj, error)
-	UpdateObjectInDb(dbV4Route ConfigObj, attrSet []byte, dbHdl *sql.DB) error
+	CompareObjectsAndDiff(updateKeys map[string]bool, dbObj ConfigObj) ([]bool, error)
+	MergeDbAndConfigObj(dbObj ConfigObj, attrSet []bool) (ConfigObj, error)
+	UpdateObjectInDb(dbV4Route ConfigObj, attrSet []bool, dbHdl *sql.DB) error
 }
 
 type BaseObj struct{}
@@ -46,16 +46,16 @@ func (b BaseObj) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, error
 	return nil, nil
 }
 
-func (b BaseObj) CompareObjectsAndDiff(updateKeys map[string]bool, dbObj ConfigObj) ([]byte, error) {
-	var arr []byte
+func (b BaseObj) CompareObjectsAndDiff(updateKeys map[string]bool, dbObj ConfigObj) ([]bool, error) {
+	var arr []bool
 	return arr, nil
 }
 
-func (b BaseObj) MergeDbAndConfigObj(dbObj ConfigObj, attrSet []byte) (ConfigObj, error) {
+func (b BaseObj) MergeDbAndConfigObj(dbObj ConfigObj, attrSet []bool) (ConfigObj, error) {
 	return nil, nil
 }
 
-func (b BaseObj) UpdateObjectInDb(dbV4Route ConfigObj, attrSet []byte, dbHdl *sql.DB) error {
+func (b BaseObj) UpdateObjectInDb(dbV4Route ConfigObj, attrSet []bool, dbHdl *sql.DB) error {
 	return nil
 }
 
