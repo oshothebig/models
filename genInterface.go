@@ -1473,15 +1473,15 @@ type AggregationLacpConfig struct {
 	// parent leaf
 	LagType int32
 	// parent leaf
-	Description string
-	// parent leaf
 	Enabled bool
+	// parent leaf
+	Description string
 	// parent leaf
 	Mtu uint16
 	// parent leaf
-	MinLinks uint16
-	// parent leaf
 	Type string
+	// parent leaf
+	MinLinks uint16
 	// parent leaf
 	NameKey string `SNAPROUTE: KEY`
 	//yang_name: interval class: leaf
@@ -1492,6 +1492,8 @@ type AggregationLacpConfig struct {
 	SystemIdMac string
 	//yang_name: system-priority class: leaf
 	SystemPriority uint16
+	//yang_name: lag-hash class: leaf
+	LagHash int32
 }
 
 type AggregationLacpState struct {
@@ -1509,15 +1511,15 @@ type AggregationLacpState struct {
 	// parent leaf
 	LagType int32
 	// parent leaf
-	Description string
-	// parent leaf
 	Enabled bool
+	// parent leaf
+	Description string
 	// parent leaf
 	Mtu uint16
 	// parent leaf
-	MinLinks uint16
-	// parent leaf
 	Type string
+	// parent leaf
+	MinLinks uint16
 	// parent leaf
 	NameKey string `SNAPROUTE: KEY`
 	//yang_name: interval class: leaf
@@ -1528,6 +1530,8 @@ type AggregationLacpState struct {
 	SystemIdMac string
 	//yang_name: system-priority class: leaf
 	SystemPriority uint16
+	//yang_name: lag-hash class: leaf
+	LagHash int32
 }
 
 type AggregationLacpMemberStateCounters struct {
@@ -1557,6 +1561,8 @@ type AggregationLacpMemberStateCounters struct {
 	// parent leaf
 	Mtu uint16
 	// parent leaf
+	NameKey string `SNAPROUTE: KEY`
+	// parent leaf
 	LacpMode int32
 	// parent leaf
 	PartnerKey uint16
@@ -1573,7 +1579,7 @@ type AggregationLacpMemberStateCounters struct {
 	// parent leaf
 	Enabled bool
 	// parent leaf
-	NameKey string `SNAPROUTE: KEY`
+	LagHash int32
 	// parent leaf
 	Distributing bool
 	// parent leaf

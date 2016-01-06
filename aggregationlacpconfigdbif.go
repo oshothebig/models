@@ -12,16 +12,17 @@ func (obj AggregationLacpConfig) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS AggregationLacpConfig " +
 		"( " +
 		"LagType INTEGER, " +
-		"Description TEXT, " +
 		"Enabled INTEGER, " +
+		"Description TEXT, " +
 		"Mtu INTEGER, " +
-		"MinLinks INTEGER, " +
 		"Type TEXT, " +
+		"MinLinks INTEGER, " +
 		"NameKey TEXT, " +
 		"Interval INTEGER, " +
 		"LacpMode INTEGER, " +
 		"SystemIdMac TEXT, " +
 		"SystemPriority INTEGER, " +
+		"LagHash INTEGER, " +
 		"PRIMARY KEY(NameKey) " +
 		")"
 
@@ -31,8 +32,8 @@ func (obj AggregationLacpConfig) CreateDBTable(dbHdl *sql.DB) error {
 
 func (obj AggregationLacpConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	var objectId int64
-	dbCmd := fmt.Sprintf("INSERT INTO AggregationLacpConfig (LagType, Description, Enabled, Mtu, MinLinks, Type, NameKey, Interval, LacpMode, SystemIdMac, SystemPriority) VALUES ('%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v') ;",
-		obj.LagType, obj.Description, dbutils.ConvertBoolToInt(obj.Enabled), obj.Mtu, obj.MinLinks, obj.Type, obj.NameKey, obj.Interval, obj.LacpMode, obj.SystemIdMac, obj.SystemPriority)
+	dbCmd := fmt.Sprintf("INSERT INTO AggregationLacpConfig (LagType, Enabled, Description, Mtu, Type, MinLinks, NameKey, Interval, LacpMode, SystemIdMac, SystemPriority, LagHash) VALUES ('%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v') ;",
+		obj.LagType, dbutils.ConvertBoolToInt(obj.Enabled), obj.Description, obj.Mtu, obj.Type, obj.MinLinks, obj.NameKey, obj.Interval, obj.LacpMode, obj.SystemIdMac, obj.SystemPriority, obj.LagHash)
 	fmt.Println("**** Create Object called with ", obj)
 
 	result, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
@@ -64,10 +65,10 @@ func (obj AggregationLacpConfig) DeleteObjectFromDb(objKey string, dbHdl *sql.DB
 func (obj AggregationLacpConfig) GetObjectFromDb(objSqlKey string, dbHdl *sql.DB) (ConfigObj, error) {
 	var object AggregationLacpConfig
 	dbCmd := "select * from AggregationLacpConfig where " + objSqlKey
-	var tmp2 string
-	err := dbHdl.QueryRow(dbCmd).Scan(&object.LagType, &object.Description, &tmp2, &object.Mtu, &object.MinLinks, &object.Type, &object.NameKey, &object.Interval, &object.LacpMode, &object.SystemIdMac, &object.SystemPriority)
+	var tmp1 string
+	err := dbHdl.QueryRow(dbCmd).Scan(&object.LagType, &tmp1, &object.Description, &object.Mtu, &object.Type, &object.MinLinks, &object.NameKey, &object.Interval, &object.LacpMode, &object.SystemIdMac, &object.SystemPriority, &object.LagHash)
 	fmt.Println("### DB Get AggregationLacpConfig\n", err)
-	object.Enabled = dbutils.ConvertStrBoolIntToBool(tmp2)
+	object.Enabled = dbutils.ConvertStrBoolIntToBool(tmp1)
 	return object, err
 }
 
