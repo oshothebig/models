@@ -37,3 +37,7 @@ func (d *AggregationLacpConfig) SystemPriority_Set(value uint16) bool {
 	d.SystemPriority = value
 	return true
 }
+func (d *AggregationLacpConfig) LagHash_Set(value int32) bool {
+	d.LagHash = value
+	return true
+}
