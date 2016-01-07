@@ -13,6 +13,7 @@ func (obj ArpEntry) CreateDBTable(dbHdl *sql.DB) error {
 		"( " +
 		"IpAddr TEXT, " +
 		"MacAddr TEXT, " +
+		"Vlan INTEGER, " +
 		"Intf TEXT, " +
 		"ExpiryTimeLeft TEXT, " +
 		"PRIMARY KEY(IpAddr) " +
@@ -24,8 +25,8 @@ func (obj ArpEntry) CreateDBTable(dbHdl *sql.DB) error {
 
 func (obj ArpEntry) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	var objectId int64
-	dbCmd := fmt.Sprintf("INSERT INTO ArpEntry (IpAddr, MacAddr, Intf, ExpiryTimeLeft) VALUES ('%v', '%v', '%v', '%v') ;",
-		obj.IpAddr, obj.MacAddr, obj.Intf, obj.ExpiryTimeLeft)
+	dbCmd := fmt.Sprintf("INSERT INTO ArpEntry (IpAddr, MacAddr, Vlan, Intf, ExpiryTimeLeft) VALUES ('%v', '%v', '%v', '%v', '%v') ;",
+		obj.IpAddr, obj.MacAddr, obj.Vlan, obj.Intf, obj.ExpiryTimeLeft)
 	fmt.Println("**** Create Object called with ", obj)
 
 	result, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
@@ -57,7 +58,7 @@ func (obj ArpEntry) DeleteObjectFromDb(objKey string, dbHdl *sql.DB) error {
 func (obj ArpEntry) GetObjectFromDb(objSqlKey string, dbHdl *sql.DB) (ConfigObj, error) {
 	var object ArpEntry
 	dbCmd := "select * from ArpEntry where " + objSqlKey
-	err := dbHdl.QueryRow(dbCmd).Scan(&object.IpAddr, &object.MacAddr, &object.Intf, &object.ExpiryTimeLeft)
+	err := dbHdl.QueryRow(dbCmd).Scan(&object.IpAddr, &object.MacAddr, &object.Vlan, &object.Intf, &object.ExpiryTimeLeft)
 	fmt.Println("### DB Get ArpEntry\n", err)
 	return object, err
 }
