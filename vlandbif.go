@@ -72,6 +72,27 @@ func (obj Vlan) GetSqlKeyStr(objKey string) (string, error) {
 	return sqlKey, nil
 }
 
+func (obj *Vlan) GetAllObjFromDb(dbHdl *sql.DB) (objList []*Vlan, e error) {
+	dbCmd := "select * from Vlan"
+	rows, err := dbHdl.Query(dbCmd)
+	if err != nil {
+		fmt.Println(fmt.Sprintf("DB method Query failed for 'Vlan' with error Vlan", dbCmd, err))
+		return objList, err
+	}
+
+	defer rows.Close()
+
+	for rows.Next() {
+
+		object := new(Vlan)
+		if err = rows.Scan(&object.VlanId, &object.Ports, &object.PortTagType); err != nil {
+
+			fmt.Println("Db method Scan failed when interating over Vlan")
+		}
+		objList = append(objList, object)
+	}
+	return objList, nil
+}
 func (obj Vlan) CompareObjectsAndDiff(updateKeys map[string]bool, dbObj ConfigObj) ([]bool, error) {
 	dbV4Route := dbObj.(Vlan)
 	objTyp := reflect.TypeOf(obj)

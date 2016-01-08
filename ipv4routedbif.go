@@ -75,6 +75,27 @@ func (obj IPV4Route) GetSqlKeyStr(objKey string) (string, error) {
 	return sqlKey, nil
 }
 
+func (obj *IPV4Route) GetAllObjFromDb(dbHdl *sql.DB) (objList []*IPV4Route, e error) {
+	dbCmd := "select * from IPV4Route"
+	rows, err := dbHdl.Query(dbCmd)
+	if err != nil {
+		fmt.Println(fmt.Sprintf("DB method Query failed for 'IPV4Route' with error IPV4Route", dbCmd, err))
+		return objList, err
+	}
+
+	defer rows.Close()
+
+	for rows.Next() {
+
+		object := new(IPV4Route)
+		if err = rows.Scan(&object.DestinationNw, &object.NetworkMask, &object.NextHopIp, &object.OutgoingIntfType, &object.OutgoingInterface, &object.Protocol); err != nil {
+
+			fmt.Println("Db method Scan failed when interating over IPV4Route")
+		}
+		objList = append(objList, object)
+	}
+	return objList, nil
+}
 func (obj IPV4Route) CompareObjectsAndDiff(updateKeys map[string]bool, dbObj ConfigObj) ([]bool, error) {
 	dbV4Route := dbObj.(IPV4Route)
 	objTyp := reflect.TypeOf(obj)

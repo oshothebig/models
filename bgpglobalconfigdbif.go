@@ -71,6 +71,27 @@ func (obj BGPGlobalConfig) GetSqlKeyStr(objKey string) (string, error) {
 	return sqlKey, nil
 }
 
+func (obj *BGPGlobalConfig) GetAllObjFromDb(dbHdl *sql.DB) (objList []*BGPGlobalConfig, e error) {
+	dbCmd := "select * from BGPGlobalConfig"
+	rows, err := dbHdl.Query(dbCmd)
+	if err != nil {
+		fmt.Println(fmt.Sprintf("DB method Query failed for 'BGPGlobalConfig' with error BGPGlobalConfig", dbCmd, err))
+		return objList, err
+	}
+
+	defer rows.Close()
+
+	for rows.Next() {
+
+		object := new(BGPGlobalConfig)
+		if err = rows.Scan(&object.ASNum, &object.RouterId); err != nil {
+
+			fmt.Println("Db method Scan failed when interating over BGPGlobalConfig")
+		}
+		objList = append(objList, object)
+	}
+	return objList, nil
+}
 func (obj BGPGlobalConfig) CompareObjectsAndDiff(updateKeys map[string]bool, dbObj ConfigObj) ([]bool, error) {
 	dbV4Route := dbObj.(BGPGlobalConfig)
 	objTyp := reflect.TypeOf(obj)

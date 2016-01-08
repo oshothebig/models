@@ -71,6 +71,27 @@ func (obj ArpConfig) GetSqlKeyStr(objKey string) (string, error) {
 	return sqlKey, nil
 }
 
+func (obj *ArpConfig) GetAllObjFromDb(dbHdl *sql.DB) (objList []*ArpConfig, e error) {
+	dbCmd := "select * from ArpConfig"
+	rows, err := dbHdl.Query(dbCmd)
+	if err != nil {
+		fmt.Println(fmt.Sprintf("DB method Query failed for 'ArpConfig' with error ArpConfig", dbCmd, err))
+		return objList, err
+	}
+
+	defer rows.Close()
+
+	for rows.Next() {
+
+		object := new(ArpConfig)
+		if err = rows.Scan(&object.ArpConfigKey, &object.Timeout); err != nil {
+
+			fmt.Println("Db method Scan failed when interating over ArpConfig")
+		}
+		objList = append(objList, object)
+	}
+	return objList, nil
+}
 func (obj ArpConfig) CompareObjectsAndDiff(updateKeys map[string]bool, dbObj ConfigObj) ([]bool, error) {
 	dbV4Route := dbObj.(ArpConfig)
 	objTyp := reflect.TypeOf(obj)
