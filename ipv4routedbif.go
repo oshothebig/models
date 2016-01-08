@@ -13,6 +13,7 @@ func (obj IPV4Route) CreateDBTable(dbHdl *sql.DB) error {
 		"( " +
 		"DestinationNw TEXT, " +
 		"NetworkMask TEXT, " +
+		"Cost INTEGER, " +
 		"NextHopIp TEXT, " +
 		"OutgoingIntfType TEXT, " +
 		"OutgoingInterface TEXT, " +
@@ -26,8 +27,8 @@ func (obj IPV4Route) CreateDBTable(dbHdl *sql.DB) error {
 
 func (obj IPV4Route) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	var objectId int64
-	dbCmd := fmt.Sprintf("INSERT INTO IPV4Route (DestinationNw, NetworkMask, NextHopIp, OutgoingIntfType, OutgoingInterface, Protocol) VALUES ('%v', '%v', '%v', '%v', '%v', '%v') ;",
-		obj.DestinationNw, obj.NetworkMask, obj.NextHopIp, obj.OutgoingIntfType, obj.OutgoingInterface, obj.Protocol)
+	dbCmd := fmt.Sprintf("INSERT INTO IPV4Route (DestinationNw, NetworkMask, Cost, NextHopIp, OutgoingIntfType, OutgoingInterface, Protocol) VALUES ('%v', '%v', '%v', '%v', '%v', '%v', '%v') ;",
+		obj.DestinationNw, obj.NetworkMask, obj.Cost, obj.NextHopIp, obj.OutgoingIntfType, obj.OutgoingInterface, obj.Protocol)
 	fmt.Println("**** Create Object called with ", obj)
 
 	result, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
@@ -59,7 +60,7 @@ func (obj IPV4Route) DeleteObjectFromDb(objKey string, dbHdl *sql.DB) error {
 func (obj IPV4Route) GetObjectFromDb(objSqlKey string, dbHdl *sql.DB) (ConfigObj, error) {
 	var object IPV4Route
 	dbCmd := "select * from IPV4Route where " + objSqlKey
-	err := dbHdl.QueryRow(dbCmd).Scan(&object.DestinationNw, &object.NetworkMask, &object.NextHopIp, &object.OutgoingIntfType, &object.OutgoingInterface, &object.Protocol)
+	err := dbHdl.QueryRow(dbCmd).Scan(&object.DestinationNw, &object.NetworkMask, &object.Cost, &object.NextHopIp, &object.OutgoingIntfType, &object.OutgoingInterface, &object.Protocol)
 	fmt.Println("### DB Get IPV4Route\n", err)
 	return object, err
 }
