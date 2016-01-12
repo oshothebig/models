@@ -72,7 +72,7 @@ func (obj IPV4Route) GetKey() (string, error) {
 
 func (obj IPV4Route) GetSqlKeyStr(objKey string) (string, error) {
 	keys := strings.Split(objKey, "#")
-	sqlKey := "DestinationNw = " + "\"" + keys[0] + "\"" + "and" + "NetworkMask = " + "\"" + keys[1] + "\""
+	sqlKey := "DestinationNw = " + "\"" + keys[0] + "\"" + " and " + "NetworkMask = " + "\"" + keys[1] + "\""
 	return sqlKey, nil
 }
 
