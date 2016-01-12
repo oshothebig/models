@@ -78,6 +78,29 @@ func (obj BGPNeighborConfig) GetSqlKeyStr(objKey string) (string, error) {
 	return sqlKey, nil
 }
 
+func (obj *BGPNeighborConfig) GetAllObjFromDb(dbHdl *sql.DB) (objList []*BGPNeighborConfig, e error) {
+	dbCmd := "select * from BGPNeighborConfig"
+	rows, err := dbHdl.Query(dbCmd)
+	if err != nil {
+		fmt.Println(fmt.Sprintf("DB method Query failed for 'BGPNeighborConfig' with error BGPNeighborConfig", dbCmd, err))
+		return objList, err
+	}
+
+	defer rows.Close()
+
+	var tmp6 string
+	for rows.Next() {
+
+		object := new(BGPNeighborConfig)
+		if err = rows.Scan(&object.PeerAS, &object.LocalAS, &object.AuthPassword, &object.Description, &object.NeighborAddress, &object.RouteReflectorClusterId, &tmp6); err != nil {
+
+			fmt.Println("Db method Scan failed when interating over BGPNeighborConfig")
+		}
+		object.RouteReflectorClient = dbutils.ConvertStrBoolIntToBool(tmp6)
+		objList = append(objList, object)
+	}
+	return objList, nil
+}
 func (obj BGPNeighborConfig) CompareObjectsAndDiff(updateKeys map[string]bool, dbObj ConfigObj) ([]bool, error) {
 	dbV4Route := dbObj.(BGPNeighborConfig)
 	objTyp := reflect.TypeOf(obj)

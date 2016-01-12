@@ -73,6 +73,27 @@ func (obj IPv4Neighbor) GetSqlKeyStr(objKey string) (string, error) {
 	return sqlKey, nil
 }
 
+func (obj *IPv4Neighbor) GetAllObjFromDb(dbHdl *sql.DB) (objList []*IPv4Neighbor, e error) {
+	dbCmd := "select * from IPv4Neighbor"
+	rows, err := dbHdl.Query(dbCmd)
+	if err != nil {
+		fmt.Println(fmt.Sprintf("DB method Query failed for 'IPv4Neighbor' with error IPv4Neighbor", dbCmd, err))
+		return objList, err
+	}
+
+	defer rows.Close()
+
+	for rows.Next() {
+
+		object := new(IPv4Neighbor)
+		if err = rows.Scan(&object.IpAddr, &object.MacAddr, &object.VlanId, &object.RouterIf); err != nil {
+
+			fmt.Println("Db method Scan failed when interating over IPv4Neighbor")
+		}
+		objList = append(objList, object)
+	}
+	return objList, nil
+}
 func (obj IPv4Neighbor) CompareObjectsAndDiff(updateKeys map[string]bool, dbObj ConfigObj) ([]bool, error) {
 	dbV4Route := dbObj.(IPv4Neighbor)
 	objTyp := reflect.TypeOf(obj)

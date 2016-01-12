@@ -86,6 +86,33 @@ func (obj EthernetConfig) GetSqlKeyStr(objKey string) (string, error) {
 	return sqlKey, nil
 }
 
+func (obj *EthernetConfig) GetAllObjFromDb(dbHdl *sql.DB) (objList []*EthernetConfig, e error) {
+	dbCmd := "select * from EthernetConfig"
+	rows, err := dbHdl.Query(dbCmd)
+	if err != nil {
+		fmt.Println(fmt.Sprintf("DB method Query failed for 'EthernetConfig' with error EthernetConfig", dbCmd, err))
+		return objList, err
+	}
+
+	defer rows.Close()
+
+	var tmp1 string
+	var tmp7 string
+	var tmp9 string
+	for rows.Next() {
+
+		object := new(EthernetConfig)
+		if err = rows.Scan(&object.NameKey, &tmp1, &object.Description, &object.Mtu, &object.Type, &object.MacAddress, &object.DuplexMode, &tmp7, &object.Speed, &tmp9, &object.AggregateId); err != nil {
+
+			fmt.Println("Db method Scan failed when interating over EthernetConfig")
+		}
+		object.Enabled = dbutils.ConvertStrBoolIntToBool(tmp1)
+		object.Auto = dbutils.ConvertStrBoolIntToBool(tmp7)
+		object.EnableFlowControl = dbutils.ConvertStrBoolIntToBool(tmp9)
+		objList = append(objList, object)
+	}
+	return objList, nil
+}
 func (obj EthernetConfig) CompareObjectsAndDiff(updateKeys map[string]bool, dbObj ConfigObj) ([]bool, error) {
 	dbV4Route := dbObj.(EthernetConfig)
 	objTyp := reflect.TypeOf(obj)
