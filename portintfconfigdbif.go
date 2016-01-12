@@ -81,6 +81,27 @@ func (obj PortIntfConfig) GetSqlKeyStr(objKey string) (string, error) {
 	return sqlKey, nil
 }
 
+func (obj *PortIntfConfig) GetAllObjFromDb(dbHdl *sql.DB) (objList []*PortIntfConfig, e error) {
+	dbCmd := "select * from PortIntfConfig"
+	rows, err := dbHdl.Query(dbCmd)
+	if err != nil {
+		fmt.Println(fmt.Sprintf("DB method Query failed for 'PortIntfConfig' with error PortIntfConfig", dbCmd, err))
+		return objList, err
+	}
+
+	defer rows.Close()
+
+	for rows.Next() {
+
+		object := new(PortIntfConfig)
+		if err = rows.Scan(&object.PortNum, &object.Name, &object.Description, &object.Type, &object.AdminState, &object.OperState, &object.MacAddr, &object.Speed, &object.Duplex, &object.Autoneg, &object.MediaType, &object.Mtu); err != nil {
+
+			fmt.Println("Db method Scan failed when interating over PortIntfConfig")
+		}
+		objList = append(objList, object)
+	}
+	return objList, nil
+}
 func (obj PortIntfConfig) CompareObjectsAndDiff(updateKeys map[string]bool, dbObj ConfigObj) ([]bool, error) {
 	dbV4Route := dbObj.(PortIntfConfig)
 	objTyp := reflect.TypeOf(obj)

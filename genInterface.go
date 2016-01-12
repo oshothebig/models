@@ -1549,49 +1549,83 @@ type AggregationLacpMemberStateCounters struct {
 	// parent leaf
 	Collecting bool
 	// parent leaf
+	PartnerCdsChurnMachine int32
+	// parent leaf
 	OperKey uint16
+	// parent leaf
+	MuxReason string
 	// parent leaf
 	PartnerId string
 	// parent leaf
-	Interface string
-	// parent leaf
-	Synchronization int32
-	// parent leaf
 	Aggregatable bool
 	// parent leaf
-	Mtu uint16
-	// parent leaf
-	NameKey string `SNAPROUTE: KEY`
-	// parent leaf
-	LacpMode int32
-	// parent leaf
-	PartnerKey uint16
-	// parent leaf
-	Description string
-	// parent leaf
-	SystemIdMac string
-	// parent leaf
-	LagType int32
-	// parent leaf
-	SystemId string
-	// parent leaf
-	Interval int32
-	// parent leaf
-	Enabled bool
+	PartnerCdsChurnCount uint64
 	// parent leaf
 	LagHash int32
 	// parent leaf
+	PartnerKey uint16
+	// parent leaf
+	RxMachine int32
+	// parent leaf
+	ActorSyncTransitionCount uint64
+	// parent leaf
+	SystemId string
+	// parent leaf
+	ActorChangeCount uint64
+	// parent leaf
+	LacpMode int32
+	// parent leaf
 	Distributing bool
 	// parent leaf
-	Timeout int32
+	MuxMachine int32
 	// parent leaf
-	Activity int32
+	ActorCdsChurnCount uint64
+	// parent leaf
+	PartnerSyncTransitionCount uint64
+	// parent leaf
+	ActorChurnCount uint64
 	// parent leaf
 	SystemPriority uint16
 	// parent leaf
 	Type string
 	// parent leaf
 	MinLinks uint16
+	// parent leaf
+	Description string
+	// parent leaf
+	PartnerChangeCount uint64
+	// parent leaf
+	Synchronization int32
+	// parent leaf
+	Interface string
+	// parent leaf
+	DebugId uint32
+	// parent leaf
+	RxTime uint32
+	// parent leaf
+	ActorChurnMachine int32
+	// parent leaf
+	LagType int32
+	// parent leaf
+	ActorCdsChurnMachine int32
+	// parent leaf
+	NameKey string `SNAPROUTE: KEY`
+	// parent leaf
+	SystemIdMac string
+	// parent leaf
+	Interval int32
+	// parent leaf
+	Enabled bool
+	// parent leaf
+	Mtu uint16
+	// parent leaf
+	Timeout int32
+	// parent leaf
+	Activity int32
+	// parent leaf
+	PartnerChurnMachine int32
+	// parent leaf
+	PartnerChurnCount uint64
 	//yang_name: lacp-in-pkts class: leaf
 	LacpInPkts uint64
 	//yang_name: lacp-out-pkts class: leaf

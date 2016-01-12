@@ -74,6 +74,27 @@ func (obj ArpEntry) GetSqlKeyStr(objKey string) (string, error) {
 	return sqlKey, nil
 }
 
+func (obj *ArpEntry) GetAllObjFromDb(dbHdl *sql.DB) (objList []*ArpEntry, e error) {
+	dbCmd := "select * from ArpEntry"
+	rows, err := dbHdl.Query(dbCmd)
+	if err != nil {
+		fmt.Println(fmt.Sprintf("DB method Query failed for 'ArpEntry' with error ArpEntry", dbCmd, err))
+		return objList, err
+	}
+
+	defer rows.Close()
+
+	for rows.Next() {
+
+		object := new(ArpEntry)
+		if err = rows.Scan(&object.IpAddr, &object.MacAddr, &object.Intf, &object.ExpiryTimeLeft); err != nil {
+
+			fmt.Println("Db method Scan failed when interating over ArpEntry")
+		}
+		objList = append(objList, object)
+	}
+	return objList, nil
+}
 func (obj ArpEntry) CompareObjectsAndDiff(updateKeys map[string]bool, dbObj ConfigObj) ([]bool, error) {
 	dbV4Route := dbObj.(ArpEntry)
 	objTyp := reflect.TypeOf(obj)

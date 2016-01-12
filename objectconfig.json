@@ -2,17 +2,17 @@
 	"Vlan"     : {
 		"access": "w",
 		"Owner": "portd",
-		"Listeners":["asicd"]
+		"Listeners":[]
 	},
  	"IPv4Intf" : {
 		"access": "w",
 		"Owner": "portd",
-		"Listeners" : ["asicd"]
+		"Listeners" : []
 	},
  	"IPv4Neighbor" : {
 		"access": "w",
 		"Owner" : "portd",
-		"Listeners" : ["asicd"]
+		"Listeners" : []
 	},
     "ArpConfig" : {
 		"access": "w",
@@ -27,7 +27,7 @@
  	"IPV4Route": {
 		"access": "rw",
 		"Owner": "ribd",
-		"Listeners": ["asicd","bgpd"]
+		"Listeners": []
 	},
  	"BGPGlobalConfig": {
 		"access": "w",
@@ -68,9 +68,15 @@
 		"access": "w",	
 		"Owner": "lacpd", 
 		"Listeners": []
-        },
+    },
 	"PortIntfConfig" : {
 		"access": "w",	
 		"Owner": "asicd",
-		"Listeners" : []}
+		"Listeners" : []
+	},
+	"PortIntfState" : {
+		"access": "r",
+		"Owner": "asicd",
+		"Listeners" : []
+	}
 }

@@ -83,6 +83,29 @@ func (obj AggregationLacpConfig) GetSqlKeyStr(objKey string) (string, error) {
 	return sqlKey, nil
 }
 
+func (obj *AggregationLacpConfig) GetAllObjFromDb(dbHdl *sql.DB) (objList []*AggregationLacpConfig, e error) {
+	dbCmd := "select * from AggregationLacpConfig"
+	rows, err := dbHdl.Query(dbCmd)
+	if err != nil {
+		fmt.Println(fmt.Sprintf("DB method Query failed for 'AggregationLacpConfig' with error AggregationLacpConfig", dbCmd, err))
+		return objList, err
+	}
+
+	defer rows.Close()
+
+	var tmp1 string
+	for rows.Next() {
+
+		object := new(AggregationLacpConfig)
+		if err = rows.Scan(&object.LagType, &tmp1, &object.Description, &object.Mtu, &object.Type, &object.MinLinks, &object.NameKey, &object.Interval, &object.LacpMode, &object.SystemIdMac, &object.SystemPriority, &object.LagHash); err != nil {
+
+			fmt.Println("Db method Scan failed when interating over AggregationLacpConfig")
+		}
+		object.Enabled = dbutils.ConvertStrBoolIntToBool(tmp1)
+		objList = append(objList, object)
+	}
+	return objList, nil
+}
 func (obj AggregationLacpConfig) CompareObjectsAndDiff(updateKeys map[string]bool, dbObj ConfigObj) ([]bool, error) {
 	dbV4Route := dbObj.(AggregationLacpConfig)
 	objTyp := reflect.TypeOf(obj)
