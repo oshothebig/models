@@ -52,10 +52,11 @@ func (obj ArpConfig) DeleteObjectFromDb(objKey string, dbHdl *sql.DB) error {
 	return err
 }
 
-func (obj ArpConfig) GetObjectFromDb(objSqlKey string, dbHdl *sql.DB) (ConfigObj, error) {
+func (obj ArpConfig) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, error) {
 	var object ArpConfig
-	dbCmd := "select * from ArpConfig where " + objSqlKey
-	err := dbHdl.QueryRow(dbCmd).Scan(&object.ArpConfigKey, &object.Timeout)
+	sqlKey, err := obj.GetSqlKeyStr(objKey)
+	dbCmd := "select * from ArpConfig where " + sqlKey
+	err = dbHdl.QueryRow(dbCmd).Scan(&object.ArpConfigKey, &object.Timeout)
 	fmt.Println("### DB Get ArpConfig\n", err)
 	return object, err
 }

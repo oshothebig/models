@@ -62,10 +62,11 @@ func (obj PortIntfConfig) DeleteObjectFromDb(objKey string, dbHdl *sql.DB) error
 	return err
 }
 
-func (obj PortIntfConfig) GetObjectFromDb(objSqlKey string, dbHdl *sql.DB) (ConfigObj, error) {
+func (obj PortIntfConfig) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, error) {
 	var object PortIntfConfig
-	dbCmd := "select * from PortIntfConfig where " + objSqlKey
-	err := dbHdl.QueryRow(dbCmd).Scan(&object.PortNum, &object.Name, &object.Description, &object.Type, &object.AdminState, &object.OperState, &object.MacAddr, &object.Speed, &object.Duplex, &object.Autoneg, &object.MediaType, &object.Mtu)
+	sqlKey, err := obj.GetSqlKeyStr(objKey)
+	dbCmd := "select * from PortIntfConfig where " + sqlKey
+	err = dbHdl.QueryRow(dbCmd).Scan(&object.PortNum, &object.Name, &object.Description, &object.Type, &object.AdminState, &object.OperState, &object.MacAddr, &object.Speed, &object.Duplex, &object.Autoneg, &object.MediaType, &object.Mtu)
 	fmt.Println("### DB Get PortIntfConfig\n", err)
 	return object, err
 }

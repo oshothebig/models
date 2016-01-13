@@ -53,10 +53,11 @@ func (obj Vlan) DeleteObjectFromDb(objKey string, dbHdl *sql.DB) error {
 	return err
 }
 
-func (obj Vlan) GetObjectFromDb(objSqlKey string, dbHdl *sql.DB) (ConfigObj, error) {
+func (obj Vlan) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, error) {
 	var object Vlan
-	dbCmd := "select * from Vlan where " + objSqlKey
-	err := dbHdl.QueryRow(dbCmd).Scan(&object.VlanId, &object.Ports, &object.PortTagType)
+	sqlKey, err := obj.GetSqlKeyStr(objKey)
+	dbCmd := "select * from Vlan where " + sqlKey
+	err = dbHdl.QueryRow(dbCmd).Scan(&object.VlanId, &object.Ports, &object.PortTagType)
 	fmt.Println("### DB Get Vlan\n", err)
 	return object, err
 }

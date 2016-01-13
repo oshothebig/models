@@ -54,10 +54,11 @@ func (obj IPv4Neighbor) DeleteObjectFromDb(objKey string, dbHdl *sql.DB) error {
 	return err
 }
 
-func (obj IPv4Neighbor) GetObjectFromDb(objSqlKey string, dbHdl *sql.DB) (ConfigObj, error) {
+func (obj IPv4Neighbor) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, error) {
 	var object IPv4Neighbor
-	dbCmd := "select * from IPv4Neighbor where " + objSqlKey
-	err := dbHdl.QueryRow(dbCmd).Scan(&object.IpAddr, &object.MacAddr, &object.VlanId, &object.RouterIf)
+	sqlKey, err := obj.GetSqlKeyStr(objKey)
+	dbCmd := "select * from IPv4Neighbor where " + sqlKey
+	err = dbHdl.QueryRow(dbCmd).Scan(&object.IpAddr, &object.MacAddr, &object.VlanId, &object.RouterIf)
 	fmt.Println("### DB Get IPv4Neighbor\n", err)
 	return object, err
 }

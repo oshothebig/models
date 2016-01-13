@@ -57,10 +57,11 @@ func (obj IPV4Route) DeleteObjectFromDb(objKey string, dbHdl *sql.DB) error {
 	return err
 }
 
-func (obj IPV4Route) GetObjectFromDb(objSqlKey string, dbHdl *sql.DB) (ConfigObj, error) {
+func (obj IPV4Route) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, error) {
 	var object IPV4Route
-	dbCmd := "select * from IPV4Route where " + objSqlKey
-	err := dbHdl.QueryRow(dbCmd).Scan(&object.DestinationNw, &object.NetworkMask, &object.Cost, &object.NextHopIp, &object.OutgoingIntfType, &object.OutgoingInterface, &object.Protocol)
+	sqlKey, err := obj.GetSqlKeyStr(objKey)
+	dbCmd := "select * from IPV4Route where " + sqlKey
+	err = dbHdl.QueryRow(dbCmd).Scan(&object.DestinationNw, &object.NetworkMask, &object.Cost, &object.NextHopIp, &object.OutgoingIntfType, &object.OutgoingInterface, &object.Protocol)
 	fmt.Println("### DB Get IPV4Route\n", err)
 	return object, err
 }
@@ -89,7 +90,7 @@ func (obj *IPV4Route) GetAllObjFromDb(dbHdl *sql.DB) (objList []*IPV4Route, e er
 	for rows.Next() {
 
 		object := new(IPV4Route)
-		if err = rows.Scan(&object.DestinationNw, &object.NetworkMask, &object.NextHopIp, &object.OutgoingIntfType, &object.OutgoingInterface, &object.Protocol); err != nil {
+		if err = rows.Scan(&object.DestinationNw, &object.NetworkMask, &object.Cost, &object.NextHopIp, &object.OutgoingIntfType, &object.OutgoingInterface, &object.Protocol); err != nil {
 
 			fmt.Println("Db method Scan failed when interating over IPV4Route")
 		}
