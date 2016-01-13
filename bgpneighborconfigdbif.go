@@ -57,11 +57,12 @@ func (obj BGPNeighborConfig) DeleteObjectFromDb(objKey string, dbHdl *sql.DB) er
 	return err
 }
 
-func (obj BGPNeighborConfig) GetObjectFromDb(objSqlKey string, dbHdl *sql.DB) (ConfigObj, error) {
+func (obj BGPNeighborConfig) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, error) {
 	var object BGPNeighborConfig
-	dbCmd := "select * from BGPNeighborConfig where " + objSqlKey
+	sqlKey, err := obj.GetSqlKeyStr(objKey)
+	dbCmd := "select * from BGPNeighborConfig where " + sqlKey
 	var tmp6 string
-	err := dbHdl.QueryRow(dbCmd).Scan(&object.PeerAS, &object.LocalAS, &object.AuthPassword, &object.Description, &object.NeighborAddress, &object.RouteReflectorClusterId, &tmp6)
+	err = dbHdl.QueryRow(dbCmd).Scan(&object.PeerAS, &object.LocalAS, &object.AuthPassword, &object.Description, &object.NeighborAddress, &object.RouteReflectorClusterId, &tmp6)
 	fmt.Println("### DB Get BGPNeighborConfig\n", err)
 	object.RouteReflectorClient = dbutils.ConvertStrBoolIntToBool(tmp6)
 	return object, err

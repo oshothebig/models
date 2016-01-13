@@ -52,10 +52,11 @@ func (obj BGPGlobalConfig) DeleteObjectFromDb(objKey string, dbHdl *sql.DB) erro
 	return err
 }
 
-func (obj BGPGlobalConfig) GetObjectFromDb(objSqlKey string, dbHdl *sql.DB) (ConfigObj, error) {
+func (obj BGPGlobalConfig) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, error) {
 	var object BGPGlobalConfig
-	dbCmd := "select * from BGPGlobalConfig where " + objSqlKey
-	err := dbHdl.QueryRow(dbCmd).Scan(&object.ASNum, &object.RouterId)
+	sqlKey, err := obj.GetSqlKeyStr(objKey)
+	dbCmd := "select * from BGPGlobalConfig where " + sqlKey
+	err = dbHdl.QueryRow(dbCmd).Scan(&object.ASNum, &object.RouterId)
 	fmt.Println("### DB Get BGPGlobalConfig\n", err)
 	return object, err
 }

@@ -55,10 +55,11 @@ func (obj ArpEntry) DeleteObjectFromDb(objKey string, dbHdl *sql.DB) error {
 	return err
 }
 
-func (obj ArpEntry) GetObjectFromDb(objSqlKey string, dbHdl *sql.DB) (ConfigObj, error) {
+func (obj ArpEntry) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, error) {
 	var object ArpEntry
-	dbCmd := "select * from ArpEntry where " + objSqlKey
-	err := dbHdl.QueryRow(dbCmd).Scan(&object.IpAddr, &object.MacAddr, &object.Vlan, &object.Intf, &object.ExpiryTimeLeft)
+	sqlKey, err := obj.GetSqlKeyStr(objKey)
+	dbCmd := "select * from ArpEntry where " + sqlKey
+	err = dbHdl.QueryRow(dbCmd).Scan(&object.IpAddr, &object.MacAddr, &object.Vlan, &object.Intf, &object.ExpiryTimeLeft)
 	fmt.Println("### DB Get ArpEntry\n", err)
 	return object, err
 }
@@ -87,7 +88,7 @@ func (obj *ArpEntry) GetAllObjFromDb(dbHdl *sql.DB) (objList []*ArpEntry, e erro
 	for rows.Next() {
 
 		object := new(ArpEntry)
-		if err = rows.Scan(&object.IpAddr, &object.MacAddr, &object.Intf, &object.ExpiryTimeLeft); err != nil {
+		if err = rows.Scan(&object.IpAddr, &object.MacAddr, &object.Vlan, &object.Intf, &object.ExpiryTimeLeft); err != nil {
 
 			fmt.Println("Db method Scan failed when interating over ArpEntry")
 		}

@@ -53,10 +53,11 @@ func (obj IPv4Intf) DeleteObjectFromDb(objKey string, dbHdl *sql.DB) error {
 	return err
 }
 
-func (obj IPv4Intf) GetObjectFromDb(objSqlKey string, dbHdl *sql.DB) (ConfigObj, error) {
+func (obj IPv4Intf) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, error) {
 	var object IPv4Intf
-	dbCmd := "select * from IPv4Intf where " + objSqlKey
-	err := dbHdl.QueryRow(dbCmd).Scan(&object.IpAddr, &object.RouterIf, &object.IfType)
+	sqlKey, err := obj.GetSqlKeyStr(objKey)
+	dbCmd := "select * from IPv4Intf where " + sqlKey
+	err = dbHdl.QueryRow(dbCmd).Scan(&object.IpAddr, &object.RouterIf, &object.IfType)
 	fmt.Println("### DB Get IPv4Intf\n", err)
 	return object, err
 }

@@ -61,13 +61,14 @@ func (obj EthernetConfig) DeleteObjectFromDb(objKey string, dbHdl *sql.DB) error
 	return err
 }
 
-func (obj EthernetConfig) GetObjectFromDb(objSqlKey string, dbHdl *sql.DB) (ConfigObj, error) {
+func (obj EthernetConfig) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, error) {
 	var object EthernetConfig
-	dbCmd := "select * from EthernetConfig where " + objSqlKey
+	sqlKey, err := obj.GetSqlKeyStr(objKey)
+	dbCmd := "select * from EthernetConfig where " + sqlKey
 	var tmp1 string
 	var tmp7 string
 	var tmp9 string
-	err := dbHdl.QueryRow(dbCmd).Scan(&object.NameKey, &tmp1, &object.Description, &object.Mtu, &object.Type, &object.MacAddress, &object.DuplexMode, &tmp7, &object.Speed, &tmp9, &object.AggregateId)
+	err = dbHdl.QueryRow(dbCmd).Scan(&object.NameKey, &tmp1, &object.Description, &object.Mtu, &object.Type, &object.MacAddress, &object.DuplexMode, &tmp7, &object.Speed, &tmp9, &object.AggregateId)
 	fmt.Println("### DB Get EthernetConfig\n", err)
 	object.Enabled = dbutils.ConvertStrBoolIntToBool(tmp1)
 	object.Auto = dbutils.ConvertStrBoolIntToBool(tmp7)
