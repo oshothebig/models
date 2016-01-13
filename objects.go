@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"encoding/json"
 	"fmt"
+	"time"
 )
 
 type ConfigObj interface {
@@ -336,4 +337,44 @@ func (obj PortIntfState) UnmarshalObject(body []byte) (ConfigObj, error) {
 	}
 
 	return portIntfStateObj, err
+}
+
+type UserConfig struct {
+	BaseObj
+	UserName      string `SNAPROUTE: "KEY"`
+	Password      string
+	Description   string
+	Previledge    string
+}
+
+func (obj UserConfig) UnmarshalObject(body []byte) (ConfigObj, error) {
+	var userConfigObj UserConfig
+	var err error
+	if len(body) > 0 {
+		if err = json.Unmarshal(body, &userConfigObj); err != nil {
+			fmt.Println("### Trouble in unmarshaling UserConfig from Json", body)
+		}
+	}
+
+	return userConfigObj, err
+}
+
+type UserState struct {
+	BaseObj
+	UserName        string
+	LastLoginTime   time.Time
+	LastLoginIp     string
+	NumAPICalled    int32
+}
+
+func (obj UserState) UnmarshalObject(body []byte) (ConfigObj, error) {
+	var userStateObj UserState
+	var err error
+	if len(body) > 0 {
+		if err = json.Unmarshal(body, &userStateObj); err != nil {
+			fmt.Println("### Trouble in unmarshaling UserState from Json", body)
+		}
+	}
+
+	return userStateObj, err
 }

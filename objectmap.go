@@ -20,4 +20,6 @@ var ConfigObjectMap = map[string]ConfigObj{
 	"AggregationLacpState":               &AggregationLacpState{},
 	"PortIntfConfig":                     &PortIntfConfig{},
 	"PortIntfState":                      &PortIntfState{},
+	"UserConfig":                         &UserConfig{},
+	"UserState":                          &UserState{},
 }
