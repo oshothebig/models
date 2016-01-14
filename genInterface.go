@@ -1561,11 +1561,11 @@ type AggregationLacpMemberStateCounters struct {
 	// parent leaf
 	PartnerCdsChurnCount uint64
 	// parent leaf
-	LagHash int32
+	LacpMode int32
 	// parent leaf
 	PartnerKey uint16
 	// parent leaf
-	RxMachine int32
+	Distributing bool
 	// parent leaf
 	ActorSyncTransitionCount uint64
 	// parent leaf
@@ -1573,9 +1573,9 @@ type AggregationLacpMemberStateCounters struct {
 	// parent leaf
 	ActorChangeCount uint64
 	// parent leaf
-	LacpMode int32
+	LagHash int32
 	// parent leaf
-	Distributing bool
+	RxMachine int32
 	// parent leaf
 	MuxMachine int32
 	// parent leaf
@@ -1638,6 +1638,14 @@ type AggregationLacpMemberStateCounters struct {
 	LacpUnknownErrors uint64
 	//yang_name: lacp-errors class: leaf
 	LacpErrors uint64
+	//yang_name: lamp-in-pdu class: leaf
+	LampInPdu uint64
+	//yang_name: lamp-in-response-pdu class: leaf
+	LampInResponsePdu uint64
+	//yang_name: lamp-out-pdu class: leaf
+	LampOutPdu uint64
+	//yang_name: lamp-out-response-pdu class: leaf
+	LampOutResponsePdu uint64
 }
 
 type AggregationVlanConfig struct {
