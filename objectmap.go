@@ -22,4 +22,5 @@ var ConfigObjectMap = map[string]ConfigObj{
 	"PortIntfState":                      &PortIntfState{},
 	"UserConfig":                         &UserConfig{},
 	"UserState":                          &UserState{},
+	"IPV4AddressBlock":                   &IPV4AddressBlock{},
 }
