@@ -341,10 +341,10 @@ func (obj PortIntfState) UnmarshalObject(body []byte) (ConfigObj, error) {
 
 type UserConfig struct {
 	BaseObj
-	UserName      string `SNAPROUTE: "KEY"`
-	Password      string
-	Description   string
-	Previledge    string
+	UserName          string `SNAPROUTE: "KEY"`
+	Password          string
+	Description       string
+	Previledge        string
 }
 
 func (obj UserConfig) UnmarshalObject(body []byte) (ConfigObj, error) {
@@ -364,7 +364,7 @@ type UserState struct {
 	UserName        string
 	LastLoginTime   time.Time
 	LastLoginIp     string
-	NumAPICalled    int32
+	NumAPICalled    uint32
 }
 
 func (obj UserState) UnmarshalObject(body []byte) (ConfigObj, error) {
