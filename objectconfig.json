@@ -78,15 +78,5 @@
 		"access": "r",
 		"Owner": "asicd",
 		"Listeners" : []
-	},
-	"UserConfig" : {
-		"access": "w",
-		"Owner": "confd",
-		"Listeners" : []
-	},
-	"UserState" : {
-		"access": "r",
-		"Owner": "confd",
-		"Listeners" : []
 	}
 }
