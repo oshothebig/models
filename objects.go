@@ -342,7 +342,7 @@ func (obj PortIntfState) UnmarshalObject(body []byte) (ConfigObj, error) {
 type UserConfig struct {
 	BaseObj
 	UserName          string `SNAPROUTE: "KEY"`
-	Password          string
+	Password          []byte
 	Description       string
 	Previledge        string
 }
