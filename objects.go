@@ -302,7 +302,7 @@ func (obj PortIntfState) UnmarshalObject(body []byte) (ConfigObj, error) {
 type UserConfig struct {
 	BaseObj
 	UserName          string `SNAPROUTE: "KEY"`
-	Password          []byte
+	Password          string
 	Description       string
 	Previledge        string
 }
@@ -337,4 +337,20 @@ func (obj UserState) UnmarshalObject(body []byte) (ConfigObj, error) {
 	}
 
 	return userStateObj, err
+}
+
+type Login struct {
+	BaseObj
+}
+
+func (obj Login) UnmarshalObject(body []byte) (ConfigObj, error) {
+	var loginObj Login
+	var err error
+	if len(body) > 0 {
+		if err = json.Unmarshal(body, &loginObj); err != nil {
+			fmt.Println("### Trouble in unmarshaling Login from Json", body)
+		}
+	}
+
+	return loginObj, err
 }
