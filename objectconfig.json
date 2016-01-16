@@ -88,5 +88,10 @@
 		"access": "r",
 		"Owner": "local",
 		"Listeners" : []
+	},
+	"IPV4AddressBlock" : {
+		"access": "w",
+		"Owner": "local",
+		"Listeners" : []		
 	}
 }
