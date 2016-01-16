@@ -11,7 +11,7 @@ import (
 type IPV4AddressBlock struct {
 	BaseObj
 	NwAddress         string `SNAPROUTE: "KEY"`
-	NetworkMask       string `SNAPROUTE: "KEY"`
+	NwMask            string `SNAPROUTE: "KEY"`
 	HostIntfIp        string
 }
 
