@@ -78,5 +78,15 @@
 		"access": "r",
 		"Owner": "asicd",
 		"Listeners" : []
+	},
+	"UserConfig" : {
+		"access": "w",
+		"Owner": "local",
+		"Listeners" : []
+	},
+	"UserState" : {
+		"access": "r",
+		"Owner": "local",
+		"Listeners" : []
 	}
 }

@@ -338,3 +338,39 @@ func (obj UserState) UnmarshalObject(body []byte) (ConfigObj, error) {
 
 	return userStateObj, err
 }
+
+type Login struct {
+	BaseObj
+	UserName          string
+	Password          string
+}
+
+func (obj Login) UnmarshalObject(body []byte) (ConfigObj, error) {
+	var loginObj Login
+	var err error
+	if len(body) > 0 {
+		if err = json.Unmarshal(body, &loginObj); err != nil {
+			fmt.Println("### Trouble in unmarshaling Login from Json", body)
+		}
+	}
+
+	return loginObj, err
+}
+
+type Logout struct {
+	BaseObj
+	UserName          string
+	SessionId         uint32
+}
+
+func (obj Logout) UnmarshalObject(body []byte) (ConfigObj, error) {
+	var logoutObj Logout
+	var err error
+	if len(body) > 0 {
+		if err = json.Unmarshal(body, &logoutObj); err != nil {
+			fmt.Println("### Trouble in unmarshaling Logout from Json", body)
+		}
+	}
+
+	return logoutObj, err
+}
