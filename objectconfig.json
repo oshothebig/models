@@ -1,18 +1,18 @@
 {
 	"Vlan"     : {
 		"access": "w",
-		"Owner": "portd",
-		"Listeners":[]
+		"Owner": "asicd",
+		"Listeners":[""]
 	},
  	"IPv4Intf" : {
 		"access": "w",
-		"Owner": "portd",
-		"Listeners" : []
+		"Owner": "asicd",
+		"Listeners" : [""]
 	},
  	"IPv4Neighbor" : {
 		"access": "w",
-		"Owner" : "portd",
-		"Listeners" : []
+		"Owner" : "asicd",
+		"Listeners" : [""]
 	},
     "ArpConfig" : {
 		"access": "w",
