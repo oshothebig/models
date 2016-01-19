@@ -3,7 +3,7 @@ package models
 /*
  * Global DataStructure for DHCP RELAY
  */
-type DhcpRelayGlobal struct {
+type DhcpRelayGlobalConfig struct {
 	BaseObj
 	// This will tell whether DHCP RELAY is enabled/disabled
 	// on the box right now or not.
@@ -13,7 +13,7 @@ type DhcpRelayGlobal struct {
 /*
  * This DS will be used while adding/deleting Relay Agent.
  */
-type DhcpRelayConf struct {
+type DhcpRelayIntfConfig struct {
 	BaseObj
 	IpSubnet string `SNAPROUTE: "KEY"`
 	Netmask  string `SNAPROUTE: "KEY"`

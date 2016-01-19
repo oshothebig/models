@@ -94,12 +94,12 @@
 		"Owner": "local",
 		"Listeners" : []		
 	},
-	"DhcpRelayGlobal" : {
+	"DhcpRelayGlobalConfig" : {
 		"access": "rw",
 		"Owner": "dhcprelayd",
 		"Listeners" : []
 	},
-	"DhcpRelayConf" : {
+	"DhcpRelayIntfConfig" : {
 		"access": "rw",
 		"Owner": "dhcprelayd",
 		"Listeners" : []
