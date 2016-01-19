@@ -2,17 +2,17 @@
 	"Vlan"     : {
 		"access": "w",
 		"Owner": "asicd",
-		"Listeners":[""]
+		"Listeners":[]
 	},
  	"IPv4Intf" : {
 		"access": "w",
 		"Owner": "asicd",
-		"Listeners" : [""]
+		"Listeners" : []
 	},
  	"IPv4Neighbor" : {
 		"access": "w",
 		"Owner" : "asicd",
-		"Listeners" : [""]
+		"Listeners" : []
 	},
     "ArpConfig" : {
 		"access": "w",
@@ -128,5 +128,15 @@
 		"access": "w",
 		"Owner": "local",
 		"Listeners" : []		
-	}
+	},
+	"DhcpRelayGlobalConfig" : {
+		"access": "rw",
+		"Owner": "dhcprelayd",
+		"Listeners" : []
+	},
+	"DhcpRelayIntfConfig" : {
+		"access": "rw",
+		"Owner": "dhcprelayd",
+		"Listeners" : []
+        }	
 }
