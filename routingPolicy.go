@@ -1,103 +1,47 @@
 package models
 
-//enumerations
-var (
-	AttributeComparisonPtAttributeGe = 0
-	AttributeComparisonPtAttributeLe = 1
-	AttributeComparisonAttributeLe = 2
-	AttributeComparisonAttributeGe = 3
-	AttributeComparisonPtypesAttributeEq = 4
-	AttributeComparisonPtypesAttributeGe = 5
-	AttributeComparisonPtAttributeEq = 6
-	AttributeComparisonAttributeEq = 7
-	AttributeComparisonPtypesAttributeLe = 8
-	InetIpVersionUnknown = 0
-	InetIpVersionIpv4 = 1
-	InetIpVersionIpv6 = 2
-	PtMatchSetOptionsTypeINVERT = 0
-	PtMatchSetOptionsTypeALL = 1
-	PtMatchSetOptionsTypeANY = 2
-	PtypesMatchSetOptionsTypeINVERT = 0
-	PtypesMatchSetOptionsTypeALL = 1
-	PtypesMatchSetOptionsTypeANY = 2
-	RpolDefaultPolicyTypeACCEPTROUTE = 0
-	RpolDefaultPolicyTypeREJECTROUTE = 1
-	PtypesAttributeComparisonAttributeLe = 0
-	PtypesAttributeComparisonAttributeGe = 1
-	PtypesAttributeComparisonPtypesAttributeEq = 2
-	PtypesAttributeComparisonPtypesAttributeGe = 3
-	PtypesAttributeComparisonAttributeEq = 4
-	PtypesAttributeComparisonPtypesAttributeLe = 5
-	MatchSetOptionsTypeINVERT = 0
-	MatchSetOptionsTypeALL = 1
-	MatchSetOptionsTypeANY = 2
-	PtypesInstallProtocolTypePtypesSTATIC = 0
-	PtypesInstallProtocolTypePtypesBGP = 1
-	PtypesInstallProtocolTypeISIS = 2
-	PtypesInstallProtocolTypeBGP = 3
-	PtypesInstallProtocolTypePtypesOSPF3 = 4
-	PtypesInstallProtocolTypePtypesOSPF = 5
-	PtypesInstallProtocolTypePtypesISIS = 6
-	PtypesInstallProtocolTypePtypesLOCALAGGREGATE = 7
-	PtypesInstallProtocolTypeDIRECTLYCONNECTED = 8
-	PtypesInstallProtocolTypeSTATIC = 9
-	PtypesInstallProtocolTypePtypesDIRECTLYCONNECTED = 10
-	PtypesInstallProtocolTypeLOCALAGGREGATE = 11
-	PtypesInstallProtocolTypeOSPF = 12
-	PtypesInstallProtocolTypeOSPF3 = 13
-	MatchSetOptionsRestrictedTypeINVERT = 0
-	MatchSetOptionsRestrictedTypeANY = 1
-	PtAttributeComparisonPtAttributeGe = 0
-	PtAttributeComparisonPtAttributeLe = 1
-	PtAttributeComparisonAttributeLe = 2
-	PtAttributeComparisonAttributeGe = 3
-	PtAttributeComparisonPtAttributeEq = 4
-	PtAttributeComparisonAttributeEq = 5
-	IpVersionUnknown = 0
-	IpVersionIpv4 = 1
-	IpVersionIpv6 = 2
-	DefaultPolicyTypeACCEPTROUTE = 0
-	DefaultPolicyTypeREJECTROUTE = 1
-	InstallProtocolTypePtypesSTATIC = 0
-	InstallProtocolTypeBGP = 1
-	InstallProtocolTypePtBGP = 2
-	InstallProtocolTypeISIS = 3
-	InstallProtocolTypePtOSPF = 4
-	InstallProtocolTypePtDIRECTLYCONNECTED = 5
-	InstallProtocolTypePtISIS = 6
-	InstallProtocolTypePtypesOSPF3 = 7
-	InstallProtocolTypePtypesOSPF = 8
-	InstallProtocolTypePtypesBGP = 9
-	InstallProtocolTypePtypesISIS = 10
-	InstallProtocolTypePtypesLOCALAGGREGATE = 11
-	InstallProtocolTypeDIRECTLYCONNECTED = 12
-	InstallProtocolTypeSTATIC = 13
-	InstallProtocolTypePtypesDIRECTLYCONNECTED = 14
-	InstallProtocolTypePtSTATIC = 15
-	InstallProtocolTypeLOCALAGGREGATE = 16
-	InstallProtocolTypeOSPF = 17
-	InstallProtocolTypePtOSPF3 = 18
-	InstallProtocolTypeOSPF3 = 19
-	InstallProtocolTypePtLOCALAGGREGATE = 20
-	PtMatchSetOptionsRestrictedTypeINVERT = 0
-	PtMatchSetOptionsRestrictedTypeANY = 1
-	PtypesMatchSetOptionsRestrictedTypeINVERT = 0
-	PtypesMatchSetOptionsRestrictedTypeANY = 1
-	PtInstallProtocolTypePtBGP = 0
-	PtInstallProtocolTypeISIS = 1
-	PtInstallProtocolTypePtOSPF = 2
-	PtInstallProtocolTypePtDIRECTLYCONNECTED = 3
-	PtInstallProtocolTypePtISIS = 4
-	PtInstallProtocolTypeLOCALAGGREGATE = 5
-	PtInstallProtocolTypeBGP = 6
-	PtInstallProtocolTypeDIRECTLYCONNECTED = 7
-	PtInstallProtocolTypeSTATIC = 8
-	PtInstallProtocolTypePtSTATIC = 9
-	PtInstallProtocolTypeOSPF = 10
-	PtInstallProtocolTypePtOSPF3 = 11
-	PtInstallProtocolTypeOSPF3 = 12
-	PtInstallProtocolTypePtLOCALAGGREGATE = 13
+import (
+	"encoding/json"
+	"fmt"
 )
+
+type PolicyDefinitionSetsPrefix struct {
+	IpPrefix string
+	/*
+            Defines a range for the masklength, or 'exact' if
+            the prefix has an exact length.
+
+            Example: 10.3.192.0/21 through 10.3.192.0/24 would be
+            expressed as prefix: 10.3.192.0/21,
+            masklength-range: 21..24.
+
+            Example: 10.3.192.0/21 would be expressed as
+            prefix: 10.3.192.0/21,
+            masklength-range: exact	
+	*/
+	MaskLengthRange string
+}
+
+type PolicyDefinitionSetsPrefixSet struct {
+	BaseObj
+	PrefixSetName string   `SNAPROUTE: "KEY"`
+    /*
+     List of prefix expressions that are part of the set
+	*/
+	IpPrefixList [] PolicyDefinitionSetsPrefix
+}
+
+func (obj PolicyDefinitionSetsPrefixSet) UnmarshalObject(body []byte) (ConfigObj, error) {
+	var policyDefinitionSetsPrefixSet PolicyDefinitionSetsPrefixSet
+	var err error
+	if len(body) > 0 {
+		if err = json.Unmarshal(body, &policyDefinitionSetsPrefixSet); err != nil {
+			fmt.Println("### Trouble in unmarshaling PolicyDefinitionSetsPrefixSet from Json", body)
+		}
+	}
+	return policyDefinitionSetsPrefixSet, err
+}
+
 
 type PolicyDefinitionStatementMatchPrefixSet struct {
 	/*
@@ -110,11 +54,31 @@ type PolicyDefinitionStatementMatchPrefixSet struct {
 	YANG Description: Match a referenced prefix-set according to the logic
 defined in the match-set-options leaf 
     */
-
 	//yang_name: prefix-set class: leaf
 	PrefixSet string
 	//yang_name: match-set-options class: leaf
 	MatchSetOptions int32
+}
+
+type PolicyDefinitionSetsNeighbor struct {
+	Address [] string
+}
+
+type PolicyDefinitionSetsNeighborSet struct {
+	BaseObj
+	NeighborSetName string `SNAPROUTE: "KEY"`
+	NeihgborSet []PolicyDefinitionSetsNeighbor
+}
+
+func (obj PolicyDefinitionSetsNeighborSet) UnmarshalObject(body []byte) (ConfigObj, error) {
+	var policyDefinitionSetsNeighborSet PolicyDefinitionSetsNeighborSet
+	var err error
+	if len(body) > 0 {
+		if err = json.Unmarshal(body, &policyDefinitionSetsNeighborSet); err != nil {
+			fmt.Println("### Trouble in unmarshaling PolicyDefinitionSetsNeighborSet from Json", body)
+		}
+	}
+	return policyDefinitionSetsNeighborSet, err
 }
 
 type PolicyDefinitionStatementMatchNeighborSet struct {
@@ -135,6 +99,15 @@ defined in the match-set-options-leaf
 	MatchSetOptions int32
 }
 
+type PolicyDefinitionStatementSetsTag struct {
+	value [] uint32
+}
+
+type PolicyDefinitionStatementSetsTagSet struct {
+	BaseObj
+	TagSetName string               `SNAPROUTE: "KEY"`
+	TagList []PolicyDefinitionStatementSetsTag
+}
 type PolicyDefinitionStatementMatchTagSet struct {
 	/*
     This class was auto-generated by the GOSTRUCT plugin for PYANG
@@ -182,15 +155,15 @@ within a policy definition.  They are evaluated in
 the order specified (see the description of policy
 evaluation at the top of this module. 
     */
-
+     BaseObj
 	//yang_name: name class: leaf
 	Name string  `SNAPROUTE: KEY`
 	//yang_name: match-prefix-set class: container
 	MatchPrefixSet PolicyDefinitionStatementMatchPrefixSet
 	//yang_name: match-neighbor-set class: container
-	MatchNeighborSet PolicyDefinitionStatementMatchNeighborSet
+	//MatchNeighborSet PolicyDefinitionStatementMatchNeighborSet
 	//yang_name: match-tag-set class: container
-	MatchTagSet PolicyDefinitionStatementMatchTagSet
+	//MatchTagSet PolicyDefinitionStatementMatchTagSet
 	//yang_name: install-protocol-eq class: leaf
 	InstallProtocolEq string
 	//yang_name: accept-route class: leaf
@@ -198,7 +171,18 @@ evaluation at the top of this module.
 	//yang_name: reject-route class: leaf
 	RejectRoute bool
 	//yang_name: igp-actions class: container
-	IgpActions PolicyDefinitionStatementIgpActions
+	//IgpActions PolicyDefinitionStatementIgpActions
+}
+
+func (obj PolicyDefinitionStatement) UnmarshalObject(body []byte) (ConfigObj, error) {
+	var policyDefinitionStmt PolicyDefinitionStatement
+	var err error
+	if len(body) > 0 {
+		if err = json.Unmarshal(body, &policyDefinitionStmt); err != nil {
+			fmt.Println("### Trouble in unmarshaling PolicyDefinitionStatement from Json", body)
+		}
+	}
+	return policyDefinitionStmt, err
 }
 
 type PolicyDefinition struct {
@@ -214,9 +198,19 @@ name.  These policy definitions are expected to be
 referenced (by name) in policy chains specified in import
 or export configuration statements. 
     */
-
+     BaseObj
 	//yang_name: name class: leaf
 	Name string  `SNAPROUTE: KEY`
 	//yang_name: statement class: list
 	Statement []PolicyDefinitionStatement}
 
+func (obj PolicyDefinition) UnmarshalObject(body []byte) (ConfigObj, error) {
+	var policyDefinition PolicyDefinition
+	var err error
+	if len(body) > 0 {
+		if err = json.Unmarshal(body, &policyDefinition); err != nil {
+			fmt.Println("### Trouble in unmarshaling PolicyDefinition from Json", body)
+		}
+	}
+	return policyDefinition, err
+}

@@ -5,6 +5,9 @@ package models
 //
 var ConfigObjectMap = map[string]ConfigObj{
 	"IPV4Route":                          &IPV4Route{},         // created before auto YANG
+	"PolicyDefinitionSetsPrefixSet":      &PolicyDefinitionSetsPrefixSet{},
+	"PolicyDefinitionStatement"    :      &PolicyDefinitionStatement{},
+	"PolicyDefinition"             :      &PolicyDefinition{},
 	"Vlan":                               &Vlan{},              // created before auto YANG
 	"IPv4Intf":                           &IPv4Intf{},          // created before auto YANG
 	"IPv4Neighbor":                       &IPv4Neighbor{},      // created before auto YANG
