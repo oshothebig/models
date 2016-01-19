@@ -93,5 +93,25 @@
 		"access": "w",
 		"Owner": "local",
 		"Listeners" : []		
+	},
+	"Dot1dStpPortEntryConfig" : {
+		"access": "rw",
+		"Owner": "stpd",
+		"Listeners" : []
+	},
+	"Dot1dStpPortEntryState" : {
+		"access": "r",
+		"Owner": "stpd",
+		"Listeners" : []
+	},
+	"Dot1dStpBridgeConfig" : {
+		"access": "rw",
+		"Owner": "stpd",
+		"Listeners" : []
+	},
+	"Dot1dStpBridgeState" : {
+		"access": "r",
+		"Owner": "stpd",
+		"Listeners" : []
 	}
 }
