@@ -235,12 +235,12 @@
 		"Listeners" : []		
 	},
 	"DhcpRelayGlobalConfig" : {
-		"access": "rw",
+		"access": "w",
 		"Owner": "dhcprelayd",
 		"Listeners" : []
 	},
 	"DhcpRelayIntfConfig" : {
-		"access": "rw",
+		"access": "w",
 		"Owner": "dhcprelayd",
 		"Listeners" : []
         }	

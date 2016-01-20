@@ -49,4 +49,6 @@ var ConfigObjectMap = map[string]ConfigObj{
 	"OspfGlobalConfig":                   &OspfGlobalConfig{},
 	"Login":                              &Login{},
 	"Logout":                             &Logout{},
+	"DhcpRelayIntfConfig":                &DhcpRelayIntfConfig{},
+	"DhcpRelayGlobalConfig":              &DhcpRelayGlobalConfig{},
 }

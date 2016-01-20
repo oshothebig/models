@@ -828,8 +828,8 @@ func (obj OspfGlobalConfig) UnmarshalObject(body []byte) (ConfigObj, error) {
 
 type Login struct {
 	BaseObj
-	UserName          string
-	Password          string
+	UserName string
+	Password string
 }
 
 func (obj Login) UnmarshalObject(body []byte) (ConfigObj, error) {
@@ -846,8 +846,8 @@ func (obj Login) UnmarshalObject(body []byte) (ConfigObj, error) {
 
 type Logout struct {
 	BaseObj
-	UserName          string
-	SessionId         uint32
+	UserName  string
+	SessionId uint32
 }
 
 func (obj Logout) UnmarshalObject(body []byte) (ConfigObj, error) {
