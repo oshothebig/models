@@ -114,6 +114,111 @@
 		"Owner": "asicd",
 		"Listeners" : []
 	},
+		"OspfAreaEntryConfig" : {
+		"access": "w",
+		"Owner": "ospfd",
+		"Listeners" : []
+	},
+	"OspfAreaEntryState" : {
+		"access": "r",
+		"Owner": "ospfd",
+		"Listeners" : []
+	},
+	"OspfStubAreaEntryConfig" : {
+		"access": "w",
+		"Owner": "ospfd",
+		"Listeners" : []
+	},
+	"OspfLsdbEntryState" : {
+		"access": "r",
+		"Owner": "ospfd",
+		"Listeners" : []
+	},
+	"OspfAreaRangeEntryConfig" : {
+		"access": "w",
+		"Owner": "ospfd",
+		"Listeners" : []
+	},
+	"OspfHostEntryConfig" : {
+		"access": "w",
+		"Owner": "ospfd",
+		"Listeners" : []
+	},
+	"OspfHostEntryState" : {
+		"access": "r",
+		"Owner": "asicd",
+		"Listeners" : []
+	},
+	"OspfIfEntryConfig" : {
+		"access": "w",
+		"Owner": "ospfd",
+		"Listeners" : []
+	},
+	"OspfIfEntryState" : {
+		"access": "r",
+		"Owner": "ospfd",
+		"Listeners" : []
+	},
+	"OspfIfMetricEntryConfig" : {
+		"access": "w",
+		"Owner": "ospfd",
+		"Listeners" : []
+	},
+	"OspfVirtIfEntryConfig" : {
+		"access": "w",
+		"Owner": "ospfd",
+		"Listeners" : []
+	},
+	"OspfNbrEntryConfig" : {
+		"access": "w",
+		"Owner": "ospfd",
+		"Listeners" : []
+	},	
+	"OspfNbrEntryState" : {
+		"access": "r",
+		"Owner": "ospfd",
+		"Listeners" : []
+	},	
+	"OspfVirtNbrEntryState" : {
+		"access": "r",
+		"Owner": "ospfd",
+		"Listeners" : []
+	},	
+	"OspfExtLsdbEntryState" : {
+		"access": "r",
+		"Owner": "ospfd",
+		"Listeners" : []
+	},	
+	"OspfAreaAggregateEntryConfig" : {
+		"access": "w",
+		"Owner": "ospfd",
+		"Listeners" : []
+	},	
+	"OspfLocalLsdbEntryState" : {
+		"access": "r",
+		"Owner": "ospfd",
+		"Listeners" : []
+	},	
+	"OspfVirtLocalLsdbEntryState" : {
+		"access": "r",
+		"Owner": "ospfd",
+		"Listeners" : []
+	},	
+	"OspfAsLsdbEntryState" : {
+		"access": "r",
+		"Owner": "ospfd",
+		"Listeners" : []
+	},	
+	"OspfAreaLsaCountEntryState" : {
+		"access": "r",
+		"Owner": "ospfd",
+		"Listeners" : []
+	},
+	"OspfGlobalConfig" : {
+		"access": "w",
+		"Owner": "ospfd",
+		"Listeners" : []
+	},
 	"UserConfig" : {
 		"access": "w",
 		"Owner": "local",
@@ -130,12 +235,12 @@
 		"Listeners" : []		
 	},
 	"DhcpRelayGlobalConfig" : {
-		"access": "rw",
+		"access": "w",
 		"Owner": "dhcprelayd",
 		"Listeners" : []
 	},
 	"DhcpRelayIntfConfig" : {
-		"access": "rw",
+		"access": "w",
 		"Owner": "dhcprelayd",
 		"Listeners" : []
         }	

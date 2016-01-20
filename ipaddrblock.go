@@ -10,12 +10,12 @@ import (
 //
 type IPV4AddressBlock struct {
 	BaseObj
-	NwAddress         string `SNAPROUTE: "KEY"`
-	NwMask            string `SNAPROUTE: "KEY"`
-	HostIntfIp        string
+	NwAddress string `SNAPROUTE: "KEY"`
+	NwMask    string `SNAPROUTE: "KEY"`
+	NwName    string `SNAPROUTE: "KEY"`
 }
 
-func (obj IPV4AddressBlock ) UnmarshalObject(body []byte) (ConfigObj, error) {
+func (obj IPV4AddressBlock) UnmarshalObject(body []byte) (ConfigObj, error) {
 	var v4block IPV4AddressBlock
 	var err error
 	if len(body) > 0 {
@@ -25,4 +25,3 @@ func (obj IPV4AddressBlock ) UnmarshalObject(body []byte) (ConfigObj, error) {
 	}
 	return v4block, err
 }
-
