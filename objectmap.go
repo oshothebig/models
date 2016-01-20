@@ -28,4 +28,6 @@ var ConfigObjectMap = map[string]ConfigObj{
 	"IPV4AddressBlock":                   &IPV4AddressBlock{},
 	"Login":                              &Login{},
 	"Logout":                             &Logout{},
+	"DhcpRelayIntfConfig":                &DhcpRelayIntfConfig{},
+	"DhcpRelayGlobalConfig":              &DhcpRelayGlobalConfig{},
 }
