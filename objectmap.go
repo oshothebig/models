@@ -28,4 +28,8 @@ var ConfigObjectMap = map[string]ConfigObj{
 	"IPV4AddressBlock":                   &IPV4AddressBlock{},
 	"Login":                              &Login{},
 	"Logout":                             &Logout{},
+	"Dot1dStpPortEntryConfig":            &Dot1dStpPortEntryConfig{},
+	"Dot1dStpBridgeState":                &Dot1dStpBridgeState{},
+	"Dot1dStpBridgeConfig":               &Dot1dStpBridgeConfig{},
+	"Dot1dStpPortEntryState":             &Dot1dStpPortEntryState{},
 }
