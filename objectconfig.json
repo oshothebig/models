@@ -29,6 +29,41 @@
 		"Owner": "ribd",
 		"Listeners": []
 	},
+	"PolicyDefinitionSetsPrefixSet" : {
+		"access": "rw",
+		"Owner": "ribd",
+		"Listeners": []
+	},
+ 	"PolicyDefinitionStatementMatchPrefixSet": {
+		"access": "rw",
+		"Owner": "ribd",
+		"Listeners": []
+	},
+ 	"PolicyDefinitionStatementMatchNeighborSet": {
+		"access": "rw",
+		"Owner": "ribd",
+		"Listeners": []
+	},
+ 	"PolicyDefinitionStatementMatchTagSet": {
+		"access": "rw",
+		"Owner": "ribd",
+		"Listeners": []
+	},
+ 	"PolicyDefinitionStatementIgpActions": {
+		"access": "rw",
+		"Owner": "ribd",
+		"Listeners": []
+	},
+ 	"PolicyDefinitionStatement": {
+		"access": "rw",
+		"Owner": "ribd",
+		"Listeners": []
+	},
+ 	"PolicyDefinition": {
+		"access": "rw",
+		"Owner": "ribd",
+		"Listeners": []
+	},
  	"BGPGlobalConfig": {
 		"access": "w",
 		"Owner": "bgpd",
@@ -94,12 +129,12 @@
 		"Owner": "local",
 		"Listeners" : []		
 	},
-	"DhcpRelayGlobal" : {
+	"DhcpRelayGlobalConfig" : {
 		"access": "rw",
 		"Owner": "dhcprelayd",
 		"Listeners" : []
 	},
-	"DhcpRelayConf" : {
+	"DhcpRelayIntfConfig" : {
 		"access": "rw",
 		"Owner": "dhcprelayd",
 		"Listeners" : []
