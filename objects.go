@@ -301,10 +301,10 @@ func (obj PortIntfState) UnmarshalObject(body []byte) (ConfigObj, error) {
 
 type UserConfig struct {
 	BaseObj
-	UserName          string `SNAPROUTE: "KEY"`
-	Password          string
-	Description       string
-	Previledge        string
+	UserName    string `SNAPROUTE: "KEY"`
+	Password    string
+	Description string
+	Previledge  string
 }
 
 func (obj UserConfig) UnmarshalObject(body []byte) (ConfigObj, error) {
@@ -321,10 +321,10 @@ func (obj UserConfig) UnmarshalObject(body []byte) (ConfigObj, error) {
 
 type UserState struct {
 	BaseObj
-	UserName        string
-	LastLoginTime   time.Time
-	LastLoginIp     string
-	NumAPICalled    uint32
+	UserName      string
+	LastLoginTime time.Time
+	LastLoginIp   string
+	NumAPICalled  uint32
 }
 
 func (obj UserState) UnmarshalObject(body []byte) (ConfigObj, error) {
@@ -337,6 +337,493 @@ func (obj UserState) UnmarshalObject(body []byte) (ConfigObj, error) {
 	}
 
 	return userStateObj, err
+}
+
+type OspfAreaEntryConfig struct {
+	BaseObj
+	AreaIdKey                           string `SNAPROUTE: "KEY"`
+	AuthType                            int32
+	ImportAsExtern                      int32
+	AreaSummary                         int32
+	AreaNssaTranslatorRole              int32
+	AreaNssaTranslatorStabilityInterval int32
+}
+
+func (obj OspfAreaEntryConfig) UnmarshalObject(body []byte) (ConfigObj, error) {
+	var gConf OspfAreaEntryConfig
+	var err error
+	if len(body) > 0 {
+		if err = json.Unmarshal(body, &gConf); err != nil {
+			fmt.Println("### Trouble in unmarshalling OspfAreaEntryConfig from Json", body)
+		}
+	}
+	return gConf, err
+}
+
+type OspfAreaEntryState struct {
+	BaseObj
+	AreaIdKey                string `SNAPROUTE: "KEY"`
+	SpfRuns                  uint32
+	AreaBdrRtrCount          uint32
+	AsBdrRtrCount            uint32
+	AreaLsaCount             uint32
+	AreaLsaCksumSum          int32
+	AreaNssaTranslatorState  int32
+	AreaNssaTranslatorEvents uint32
+}
+
+func (obj OspfAreaEntryState) UnmarshalObject(body []byte) (ConfigObj, error) {
+	var gConf OspfAreaEntryState
+	var err error
+	if len(body) > 0 {
+		if err = json.Unmarshal(body, &gConf); err != nil {
+			fmt.Println("### Trouble in unmarshalling OspfAreaEntryState from Json", body)
+		}
+	}
+	return gConf, err
+}
+
+type OspfStubAreaEntryConfig struct {
+	BaseObj
+	StubTOSKey     int32  `SNAPROUTE: "KEY"`
+	StubAreaIdKey  string `SNAPROUTE: "KEY"`
+	StubMetric     int32
+	StubMetricType int32
+}
+
+func (obj OspfStubAreaEntryConfig) UnmarshalObject(body []byte) (ConfigObj, error) {
+	var gConf OspfStubAreaEntryConfig
+	var err error
+	if len(body) > 0 {
+		if err = json.Unmarshal(body, &gConf); err != nil {
+			fmt.Println("### Trouble in unmarshalling OspfStubAreaEntryConfig from Json", body)
+		}
+	}
+	return gConf, err
+}
+
+type OspfLsdbEntryState struct {
+	BaseObj
+	LsdbRouterIdKey   string `SNAPROUTE: "KEY"`
+	LsdbAreaIdKey     string `SNAPROUTE: "KEY"`
+	LsdbLsidKey       string `SNAPROUTE: "KEY"`
+	LsdbTypeKey       int32  `SNAPROUTE: "KEY"`
+	LsdbSequence      int32
+	LsdbAge           int32
+	LsdbChecksum      int32
+	LsdbAdvertisement string
+}
+
+func (obj OspfLsdbEntryState) UnmarshalObject(body []byte) (ConfigObj, error) {
+	var gConf OspfLsdbEntryState
+	var err error
+	if len(body) > 0 {
+		if err = json.Unmarshal(body, &gConf); err != nil {
+			fmt.Println("### Trouble in unmarshalling OspfLsdbEntryState from Json", body)
+		}
+	}
+	return gConf, err
+}
+
+type OspfAreaRangeEntryConfig struct {
+	BaseObj
+	AreaRangeAreaIdKey string `SNAPROUTE: "KEY"`
+	AreaRangeNetKey    string `SNAPROUTE: "KEY"`
+	AreaRangeMask      string `SNAPROUTE: "KEY"`
+	AreaRangeEffect    int32
+}
+
+func (obj OspfAreaRangeEntryConfig) UnmarshalObject(body []byte) (ConfigObj, error) {
+	var gConf OspfAreaRangeEntryConfig
+	var err error
+	if len(body) > 0 {
+		if err = json.Unmarshal(body, &gConf); err != nil {
+			fmt.Println("### Trouble in unmarshalling OspfAreaRangeEntryConfig from Json", body)
+		}
+	}
+	return gConf, err
+}
+
+type OspfHostEntryConfig struct {
+	BaseObj
+	HostIpAddressKey string `SNAPROUTE: "KEY"`
+	HostTOSKey       int32  `SNAPROUTE: "KEY"`
+	HostMetric       int32
+	HostCfgAreaID    string
+}
+
+func (obj OspfHostEntryConfig) UnmarshalObject(body []byte) (ConfigObj, error) {
+	var gConf OspfHostEntryConfig
+	var err error
+	if len(body) > 0 {
+		if err = json.Unmarshal(body, &gConf); err != nil {
+			fmt.Println("### Trouble in unmarshalling OspfHostEntryConfig from Json", body)
+		}
+	}
+	return gConf, err
+}
+
+type OspfHostEntryState struct {
+	BaseObj
+	HostIpAddressKey string `SNAPROUTE: "KEY"`
+	HostTOSKey       int32  `SNAPROUTE: "KEY"`
+	HostAreaID       string
+}
+
+func (obj OspfHostEntryState) UnmarshalObject(body []byte) (ConfigObj, error) {
+	var gConf OspfHostEntryState
+	var err error
+	if len(body) > 0 {
+		if err = json.Unmarshal(body, &gConf); err != nil {
+			fmt.Println("### Trouble in unmarshalling OspfHostEntryState from Json", body)
+		}
+	}
+	return gConf, err
+}
+
+type OspfIfEntryConfig struct {
+	BaseObj
+	IfIpAddressKey        string `SNAPROUTE: "KEY"`
+	AddressLessIfKey      int32  `SNAPROUTE: "KEY"`
+	IfAreaId              string
+	IfType                int32
+	IfAdminStat           int32
+	IfRtrPriority         int32
+	IfTransitDelay        int32
+	IfRetransInterval     int32
+	IfHelloInterval       int32
+	IfRtrDeadInterval     int32
+	IfPollInterval        int32
+	IfAuthKey             string
+	IfMulticastForwarding int32
+	IfDemand              bool
+	IfAuthType            int32
+}
+
+func (obj OspfIfEntryConfig) UnmarshalObject(body []byte) (ConfigObj, error) {
+	var gConf OspfIfEntryConfig
+	var err error
+	if len(body) > 0 {
+		if err = json.Unmarshal(body, &gConf); err != nil {
+			fmt.Println("### Trouble in unmarshalling OspfIfEntryConfig from Json", body)
+		}
+	}
+	return gConf, err
+}
+
+type OspfIfEntryState struct {
+	BaseObj
+	IfIpAddressKey             string `SNAPROUTE: "KEY"`
+	AddressLessIfKey           int32  `SNAPROUTE: "KEY"`
+	IfState                    int32
+	IfDesignatedRouter         string
+	IfBackupDesignatedRouter   string
+	IfEvents                   uint32
+	IfLsaCount                 uint32
+	IfLsaCksumSum              uint32
+	IfDesignatedRouterId       string
+	IfBackupDesignatedRouterId string
+}
+
+func (obj OspfIfEntryState) UnmarshalObject(body []byte) (ConfigObj, error) {
+	var gConf OspfIfEntryState
+	var err error
+	if len(body) > 0 {
+		if err = json.Unmarshal(body, &gConf); err != nil {
+			fmt.Println("### Trouble in unmarshalling OspfIfEntryState from Json", body)
+		}
+	}
+	return gConf, err
+}
+
+type OspfIfMetricEntryConfig struct {
+	BaseObj
+	IfMetricAddressLessIfKey int32  `SNAPROUTE: "KEY"`
+	IfMetricTOSKey           int32  `SNAPROUTE: "KEY"`
+	IfMetricIpAddressKey     string `SNAPROUTE: "KEY"`
+	IfMetricValue            int32
+}
+
+func (obj OspfIfMetricEntryConfig) UnmarshalObject(body []byte) (ConfigObj, error) {
+	var gConf OspfIfMetricEntryConfig
+	var err error
+	if len(body) > 0 {
+		if err = json.Unmarshal(body, &gConf); err != nil {
+			fmt.Println("### Trouble in unmarshalling OspfIfMetricEntryConfig from Json", body)
+		}
+	}
+	return gConf, err
+}
+
+type OspfVirtIfEntryConfig struct {
+	BaseObj
+	VirtIfNeighborKey     string `SNAPROUTE: "KEY"`
+	VirtIfAreaIdKey       string `SNAPROUTE: "KEY"`
+	VirtIfTransitDelay    int32
+	VirtIfRetransInterval int32
+	VirtIfHelloInterval   int32
+	VirtIfRtrDeadInterval int32
+	VirtIfAuthKey         string
+	VirtIfAuthType        int32
+}
+
+func (obj OspfVirtIfEntryConfig) UnmarshalObject(body []byte) (ConfigObj, error) {
+	var gConf OspfVirtIfEntryConfig
+	var err error
+	if len(body) > 0 {
+		if err = json.Unmarshal(body, &gConf); err != nil {
+			fmt.Println("### Trouble in unmarshalling OspfVirtIfEntryConfig from Json", body)
+		}
+	}
+	return gConf, err
+}
+
+type OspfNbrEntryConfig struct {
+	BaseObj
+	NbrAddressLessIndexKey int32  `SNAPROUTE: "KEY"`
+	NbrIpAddrKey           string `SNAPROUTE: "KEY"`
+	NbrPriority            int32
+}
+
+func (obj OspfNbrEntryConfig) UnmarshalObject(body []byte) (ConfigObj, error) {
+	var gConf OspfNbrEntryConfig
+	var err error
+	if len(body) > 0 {
+		if err = json.Unmarshal(body, &gConf); err != nil {
+			fmt.Println("### Trouble in unmarshalling OspfNbrEntryConfig from Json", body)
+		}
+	}
+	return gConf, err
+}
+
+type OspfNbrEntryState struct {
+	BaseObj
+	NbrAddressLessIndexKey     int32  `SNAPROUTE: "KEY"`
+	NbrIpAddrKey               string `SNAPROUTE: "KEY"`
+	NbrRtrId                   string
+	NbrOptions                 int32
+	NbrState                   int32
+	NbrEvents                  uint32
+	NbrLsRetransQLen           uint32
+	NbmaNbrPermanence          int32
+	NbrHelloSuppressed         bool
+	NbrRestartHelperStatus     int32
+	NbrRestartHelperAge        uint32
+	NbrRestartHelperExitReason int32
+}
+
+func (obj OspfNbrEntryState) UnmarshalObject(body []byte) (ConfigObj, error) {
+	var gConf OspfNbrEntryState
+	var err error
+	if len(body) > 0 {
+		if err = json.Unmarshal(body, &gConf); err != nil {
+			fmt.Println("### Trouble in unmarshalling OspfNbrEntryState from Json", body)
+		}
+	}
+	return gConf, err
+}
+
+type OspfVirtNbrEntryState struct {
+	BaseObj
+	VirtNbrRtrIdKey                string `SNAPROUTE: "KEY"`
+	VirtNbrAreaKey                 string `SNAPROUTE: "KEY"`
+	VirtNbrIpAddr                  string
+	VirtNbrOptions                 int32
+	VirtNbrState                   int32
+	VirtNbrEvents                  uint32
+	VirtNbrLsRetransQLen           uint32
+	VirtNbrHelloSuppressed         bool
+	VirtNbrRestartHelperStatus     int32
+	VirtNbrRestartHelperAge        uint32
+	VirtNbrRestartHelperExitReason int32
+}
+
+func (obj OspfVirtNbrEntryState) UnmarshalObject(body []byte) (ConfigObj, error) {
+	var gConf OspfVirtNbrEntryState
+	var err error
+	if len(body) > 0 {
+		if err = json.Unmarshal(body, &gConf); err != nil {
+			fmt.Println("### Trouble in unmarshalling OspfVirtNbrEntryState from Json", body)
+		}
+	}
+	return gConf, err
+}
+
+type OspfExtLsdbEntryState struct {
+	BaseObj
+	ExtLsdbTypeKey       int32  `SNAPROUTE: "KEY"`
+	ExtLsdbRouterIdKey   string `SNAPROUTE: "KEY"`
+	ExtLsdbLsidKey       string `SNAPROUTE: "KEY"`
+	ExtLsdbSequence      int32
+	ExtLsdbAge           int32
+	ExtLsdbChecksum      int32
+	ExtLsdbAdvertisement string
+}
+
+func (obj OspfExtLsdbEntryState) UnmarshalObject(body []byte) (ConfigObj, error) {
+	var gConf OspfExtLsdbEntryState
+	var err error
+	if len(body) > 0 {
+		if err = json.Unmarshal(body, &gConf); err != nil {
+			fmt.Println("### Trouble in unmarshalling OspfExtLsdbEntryState from Json", body)
+		}
+	}
+	return gConf, err
+}
+
+type OspfAreaAggregateEntryConfig struct {
+	BaseObj
+	AreaAggregateMaskKey     string `SNAPROUTE: "KEY"`
+	AreaAggregateLsdbTypeKey int32  `SNAPROUTE: "KEY"`
+	AreaAggregateNetKey      string `SNAPROUTE: "KEY"`
+	AreaAggregateAreaIDKey   string `SNAPROUTE: "KEY"`
+	AreaAggregateEffect      int32
+	AreaAggregateExtRouteTag uint32
+}
+
+func (obj OspfAreaAggregateEntryConfig) UnmarshalObject(body []byte) (ConfigObj, error) {
+	var gConf OspfAreaAggregateEntryConfig
+	var err error
+	if len(body) > 0 {
+		if err = json.Unmarshal(body, &gConf); err != nil {
+			fmt.Println("### Trouble in unmarshalling OspfAreaAggregateEntryConfig from Json", body)
+		}
+	}
+	return gConf, err
+}
+
+type OspfLocalLsdbEntryState struct {
+	BaseObj
+	LocalLsdbTypeKey          int32  `SNAPROUTE: "KEY"`
+	LocalLsdbAddressLessIfKey int32  `SNAPROUTE: "KEY"`
+	LocalLsdbRouterIdKey      string `SNAPROUTE: "KEY"`
+	LocalLsdbLsidKey          string `SNAPROUTE: "KEY"`
+	LocalLsdbIpAddressKey     string
+	LocalLsdbLsid             string
+	LocalLsdbRouterId         string
+	LocalLsdbSequence         int32
+	LocalLsdbAge              int32
+	LocalLsdbChecksum         int32
+	LocalLsdbAdvertisement    string
+}
+
+func (obj OspfLocalLsdbEntryState) UnmarshalObject(body []byte) (ConfigObj, error) {
+	var gConf OspfLocalLsdbEntryState
+	var err error
+	if len(body) > 0 {
+		if err = json.Unmarshal(body, &gConf); err != nil {
+			fmt.Println("### Trouble in unmarshalling OspfLocalLsdbEntryState from Json", body)
+		}
+	}
+	return gConf, err
+}
+
+type OspfVirtLocalLsdbEntryState struct {
+	BaseObj
+	VirtLocalLsdbTypeKey        int32  `SNAPROUTE: "KEY"`
+	VirtLocalLsdbLsidKey        string `SNAPROUTE: "KEY"`
+	VirtLocalLsdbTransitAreaKey string `SNAPROUTE: "KEY"`
+	VirtLocalLsdbNeighborKey    string `SNAPROUTE: "KEY"`
+	VirtLocalLsdbRouterIdKey    string `SNAPROUTE: "KEY"`
+	VirtLocalLsdbNeighbor       string
+	VirtLocalLsdbSequence       int32
+	VirtLocalLsdbAge            int32
+	VirtLocalLsdbChecksum       int32
+	VirtLocalLsdbAdvertisement  string
+}
+
+func (obj OspfVirtLocalLsdbEntryState) UnmarshalObject(body []byte) (ConfigObj, error) {
+	var gConf OspfVirtLocalLsdbEntryState
+	var err error
+	if len(body) > 0 {
+		if err = json.Unmarshal(body, &gConf); err != nil {
+			fmt.Println("### Trouble in unmarshalling OspfVirtLocalLsdbEntryState from Json", body)
+		}
+	}
+	return gConf, err
+}
+
+type OspfAsLsdbEntryState struct {
+	BaseObj
+	AsLsdbRouterIdKey   string `SNAPROUTE: "KEY"`
+	AsLsdbLsidKey       string `SNAPROUTE: "KEY"`
+	AsLsdbTypeKey       int32  `SNAPROUTE: "KEY"`
+	AsLsdbSequence      int32
+	AsLsdbAge           int32
+	AsLsdbChecksum      int32
+	AsLsdbAdvertisement string
+}
+
+func (obj OspfAsLsdbEntryState) UnmarshalObject(body []byte) (ConfigObj, error) {
+	var gConf OspfAsLsdbEntryState
+	var err error
+	if len(body) > 0 {
+		if err = json.Unmarshal(body, &gConf); err != nil {
+			fmt.Println("### Trouble in unmarshalling OspfAsLsdbEntryState from Json", body)
+		}
+	}
+	return gConf, err
+}
+
+type OspfAreaLsaCountEntryState struct {
+	BaseObj
+	AreaLsaCountLsaTypeKey int32  `SNAPROUTE: "KEY"`
+	AreaLsaCountAreaIdKey  string `SNAPROUTE: "KEY"`
+	AreaLsaCountNumber     uint32
+}
+
+func (obj OspfAreaLsaCountEntryState) UnmarshalObject(body []byte) (ConfigObj, error) {
+	var gConf OspfAreaLsaCountEntryState
+	var err error
+	if len(body) > 0 {
+		if err = json.Unmarshal(body, &gConf); err != nil {
+			fmt.Println("### Trouble in unmarshalling OspfAreaLsaCountEntryState from Json", body)
+		}
+	}
+	return gConf, err
+}
+
+type OspfGlobalConfig struct {
+	BaseObj
+	RouterIdKey              string `SNAPROUTE: "KEY"`
+	AdminStat                int32
+	VersionNumber            int32
+	AreaBdrRtrStatus         bool
+	ASBdrRtrStatus           bool
+	ExternLsaCount           uint32
+	ExternLsaCksumSum        int32
+	TOSSupport               bool
+	OriginateNewLsas         uint32
+	RxNewLsas                uint32
+	ExtLsdbLimit             int32
+	MulticastExtensions      int32
+	ExitOverflowInterval     int32
+	DemandExtensions         bool
+	RFC1583Compatibility     bool
+	OpaqueLsaSupport         bool
+	ReferenceBandwidth       uint32
+	RestartSupport           int32
+	RestartInterval          int32
+	RestartStrictLsaChecking bool
+	RestartStatus            int32
+	RestartAge               uint32
+	RestartExitReason        int32
+	AsLsaCount               uint32
+	AsLsaCksumSum            uint32
+	StubRouterSupport        bool
+	StubRouterAdvertisement  int32
+	DiscontinuityTime        uint32
+}
+
+func (obj OspfGlobalConfig) UnmarshalObject(body []byte) (ConfigObj, error) {
+	var gConf OspfGlobalConfig
+	var err error
+	if len(body) > 0 {
+		if err = json.Unmarshal(body, &gConf); err != nil {
+			fmt.Println("### Trouble in unmarshalling OspfGeneralGroup from Json", body)
+		}
+	}
+	return gConf, err
 }
 
 type Login struct {
