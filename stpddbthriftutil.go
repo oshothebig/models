@@ -29,7 +29,7 @@ func ConvertThriftTostpdDot1dStpPortEntryConfigObj(thriftobj *stpd.Dot1dStpPortE
 	dbobj.Dot1dStpPortEnable = int32(thriftobj.Dot1dStpPortEnable)
 }
 
-func ConvertstpdDot1dBridgeStpConfigObjToThrift(dbobj *Dot1dBridgeStpConfig, thriftobj *stpd.Dot1dBridgeStpConfig) {
+func ConvertstpdDot1dStpBridgeConfigObjToThrift(dbobj *Dot1dStpBridgeConfig, thriftobj *stpd.Dot1dStpBridgeConfig) {
 	thriftobj.Dot1dStpPriorityKey = int32(dbobj.Dot1dStpPriorityKey)
 	thriftobj.Dot1dStpBridgeHelloTime = int32(dbobj.Dot1dStpBridgeHelloTime)
 	thriftobj.Dot1dStpBridgeForwardDelay = int32(dbobj.Dot1dStpBridgeForwardDelay)
@@ -37,7 +37,7 @@ func ConvertstpdDot1dBridgeStpConfigObjToThrift(dbobj *Dot1dBridgeStpConfig, thr
 	thriftobj.Dot1dStpBridgeMaxAge = int32(dbobj.Dot1dStpBridgeMaxAge)
 }
 
-func ConvertThriftTostpdDot1dBridgeStpConfigObj(thriftobj *stpd.Dot1dBridgeStpConfig, dbobj *Dot1dBridgeStpConfig) {
+func ConvertThriftTostpdDot1dStpBridgeConfigObj(thriftobj *stpd.Dot1dStpBridgeConfig, dbobj *Dot1dStpBridgeConfig) {
 	dbobj.Dot1dStpPriorityKey = int32(thriftobj.Dot1dStpPriorityKey)
 	dbobj.Dot1dStpBridgeHelloTime = int32(thriftobj.Dot1dStpBridgeHelloTime)
 	dbobj.Dot1dStpBridgeForwardDelay = int32(thriftobj.Dot1dStpBridgeForwardDelay)
