@@ -1,17 +1,17 @@
 {
 	"Vlan"     : {
 		"access": "w",
-		"Owner": "portd",
+		"Owner": "asicd",
 		"Listeners":[]
 	},
  	"IPv4Intf" : {
 		"access": "w",
-		"Owner": "portd",
+		"Owner": "asicd",
 		"Listeners" : []
 	},
  	"IPv4Neighbor" : {
 		"access": "w",
-		"Owner" : "portd",
+		"Owner" : "asicd",
 		"Listeners" : []
 	},
     "ArpConfig" : {
@@ -25,6 +25,41 @@
         "Listeners":[]
     },
  	"IPV4Route": {
+		"access": "rw",
+		"Owner": "ribd",
+		"Listeners": []
+	},
+	"PolicyDefinitionSetsPrefixSet" : {
+		"access": "rw",
+		"Owner": "ribd",
+		"Listeners": []
+	},
+ 	"PolicyDefinitionStatementMatchPrefixSet": {
+		"access": "rw",
+		"Owner": "ribd",
+		"Listeners": []
+	},
+ 	"PolicyDefinitionStatementMatchNeighborSet": {
+		"access": "rw",
+		"Owner": "ribd",
+		"Listeners": []
+	},
+ 	"PolicyDefinitionStatementMatchTagSet": {
+		"access": "rw",
+		"Owner": "ribd",
+		"Listeners": []
+	},
+ 	"PolicyDefinitionStatementIgpActions": {
+		"access": "rw",
+		"Owner": "ribd",
+		"Listeners": []
+	},
+ 	"PolicyDefinitionStatement": {
+		"access": "rw",
+		"Owner": "ribd",
+		"Listeners": []
+	},
+ 	"PolicyDefinition": {
 		"access": "rw",
 		"Owner": "ribd",
 		"Listeners": []
@@ -183,5 +218,30 @@
 		"access": "w",
 		"Owner": "ospfd",
 		"Listeners" : []
-	}
+	},
+	"UserConfig" : {
+		"access": "w",
+		"Owner": "local",
+		"Listeners" : []
+	},
+	"UserState" : {
+		"access": "r",
+		"Owner": "local",
+		"Listeners" : []
+	},
+	"IPV4AddressBlock" : {
+		"access": "w",
+		"Owner": "local",
+		"Listeners" : []		
+	},
+	"DhcpRelayGlobalConfig" : {
+		"access": "rw",
+		"Owner": "dhcprelayd",
+		"Listeners" : []
+	},
+	"DhcpRelayIntfConfig" : {
+		"access": "rw",
+		"Owner": "dhcprelayd",
+		"Listeners" : []
+        }	
 }
