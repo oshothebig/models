@@ -120,6 +120,14 @@ func (d *Dot1dStpBridgeConfig) Dot1dStpBridgeForwardDelay_Set(value int32) bool 
 	d.Dot1dStpBridgeForwardDelay = value
 	return true
 }
+func (d *Dot1dStpBridgeConfig) Dot1dStpBridgeForceVersion_Set(value int32) bool {
+	d.Dot1dStpBridgeForceVersion = value
+	return true
+}
+func (d *Dot1dStpBridgeConfig) Dot1dStpBridgeTxHoldCount_Set(value int32) bool {
+	d.Dot1dStpBridgeTxHoldCount = value
+	return true
+}
 func NewDot1dStpBridgeState() *Dot1dStpBridgeState {
 	newObj := &Dot1dStpBridgeState{}
 	return newObj

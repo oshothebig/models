@@ -100,6 +100,10 @@ type Dot1dStpBridgeConfig struct {
 	Dot1dStpBridgeHelloTime int32
 	//yang_name: dot1dStpBridgeForwardDelay class: restricted-int32
 	Dot1dStpBridgeForwardDelay int32
+	//yang_name: dot1dStpBridgeForceVersion class: leaf
+	Dot1dStpBridgeForceVersion int32
+	//yang_name: dot1dStpBridgeTxHoldCount class: leaf
+	Dot1dStpBridgeTxHoldCount int32
 }
 
 type Dot1dStpBridgeState struct {
@@ -113,9 +117,13 @@ type Dot1dStpBridgeState struct {
 
 	BaseObj
 	// parent leaf
+	Dot1dStpBridgeForceVersion int32
+	// parent leaf
 	Dot1dBridgeAddressKey string `SNAPROUTE: KEY`
 	// parent restricted-int32
 	Dot1dStpBridgeHelloTime int32
+	// parent leaf
+	Dot1dStpBridgeTxHoldCount int32
 	// parent restricted-int32
 	Dot1dStpBridgeForwardDelay int32
 	// parent restricted-int32

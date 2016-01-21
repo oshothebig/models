@@ -130,7 +130,7 @@
 		"Listeners" : []		
 	},
 	"Dot1dStpPortEntryConfig" : {
-		"access": "rw",
+		"access": "w",
 		"Owner": "stpd",
 		"Listeners" : []
 	},
@@ -140,7 +140,7 @@
 		"Listeners" : []
 	},
 	"Dot1dStpBridgeConfig" : {
-		"access": "rw",
+		"access": "w",
 		"Owner": "stpd",
 		"Listeners" : []
 	},

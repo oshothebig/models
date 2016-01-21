@@ -539,6 +539,18 @@ list dot1dStpBridge {
       reference     
        "IEEE 802.1D-1998: clause 8.5.3.10";
     }
+    leaf dot1dStpBridgeForceVersion {
+		type int32;
+		config true;
+		description
+		 "TODO";
+    }
+    leaf dot1dStpBridgeTxHoldCount {
+		type int32;
+		config true;
+		description
+		 "TODO";
+    }
     /* XXX table comments here XXX */
   }
 

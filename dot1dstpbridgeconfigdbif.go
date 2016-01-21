@@ -16,6 +16,8 @@ func (obj Dot1dStpBridgeConfig) CreateDBTable(dbHdl *sql.DB) error {
 		"Dot1dStpBridgeMaxAge INTEGER, " +
 		"Dot1dStpBridgeHelloTime INTEGER, " +
 		"Dot1dStpBridgeForwardDelay INTEGER, " +
+		"Dot1dStpBridgeForceVersion INTEGER, " +
+		"Dot1dStpBridgeTxHoldCount INTEGER, " +
 		"PRIMARY KEY(Dot1dBridgeAddressKey, Dot1dStpPriorityKey) " +
 		")"
 
@@ -25,8 +27,8 @@ func (obj Dot1dStpBridgeConfig) CreateDBTable(dbHdl *sql.DB) error {
 
 func (obj Dot1dStpBridgeConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	var objectId int64
-	dbCmd := fmt.Sprintf("INSERT INTO Dot1dStpBridgeConfig (Dot1dBridgeAddressKey, Dot1dStpPriorityKey, Dot1dStpBridgeMaxAge, Dot1dStpBridgeHelloTime, Dot1dStpBridgeForwardDelay) VALUES ('%v', '%v', '%v', '%v', '%v') ;",
-		obj.Dot1dBridgeAddressKey, obj.Dot1dStpPriorityKey, obj.Dot1dStpBridgeMaxAge, obj.Dot1dStpBridgeHelloTime, obj.Dot1dStpBridgeForwardDelay)
+	dbCmd := fmt.Sprintf("INSERT INTO Dot1dStpBridgeConfig (Dot1dBridgeAddressKey, Dot1dStpPriorityKey, Dot1dStpBridgeMaxAge, Dot1dStpBridgeHelloTime, Dot1dStpBridgeForwardDelay, Dot1dStpBridgeForceVersion, Dot1dStpBridgeTxHoldCount) VALUES ('%v', '%v', '%v', '%v', '%v', '%v', '%v') ;",
+		obj.Dot1dBridgeAddressKey, obj.Dot1dStpPriorityKey, obj.Dot1dStpBridgeMaxAge, obj.Dot1dStpBridgeHelloTime, obj.Dot1dStpBridgeForwardDelay, obj.Dot1dStpBridgeForceVersion, obj.Dot1dStpBridgeTxHoldCount)
 	fmt.Println("**** Create Object called with ", obj)
 
 	result, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
@@ -59,7 +61,7 @@ func (obj Dot1dStpBridgeConfig) GetObjectFromDb(objKey string, dbHdl *sql.DB) (C
 	var object Dot1dStpBridgeConfig
 	sqlKey, err := obj.GetSqlKeyStr(objKey)
 	dbCmd := "select * from Dot1dStpBridgeConfig where " + sqlKey
-	err = dbHdl.QueryRow(dbCmd).Scan(&object.Dot1dBridgeAddressKey, &object.Dot1dStpPriorityKey, &object.Dot1dStpBridgeMaxAge, &object.Dot1dStpBridgeHelloTime, &object.Dot1dStpBridgeForwardDelay)
+	err = dbHdl.QueryRow(dbCmd).Scan(&object.Dot1dBridgeAddressKey, &object.Dot1dStpPriorityKey, &object.Dot1dStpBridgeMaxAge, &object.Dot1dStpBridgeHelloTime, &object.Dot1dStpBridgeForwardDelay, &object.Dot1dStpBridgeForceVersion, &object.Dot1dStpBridgeTxHoldCount)
 	fmt.Println("### DB Get Dot1dStpBridgeConfig\n", err)
 	return object, err
 }
@@ -88,7 +90,7 @@ func (obj *Dot1dStpBridgeConfig) GetAllObjFromDb(dbHdl *sql.DB) (objList []*Dot1
 	for rows.Next() {
 
 		object := new(Dot1dStpBridgeConfig)
-		if err = rows.Scan(&object.Dot1dBridgeAddressKey, &object.Dot1dStpPriorityKey, &object.Dot1dStpBridgeMaxAge, &object.Dot1dStpBridgeHelloTime, &object.Dot1dStpBridgeForwardDelay); err != nil {
+		if err = rows.Scan(&object.Dot1dBridgeAddressKey, &object.Dot1dStpPriorityKey, &object.Dot1dStpBridgeMaxAge, &object.Dot1dStpBridgeHelloTime, &object.Dot1dStpBridgeForwardDelay, &object.Dot1dStpBridgeForceVersion, &object.Dot1dStpBridgeTxHoldCount); err != nil {
 
 			fmt.Println("Db method Scan failed when interating over Dot1dStpBridgeConfig")
 		}
