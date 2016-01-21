@@ -234,6 +234,26 @@
 		"Owner": "local",
 		"Listeners" : []		
 	},
+	"Dot1dStpPortEntryConfig" : {
+		"access": "w",
+		"Owner": "stpd",
+		"Listeners" : []
+	},
+	"Dot1dStpPortEntryState" : {
+		"access": "r",
+		"Owner": "stpd",
+		"Listeners" : []
+	},
+	"Dot1dStpBridgeConfig" : {
+		"access": "w",
+		"Owner": "stpd",
+		"Listeners" : []
+	},
+	"Dot1dStpBridgeState" : {
+		"access": "r",
+		"Owner": "stpd",
+		"Listeners" : []
+	},
 	"DhcpRelayGlobalConfig" : {
 		"access": "w",
 		"Owner": "dhcprelayd",

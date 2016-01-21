@@ -49,6 +49,10 @@ var ConfigObjectMap = map[string]ConfigObj{
 	"OspfGlobalConfig":                   &OspfGlobalConfig{},
 	"Login":                              &Login{},
 	"Logout":                             &Logout{},
+	"Dot1dStpPortEntryConfig":            &Dot1dStpPortEntryConfig{},
+	"Dot1dStpBridgeState":                &Dot1dStpBridgeState{},
+	"Dot1dStpBridgeConfig":               &Dot1dStpBridgeConfig{},
+	"Dot1dStpPortEntryState":             &Dot1dStpPortEntryState{},
 	"DhcpRelayIntfConfig":                &DhcpRelayIntfConfig{},
 	"DhcpRelayGlobalConfig":              &DhcpRelayGlobalConfig{},
 }
