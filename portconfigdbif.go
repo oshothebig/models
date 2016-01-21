@@ -8,10 +8,10 @@ import (
 	"utils/dbutils"
 )
 
-func (obj PortIntfConfig) CreateDBTable(dbHdl *sql.DB) error {
-	dbCmd := "CREATE TABLE IF NOT EXISTS PortIntfConfig " +
+func (obj PortConfig) CreateDBTable(dbHdl *sql.DB) error {
+	dbCmd := "CREATE TABLE IF NOT EXISTS PortConfig " +
 		"( " +
-		"PortNum INTEGER, " +
+		"IfIndex INTEGER, " +
 		"Name TEXT, " +
 		"Description TEXT, " +
 		"Type TEXT, " +
@@ -23,17 +23,17 @@ func (obj PortIntfConfig) CreateDBTable(dbHdl *sql.DB) error {
 		"Autoneg TEXT, " +
 		"MediaType TEXT, " +
 		"Mtu INTEGER, " +
-		"PRIMARY KEY(PortNum) " +
+		"PRIMARY KEY(IfIndex) " +
 		")"
 
 	_, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
 
-func (obj PortIntfConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
+func (obj PortConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	var objectId int64
-	dbCmd := fmt.Sprintf("INSERT INTO PortIntfConfig (PortNum, Name, Description, Type, AdminState, OperState, MacAddr, Speed, Duplex, Autoneg, MediaType, Mtu) VALUES ('%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v') ;",
-		obj.PortNum, obj.Name, obj.Description, obj.Type, obj.AdminState, obj.OperState, obj.MacAddr, obj.Speed, obj.Duplex, obj.Autoneg, obj.MediaType, obj.Mtu)
+	dbCmd := fmt.Sprintf("INSERT INTO PortConfig (IfIndex, Name, Description, Type, AdminState, OperState, MacAddr, Speed, Duplex, Autoneg, MediaType, Mtu) VALUES ('%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v') ;",
+		obj.IfIndex, obj.Name, obj.Description, obj.Type, obj.AdminState, obj.OperState, obj.MacAddr, obj.Speed, obj.Duplex, obj.Autoneg, obj.MediaType, obj.Mtu)
 	fmt.Println("**** Create Object called with ", obj)
 
 	result, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
@@ -49,44 +49,44 @@ func (obj PortIntfConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	return objectId, err
 }
 
-func (obj PortIntfConfig) DeleteObjectFromDb(objKey string, dbHdl *sql.DB) error {
+func (obj PortConfig) DeleteObjectFromDb(objKey string, dbHdl *sql.DB) error {
 	sqlKey, err := obj.GetSqlKeyStr(objKey)
 	if err != nil {
-		fmt.Println("GetSqlKeyStr for PortIntfConfig with key", objKey, "failed with error", err)
+		fmt.Println("GetSqlKeyStr for PortConfig with key", objKey, "failed with error", err)
 		return err
 	}
 
-	dbCmd := "delete from PortIntfConfig where " + sqlKey
-	fmt.Println("### DB Deleting PortIntfConfig\n")
+	dbCmd := "delete from PortConfig where " + sqlKey
+	fmt.Println("### DB Deleting PortConfig\n")
 	_, err = dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
 
-func (obj PortIntfConfig) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, error) {
-	var object PortIntfConfig
+func (obj PortConfig) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, error) {
+	var object PortConfig
 	sqlKey, err := obj.GetSqlKeyStr(objKey)
-	dbCmd := "select * from PortIntfConfig where " + sqlKey
-	err = dbHdl.QueryRow(dbCmd).Scan(&object.PortNum, &object.Name, &object.Description, &object.Type, &object.AdminState, &object.OperState, &object.MacAddr, &object.Speed, &object.Duplex, &object.Autoneg, &object.MediaType, &object.Mtu)
-	fmt.Println("### DB Get PortIntfConfig\n", err)
+	dbCmd := "select * from PortConfig where " + sqlKey
+	err = dbHdl.QueryRow(dbCmd).Scan(&object.IfIndex, &object.Name, &object.Description, &object.Type, &object.AdminState, &object.OperState, &object.MacAddr, &object.Speed, &object.Duplex, &object.Autoneg, &object.MediaType, &object.Mtu)
+	fmt.Println("### DB Get PortConfig\n", err)
 	return object, err
 }
 
-func (obj PortIntfConfig) GetKey() (string, error) {
-	key := string(obj.PortNum)
+func (obj PortConfig) GetKey() (string, error) {
+	key := string(obj.IfIndex)
 	return key, nil
 }
 
-func (obj PortIntfConfig) GetSqlKeyStr(objKey string) (string, error) {
+func (obj PortConfig) GetSqlKeyStr(objKey string) (string, error) {
 	keys := strings.Split(objKey, "#")
-	sqlKey := "PortNum = " + "\"" + keys[0] + "\""
+	sqlKey := "IfIndex = " + "\"" + keys[0] + "\""
 	return sqlKey, nil
 }
 
-func (obj *PortIntfConfig) GetAllObjFromDb(dbHdl *sql.DB) (objList []*PortIntfConfig, e error) {
-	dbCmd := "select * from PortIntfConfig"
+func (obj *PortConfig) GetAllObjFromDb(dbHdl *sql.DB) (objList []*PortConfig, e error) {
+	dbCmd := "select * from PortConfig"
 	rows, err := dbHdl.Query(dbCmd)
 	if err != nil {
-		fmt.Println(fmt.Sprintf("DB method Query failed for 'PortIntfConfig' with error PortIntfConfig", dbCmd, err))
+		fmt.Println(fmt.Sprintf("DB method Query failed for 'PortConfig' with error PortConfig", dbCmd, err))
 		return objList, err
 	}
 
@@ -94,17 +94,17 @@ func (obj *PortIntfConfig) GetAllObjFromDb(dbHdl *sql.DB) (objList []*PortIntfCo
 
 	for rows.Next() {
 
-		object := new(PortIntfConfig)
-		if err = rows.Scan(&object.PortNum, &object.Name, &object.Description, &object.Type, &object.AdminState, &object.OperState, &object.MacAddr, &object.Speed, &object.Duplex, &object.Autoneg, &object.MediaType, &object.Mtu); err != nil {
+		object := new(PortConfig)
+		if err = rows.Scan(&object.IfIndex, &object.Name, &object.Description, &object.Type, &object.AdminState, &object.OperState, &object.MacAddr, &object.Speed, &object.Duplex, &object.Autoneg, &object.MediaType, &object.Mtu); err != nil {
 
-			fmt.Println("Db method Scan failed when interating over PortIntfConfig")
+			fmt.Println("Db method Scan failed when interating over PortConfig")
 		}
 		objList = append(objList, object)
 	}
 	return objList, nil
 }
-func (obj PortIntfConfig) CompareObjectsAndDiff(updateKeys map[string]bool, dbObj ConfigObj) ([]bool, error) {
-	dbV4Route := dbObj.(PortIntfConfig)
+func (obj PortConfig) CompareObjectsAndDiff(updateKeys map[string]bool, dbObj ConfigObj) ([]bool, error) {
+	dbV4Route := dbObj.(PortConfig)
 	objTyp := reflect.TypeOf(obj)
 	objVal := reflect.ValueOf(obj)
 	dbObjVal := reflect.ValueOf(dbV4Route)
@@ -178,12 +178,12 @@ func (obj PortIntfConfig) CompareObjectsAndDiff(updateKeys map[string]bool, dbOb
 	return attrIds[:idx], nil
 }
 
-func (obj PortIntfConfig) MergeDbAndConfigObj(dbObj ConfigObj, attrSet []bool) (ConfigObj, error) {
-	var mergedPortIntfConfig PortIntfConfig
+func (obj PortConfig) MergeDbAndConfigObj(dbObj ConfigObj, attrSet []bool) (ConfigObj, error) {
+	var mergedPortConfig PortConfig
 	objTyp := reflect.TypeOf(obj)
 	objVal := reflect.ValueOf(obj)
 	dbObjVal := reflect.ValueOf(dbObj)
-	mergedObjVal := reflect.ValueOf(&mergedPortIntfConfig)
+	mergedObjVal := reflect.ValueOf(&mergedPortConfig)
 	idx := 0
 	for i := 0; i < objTyp.NumField(); i++ {
 		if fieldTyp := objTyp.Field(i); fieldTyp.Anonymous {
@@ -232,15 +232,15 @@ func (obj PortIntfConfig) MergeDbAndConfigObj(dbObj ConfigObj, attrSet []bool) (
 		idx++
 
 	}
-	return mergedPortIntfConfig, nil
+	return mergedPortConfig, nil
 }
 
-func (obj PortIntfConfig) UpdateObjectInDb(dbObj ConfigObj, attrSet []bool, dbHdl *sql.DB) error {
+func (obj PortConfig) UpdateObjectInDb(dbObj ConfigObj, attrSet []bool, dbHdl *sql.DB) error {
 	var fieldSqlStr string
-	dbPortIntfConfig := dbObj.(PortIntfConfig)
-	objKey, err := dbPortIntfConfig.GetKey()
-	objSqlKey, err := dbPortIntfConfig.GetSqlKeyStr(objKey)
-	dbCmd := "update " + "PortIntfConfig" + " set"
+	dbPortConfig := dbObj.(PortConfig)
+	objKey, err := dbPortConfig.GetKey()
+	objSqlKey, err := dbPortConfig.GetSqlKeyStr(objKey)
+	dbCmd := "update " + "PortConfig" + " set"
 	objTyp := reflect.TypeOf(obj)
 	objVal := reflect.ValueOf(obj)
 	idx := 0
