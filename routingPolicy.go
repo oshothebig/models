@@ -165,11 +165,9 @@ evaluation at the top of this module.
 	//yang_name: match-tag-set class: container
 	//MatchTagSet PolicyDefinitionStatementMatchTagSet
 	//yang_name: install-protocol-eq class: leaf
-	InstallProtocolEq string
-	//yang_name: accept-route class: leaf
-	AcceptRoute bool
-	//yang_name: reject-route class: leaf
-	RejectRoute bool
+	InstallProtocolEq string		//ribdCommonDefs.PtypesInstallProtocolTypePtypes
+	
+	RouteDisposition string    //Accept or Reject
 	//yang_name: igp-actions class: container
 	//IgpActions PolicyDefinitionStatementIgpActions
 }
