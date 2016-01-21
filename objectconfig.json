@@ -1,17 +1,17 @@
 {
-	"Vlan"     : {
+	"VlanConfig"     : {
 		"access": "w",
+		"Owner": "asicd",
+		"Listeners":[]
+	},
+	"VlanState"     : {
+		"access": "r",
 		"Owner": "asicd",
 		"Listeners":[]
 	},
  	"IPv4Intf" : {
 		"access": "w",
 		"Owner": "asicd",
-		"Listeners" : []
-	},
- 	"IPv4Neighbor" : {
-		"access": "w",
-		"Owner" : "asicd",
 		"Listeners" : []
 	},
     "ArpConfig" : {
@@ -104,12 +104,12 @@
 		"Owner": "lacpd", 
 		"Listeners": []
     },
-	"PortIntfConfig" : {
+	"PortConfig" : {
 		"access": "w",	
 		"Owner": "asicd",
 		"Listeners" : []
 	},
-	"PortIntfState" : {
+	"PortState" : {
 		"access": "r",
 		"Owner": "asicd",
 		"Listeners" : []

@@ -12,8 +12,7 @@ func (obj IPv4Intf) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS IPv4Intf " +
 		"( " +
 		"IpAddr TEXT, " +
-		"RouterIf INTEGER, " +
-		"IfType INTEGER, " +
+		"IfIndex INTEGER, " +
 		"PRIMARY KEY(IpAddr) " +
 		")"
 
@@ -23,8 +22,8 @@ func (obj IPv4Intf) CreateDBTable(dbHdl *sql.DB) error {
 
 func (obj IPv4Intf) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	var objectId int64
-	dbCmd := fmt.Sprintf("INSERT INTO IPv4Intf (IpAddr, RouterIf, IfType) VALUES ('%v', '%v', '%v') ;",
-		obj.IpAddr, obj.RouterIf, obj.IfType)
+	dbCmd := fmt.Sprintf("INSERT INTO IPv4Intf (IpAddr, IfIndex) VALUES ('%v', '%v') ;",
+		obj.IpAddr, obj.IfIndex)
 	fmt.Println("**** Create Object called with ", obj)
 
 	result, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
@@ -57,7 +56,7 @@ func (obj IPv4Intf) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, er
 	var object IPv4Intf
 	sqlKey, err := obj.GetSqlKeyStr(objKey)
 	dbCmd := "select * from IPv4Intf where " + sqlKey
-	err = dbHdl.QueryRow(dbCmd).Scan(&object.IpAddr, &object.RouterIf, &object.IfType)
+	err = dbHdl.QueryRow(dbCmd).Scan(&object.IpAddr, &object.IfIndex)
 	fmt.Println("### DB Get IPv4Intf\n", err)
 	return object, err
 }
@@ -86,7 +85,7 @@ func (obj *IPv4Intf) GetAllObjFromDb(dbHdl *sql.DB) (objList []*IPv4Intf, e erro
 	for rows.Next() {
 
 		object := new(IPv4Intf)
-		if err = rows.Scan(&object.IpAddr, &object.RouterIf, &object.IfType); err != nil {
+		if err = rows.Scan(&object.IpAddr, &object.IfIndex); err != nil {
 
 			fmt.Println("Db method Scan failed when interating over IPv4Intf")
 		}

@@ -8,24 +8,23 @@ import (
 	"utils/dbutils"
 )
 
-func (obj IPv4Neighbor) CreateDBTable(dbHdl *sql.DB) error {
-	dbCmd := "CREATE TABLE IF NOT EXISTS IPv4Neighbor " +
+func (obj VlanConfig) CreateDBTable(dbHdl *sql.DB) error {
+	dbCmd := "CREATE TABLE IF NOT EXISTS VlanConfig " +
 		"( " +
-		"IpAddr TEXT, " +
-		"MacAddr TEXT, " +
 		"VlanId INTEGER, " +
-		"RouterIf INTEGER, " +
-		"PRIMARY KEY(IpAddr) " +
+		"IfIndexList TEXT, " +
+		"UntagIfIndexList TEXT, " +
+		"PRIMARY KEY(VlanId) " +
 		")"
 
 	_, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
 
-func (obj IPv4Neighbor) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
+func (obj VlanConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	var objectId int64
-	dbCmd := fmt.Sprintf("INSERT INTO IPv4Neighbor (IpAddr, MacAddr, VlanId, RouterIf) VALUES ('%v', '%v', '%v', '%v') ;",
-		obj.IpAddr, obj.MacAddr, obj.VlanId, obj.RouterIf)
+	dbCmd := fmt.Sprintf("INSERT INTO VlanConfig (VlanId, IfIndexList, UntagIfIndexList) VALUES ('%v', '%v', '%v') ;",
+		obj.VlanId, obj.IfIndexList, obj.UntagIfIndexList)
 	fmt.Println("**** Create Object called with ", obj)
 
 	result, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
@@ -41,44 +40,44 @@ func (obj IPv4Neighbor) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	return objectId, err
 }
 
-func (obj IPv4Neighbor) DeleteObjectFromDb(objKey string, dbHdl *sql.DB) error {
+func (obj VlanConfig) DeleteObjectFromDb(objKey string, dbHdl *sql.DB) error {
 	sqlKey, err := obj.GetSqlKeyStr(objKey)
 	if err != nil {
-		fmt.Println("GetSqlKeyStr for IPv4Neighbor with key", objKey, "failed with error", err)
+		fmt.Println("GetSqlKeyStr for VlanConfig with key", objKey, "failed with error", err)
 		return err
 	}
 
-	dbCmd := "delete from IPv4Neighbor where " + sqlKey
-	fmt.Println("### DB Deleting IPv4Neighbor\n")
+	dbCmd := "delete from VlanConfig where " + sqlKey
+	fmt.Println("### DB Deleting VlanConfig\n")
 	_, err = dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
 
-func (obj IPv4Neighbor) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, error) {
-	var object IPv4Neighbor
+func (obj VlanConfig) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, error) {
+	var object VlanConfig
 	sqlKey, err := obj.GetSqlKeyStr(objKey)
-	dbCmd := "select * from IPv4Neighbor where " + sqlKey
-	err = dbHdl.QueryRow(dbCmd).Scan(&object.IpAddr, &object.MacAddr, &object.VlanId, &object.RouterIf)
-	fmt.Println("### DB Get IPv4Neighbor\n", err)
+	dbCmd := "select * from VlanConfig where " + sqlKey
+	err = dbHdl.QueryRow(dbCmd).Scan(&object.VlanId, &object.IfIndexList, &object.UntagIfIndexList)
+	fmt.Println("### DB Get VlanConfig\n", err)
 	return object, err
 }
 
-func (obj IPv4Neighbor) GetKey() (string, error) {
-	key := string(obj.IpAddr)
+func (obj VlanConfig) GetKey() (string, error) {
+	key := string(obj.VlanId)
 	return key, nil
 }
 
-func (obj IPv4Neighbor) GetSqlKeyStr(objKey string) (string, error) {
+func (obj VlanConfig) GetSqlKeyStr(objKey string) (string, error) {
 	keys := strings.Split(objKey, "#")
-	sqlKey := "IpAddr = " + "\"" + keys[0] + "\""
+	sqlKey := "VlanId = " + "\"" + keys[0] + "\""
 	return sqlKey, nil
 }
 
-func (obj *IPv4Neighbor) GetAllObjFromDb(dbHdl *sql.DB) (objList []*IPv4Neighbor, e error) {
-	dbCmd := "select * from IPv4Neighbor"
+func (obj *VlanConfig) GetAllObjFromDb(dbHdl *sql.DB) (objList []*VlanConfig, e error) {
+	dbCmd := "select * from VlanConfig"
 	rows, err := dbHdl.Query(dbCmd)
 	if err != nil {
-		fmt.Println(fmt.Sprintf("DB method Query failed for 'IPv4Neighbor' with error IPv4Neighbor", dbCmd, err))
+		fmt.Println(fmt.Sprintf("DB method Query failed for 'VlanConfig' with error VlanConfig", dbCmd, err))
 		return objList, err
 	}
 
@@ -86,17 +85,17 @@ func (obj *IPv4Neighbor) GetAllObjFromDb(dbHdl *sql.DB) (objList []*IPv4Neighbor
 
 	for rows.Next() {
 
-		object := new(IPv4Neighbor)
-		if err = rows.Scan(&object.IpAddr, &object.MacAddr, &object.VlanId, &object.RouterIf); err != nil {
+		object := new(VlanConfig)
+		if err = rows.Scan(&object.VlanId, &object.IfIndexList, &object.UntagIfIndexList); err != nil {
 
-			fmt.Println("Db method Scan failed when interating over IPv4Neighbor")
+			fmt.Println("Db method Scan failed when interating over VlanConfig")
 		}
 		objList = append(objList, object)
 	}
 	return objList, nil
 }
-func (obj IPv4Neighbor) CompareObjectsAndDiff(updateKeys map[string]bool, dbObj ConfigObj) ([]bool, error) {
-	dbV4Route := dbObj.(IPv4Neighbor)
+func (obj VlanConfig) CompareObjectsAndDiff(updateKeys map[string]bool, dbObj ConfigObj) ([]bool, error) {
+	dbV4Route := dbObj.(VlanConfig)
 	objTyp := reflect.TypeOf(obj)
 	objVal := reflect.ValueOf(obj)
 	dbObjVal := reflect.ValueOf(dbV4Route)
@@ -170,12 +169,12 @@ func (obj IPv4Neighbor) CompareObjectsAndDiff(updateKeys map[string]bool, dbObj 
 	return attrIds[:idx], nil
 }
 
-func (obj IPv4Neighbor) MergeDbAndConfigObj(dbObj ConfigObj, attrSet []bool) (ConfigObj, error) {
-	var mergedIPv4Neighbor IPv4Neighbor
+func (obj VlanConfig) MergeDbAndConfigObj(dbObj ConfigObj, attrSet []bool) (ConfigObj, error) {
+	var mergedVlanConfig VlanConfig
 	objTyp := reflect.TypeOf(obj)
 	objVal := reflect.ValueOf(obj)
 	dbObjVal := reflect.ValueOf(dbObj)
-	mergedObjVal := reflect.ValueOf(&mergedIPv4Neighbor)
+	mergedObjVal := reflect.ValueOf(&mergedVlanConfig)
 	idx := 0
 	for i := 0; i < objTyp.NumField(); i++ {
 		if fieldTyp := objTyp.Field(i); fieldTyp.Anonymous {
@@ -224,15 +223,15 @@ func (obj IPv4Neighbor) MergeDbAndConfigObj(dbObj ConfigObj, attrSet []bool) (Co
 		idx++
 
 	}
-	return mergedIPv4Neighbor, nil
+	return mergedVlanConfig, nil
 }
 
-func (obj IPv4Neighbor) UpdateObjectInDb(dbObj ConfigObj, attrSet []bool, dbHdl *sql.DB) error {
+func (obj VlanConfig) UpdateObjectInDb(dbObj ConfigObj, attrSet []bool, dbHdl *sql.DB) error {
 	var fieldSqlStr string
-	dbIPv4Neighbor := dbObj.(IPv4Neighbor)
-	objKey, err := dbIPv4Neighbor.GetKey()
-	objSqlKey, err := dbIPv4Neighbor.GetSqlKeyStr(objKey)
-	dbCmd := "update " + "IPv4Neighbor" + " set"
+	dbVlanConfig := dbObj.(VlanConfig)
+	objKey, err := dbVlanConfig.GetKey()
+	objSqlKey, err := dbVlanConfig.GetSqlKeyStr(objKey)
+	dbCmd := "update " + "VlanConfig" + " set"
 	objTyp := reflect.TypeOf(obj)
 	objVal := reflect.ValueOf(obj)
 	idx := 0
