@@ -112,6 +112,8 @@ type BGPNeighborConfig struct {
 	NeighborAddress         string `SNAPROUTE: "KEY"`
 	RouteReflectorClusterId uint32
 	RouteReflectorClient    bool
+	MultiHopEnable          bool
+	MultiHopTTL             uint8
 }
 
 func (obj BGPNeighborConfig) UnmarshalObject(body []byte) (ConfigObj, error) {
@@ -138,6 +140,8 @@ type BGPNeighborState struct {
 	Queues                  BGPQueues
 	RouteReflectorClusterId uint32
 	RouteReflectorClient    bool
+	MultiHopEnable          bool
+	MultiHopTTL             uint8
 }
 
 func (obj BGPNeighborState) UnmarshalObject(body []byte) (ConfigObj, error) {

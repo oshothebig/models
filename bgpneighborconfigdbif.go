@@ -18,6 +18,8 @@ func (obj BGPNeighborConfig) CreateDBTable(dbHdl *sql.DB) error {
 		"NeighborAddress TEXT, " +
 		"RouteReflectorClusterId INTEGER, " +
 		"RouteReflectorClient INTEGER, " +
+		"MultiHopEnable INTEGER, " +
+		"MultiHopTTL INTEGER, " +
 		"PRIMARY KEY(NeighborAddress) " +
 		")"
 
@@ -27,8 +29,8 @@ func (obj BGPNeighborConfig) CreateDBTable(dbHdl *sql.DB) error {
 
 func (obj BGPNeighborConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	var objectId int64
-	dbCmd := fmt.Sprintf("INSERT INTO BGPNeighborConfig (PeerAS, LocalAS, AuthPassword, Description, NeighborAddress, RouteReflectorClusterId, RouteReflectorClient) VALUES ('%v', '%v', '%v', '%v', '%v', '%v', '%v') ;",
-		obj.PeerAS, obj.LocalAS, obj.AuthPassword, obj.Description, obj.NeighborAddress, obj.RouteReflectorClusterId, dbutils.ConvertBoolToInt(obj.RouteReflectorClient))
+	dbCmd := fmt.Sprintf("INSERT INTO BGPNeighborConfig (PeerAS, LocalAS, AuthPassword, Description, NeighborAddress, RouteReflectorClusterId, RouteReflectorClient, MultiHopEnable, MultiHopTTL) VALUES ('%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v') ;",
+		obj.PeerAS, obj.LocalAS, obj.AuthPassword, obj.Description, obj.NeighborAddress, obj.RouteReflectorClusterId, dbutils.ConvertBoolToInt(obj.RouteReflectorClient), dbutils.ConvertBoolToInt(obj.MultiHopEnable), obj.MultiHopTTL)
 	fmt.Println("**** Create Object called with ", obj)
 
 	result, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
@@ -62,9 +64,11 @@ func (obj BGPNeighborConfig) GetObjectFromDb(objKey string, dbHdl *sql.DB) (Conf
 	sqlKey, err := obj.GetSqlKeyStr(objKey)
 	dbCmd := "select * from BGPNeighborConfig where " + sqlKey
 	var tmp6 string
-	err = dbHdl.QueryRow(dbCmd).Scan(&object.PeerAS, &object.LocalAS, &object.AuthPassword, &object.Description, &object.NeighborAddress, &object.RouteReflectorClusterId, &tmp6)
+	var tmp7 string
+	err = dbHdl.QueryRow(dbCmd).Scan(&object.PeerAS, &object.LocalAS, &object.AuthPassword, &object.Description, &object.NeighborAddress, &object.RouteReflectorClusterId, &tmp6, &tmp7, &object.MultiHopTTL)
 	fmt.Println("### DB Get BGPNeighborConfig\n", err)
 	object.RouteReflectorClient = dbutils.ConvertStrBoolIntToBool(tmp6)
+	object.MultiHopEnable = dbutils.ConvertStrBoolIntToBool(tmp7)
 	return object, err
 }
 
@@ -90,14 +94,16 @@ func (obj *BGPNeighborConfig) GetAllObjFromDb(dbHdl *sql.DB) (objList []*BGPNeig
 	defer rows.Close()
 
 	var tmp6 string
+	var tmp7 string
 	for rows.Next() {
 
 		object := new(BGPNeighborConfig)
-		if err = rows.Scan(&object.PeerAS, &object.LocalAS, &object.AuthPassword, &object.Description, &object.NeighborAddress, &object.RouteReflectorClusterId, &tmp6); err != nil {
+		if err = rows.Scan(&object.PeerAS, &object.LocalAS, &object.AuthPassword, &object.Description, &object.NeighborAddress, &object.RouteReflectorClusterId, &tmp6, &tmp7, &object.MultiHopTTL); err != nil {
 
 			fmt.Println("Db method Scan failed when interating over BGPNeighborConfig")
 		}
 		object.RouteReflectorClient = dbutils.ConvertStrBoolIntToBool(tmp6)
+		object.MultiHopEnable = dbutils.ConvertStrBoolIntToBool(tmp7)
 		objList = append(objList, object)
 	}
 	return objList, nil
