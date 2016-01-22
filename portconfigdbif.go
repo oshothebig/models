@@ -8,29 +8,32 @@ import (
 	"utils/dbutils"
 )
 
-func (obj BGPNeighborConfig) CreateDBTable(dbHdl *sql.DB) error {
-	dbCmd := "CREATE TABLE IF NOT EXISTS BGPNeighborConfig " +
+func (obj PortConfig) CreateDBTable(dbHdl *sql.DB) error {
+	dbCmd := "CREATE TABLE IF NOT EXISTS PortConfig " +
 		"( " +
-		"PeerAS INTEGER, " +
-		"LocalAS INTEGER, " +
-		"AuthPassword TEXT, " +
+		"IfIndex INTEGER, " +
+		"Name TEXT, " +
 		"Description TEXT, " +
-		"NeighborAddress TEXT, " +
-		"RouteReflectorClusterId INTEGER, " +
-		"RouteReflectorClient INTEGER, " +
-		"MultiHopEnable INTEGER, " +
-		"MultiHopTTL INTEGER, " +
-		"PRIMARY KEY(NeighborAddress) " +
+		"Type TEXT, " +
+		"AdminState TEXT, " +
+		"OperState TEXT, " +
+		"MacAddr TEXT, " +
+		"Speed INTEGER, " +
+		"Duplex TEXT, " +
+		"Autoneg TEXT, " +
+		"MediaType TEXT, " +
+		"Mtu INTEGER, " +
+		"PRIMARY KEY(IfIndex) " +
 		")"
 
 	_, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
 
-func (obj BGPNeighborConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
+func (obj PortConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	var objectId int64
-	dbCmd := fmt.Sprintf("INSERT INTO BGPNeighborConfig (PeerAS, LocalAS, AuthPassword, Description, NeighborAddress, RouteReflectorClusterId, RouteReflectorClient, MultiHopEnable, MultiHopTTL) VALUES ('%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v') ;",
-		obj.PeerAS, obj.LocalAS, obj.AuthPassword, obj.Description, obj.NeighborAddress, obj.RouteReflectorClusterId, dbutils.ConvertBoolToInt(obj.RouteReflectorClient), dbutils.ConvertBoolToInt(obj.MultiHopEnable), obj.MultiHopTTL)
+	dbCmd := fmt.Sprintf("INSERT INTO PortConfig (IfIndex, Name, Description, Type, AdminState, OperState, MacAddr, Speed, Duplex, Autoneg, MediaType, Mtu) VALUES ('%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v') ;",
+		obj.IfIndex, obj.Name, obj.Description, obj.Type, obj.AdminState, obj.OperState, obj.MacAddr, obj.Speed, obj.Duplex, obj.Autoneg, obj.MediaType, obj.Mtu)
 	fmt.Println("**** Create Object called with ", obj)
 
 	result, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
@@ -46,70 +49,62 @@ func (obj BGPNeighborConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	return objectId, err
 }
 
-func (obj BGPNeighborConfig) DeleteObjectFromDb(objKey string, dbHdl *sql.DB) error {
+func (obj PortConfig) DeleteObjectFromDb(objKey string, dbHdl *sql.DB) error {
 	sqlKey, err := obj.GetSqlKeyStr(objKey)
 	if err != nil {
-		fmt.Println("GetSqlKeyStr for BGPNeighborConfig with key", objKey, "failed with error", err)
+		fmt.Println("GetSqlKeyStr for PortConfig with key", objKey, "failed with error", err)
 		return err
 	}
 
-	dbCmd := "delete from BGPNeighborConfig where " + sqlKey
-	fmt.Println("### DB Deleting BGPNeighborConfig\n")
+	dbCmd := "delete from PortConfig where " + sqlKey
+	fmt.Println("### DB Deleting PortConfig\n")
 	_, err = dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
 
-func (obj BGPNeighborConfig) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, error) {
-	var object BGPNeighborConfig
+func (obj PortConfig) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, error) {
+	var object PortConfig
 	sqlKey, err := obj.GetSqlKeyStr(objKey)
-	dbCmd := "select * from BGPNeighborConfig where " + sqlKey
-	var tmp6 string
-	var tmp7 string
-	err = dbHdl.QueryRow(dbCmd).Scan(&object.PeerAS, &object.LocalAS, &object.AuthPassword, &object.Description, &object.NeighborAddress, &object.RouteReflectorClusterId, &tmp6, &tmp7, &object.MultiHopTTL)
-	fmt.Println("### DB Get BGPNeighborConfig\n", err)
-	object.RouteReflectorClient = dbutils.ConvertStrBoolIntToBool(tmp6)
-	object.MultiHopEnable = dbutils.ConvertStrBoolIntToBool(tmp7)
+	dbCmd := "select * from PortConfig where " + sqlKey
+	err = dbHdl.QueryRow(dbCmd).Scan(&object.IfIndex, &object.Name, &object.Description, &object.Type, &object.AdminState, &object.OperState, &object.MacAddr, &object.Speed, &object.Duplex, &object.Autoneg, &object.MediaType, &object.Mtu)
+	fmt.Println("### DB Get PortConfig\n", err)
 	return object, err
 }
 
-func (obj BGPNeighborConfig) GetKey() (string, error) {
-	key := string(obj.NeighborAddress)
+func (obj PortConfig) GetKey() (string, error) {
+	key := string(obj.IfIndex)
 	return key, nil
 }
 
-func (obj BGPNeighborConfig) GetSqlKeyStr(objKey string) (string, error) {
+func (obj PortConfig) GetSqlKeyStr(objKey string) (string, error) {
 	keys := strings.Split(objKey, "#")
-	sqlKey := "NeighborAddress = " + "\"" + keys[0] + "\""
+	sqlKey := "IfIndex = " + "\"" + keys[0] + "\""
 	return sqlKey, nil
 }
 
-func (obj *BGPNeighborConfig) GetAllObjFromDb(dbHdl *sql.DB) (objList []*BGPNeighborConfig, e error) {
-	dbCmd := "select * from BGPNeighborConfig"
+func (obj *PortConfig) GetAllObjFromDb(dbHdl *sql.DB) (objList []*PortConfig, e error) {
+	dbCmd := "select * from PortConfig"
 	rows, err := dbHdl.Query(dbCmd)
 	if err != nil {
-		fmt.Println(fmt.Sprintf("DB method Query failed for 'BGPNeighborConfig' with error BGPNeighborConfig", dbCmd, err))
+		fmt.Println(fmt.Sprintf("DB method Query failed for 'PortConfig' with error PortConfig", dbCmd, err))
 		return objList, err
 	}
 
 	defer rows.Close()
 
-	var tmp6 string
-	var tmp7 string
 	for rows.Next() {
 
-		object := new(BGPNeighborConfig)
-		if err = rows.Scan(&object.PeerAS, &object.LocalAS, &object.AuthPassword, &object.Description, &object.NeighborAddress, &object.RouteReflectorClusterId, &tmp6, &tmp7, &object.MultiHopTTL); err != nil {
+		object := new(PortConfig)
+		if err = rows.Scan(&object.IfIndex, &object.Name, &object.Description, &object.Type, &object.AdminState, &object.OperState, &object.MacAddr, &object.Speed, &object.Duplex, &object.Autoneg, &object.MediaType, &object.Mtu); err != nil {
 
-			fmt.Println("Db method Scan failed when interating over BGPNeighborConfig")
+			fmt.Println("Db method Scan failed when interating over PortConfig")
 		}
-		object.RouteReflectorClient = dbutils.ConvertStrBoolIntToBool(tmp6)
-		object.MultiHopEnable = dbutils.ConvertStrBoolIntToBool(tmp7)
 		objList = append(objList, object)
 	}
 	return objList, nil
 }
-func (obj BGPNeighborConfig) CompareObjectsAndDiff(updateKeys map[string]bool, dbObj ConfigObj) ([]bool, error) {
-	dbV4Route := dbObj.(BGPNeighborConfig)
+func (obj PortConfig) CompareObjectsAndDiff(updateKeys map[string]bool, dbObj ConfigObj) ([]bool, error) {
+	dbV4Route := dbObj.(PortConfig)
 	objTyp := reflect.TypeOf(obj)
 	objVal := reflect.ValueOf(obj)
 	dbObjVal := reflect.ValueOf(dbV4Route)
@@ -183,12 +178,12 @@ func (obj BGPNeighborConfig) CompareObjectsAndDiff(updateKeys map[string]bool, d
 	return attrIds[:idx], nil
 }
 
-func (obj BGPNeighborConfig) MergeDbAndConfigObj(dbObj ConfigObj, attrSet []bool) (ConfigObj, error) {
-	var mergedBGPNeighborConfig BGPNeighborConfig
+func (obj PortConfig) MergeDbAndConfigObj(dbObj ConfigObj, attrSet []bool) (ConfigObj, error) {
+	var mergedPortConfig PortConfig
 	objTyp := reflect.TypeOf(obj)
 	objVal := reflect.ValueOf(obj)
 	dbObjVal := reflect.ValueOf(dbObj)
-	mergedObjVal := reflect.ValueOf(&mergedBGPNeighborConfig)
+	mergedObjVal := reflect.ValueOf(&mergedPortConfig)
 	idx := 0
 	for i := 0; i < objTyp.NumField(); i++ {
 		if fieldTyp := objTyp.Field(i); fieldTyp.Anonymous {
@@ -237,15 +232,15 @@ func (obj BGPNeighborConfig) MergeDbAndConfigObj(dbObj ConfigObj, attrSet []bool
 		idx++
 
 	}
-	return mergedBGPNeighborConfig, nil
+	return mergedPortConfig, nil
 }
 
-func (obj BGPNeighborConfig) UpdateObjectInDb(dbObj ConfigObj, attrSet []bool, dbHdl *sql.DB) error {
+func (obj PortConfig) UpdateObjectInDb(dbObj ConfigObj, attrSet []bool, dbHdl *sql.DB) error {
 	var fieldSqlStr string
-	dbBGPNeighborConfig := dbObj.(BGPNeighborConfig)
-	objKey, err := dbBGPNeighborConfig.GetKey()
-	objSqlKey, err := dbBGPNeighborConfig.GetSqlKeyStr(objKey)
-	dbCmd := "update " + "BGPNeighborConfig" + " set"
+	dbPortConfig := dbObj.(PortConfig)
+	objKey, err := dbPortConfig.GetKey()
+	objSqlKey, err := dbPortConfig.GetSqlKeyStr(objKey)
+	dbCmd := "update " + "PortConfig" + " set"
 	objTyp := reflect.TypeOf(obj)
 	objVal := reflect.ValueOf(obj)
 	idx := 0

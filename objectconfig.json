@@ -1,17 +1,17 @@
 {
-	"Vlan"     : {
+	"VlanConfig"     : {
 		"access": "w",
+		"Owner": "asicd",
+		"Listeners":[]
+	},
+	"VlanState"     : {
+		"access": "r",
 		"Owner": "asicd",
 		"Listeners":[]
 	},
  	"IPv4Intf" : {
 		"access": "w",
 		"Owner": "asicd",
-		"Listeners" : []
-	},
- 	"IPv4Neighbor" : {
-		"access": "w",
-		"Owner" : "asicd",
 		"Listeners" : []
 	},
     "ArpConfig" : {
@@ -54,7 +54,7 @@
 		"Owner": "ribd",
 		"Listeners": []
 	},
- 	"PolicyDefinitionStatement": {
+ 	"PolicyDefinitionStmt": {
 		"access": "rw",
 		"Owner": "ribd",
 		"Listeners": []
@@ -104,12 +104,12 @@
 		"Owner": "lacpd", 
 		"Listeners": []
     },
-	"PortIntfConfig" : {
+	"PortConfig" : {
 		"access": "w",	
 		"Owner": "asicd",
 		"Listeners" : []
 	},
-	"PortIntfState" : {
+	"PortState" : {
 		"access": "r",
 		"Owner": "asicd",
 		"Listeners" : []
@@ -233,6 +233,26 @@
 		"access": "w",
 		"Owner": "local",
 		"Listeners" : []		
+	},
+	"Dot1dStpPortEntryConfig" : {
+		"access": "w",
+		"Owner": "stpd",
+		"Listeners" : []
+	},
+	"Dot1dStpPortEntryState" : {
+		"access": "r",
+		"Owner": "stpd",
+		"Listeners" : []
+	},
+	"Dot1dStpBridgeConfig" : {
+		"access": "w",
+		"Owner": "stpd",
+		"Listeners" : []
+	},
+	"Dot1dStpBridgeState" : {
+		"access": "r",
+		"Owner": "stpd",
+		"Listeners" : []
 	},
 	"DhcpRelayGlobalConfig" : {
 		"access": "w",

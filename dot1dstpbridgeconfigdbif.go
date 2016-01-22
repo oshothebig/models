@@ -8,32 +8,27 @@ import (
 	"utils/dbutils"
 )
 
-func (obj PortIntfConfig) CreateDBTable(dbHdl *sql.DB) error {
-	dbCmd := "CREATE TABLE IF NOT EXISTS PortIntfConfig " +
+func (obj Dot1dStpBridgeConfig) CreateDBTable(dbHdl *sql.DB) error {
+	dbCmd := "CREATE TABLE IF NOT EXISTS Dot1dStpBridgeConfig " +
 		"( " +
-		"PortNum INTEGER, " +
-		"Name TEXT, " +
-		"Description TEXT, " +
-		"Type TEXT, " +
-		"AdminState TEXT, " +
-		"OperState TEXT, " +
-		"MacAddr TEXT, " +
-		"Speed INTEGER, " +
-		"Duplex TEXT, " +
-		"Autoneg TEXT, " +
-		"MediaType TEXT, " +
-		"Mtu INTEGER, " +
-		"PRIMARY KEY(PortNum) " +
+		"Dot1dBridgeAddressKey TEXT, " +
+		"Dot1dStpPriorityKey INTEGER, " +
+		"Dot1dStpBridgeMaxAge INTEGER, " +
+		"Dot1dStpBridgeHelloTime INTEGER, " +
+		"Dot1dStpBridgeForwardDelay INTEGER, " +
+		"Dot1dStpBridgeForceVersion INTEGER, " +
+		"Dot1dStpBridgeTxHoldCount INTEGER, " +
+		"PRIMARY KEY(Dot1dBridgeAddressKey, Dot1dStpPriorityKey) " +
 		")"
 
 	_, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
 
-func (obj PortIntfConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
+func (obj Dot1dStpBridgeConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	var objectId int64
-	dbCmd := fmt.Sprintf("INSERT INTO PortIntfConfig (PortNum, Name, Description, Type, AdminState, OperState, MacAddr, Speed, Duplex, Autoneg, MediaType, Mtu) VALUES ('%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v') ;",
-		obj.PortNum, obj.Name, obj.Description, obj.Type, obj.AdminState, obj.OperState, obj.MacAddr, obj.Speed, obj.Duplex, obj.Autoneg, obj.MediaType, obj.Mtu)
+	dbCmd := fmt.Sprintf("INSERT INTO Dot1dStpBridgeConfig (Dot1dBridgeAddressKey, Dot1dStpPriorityKey, Dot1dStpBridgeMaxAge, Dot1dStpBridgeHelloTime, Dot1dStpBridgeForwardDelay, Dot1dStpBridgeForceVersion, Dot1dStpBridgeTxHoldCount) VALUES ('%v', '%v', '%v', '%v', '%v', '%v', '%v') ;",
+		obj.Dot1dBridgeAddressKey, obj.Dot1dStpPriorityKey, obj.Dot1dStpBridgeMaxAge, obj.Dot1dStpBridgeHelloTime, obj.Dot1dStpBridgeForwardDelay, obj.Dot1dStpBridgeForceVersion, obj.Dot1dStpBridgeTxHoldCount)
 	fmt.Println("**** Create Object called with ", obj)
 
 	result, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
@@ -49,44 +44,44 @@ func (obj PortIntfConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	return objectId, err
 }
 
-func (obj PortIntfConfig) DeleteObjectFromDb(objKey string, dbHdl *sql.DB) error {
+func (obj Dot1dStpBridgeConfig) DeleteObjectFromDb(objKey string, dbHdl *sql.DB) error {
 	sqlKey, err := obj.GetSqlKeyStr(objKey)
 	if err != nil {
-		fmt.Println("GetSqlKeyStr for PortIntfConfig with key", objKey, "failed with error", err)
+		fmt.Println("GetSqlKeyStr for Dot1dStpBridgeConfig with key", objKey, "failed with error", err)
 		return err
 	}
 
-	dbCmd := "delete from PortIntfConfig where " + sqlKey
-	fmt.Println("### DB Deleting PortIntfConfig\n")
+	dbCmd := "delete from Dot1dStpBridgeConfig where " + sqlKey
+	fmt.Println("### DB Deleting Dot1dStpBridgeConfig\n")
 	_, err = dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
 
-func (obj PortIntfConfig) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, error) {
-	var object PortIntfConfig
+func (obj Dot1dStpBridgeConfig) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, error) {
+	var object Dot1dStpBridgeConfig
 	sqlKey, err := obj.GetSqlKeyStr(objKey)
-	dbCmd := "select * from PortIntfConfig where " + sqlKey
-	err = dbHdl.QueryRow(dbCmd).Scan(&object.PortNum, &object.Name, &object.Description, &object.Type, &object.AdminState, &object.OperState, &object.MacAddr, &object.Speed, &object.Duplex, &object.Autoneg, &object.MediaType, &object.Mtu)
-	fmt.Println("### DB Get PortIntfConfig\n", err)
+	dbCmd := "select * from Dot1dStpBridgeConfig where " + sqlKey
+	err = dbHdl.QueryRow(dbCmd).Scan(&object.Dot1dBridgeAddressKey, &object.Dot1dStpPriorityKey, &object.Dot1dStpBridgeMaxAge, &object.Dot1dStpBridgeHelloTime, &object.Dot1dStpBridgeForwardDelay, &object.Dot1dStpBridgeForceVersion, &object.Dot1dStpBridgeTxHoldCount)
+	fmt.Println("### DB Get Dot1dStpBridgeConfig\n", err)
 	return object, err
 }
 
-func (obj PortIntfConfig) GetKey() (string, error) {
-	key := string(obj.PortNum)
+func (obj Dot1dStpBridgeConfig) GetKey() (string, error) {
+	key := string(obj.Dot1dBridgeAddressKey) + "#" + string(obj.Dot1dStpPriorityKey)
 	return key, nil
 }
 
-func (obj PortIntfConfig) GetSqlKeyStr(objKey string) (string, error) {
+func (obj Dot1dStpBridgeConfig) GetSqlKeyStr(objKey string) (string, error) {
 	keys := strings.Split(objKey, "#")
-	sqlKey := "PortNum = " + "\"" + keys[0] + "\""
+	sqlKey := "Dot1dBridgeAddressKey = " + "\"" + keys[0] + "\"" + " and " + "Dot1dStpPriorityKey = " + "\"" + keys[1] + "\""
 	return sqlKey, nil
 }
 
-func (obj *PortIntfConfig) GetAllObjFromDb(dbHdl *sql.DB) (objList []*PortIntfConfig, e error) {
-	dbCmd := "select * from PortIntfConfig"
+func (obj *Dot1dStpBridgeConfig) GetAllObjFromDb(dbHdl *sql.DB) (objList []*Dot1dStpBridgeConfig, e error) {
+	dbCmd := "select * from Dot1dStpBridgeConfig"
 	rows, err := dbHdl.Query(dbCmd)
 	if err != nil {
-		fmt.Println(fmt.Sprintf("DB method Query failed for 'PortIntfConfig' with error PortIntfConfig", dbCmd, err))
+		fmt.Println(fmt.Sprintf("DB method Query failed for 'Dot1dStpBridgeConfig' with error Dot1dStpBridgeConfig", dbCmd, err))
 		return objList, err
 	}
 
@@ -94,17 +89,17 @@ func (obj *PortIntfConfig) GetAllObjFromDb(dbHdl *sql.DB) (objList []*PortIntfCo
 
 	for rows.Next() {
 
-		object := new(PortIntfConfig)
-		if err = rows.Scan(&object.PortNum, &object.Name, &object.Description, &object.Type, &object.AdminState, &object.OperState, &object.MacAddr, &object.Speed, &object.Duplex, &object.Autoneg, &object.MediaType, &object.Mtu); err != nil {
+		object := new(Dot1dStpBridgeConfig)
+		if err = rows.Scan(&object.Dot1dBridgeAddressKey, &object.Dot1dStpPriorityKey, &object.Dot1dStpBridgeMaxAge, &object.Dot1dStpBridgeHelloTime, &object.Dot1dStpBridgeForwardDelay, &object.Dot1dStpBridgeForceVersion, &object.Dot1dStpBridgeTxHoldCount); err != nil {
 
-			fmt.Println("Db method Scan failed when interating over PortIntfConfig")
+			fmt.Println("Db method Scan failed when interating over Dot1dStpBridgeConfig")
 		}
 		objList = append(objList, object)
 	}
 	return objList, nil
 }
-func (obj PortIntfConfig) CompareObjectsAndDiff(updateKeys map[string]bool, dbObj ConfigObj) ([]bool, error) {
-	dbV4Route := dbObj.(PortIntfConfig)
+func (obj Dot1dStpBridgeConfig) CompareObjectsAndDiff(updateKeys map[string]bool, dbObj ConfigObj) ([]bool, error) {
+	dbV4Route := dbObj.(Dot1dStpBridgeConfig)
 	objTyp := reflect.TypeOf(obj)
 	objVal := reflect.ValueOf(obj)
 	dbObjVal := reflect.ValueOf(dbV4Route)
@@ -178,12 +173,12 @@ func (obj PortIntfConfig) CompareObjectsAndDiff(updateKeys map[string]bool, dbOb
 	return attrIds[:idx], nil
 }
 
-func (obj PortIntfConfig) MergeDbAndConfigObj(dbObj ConfigObj, attrSet []bool) (ConfigObj, error) {
-	var mergedPortIntfConfig PortIntfConfig
+func (obj Dot1dStpBridgeConfig) MergeDbAndConfigObj(dbObj ConfigObj, attrSet []bool) (ConfigObj, error) {
+	var mergedDot1dStpBridgeConfig Dot1dStpBridgeConfig
 	objTyp := reflect.TypeOf(obj)
 	objVal := reflect.ValueOf(obj)
 	dbObjVal := reflect.ValueOf(dbObj)
-	mergedObjVal := reflect.ValueOf(&mergedPortIntfConfig)
+	mergedObjVal := reflect.ValueOf(&mergedDot1dStpBridgeConfig)
 	idx := 0
 	for i := 0; i < objTyp.NumField(); i++ {
 		if fieldTyp := objTyp.Field(i); fieldTyp.Anonymous {
@@ -232,15 +227,15 @@ func (obj PortIntfConfig) MergeDbAndConfigObj(dbObj ConfigObj, attrSet []bool) (
 		idx++
 
 	}
-	return mergedPortIntfConfig, nil
+	return mergedDot1dStpBridgeConfig, nil
 }
 
-func (obj PortIntfConfig) UpdateObjectInDb(dbObj ConfigObj, attrSet []bool, dbHdl *sql.DB) error {
+func (obj Dot1dStpBridgeConfig) UpdateObjectInDb(dbObj ConfigObj, attrSet []bool, dbHdl *sql.DB) error {
 	var fieldSqlStr string
-	dbPortIntfConfig := dbObj.(PortIntfConfig)
-	objKey, err := dbPortIntfConfig.GetKey()
-	objSqlKey, err := dbPortIntfConfig.GetSqlKeyStr(objKey)
-	dbCmd := "update " + "PortIntfConfig" + " set"
+	dbDot1dStpBridgeConfig := dbObj.(Dot1dStpBridgeConfig)
+	objKey, err := dbDot1dStpBridgeConfig.GetKey()
+	objSqlKey, err := dbDot1dStpBridgeConfig.GetSqlKeyStr(objKey)
+	dbCmd := "update " + "Dot1dStpBridgeConfig" + " set"
 	objTyp := reflect.TypeOf(obj)
 	objVal := reflect.ValueOf(obj)
 	idx := 0

@@ -1509,13 +1509,13 @@ type AggregationLacpState struct {
 
 	BaseObj
 	// parent leaf
+	Mtu uint16
+	// parent leaf
 	LagType int32
 	// parent leaf
 	Enabled bool
 	// parent leaf
 	Description string
-	// parent leaf
-	Mtu uint16
 	// parent leaf
 	Type string
 	// parent leaf
@@ -1532,6 +1532,8 @@ type AggregationLacpState struct {
 	SystemPriority uint16
 	//yang_name: lag-hash class: leaf
 	LagHash int32
+	//yang_name: ifindex class: leaf
+	Ifindex uint32
 }
 
 type AggregationLacpMemberStateCounters struct {

@@ -8,24 +8,29 @@ import (
 	"utils/dbutils"
 )
 
-func (obj IPv4Neighbor) CreateDBTable(dbHdl *sql.DB) error {
-	dbCmd := "CREATE TABLE IF NOT EXISTS IPv4Neighbor " +
+func (obj Dot1dStpPortEntryConfig) CreateDBTable(dbHdl *sql.DB) error {
+	dbCmd := "CREATE TABLE IF NOT EXISTS Dot1dStpPortEntryConfig " +
 		"( " +
-		"IpAddr TEXT, " +
-		"MacAddr TEXT, " +
-		"VlanId INTEGER, " +
-		"RouterIf INTEGER, " +
-		"PRIMARY KEY(IpAddr) " +
+		"Dot1dStpPortKey INTEGER, " +
+		"Dot1dStpPortPriority INTEGER, " +
+		"Dot1dStpPortEnable INTEGER, " +
+		"Dot1dStpPortPathCost INTEGER, " +
+		"Dot1dStpPortPathCost32 INTEGER, " +
+		"Dot1dStpPortProtocolMigration INTEGER, " +
+		"Dot1dStpPortAdminPointToPoint INTEGER, " +
+		"Dot1dStpPortAdminEdgePort INTEGER, " +
+		"Dot1dStpPortAdminPathCost INTEGER, " +
+		"PRIMARY KEY(Dot1dStpPortKey) " +
 		")"
 
 	_, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
 
-func (obj IPv4Neighbor) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
+func (obj Dot1dStpPortEntryConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	var objectId int64
-	dbCmd := fmt.Sprintf("INSERT INTO IPv4Neighbor (IpAddr, MacAddr, VlanId, RouterIf) VALUES ('%v', '%v', '%v', '%v') ;",
-		obj.IpAddr, obj.MacAddr, obj.VlanId, obj.RouterIf)
+	dbCmd := fmt.Sprintf("INSERT INTO Dot1dStpPortEntryConfig (Dot1dStpPortKey, Dot1dStpPortPriority, Dot1dStpPortEnable, Dot1dStpPortPathCost, Dot1dStpPortPathCost32, Dot1dStpPortProtocolMigration, Dot1dStpPortAdminPointToPoint, Dot1dStpPortAdminEdgePort, Dot1dStpPortAdminPathCost) VALUES ('%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v') ;",
+		obj.Dot1dStpPortKey, obj.Dot1dStpPortPriority, obj.Dot1dStpPortEnable, obj.Dot1dStpPortPathCost, obj.Dot1dStpPortPathCost32, obj.Dot1dStpPortProtocolMigration, obj.Dot1dStpPortAdminPointToPoint, obj.Dot1dStpPortAdminEdgePort, obj.Dot1dStpPortAdminPathCost)
 	fmt.Println("**** Create Object called with ", obj)
 
 	result, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
@@ -41,44 +46,44 @@ func (obj IPv4Neighbor) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	return objectId, err
 }
 
-func (obj IPv4Neighbor) DeleteObjectFromDb(objKey string, dbHdl *sql.DB) error {
+func (obj Dot1dStpPortEntryConfig) DeleteObjectFromDb(objKey string, dbHdl *sql.DB) error {
 	sqlKey, err := obj.GetSqlKeyStr(objKey)
 	if err != nil {
-		fmt.Println("GetSqlKeyStr for IPv4Neighbor with key", objKey, "failed with error", err)
+		fmt.Println("GetSqlKeyStr for Dot1dStpPortEntryConfig with key", objKey, "failed with error", err)
 		return err
 	}
 
-	dbCmd := "delete from IPv4Neighbor where " + sqlKey
-	fmt.Println("### DB Deleting IPv4Neighbor\n")
+	dbCmd := "delete from Dot1dStpPortEntryConfig where " + sqlKey
+	fmt.Println("### DB Deleting Dot1dStpPortEntryConfig\n")
 	_, err = dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
 
-func (obj IPv4Neighbor) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, error) {
-	var object IPv4Neighbor
+func (obj Dot1dStpPortEntryConfig) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, error) {
+	var object Dot1dStpPortEntryConfig
 	sqlKey, err := obj.GetSqlKeyStr(objKey)
-	dbCmd := "select * from IPv4Neighbor where " + sqlKey
-	err = dbHdl.QueryRow(dbCmd).Scan(&object.IpAddr, &object.MacAddr, &object.VlanId, &object.RouterIf)
-	fmt.Println("### DB Get IPv4Neighbor\n", err)
+	dbCmd := "select * from Dot1dStpPortEntryConfig where " + sqlKey
+	err = dbHdl.QueryRow(dbCmd).Scan(&object.Dot1dStpPortKey, &object.Dot1dStpPortPriority, &object.Dot1dStpPortEnable, &object.Dot1dStpPortPathCost, &object.Dot1dStpPortPathCost32, &object.Dot1dStpPortProtocolMigration, &object.Dot1dStpPortAdminPointToPoint, &object.Dot1dStpPortAdminEdgePort, &object.Dot1dStpPortAdminPathCost)
+	fmt.Println("### DB Get Dot1dStpPortEntryConfig\n", err)
 	return object, err
 }
 
-func (obj IPv4Neighbor) GetKey() (string, error) {
-	key := string(obj.IpAddr)
+func (obj Dot1dStpPortEntryConfig) GetKey() (string, error) {
+	key := string(obj.Dot1dStpPortKey)
 	return key, nil
 }
 
-func (obj IPv4Neighbor) GetSqlKeyStr(objKey string) (string, error) {
+func (obj Dot1dStpPortEntryConfig) GetSqlKeyStr(objKey string) (string, error) {
 	keys := strings.Split(objKey, "#")
-	sqlKey := "IpAddr = " + "\"" + keys[0] + "\""
+	sqlKey := "Dot1dStpPortKey = " + "\"" + keys[0] + "\""
 	return sqlKey, nil
 }
 
-func (obj *IPv4Neighbor) GetAllObjFromDb(dbHdl *sql.DB) (objList []*IPv4Neighbor, e error) {
-	dbCmd := "select * from IPv4Neighbor"
+func (obj *Dot1dStpPortEntryConfig) GetAllObjFromDb(dbHdl *sql.DB) (objList []*Dot1dStpPortEntryConfig, e error) {
+	dbCmd := "select * from Dot1dStpPortEntryConfig"
 	rows, err := dbHdl.Query(dbCmd)
 	if err != nil {
-		fmt.Println(fmt.Sprintf("DB method Query failed for 'IPv4Neighbor' with error IPv4Neighbor", dbCmd, err))
+		fmt.Println(fmt.Sprintf("DB method Query failed for 'Dot1dStpPortEntryConfig' with error Dot1dStpPortEntryConfig", dbCmd, err))
 		return objList, err
 	}
 
@@ -86,17 +91,17 @@ func (obj *IPv4Neighbor) GetAllObjFromDb(dbHdl *sql.DB) (objList []*IPv4Neighbor
 
 	for rows.Next() {
 
-		object := new(IPv4Neighbor)
-		if err = rows.Scan(&object.IpAddr, &object.MacAddr, &object.VlanId, &object.RouterIf); err != nil {
+		object := new(Dot1dStpPortEntryConfig)
+		if err = rows.Scan(&object.Dot1dStpPortKey, &object.Dot1dStpPortPriority, &object.Dot1dStpPortEnable, &object.Dot1dStpPortPathCost, &object.Dot1dStpPortPathCost32, &object.Dot1dStpPortProtocolMigration, &object.Dot1dStpPortAdminPointToPoint, &object.Dot1dStpPortAdminEdgePort, &object.Dot1dStpPortAdminPathCost); err != nil {
 
-			fmt.Println("Db method Scan failed when interating over IPv4Neighbor")
+			fmt.Println("Db method Scan failed when interating over Dot1dStpPortEntryConfig")
 		}
 		objList = append(objList, object)
 	}
 	return objList, nil
 }
-func (obj IPv4Neighbor) CompareObjectsAndDiff(updateKeys map[string]bool, dbObj ConfigObj) ([]bool, error) {
-	dbV4Route := dbObj.(IPv4Neighbor)
+func (obj Dot1dStpPortEntryConfig) CompareObjectsAndDiff(updateKeys map[string]bool, dbObj ConfigObj) ([]bool, error) {
+	dbV4Route := dbObj.(Dot1dStpPortEntryConfig)
 	objTyp := reflect.TypeOf(obj)
 	objVal := reflect.ValueOf(obj)
 	dbObjVal := reflect.ValueOf(dbV4Route)
@@ -170,12 +175,12 @@ func (obj IPv4Neighbor) CompareObjectsAndDiff(updateKeys map[string]bool, dbObj 
 	return attrIds[:idx], nil
 }
 
-func (obj IPv4Neighbor) MergeDbAndConfigObj(dbObj ConfigObj, attrSet []bool) (ConfigObj, error) {
-	var mergedIPv4Neighbor IPv4Neighbor
+func (obj Dot1dStpPortEntryConfig) MergeDbAndConfigObj(dbObj ConfigObj, attrSet []bool) (ConfigObj, error) {
+	var mergedDot1dStpPortEntryConfig Dot1dStpPortEntryConfig
 	objTyp := reflect.TypeOf(obj)
 	objVal := reflect.ValueOf(obj)
 	dbObjVal := reflect.ValueOf(dbObj)
-	mergedObjVal := reflect.ValueOf(&mergedIPv4Neighbor)
+	mergedObjVal := reflect.ValueOf(&mergedDot1dStpPortEntryConfig)
 	idx := 0
 	for i := 0; i < objTyp.NumField(); i++ {
 		if fieldTyp := objTyp.Field(i); fieldTyp.Anonymous {
@@ -224,15 +229,15 @@ func (obj IPv4Neighbor) MergeDbAndConfigObj(dbObj ConfigObj, attrSet []bool) (Co
 		idx++
 
 	}
-	return mergedIPv4Neighbor, nil
+	return mergedDot1dStpPortEntryConfig, nil
 }
 
-func (obj IPv4Neighbor) UpdateObjectInDb(dbObj ConfigObj, attrSet []bool, dbHdl *sql.DB) error {
+func (obj Dot1dStpPortEntryConfig) UpdateObjectInDb(dbObj ConfigObj, attrSet []bool, dbHdl *sql.DB) error {
 	var fieldSqlStr string
-	dbIPv4Neighbor := dbObj.(IPv4Neighbor)
-	objKey, err := dbIPv4Neighbor.GetKey()
-	objSqlKey, err := dbIPv4Neighbor.GetSqlKeyStr(objKey)
-	dbCmd := "update " + "IPv4Neighbor" + " set"
+	dbDot1dStpPortEntryConfig := dbObj.(Dot1dStpPortEntryConfig)
+	objKey, err := dbDot1dStpPortEntryConfig.GetKey()
+	objSqlKey, err := dbDot1dStpPortEntryConfig.GetSqlKeyStr(objKey)
+	dbCmd := "update " + "Dot1dStpPortEntryConfig" + " set"
 	objTyp := reflect.TypeOf(obj)
 	objVal := reflect.ValueOf(obj)
 	idx := 0
