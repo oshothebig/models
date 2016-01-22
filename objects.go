@@ -170,7 +170,9 @@ type VlanConfig struct {
 
 type VlanState struct {
 	BaseObj
+	VlanId    int32
 	IfIndex   int32
+	VlanName  string
 	OperState string
 }
 

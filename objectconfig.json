@@ -54,7 +54,7 @@
 		"Owner": "ribd",
 		"Listeners": []
 	},
- 	"PolicyDefinitionStatement": {
+ 	"PolicyDefinitionStmt": {
 		"access": "rw",
 		"Owner": "ribd",
 		"Listeners": []
