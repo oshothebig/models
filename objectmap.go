@@ -15,7 +15,7 @@ var ConfigObjectMap = map[string]ConfigObj{
 	"BGPNeighborConfig":                  &BGPNeighborConfig{}, // created before auto YANG
 	"BGPNeighborState":                   &BGPNeighborState{},  // created before auto YANG
 	"PolicyDefinitionSetsPrefixSet":      &PolicyDefinitionSetsPrefixSet{},
-	"PolicyDefinitionStatement":          &PolicyDefinitionStatement{},
+	"PolicyDefinitionStmt":               &PolicyDefinitionStmt{},
 	"PolicyDefinition":                   &PolicyDefinition{},
 	"AggregationLacpConfig":              &AggregationLacpConfig{},
 	"EthernetConfig":                     &EthernetConfig{},
