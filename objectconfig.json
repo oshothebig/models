@@ -34,22 +34,37 @@
 		"Owner": "ribd",
 		"Listeners": []
 	},
- 	"PolicyDefinitionStatementMatchPrefixSet": {
+ 	"PolicyDefinitionStmtMatchPrefixSetCondition": {
 		"access": "rw",
 		"Owner": "ribd",
 		"Listeners": []
 	},
- 	"PolicyDefinitionStatementMatchNeighborSet": {
+ 	"PolicyDefinitionStmtMatchNeighborSetCondition": {
 		"access": "rw",
 		"Owner": "ribd",
 		"Listeners": []
 	},
- 	"PolicyDefinitionStatementMatchTagSet": {
+ 	"PolicyDefinitionStmtMatchTagSetCondition": {
 		"access": "rw",
 		"Owner": "ribd",
 		"Listeners": []
 	},
- 	"PolicyDefinitionStatementIgpActions": {
+ 	"PolicyDefinitionStmtMatchProtocolCondition": {
+		"access": "rw",
+		"Owner": "ribd",
+		"Listeners": []
+	},
+ 	"PolicyDefinitionStmtIgpActions": {
+		"access": "rw",
+		"Owner": "ribd",
+		"Listeners": []
+	},
+ 	"PolicyDefinitionStmtRouteDispositionAction": {
+		"access": "rw",
+		"Owner": "ribd",
+		"Listeners": []
+	},
+ 	"PolicyDefinitionStmtRedistributionAction": {
 		"access": "rw",
 		"Owner": "ribd",
 		"Listeners": []
