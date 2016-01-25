@@ -114,6 +114,9 @@ type BGPNeighborConfig struct {
 	RouteReflectorClient    bool
 	MultiHopEnable          bool
 	MultiHopTTL             uint8
+	ConnectRetryTime        uint32
+	HoldTime                uint32
+	KeepaliveTime           uint32
 }
 
 func (obj BGPNeighborConfig) UnmarshalObject(body []byte) (ConfigObj, error) {
@@ -142,6 +145,9 @@ type BGPNeighborState struct {
 	RouteReflectorClient    bool
 	MultiHopEnable          bool
 	MultiHopTTL             uint8
+	ConnectRetryTime        uint32
+	HoldTime                uint32
+	KeepaliveTime           uint32
 }
 
 func (obj BGPNeighborState) UnmarshalObject(body []byte) (ConfigObj, error) {
@@ -164,7 +170,9 @@ type VlanConfig struct {
 
 type VlanState struct {
 	BaseObj
+	VlanId    int32
 	IfIndex   int32
+	VlanName  string
 	OperState string
 }
 
