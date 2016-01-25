@@ -1,28 +1,26 @@
 package models
 
-import (
-	"encoding/json"
-	"fmt"
-)
+import ()
 
 /*
- * Global DataStructure for BFD
+ * Global Config for BFD
  */
-type DhcpRelayGlobalConfig struct {
+type BfdGlobalConfig struct {
 	BaseObj
 	Bfd    string `SNAPROUTE: "KEY"`
 	Enable bool
 }
 
-func (obj BfdGlobalConfig) UnmarshalObject(body []byte) (ConfigObj, error) {
-	var gConf BfdGlobalConfig
-	var err error
-	if len(body) > 0 {
-		if err = json.Unmarshal(body, &gConf); err != nil {
-			fmt.Println("### Trouble in unmarshalling BfdGlobalConfig from Json", body)
-		}
-	}
-	return gConf, err
+/*
+ * Global State
+ */
+type BfdGlobalState struct {
+	BaseObj
+	Enable               bool
+	NumTotalSessions     uint32
+	NumUpSessions        uint32
+	NumDownSessions      uint32
+	NumAdminDownSessions uint32
 }
 
 /*
@@ -30,21 +28,42 @@ func (obj BfdGlobalConfig) UnmarshalObject(body []byte) (ConfigObj, error) {
  */
 type BfdIntfConfig struct {
 	BaseObj
-	Interface     int32 `SNAPROUTE: "KEY"`
-	Mode          string
-	TxMinInterval uint32
-	RxMinInterval uint32
-	Multiplier    uint32
-	EchoFunction  bool
+	Interface                 int32 `SNAPROUTE: "KEY"`
+	LocalMultiplier           uint32
+	DesiredMinTxInterval      uint32
+	RequiredMinRxInterval     uint32
+	RequiredMinEchoRxInterval uint32
+	DemandEnabled             bool
+	AuthenticationEnabled     bool
+	Type                      uint32
+	AuthKeyId                 uint32
+	SequenceNumber            uint32
+	AuthData                  string
 }
 
-func (obj bfdIntfConfig) UnmarshalObject(body []byte) (ConfigObj, error) {
-	var gConf BfdIntfConfig
-	var err error
-	if len(body) > 0 {
-		if err = json.Unmarshal(body, &gConf); err != nil {
-			fmt.Println("### Trouble in unmarshalling BfdIntfConfig from Json", body)
-		}
-	}
-	return gConf, err
+/*
+ * BFD Session state
+ */
+type BfdSessionState struct {
+	BaseObj
+	SessionId             int32
+	LocalIpAddr           string
+	RemoteIpAddr          string
+	InterfaceId           int32
+	ReqisteredProtocols   string
+	SessionState          int
+	RemoteSessionState    int
+	LocalDicriminator     uint32
+	RemoteDiscriminator   uint32
+	LocalDiagType         int
+	DesiredMinTxInterval  int
+	RequiredMinRxInterval int
+	RemoteMinRxInterval   int
+	DetectionMultiplier   uint32
+	DemandMode            bool
+	RemoteDemandMode      bool
+	AuthSeqKnown          bool
+	AuthType              uint32
+	ReceivedAuthSeq       uint32
+	SentAuthSeq           uint32
 }
