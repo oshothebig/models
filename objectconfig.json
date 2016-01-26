@@ -278,5 +278,25 @@
 		"access": "w",
 		"Owner": "dhcprelayd",
 		"Listeners" : []
-        }	
+        },
+	"BfdGlobalConfig" : {
+		"access": "w",
+		"Owner": "bfdd",
+		"Listeners" : []
+	},
+	"BfdIntfConfig" : {
+		"access": "w",
+		"Owner": "bfdd",
+		"Listeners" : []
+	},
+	"BfdGlobalState" : {
+		"access": "r",
+		"Owner": "bfdd",
+		"Listeners" : []
+	},
+	"BfdSessionState" : {
+		"access": "r",
+		"Owner": "bfdd",
+		"Listeners" : []
+	}
 }

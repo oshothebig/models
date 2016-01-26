@@ -62,4 +62,8 @@ var ConfigObjectMap = map[string]ConfigObj{
 	"Dot1dStpPortEntryState":             &Dot1dStpPortEntryState{},
 	"DhcpRelayIntfConfig":                &DhcpRelayIntfConfig{},
 	"DhcpRelayGlobalConfig":              &DhcpRelayGlobalConfig{},
+	"BfdGlobalConfig":                    &BfdGlobalConfig{},
+	"BfdIntfConfig":                      &BfdIntfConfig{},
+	"BfdGlobalState":                     &BfdGlobalState{},
+	"BfdSessionState":                    &BfdSessionState{},
 }
