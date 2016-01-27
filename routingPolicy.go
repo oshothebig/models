@@ -55,7 +55,7 @@ type PolicyDefinitionStmtMatchPrefixSetCondition struct {
 	YANG Description: Match a referenced prefix-set according to the logic
 defined in the match-set-options leaf 
     */
-	Name string
+	Name string  `SNAPROUTE: "KEY"`
 	//yang_name: prefix-set class: leaf
 	PrefixSet string
 	//yang_name: match-set-options class: leaf
@@ -107,7 +107,7 @@ type PolicyDefinitionStmtMatchNeighborSetCondition struct {
 defined in the match-set-options-leaf 
     */
 
-	Name string
+	Name string   `SNAPROUTE: "KEY"`
 	//yang_name: neighbor-set class: leaf
 	NeighborSet string
 	//yang_name: match-set-options class: leaf
@@ -160,7 +160,7 @@ in the match-options-set leaf
     */
 
 	//yang_name: tag-set class: leaf
-	Name string
+	Name string   `SNAPROUTE: "KEY"`
 	TagSet string
 	//yang_name: match-set-options class: leaf
 	MatchSetOptions int32
@@ -179,7 +179,7 @@ func (obj PolicyDefinitionStmtMatchTagSetCondition) UnmarshalObject(body []byte)
 
 type PolicyDefinitionStmtMatchProtocolCondition struct {
 	BaseObj
-	Name string
+	Name string  `SNAPROUTE: "KEY"`
 	InstallProtocolEq string		//ribdCommonDefs.PtypesInstallProtocolTypePtypes
 }
 
@@ -208,7 +208,7 @@ apply to multiple IGPs
     */
 
 	//yang_name: set-tag class: leaf
-	Name string
+	Name string  `SNAPROUTE: "KEY"`
 	SetTag []uint32
 }
 
@@ -225,7 +225,7 @@ func (obj PolicyDefinitionStmtIgpActions) UnmarshalObject(body []byte) (ConfigOb
 
 type PolicyDefinitionStmtRouteDispositionAction struct {
 	BaseObj
-	Name string
+	Name string  `SNAPROUTE: "KEY"`
 	RouteDisposition string    //Accept or Reject
 }
 
@@ -242,7 +242,7 @@ func (obj PolicyDefinitionStmtRouteDispositionAction) UnmarshalObject(body []byt
 
 type PolicyDefinitionStmtRedistributionAction struct {
 	BaseObj
-	Name string
+	Name string  `SNAPROUTE: "KEY"`
 	RedistributeTargetProtocol string 
 }
 
@@ -272,7 +272,7 @@ evaluation at the top of this module.
     */
      BaseObj
 	//yang_name: name class: leaf
-	Name string  `SNAPROUTE: KEY`
+	Name string  `SNAPROUTE: "KEY"`
 //	AdminState string
 //	MatchConditions string
 	Conditions []string
@@ -307,7 +307,7 @@ evaluation at the top of this module.
     */
      BaseObj
 	//yang_name: name class: leaf
-	Name string  `SNAPROUTE: KEY`
+	Name string  `SNAPROUTE: "KEY"`
 //	AdminState string
 //	OperState  string
 //	MatchConditions string
@@ -343,7 +343,7 @@ evaluation at the top of this module.
     */
      BaseObj
 	//yang_name: name class: leaf
-	Name string  `SNAPROUTE: KEY`
+	Name string  `SNAPROUTE: "KEY"`
 	ConditionInfo string
 	PolicyList    []string
 }
@@ -374,7 +374,7 @@ evaluation at the top of this module.
     */
      BaseObj
 	//yang_name: name class: leaf
-	Name string  `SNAPROUTE: KEY`
+	Name string  `SNAPROUTE: "KEY"`
 	ActionInfo string
 	PolicyList    []string
 }
