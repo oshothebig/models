@@ -521,6 +521,8 @@ type OspfIfEntryState struct {
 	IfState                    int32
 	IfDesignatedRouter         string
 	IfBackupDesignatedRouter   string
+	IfDesignatedRouterIp       string
+	IfBackupDesignatedRouterIp string
 	IfEvents                   uint32
 	IfLsaCount                 uint32
 	IfLsaCksumSum              uint32
@@ -790,32 +792,18 @@ type OspfGlobalConfig struct {
 	BaseObj
 	RouterIdKey              string `SNAPROUTE: "KEY"`
 	AdminStat                int32
-	VersionNumber            int32
-	AreaBdrRtrStatus         bool
 	ASBdrRtrStatus           bool
-	ExternLsaCount           uint32
-	ExternLsaCksumSum        int32
 	TOSSupport               bool
-	OriginateNewLsas         uint32
-	RxNewLsas                uint32
 	ExtLsdbLimit             int32
 	MulticastExtensions      int32
 	ExitOverflowInterval     int32
 	DemandExtensions         bool
 	RFC1583Compatibility     bool
-	OpaqueLsaSupport         bool
 	ReferenceBandwidth       uint32
 	RestartSupport           int32
 	RestartInterval          int32
 	RestartStrictLsaChecking bool
-	RestartStatus            int32
-	RestartAge               uint32
-	RestartExitReason        int32
-	AsLsaCount               uint32
-	AsLsaCksumSum            uint32
-	StubRouterSupport        bool
 	StubRouterAdvertisement  int32
-	DiscontinuityTime        uint32
 }
 
 func (obj OspfGlobalConfig) UnmarshalObject(body []byte) (ConfigObj, error) {
@@ -823,7 +811,37 @@ func (obj OspfGlobalConfig) UnmarshalObject(body []byte) (ConfigObj, error) {
 	var err error
 	if len(body) > 0 {
 		if err = json.Unmarshal(body, &gConf); err != nil {
-			fmt.Println("### Trouble in unmarshalling OspfGeneralGroup from Json", body)
+			fmt.Println("### Trouble in unmarshalling OspfGlobalConfig from Json", body)
+		}
+	}
+	return gConf, err
+}
+
+type OspfGlobalState struct {
+	BaseObj
+	RouterIdKey       string `SNAPROUTE: "KEY"`
+	VersionNumber     int32
+	AreaBdrRtrStatus  bool
+	ExternLsaCount    uint32
+	ExternLsaCksumSum int32
+	OriginateNewLsas  uint32
+	RxNewLsas         uint32
+	OpaqueLsaSupport  bool
+	RestartStatus     int32
+	RestartAge        uint32
+	RestartExitReason int32
+	AsLsaCount        uint32
+	AsLsaCksumSum     uint32
+	StubRouterSupport bool
+	DiscontinuityTime uint32
+}
+
+func (obj OspfGlobalState) UnmarshalObject(body []byte) (ConfigObj, error) {
+	var gConf OspfGlobalState
+	var err error
+	if len(body) > 0 {
+		if err = json.Unmarshal(body, &gConf); err != nil {
+			fmt.Println("### Trouble in unmarshalling OspfGlobalState from Json", body)
 		}
 	}
 	return gConf, err
