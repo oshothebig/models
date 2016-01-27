@@ -35,42 +35,57 @@
 		"Listeners": []
 	},
  	"PolicyDefinitionStmtMatchPrefixSetCondition": {
-		"access": "rw",
+		"access": "w",
 		"Owner": "ribd",
 		"Listeners": []
 	},
  	"PolicyDefinitionStmtMatchNeighborSetCondition": {
-		"access": "rw",
+		"access": "w",
 		"Owner": "ribd",
 		"Listeners": []
 	},
  	"PolicyDefinitionStmtMatchTagSetCondition": {
-		"access": "rw",
+		"access": "w",
 		"Owner": "ribd",
 		"Listeners": []
 	},
  	"PolicyDefinitionStmtMatchProtocolCondition": {
-		"access": "rw",
+		"access": "w",
 		"Owner": "ribd",
 		"Listeners": []
 	},
  	"PolicyDefinitionStmtIgpActions": {
-		"access": "rw",
+		"access": "w",
 		"Owner": "ribd",
 		"Listeners": []
 	},
  	"PolicyDefinitionStmtRouteDispositionAction": {
-		"access": "rw",
+		"access": "w",
 		"Owner": "ribd",
 		"Listeners": []
 	},
  	"PolicyDefinitionStmtRedistributionAction": {
-		"access": "rw",
+		"access": "w",
 		"Owner": "ribd",
 		"Listeners": []
 	},
- 	"PolicyDefinitionStmt": {
-		"access": "rw",
+ 	"PolicyDefinitionStmtConfig": {
+		"access": "w",
+		"Owner": "ribd",
+		"Listeners": []
+	},
+ 	"PolicyDefinitionStmtState": {
+		"access": "r",
+		"Owner": "ribd",
+		"Listeners": []
+	},
+ 	"PolicyDefinitionConditionState": {
+		"access": "r",
+		"Owner": "ribd",
+		"Listeners": []
+	},
+ 	"PolicyDefinitionActionState": {
+		"access": "r",
 		"Owner": "ribd",
 		"Listeners": []
 	},
