@@ -234,6 +234,11 @@
 		"Owner": "ospfd",
 		"Listeners" : []
 	},
+	"OspfGlobalState" : {
+		"access": "r",
+		"Owner": "ospfd",
+		"Listeners" : []
+	},
 	"UserConfig" : {
 		"access": "w",
 		"Owner": "local",
