@@ -8,23 +8,22 @@ import (
 	"utils/dbutils"
 )
 
-func (obj PolicyDefinitionStmt) CreateDBTable(dbHdl *sql.DB) error {
-	dbCmd := "CREATE TABLE IF NOT EXISTS PolicyDefinitionStmt " +
+func (obj BfdGlobalConfig) CreateDBTable(dbHdl *sql.DB) error {
+	dbCmd := "CREATE TABLE IF NOT EXISTS BfdGlobalConfig " +
 		"( " +
-		"Name TEXT, " +
-		"Conditions TEXT, " +
-		"Actions TEXT, " +
-		"PRIMARY KEY(Name) " +
+		"Bfd TEXT, " +
+		"Enable INTEGER, " +
+		"PRIMARY KEY(Bfd) " +
 		")"
 
 	_, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
 
-func (obj PolicyDefinitionStmt) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
+func (obj BfdGlobalConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	var objectId int64
-	dbCmd := fmt.Sprintf("INSERT INTO PolicyDefinitionStmt (Name, Conditions, Actions) VALUES ('%v', '%v', '%v') ;",
-		obj.Name, obj.Conditions, obj.Actions)
+	dbCmd := fmt.Sprintf("INSERT INTO BfdGlobalConfig (Bfd, Enable) VALUES ('%v', '%v') ;",
+		obj.Bfd, dbutils.ConvertBoolToInt(obj.Enable))
 	fmt.Println("**** Create Object called with ", obj)
 
 	result, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
@@ -40,86 +39,66 @@ func (obj PolicyDefinitionStmt) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	return objectId, err
 }
 
-func (obj PolicyDefinitionStmt) DeleteObjectFromDb(objKey string, dbHdl *sql.DB) error {
+func (obj BfdGlobalConfig) DeleteObjectFromDb(objKey string, dbHdl *sql.DB) error {
 	sqlKey, err := obj.GetSqlKeyStr(objKey)
 	if err != nil {
-		fmt.Println("GetSqlKeyStr for PolicyDefinitionStmt with key", objKey, "failed with error", err)
+		fmt.Println("GetSqlKeyStr for BfdGlobalConfig with key", objKey, "failed with error", err)
 		return err
 	}
 
-	dbCmd := "delete from PolicyDefinitionStmt where " + sqlKey
-	fmt.Println("### DB Deleting PolicyDefinitionStmt\n")
+	dbCmd := "delete from BfdGlobalConfig where " + sqlKey
+	fmt.Println("### DB Deleting BfdGlobalConfig\n")
 	_, err = dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
 
-func (obj PolicyDefinitionStmt) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, error) {
-	var object PolicyDefinitionStmt
+func (obj BfdGlobalConfig) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, error) {
+	var object BfdGlobalConfig
 	sqlKey, err := obj.GetSqlKeyStr(objKey)
-	dbCmd := "select * from PolicyDefinitionStmt where " + sqlKey
+	dbCmd := "select * from BfdGlobalConfig where " + sqlKey
 	var tmp1 string
-	var tmp2 string
-	err = dbHdl.QueryRow(dbCmd).Scan(&object.Name, &tmp1, &tmp2)
-	fmt.Println("### DB Get PolicyDefinitionStmt\n", err)
-	convtmpConditions := strings.Split(tmp1, ",")
-	for _, x := range convtmpConditions {
-		y := strings.Replace(x, " ", "", 1)
-		object.Conditions = append(object.Conditions, string(y))
-	}
-	convtmpActions := strings.Split(tmp2, ",")
-	for _, x := range convtmpActions {
-		y := strings.Replace(x, " ", "", 1)
-		object.Actions = append(object.Actions, string(y))
-	}
+	err = dbHdl.QueryRow(dbCmd).Scan(&object.Bfd, &tmp1)
+	fmt.Println("### DB Get BfdGlobalConfig\n", err)
+	object.Enable = dbutils.ConvertStrBoolIntToBool(tmp1)
 	return object, err
 }
 
-func (obj PolicyDefinitionStmt) GetKey() (string, error) {
-	key := string(obj.Name)
+func (obj BfdGlobalConfig) GetKey() (string, error) {
+	key := string(obj.Bfd)
 	return key, nil
 }
 
-func (obj PolicyDefinitionStmt) GetSqlKeyStr(objKey string) (string, error) {
+func (obj BfdGlobalConfig) GetSqlKeyStr(objKey string) (string, error) {
 	keys := strings.Split(objKey, "#")
-	sqlKey := "Name = " + "\"" + keys[0] + "\""
+	sqlKey := "Bfd = " + "\"" + keys[0] + "\""
 	return sqlKey, nil
 }
 
-func (obj *PolicyDefinitionStmt) GetAllObjFromDb(dbHdl *sql.DB) (objList []*PolicyDefinitionStmt, e error) {
-	dbCmd := "select * from PolicyDefinitionStmt"
+func (obj *BfdGlobalConfig) GetAllObjFromDb(dbHdl *sql.DB) (objList []*BfdGlobalConfig, e error) {
+	dbCmd := "select * from BfdGlobalConfig"
 	rows, err := dbHdl.Query(dbCmd)
 	if err != nil {
-		fmt.Println(fmt.Sprintf("DB method Query failed for 'PolicyDefinitionStmt' with error PolicyDefinitionStmt", dbCmd, err))
+		fmt.Println(fmt.Sprintf("DB method Query failed for 'BfdGlobalConfig' with error BfdGlobalConfig", dbCmd, err))
 		return objList, err
 	}
 
 	defer rows.Close()
 
 	var tmp1 string
-	var tmp2 string
 	for rows.Next() {
 
-		object := new(PolicyDefinitionStmt)
-		if err = rows.Scan(&object.Name, &object.Conditions, &object.Actions); err != nil {
+		object := new(BfdGlobalConfig)
+		if err = rows.Scan(&object.Bfd, &tmp1); err != nil {
 
-			fmt.Println("Db method Scan failed when interating over PolicyDefinitionStmt")
+			fmt.Println("Db method Scan failed when interating over BfdGlobalConfig")
 		}
-		convtmpConditions := strings.Split(tmp1, ",")
-		for _, x := range convtmpConditions {
-			y := strings.Replace(x, " ", "", 1)
-			object.Conditions = append(object.Conditions, string(y))
-		}
-		convtmpActions := strings.Split(tmp2, ",")
-		for _, x := range convtmpActions {
-			y := strings.Replace(x, " ", "", 1)
-			object.Actions = append(object.Actions, string(y))
-		}
+		object.Enable = dbutils.ConvertStrBoolIntToBool(tmp1)
 		objList = append(objList, object)
 	}
 	return objList, nil
 }
-func (obj PolicyDefinitionStmt) CompareObjectsAndDiff(updateKeys map[string]bool, dbObj ConfigObj) ([]bool, error) {
-	dbV4Route := dbObj.(PolicyDefinitionStmt)
+func (obj BfdGlobalConfig) CompareObjectsAndDiff(updateKeys map[string]bool, dbObj ConfigObj) ([]bool, error) {
+	dbV4Route := dbObj.(BfdGlobalConfig)
 	objTyp := reflect.TypeOf(obj)
 	objVal := reflect.ValueOf(obj)
 	dbObjVal := reflect.ValueOf(dbV4Route)
@@ -193,12 +172,12 @@ func (obj PolicyDefinitionStmt) CompareObjectsAndDiff(updateKeys map[string]bool
 	return attrIds[:idx], nil
 }
 
-func (obj PolicyDefinitionStmt) MergeDbAndConfigObj(dbObj ConfigObj, attrSet []bool) (ConfigObj, error) {
-	var mergedPolicyDefinitionStmt PolicyDefinitionStmt
+func (obj BfdGlobalConfig) MergeDbAndConfigObj(dbObj ConfigObj, attrSet []bool) (ConfigObj, error) {
+	var mergedBfdGlobalConfig BfdGlobalConfig
 	objTyp := reflect.TypeOf(obj)
 	objVal := reflect.ValueOf(obj)
 	dbObjVal := reflect.ValueOf(dbObj)
-	mergedObjVal := reflect.ValueOf(&mergedPolicyDefinitionStmt)
+	mergedObjVal := reflect.ValueOf(&mergedBfdGlobalConfig)
 	idx := 0
 	for i := 0; i < objTyp.NumField(); i++ {
 		if fieldTyp := objTyp.Field(i); fieldTyp.Anonymous {
@@ -247,15 +226,15 @@ func (obj PolicyDefinitionStmt) MergeDbAndConfigObj(dbObj ConfigObj, attrSet []b
 		idx++
 
 	}
-	return mergedPolicyDefinitionStmt, nil
+	return mergedBfdGlobalConfig, nil
 }
 
-func (obj PolicyDefinitionStmt) UpdateObjectInDb(dbObj ConfigObj, attrSet []bool, dbHdl *sql.DB) error {
+func (obj BfdGlobalConfig) UpdateObjectInDb(dbObj ConfigObj, attrSet []bool, dbHdl *sql.DB) error {
 	var fieldSqlStr string
-	dbPolicyDefinitionStmt := dbObj.(PolicyDefinitionStmt)
-	objKey, err := dbPolicyDefinitionStmt.GetKey()
-	objSqlKey, err := dbPolicyDefinitionStmt.GetSqlKeyStr(objKey)
-	dbCmd := "update " + "PolicyDefinitionStmt" + " set"
+	dbBfdGlobalConfig := dbObj.(BfdGlobalConfig)
+	objKey, err := dbBfdGlobalConfig.GetKey()
+	objSqlKey, err := dbBfdGlobalConfig.GetSqlKeyStr(objKey)
+	dbCmd := "update " + "BfdGlobalConfig" + " set"
 	objTyp := reflect.TypeOf(obj)
 	objVal := reflect.ValueOf(obj)
 	idx := 0
