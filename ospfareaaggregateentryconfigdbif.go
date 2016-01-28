@@ -8,23 +8,26 @@ import (
 	"utils/dbutils"
 )
 
-func (obj PolicyDefinitionStmt) CreateDBTable(dbHdl *sql.DB) error {
-	dbCmd := "CREATE TABLE IF NOT EXISTS PolicyDefinitionStmt " +
+func (obj OspfAreaAggregateEntryConfig) CreateDBTable(dbHdl *sql.DB) error {
+	dbCmd := "CREATE TABLE IF NOT EXISTS OspfAreaAggregateEntryConfig " +
 		"( " +
-		"Name TEXT, " +
-		"Conditions TEXT, " +
-		"Actions TEXT, " +
-		"PRIMARY KEY(Name) " +
+		"AreaAggregateMaskKey TEXT, " +
+		"AreaAggregateLsdbTypeKey INTEGER, " +
+		"AreaAggregateNetKey TEXT, " +
+		"AreaAggregateAreaIDKey TEXT, " +
+		"AreaAggregateEffect INTEGER, " +
+		"AreaAggregateExtRouteTag INTEGER, " +
+		"PRIMARY KEY(AreaAggregateMaskKey, AreaAggregateLsdbTypeKey, AreaAggregateNetKey, AreaAggregateAreaIDKey) " +
 		")"
 
 	_, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
 
-func (obj PolicyDefinitionStmt) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
+func (obj OspfAreaAggregateEntryConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	var objectId int64
-	dbCmd := fmt.Sprintf("INSERT INTO PolicyDefinitionStmt (Name, Conditions, Actions) VALUES ('%v', '%v', '%v') ;",
-		obj.Name, obj.Conditions, obj.Actions)
+	dbCmd := fmt.Sprintf("INSERT INTO OspfAreaAggregateEntryConfig (AreaAggregateMaskKey, AreaAggregateLsdbTypeKey, AreaAggregateNetKey, AreaAggregateAreaIDKey, AreaAggregateEffect, AreaAggregateExtRouteTag) VALUES ('%v', '%v', '%v', '%v', '%v', '%v') ;",
+		obj.AreaAggregateMaskKey, obj.AreaAggregateLsdbTypeKey, obj.AreaAggregateNetKey, obj.AreaAggregateAreaIDKey, obj.AreaAggregateEffect, obj.AreaAggregateExtRouteTag)
 	fmt.Println("**** Create Object called with ", obj)
 
 	result, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
@@ -40,86 +43,62 @@ func (obj PolicyDefinitionStmt) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	return objectId, err
 }
 
-func (obj PolicyDefinitionStmt) DeleteObjectFromDb(objKey string, dbHdl *sql.DB) error {
+func (obj OspfAreaAggregateEntryConfig) DeleteObjectFromDb(objKey string, dbHdl *sql.DB) error {
 	sqlKey, err := obj.GetSqlKeyStr(objKey)
 	if err != nil {
-		fmt.Println("GetSqlKeyStr for PolicyDefinitionStmt with key", objKey, "failed with error", err)
+		fmt.Println("GetSqlKeyStr for OspfAreaAggregateEntryConfig with key", objKey, "failed with error", err)
 		return err
 	}
 
-	dbCmd := "delete from PolicyDefinitionStmt where " + sqlKey
-	fmt.Println("### DB Deleting PolicyDefinitionStmt\n")
+	dbCmd := "delete from OspfAreaAggregateEntryConfig where " + sqlKey
+	fmt.Println("### DB Deleting OspfAreaAggregateEntryConfig\n")
 	_, err = dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
 
-func (obj PolicyDefinitionStmt) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, error) {
-	var object PolicyDefinitionStmt
+func (obj OspfAreaAggregateEntryConfig) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, error) {
+	var object OspfAreaAggregateEntryConfig
 	sqlKey, err := obj.GetSqlKeyStr(objKey)
-	dbCmd := "select * from PolicyDefinitionStmt where " + sqlKey
-	var tmp1 string
-	var tmp2 string
-	err = dbHdl.QueryRow(dbCmd).Scan(&object.Name, &tmp1, &tmp2)
-	fmt.Println("### DB Get PolicyDefinitionStmt\n", err)
-	convtmpConditions := strings.Split(tmp1, ",")
-	for _, x := range convtmpConditions {
-		y := strings.Replace(x, " ", "", 1)
-		object.Conditions = append(object.Conditions, string(y))
-	}
-	convtmpActions := strings.Split(tmp2, ",")
-	for _, x := range convtmpActions {
-		y := strings.Replace(x, " ", "", 1)
-		object.Actions = append(object.Actions, string(y))
-	}
+	dbCmd := "select * from OspfAreaAggregateEntryConfig where " + sqlKey
+	err = dbHdl.QueryRow(dbCmd).Scan(&object.AreaAggregateMaskKey, &object.AreaAggregateLsdbTypeKey, &object.AreaAggregateNetKey, &object.AreaAggregateAreaIDKey, &object.AreaAggregateEffect, &object.AreaAggregateExtRouteTag)
+	fmt.Println("### DB Get OspfAreaAggregateEntryConfig\n", err)
 	return object, err
 }
 
-func (obj PolicyDefinitionStmt) GetKey() (string, error) {
-	key := string(obj.Name)
+func (obj OspfAreaAggregateEntryConfig) GetKey() (string, error) {
+	key := string(obj.AreaAggregateMaskKey) + "#" + string(obj.AreaAggregateLsdbTypeKey) + "#" + string(obj.AreaAggregateNetKey) + "#" + string(obj.AreaAggregateAreaIDKey)
 	return key, nil
 }
 
-func (obj PolicyDefinitionStmt) GetSqlKeyStr(objKey string) (string, error) {
+func (obj OspfAreaAggregateEntryConfig) GetSqlKeyStr(objKey string) (string, error) {
 	keys := strings.Split(objKey, "#")
-	sqlKey := "Name = " + "\"" + keys[0] + "\""
+	sqlKey := "AreaAggregateMaskKey = " + "\"" + keys[0] + "\"" + " and " + "AreaAggregateLsdbTypeKey = " + "\"" + keys[1] + "\"" + " and " + "AreaAggregateNetKey = " + "\"" + keys[2] + "\"" + " and " + "AreaAggregateAreaIDKey = " + "\"" + keys[3] + "\""
 	return sqlKey, nil
 }
 
-func (obj *PolicyDefinitionStmt) GetAllObjFromDb(dbHdl *sql.DB) (objList []*PolicyDefinitionStmt, e error) {
-	dbCmd := "select * from PolicyDefinitionStmt"
+func (obj *OspfAreaAggregateEntryConfig) GetAllObjFromDb(dbHdl *sql.DB) (objList []*OspfAreaAggregateEntryConfig, e error) {
+	dbCmd := "select * from OspfAreaAggregateEntryConfig"
 	rows, err := dbHdl.Query(dbCmd)
 	if err != nil {
-		fmt.Println(fmt.Sprintf("DB method Query failed for 'PolicyDefinitionStmt' with error PolicyDefinitionStmt", dbCmd, err))
+		fmt.Println(fmt.Sprintf("DB method Query failed for 'OspfAreaAggregateEntryConfig' with error OspfAreaAggregateEntryConfig", dbCmd, err))
 		return objList, err
 	}
 
 	defer rows.Close()
 
-	var tmp1 string
-	var tmp2 string
 	for rows.Next() {
 
-		object := new(PolicyDefinitionStmt)
-		if err = rows.Scan(&object.Name, &object.Conditions, &object.Actions); err != nil {
+		object := new(OspfAreaAggregateEntryConfig)
+		if err = rows.Scan(&object.AreaAggregateMaskKey, &object.AreaAggregateLsdbTypeKey, &object.AreaAggregateNetKey, &object.AreaAggregateAreaIDKey, &object.AreaAggregateEffect, &object.AreaAggregateExtRouteTag); err != nil {
 
-			fmt.Println("Db method Scan failed when interating over PolicyDefinitionStmt")
-		}
-		convtmpConditions := strings.Split(tmp1, ",")
-		for _, x := range convtmpConditions {
-			y := strings.Replace(x, " ", "", 1)
-			object.Conditions = append(object.Conditions, string(y))
-		}
-		convtmpActions := strings.Split(tmp2, ",")
-		for _, x := range convtmpActions {
-			y := strings.Replace(x, " ", "", 1)
-			object.Actions = append(object.Actions, string(y))
+			fmt.Println("Db method Scan failed when interating over OspfAreaAggregateEntryConfig")
 		}
 		objList = append(objList, object)
 	}
 	return objList, nil
 }
-func (obj PolicyDefinitionStmt) CompareObjectsAndDiff(updateKeys map[string]bool, dbObj ConfigObj) ([]bool, error) {
-	dbV4Route := dbObj.(PolicyDefinitionStmt)
+func (obj OspfAreaAggregateEntryConfig) CompareObjectsAndDiff(updateKeys map[string]bool, dbObj ConfigObj) ([]bool, error) {
+	dbV4Route := dbObj.(OspfAreaAggregateEntryConfig)
 	objTyp := reflect.TypeOf(obj)
 	objVal := reflect.ValueOf(obj)
 	dbObjVal := reflect.ValueOf(dbV4Route)
@@ -193,12 +172,12 @@ func (obj PolicyDefinitionStmt) CompareObjectsAndDiff(updateKeys map[string]bool
 	return attrIds[:idx], nil
 }
 
-func (obj PolicyDefinitionStmt) MergeDbAndConfigObj(dbObj ConfigObj, attrSet []bool) (ConfigObj, error) {
-	var mergedPolicyDefinitionStmt PolicyDefinitionStmt
+func (obj OspfAreaAggregateEntryConfig) MergeDbAndConfigObj(dbObj ConfigObj, attrSet []bool) (ConfigObj, error) {
+	var mergedOspfAreaAggregateEntryConfig OspfAreaAggregateEntryConfig
 	objTyp := reflect.TypeOf(obj)
 	objVal := reflect.ValueOf(obj)
 	dbObjVal := reflect.ValueOf(dbObj)
-	mergedObjVal := reflect.ValueOf(&mergedPolicyDefinitionStmt)
+	mergedObjVal := reflect.ValueOf(&mergedOspfAreaAggregateEntryConfig)
 	idx := 0
 	for i := 0; i < objTyp.NumField(); i++ {
 		if fieldTyp := objTyp.Field(i); fieldTyp.Anonymous {
@@ -247,15 +226,15 @@ func (obj PolicyDefinitionStmt) MergeDbAndConfigObj(dbObj ConfigObj, attrSet []b
 		idx++
 
 	}
-	return mergedPolicyDefinitionStmt, nil
+	return mergedOspfAreaAggregateEntryConfig, nil
 }
 
-func (obj PolicyDefinitionStmt) UpdateObjectInDb(dbObj ConfigObj, attrSet []bool, dbHdl *sql.DB) error {
+func (obj OspfAreaAggregateEntryConfig) UpdateObjectInDb(dbObj ConfigObj, attrSet []bool, dbHdl *sql.DB) error {
 	var fieldSqlStr string
-	dbPolicyDefinitionStmt := dbObj.(PolicyDefinitionStmt)
-	objKey, err := dbPolicyDefinitionStmt.GetKey()
-	objSqlKey, err := dbPolicyDefinitionStmt.GetSqlKeyStr(objKey)
-	dbCmd := "update " + "PolicyDefinitionStmt" + " set"
+	dbOspfAreaAggregateEntryConfig := dbObj.(OspfAreaAggregateEntryConfig)
+	objKey, err := dbOspfAreaAggregateEntryConfig.GetKey()
+	objSqlKey, err := dbOspfAreaAggregateEntryConfig.GetSqlKeyStr(objKey)
+	dbCmd := "update " + "OspfAreaAggregateEntryConfig" + " set"
 	objTyp := reflect.TypeOf(obj)
 	objVal := reflect.ValueOf(obj)
 	idx := 0
