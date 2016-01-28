@@ -45,6 +45,24 @@ func (obj IPV4Route) UnmarshalObject(body []byte) (ConfigObj, error) {
 	return v4Route, err
 }
 
+type IPV4RouteState struct {
+	BaseObj
+	DestinationNw     string `SNAPROUTE: "KEY"`
+	NetworkMask       string `SNAPROUTE: "KEY"`
+	PolicyList        []string
+}
+
+func (obj IPV4RouteState) UnmarshalObject(body []byte) (ConfigObj, error) {
+	var v4RouteState IPV4RouteState
+	var err error
+	if len(body) > 0 {
+		if err = json.Unmarshal(body, &v4RouteState); err != nil {
+			fmt.Println("### Trouble in unmarshaling IPV4RouteState from Json", body)
+		}
+	}
+	return v4RouteState, err
+}
+
 type BGPGlobalConfig struct {
 	BaseObj
 	ASNum    uint32

@@ -7,6 +7,7 @@ var ConfigObjectMap = map[string]ConfigObj{
 	"VlanConfig":                                    &VlanConfig{},        // created before auto YANG
 	"VlanState":                                     &VlanState{},         // created before auto YANG
 	"IPV4Route":                                     &IPV4Route{},         // created before auto YANG
+	"IPV4RouteState":                          &IPV4RouteState{},
 	"IPv4Intf":                                      &IPv4Intf{},          // created before auto YANG
 	"ArpConfig":                                     &ArpConfig{},         // created before auto YANG
 	"ArpEntry":                                      &ArpEntry{},          // created before auto YANG
