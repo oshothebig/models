@@ -243,6 +243,7 @@ func (obj PolicyDefinitionStmtRouteDispositionAction) UnmarshalObject(body []byt
 type PolicyDefinitionStmtRedistributionAction struct {
 	BaseObj
 	Name string  `SNAPROUTE: "KEY"`
+	Redistribute bool
 	RedistributeTargetProtocol string 
 }
 
@@ -274,7 +275,7 @@ evaluation at the top of this module.
 	//yang_name: name class: leaf
 	Name string  `SNAPROUTE: "KEY"`
 //	AdminState string
-//	MatchConditions string
+	MatchConditions string
 	Conditions []string
 	Actions []string
 	Export  bool
@@ -310,11 +311,13 @@ evaluation at the top of this module.
 	Name string  `SNAPROUTE: "KEY"`
 //	AdminState string
 //	OperState  string
-//	MatchConditions string
+	MatchConditions string
 	Conditions []string
 	Actions []string
 	Export  bool
 	Import  bool
+	HitCounter int
+	IpPrefixList []string
 }
 
 func (obj PolicyDefinitionStmtState) UnmarshalObject(body []byte) (ConfigObj, error) {
