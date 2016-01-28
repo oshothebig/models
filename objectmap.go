@@ -58,6 +58,7 @@ var ConfigObjectMap = map[string]ConfigObj{
 	"OspfAsLsdbEntryState":               &OspfAsLsdbEntryState{},
 	"OspfAreaLsaCountEntryState":         &OspfAreaLsaCountEntryState{},
 	"OspfGlobalConfig":                   &OspfGlobalConfig{},
+	"OspfGlobalState":                    &OspfGlobalState{},
 	"Login":                              &Login{},
 	"Logout":                             &Logout{},
 	"Dot1dStpPortEntryConfig":            &Dot1dStpPortEntryConfig{},
