@@ -1,6 +1,9 @@
 package models
 
-import ()
+import (
+	"encoding/json"
+	"fmt"
+)
 
 /*
  * Global Config for BFD
@@ -17,10 +20,22 @@ type BfdGlobalConfig struct {
 type BfdGlobalState struct {
 	BaseObj
 	Enable               bool
+	NumInterfaces        uint32
 	NumTotalSessions     uint32
 	NumUpSessions        uint32
 	NumDownSessions      uint32
 	NumAdminDownSessions uint32
+}
+
+func (obj BfdGlobalState) UnmarshalObject(body []byte) (ConfigObj, error) {
+	var gConf BfdGlobalState
+	var err error
+	if len(body) > 0 {
+		if err = json.Unmarshal(body, &gConf); err != nil {
+			fmt.Println("### Trouble in unmarshalling BfdGlobalState from Json", body)
+		}
+	}
+	return gConf, err
 }
 
 /*
@@ -35,7 +50,7 @@ type BfdIntfConfig struct {
 	RequiredMinEchoRxInterval uint32
 	DemandEnabled             bool
 	AuthenticationEnabled     bool
-	Type                      uint32
+	AuthType                  uint32
 	AuthKeyId                 uint32
 	SequenceNumber            uint32
 	AuthData                  string
@@ -66,4 +81,15 @@ type BfdSessionState struct {
 	AuthType              uint32
 	ReceivedAuthSeq       uint32
 	SentAuthSeq           uint32
+}
+
+func (obj BfdSessionState) UnmarshalObject(body []byte) (ConfigObj, error) {
+	var gConf BfdSessionState
+	var err error
+	if len(body) > 0 {
+		if err = json.Unmarshal(body, &gConf); err != nil {
+			fmt.Println("### Trouble in unmarshalling BfdSessionState from Json", body)
+		}
+	}
+	return gConf, err
 }

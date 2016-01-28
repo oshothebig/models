@@ -18,7 +18,7 @@ func (obj BfdIntfConfig) CreateDBTable(dbHdl *sql.DB) error {
 		"RequiredMinEchoRxInterval INTEGER, " +
 		"DemandEnabled INTEGER, " +
 		"AuthenticationEnabled INTEGER, " +
-		"Type INTEGER, " +
+		"AuthType INTEGER, " +
 		"AuthKeyId INTEGER, " +
 		"SequenceNumber INTEGER, " +
 		"AuthData TEXT, " +
@@ -31,8 +31,8 @@ func (obj BfdIntfConfig) CreateDBTable(dbHdl *sql.DB) error {
 
 func (obj BfdIntfConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	var objectId int64
-	dbCmd := fmt.Sprintf("INSERT INTO BfdIntfConfig (Interface, LocalMultiplier, DesiredMinTxInterval, RequiredMinRxInterval, RequiredMinEchoRxInterval, DemandEnabled, AuthenticationEnabled, Type, AuthKeyId, SequenceNumber, AuthData) VALUES ('%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v') ;",
-		obj.Interface, obj.LocalMultiplier, obj.DesiredMinTxInterval, obj.RequiredMinRxInterval, obj.RequiredMinEchoRxInterval, dbutils.ConvertBoolToInt(obj.DemandEnabled), dbutils.ConvertBoolToInt(obj.AuthenticationEnabled), obj.Type, obj.AuthKeyId, obj.SequenceNumber, obj.AuthData)
+	dbCmd := fmt.Sprintf("INSERT INTO BfdIntfConfig (Interface, LocalMultiplier, DesiredMinTxInterval, RequiredMinRxInterval, RequiredMinEchoRxInterval, DemandEnabled, AuthenticationEnabled, AuthType, AuthKeyId, SequenceNumber, AuthData) VALUES ('%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v') ;",
+		obj.Interface, obj.LocalMultiplier, obj.DesiredMinTxInterval, obj.RequiredMinRxInterval, obj.RequiredMinEchoRxInterval, dbutils.ConvertBoolToInt(obj.DemandEnabled), dbutils.ConvertBoolToInt(obj.AuthenticationEnabled), obj.AuthType, obj.AuthKeyId, obj.SequenceNumber, obj.AuthData)
 	fmt.Println("**** Create Object called with ", obj)
 
 	result, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
@@ -67,7 +67,7 @@ func (obj BfdIntfConfig) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigOb
 	dbCmd := "select * from BfdIntfConfig where " + sqlKey
 	var tmp5 string
 	var tmp6 string
-	err = dbHdl.QueryRow(dbCmd).Scan(&object.Interface, &object.LocalMultiplier, &object.DesiredMinTxInterval, &object.RequiredMinRxInterval, &object.RequiredMinEchoRxInterval, &tmp5, &tmp6, &object.Type, &object.AuthKeyId, &object.SequenceNumber, &object.AuthData)
+	err = dbHdl.QueryRow(dbCmd).Scan(&object.Interface, &object.LocalMultiplier, &object.DesiredMinTxInterval, &object.RequiredMinRxInterval, &object.RequiredMinEchoRxInterval, &tmp5, &tmp6, &object.AuthType, &object.AuthKeyId, &object.SequenceNumber, &object.AuthData)
 	fmt.Println("### DB Get BfdIntfConfig\n", err)
 	object.DemandEnabled = dbutils.ConvertStrBoolIntToBool(tmp5)
 	object.AuthenticationEnabled = dbutils.ConvertStrBoolIntToBool(tmp6)
@@ -100,7 +100,7 @@ func (obj *BfdIntfConfig) GetAllObjFromDb(dbHdl *sql.DB) (objList []*BfdIntfConf
 	for rows.Next() {
 
 		object := new(BfdIntfConfig)
-		if err = rows.Scan(&object.Interface, &object.LocalMultiplier, &object.DesiredMinTxInterval, &object.RequiredMinRxInterval, &object.RequiredMinEchoRxInterval, &tmp5, &tmp6, &object.Type, &object.AuthKeyId, &object.SequenceNumber, &object.AuthData); err != nil {
+		if err = rows.Scan(&object.Interface, &object.LocalMultiplier, &object.DesiredMinTxInterval, &object.RequiredMinRxInterval, &object.RequiredMinEchoRxInterval, &tmp5, &tmp6, &object.AuthType, &object.AuthKeyId, &object.SequenceNumber, &object.AuthData); err != nil {
 
 			fmt.Println("Db method Scan failed when interating over BfdIntfConfig")
 		}
