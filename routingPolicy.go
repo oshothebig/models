@@ -59,7 +59,7 @@ defined in the match-set-options leaf
 	//yang_name: prefix-set class: leaf
 	PrefixSet string
 	//yang_name: match-set-options class: leaf
-	MatchSetOptions int32
+    Prefix PolicyDefinitionSetsPrefix 
 }
 
 func (obj PolicyDefinitionStmtMatchPrefixSetCondition) UnmarshalObject(body []byte) (ConfigObj, error) {
@@ -180,7 +180,7 @@ func (obj PolicyDefinitionStmtMatchTagSetCondition) UnmarshalObject(body []byte)
 type PolicyDefinitionStmtMatchProtocolCondition struct {
 	BaseObj
 	Name string  `SNAPROUTE: "KEY"`
-	InstallProtocolEq string		//ribdCommonDefs.PtypesInstallProtocolTypePtypes
+	InstallProtocolEq string		
 }
 
 func (obj PolicyDefinitionStmtMatchProtocolCondition) UnmarshalObject(body []byte) (ConfigObj, error) {
