@@ -94,8 +94,13 @@
 		"Owner": "ribd",
 		"Listeners": []
 	},
- 	"PolicyDefinition": {
-		"access": "rw",
+ 	"PolicyDefinitionConfig": {
+		"access": "w",
+		"Owner": "ribd",
+		"Listeners": []
+	},
+ 	"PolicyDefinitionState": {
+		"access": "r",
 		"Owner": "ribd",
 		"Listeners": []
 	},
