@@ -47,9 +47,9 @@ func (obj IPV4Route) UnmarshalObject(body []byte) (ConfigObj, error) {
 
 type IPV4RouteState struct {
 	BaseObj
-	DestinationNw     string `SNAPROUTE: "KEY"`
-	NetworkMask       string `SNAPROUTE: "KEY"`
-	PolicyList        []string
+	DestinationNw string `SNAPROUTE: "KEY"`
+	NetworkMask   string `SNAPROUTE: "KEY"`
+	PolicyList    []string
 }
 
 func (obj IPV4RouteState) UnmarshalObject(body []byte) (ConfigObj, error) {
@@ -135,6 +135,7 @@ type BGPNeighborConfig struct {
 	ConnectRetryTime        uint32
 	HoldTime                uint32
 	KeepaliveTime           uint32
+	PeerGroup               string
 }
 
 func (obj BGPNeighborConfig) UnmarshalObject(body []byte) (ConfigObj, error) {
@@ -146,6 +147,33 @@ func (obj BGPNeighborConfig) UnmarshalObject(body []byte) (ConfigObj, error) {
 		}
 	}
 	return nConf, err
+}
+
+type BGPPeerGroup struct {
+	BaseObj
+	PeerAS                  uint32
+	LocalAS                 uint32
+	AuthPassword            string
+	Description             string
+	Name                    string `SNAPROUTE: "KEY"`
+	RouteReflectorClusterId uint32
+	RouteReflectorClient    bool
+	MultiHopEnable          bool
+	MultiHopTTL             uint8
+	ConnectRetryTime        uint32
+	HoldTime                uint32
+	KeepaliveTime           uint32
+}
+
+func (obj BGPPeerGroup) UnmarshalObject(body []byte) (ConfigObj, error) {
+	var group BGPPeerGroup
+	var err error
+	if len(body) > 0 {
+		if err = json.Unmarshal(body, &group); err != nil {
+			fmt.Println("### Trouble in unmarshaling BGPPeerGroup from Json", body)
+		}
+	}
+	return group, err
 }
 
 type BGPNeighborState struct {

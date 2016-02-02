@@ -8,14 +8,14 @@ import (
 	"utils/dbutils"
 )
 
-func (obj BGPNeighborConfig) CreateDBTable(dbHdl *sql.DB) error {
-	dbCmd := "CREATE TABLE IF NOT EXISTS BGPNeighborConfig " +
+func (obj BGPPeerGroup) CreateDBTable(dbHdl *sql.DB) error {
+	dbCmd := "CREATE TABLE IF NOT EXISTS BGPPeerGroup " +
 		"( " +
 		"PeerAS INTEGER, " +
 		"LocalAS INTEGER, " +
 		"AuthPassword TEXT, " +
 		"Description TEXT, " +
-		"NeighborAddress TEXT, " +
+		"Name TEXT, " +
 		"RouteReflectorClusterId INTEGER, " +
 		"RouteReflectorClient INTEGER, " +
 		"MultiHopEnable INTEGER, " +
@@ -23,18 +23,17 @@ func (obj BGPNeighborConfig) CreateDBTable(dbHdl *sql.DB) error {
 		"ConnectRetryTime INTEGER, " +
 		"HoldTime INTEGER, " +
 		"KeepaliveTime INTEGER, " +
-		"PeerGroup TEXT, " +
-		"PRIMARY KEY(NeighborAddress) " +
+		"PRIMARY KEY(Name) " +
 		")"
 
 	_, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
 
-func (obj BGPNeighborConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
+func (obj BGPPeerGroup) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	var objectId int64
-	dbCmd := fmt.Sprintf("INSERT INTO BGPNeighborConfig (PeerAS, LocalAS, AuthPassword, Description, NeighborAddress, RouteReflectorClusterId, RouteReflectorClient, MultiHopEnable, MultiHopTTL, ConnectRetryTime, HoldTime, KeepaliveTime, PeerGroup) VALUES ('%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v') ;",
-		obj.PeerAS, obj.LocalAS, obj.AuthPassword, obj.Description, obj.NeighborAddress, obj.RouteReflectorClusterId, dbutils.ConvertBoolToInt(obj.RouteReflectorClient), dbutils.ConvertBoolToInt(obj.MultiHopEnable), obj.MultiHopTTL, obj.ConnectRetryTime, obj.HoldTime, obj.KeepaliveTime, obj.PeerGroup)
+	dbCmd := fmt.Sprintf("INSERT INTO BGPPeerGroup (PeerAS, LocalAS, AuthPassword, Description, Name, RouteReflectorClusterId, RouteReflectorClient, MultiHopEnable, MultiHopTTL, ConnectRetryTime, HoldTime, KeepaliveTime) VALUES ('%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v') ;",
+		obj.PeerAS, obj.LocalAS, obj.AuthPassword, obj.Description, obj.Name, obj.RouteReflectorClusterId, dbutils.ConvertBoolToInt(obj.RouteReflectorClient), dbutils.ConvertBoolToInt(obj.MultiHopEnable), obj.MultiHopTTL, obj.ConnectRetryTime, obj.HoldTime, obj.KeepaliveTime)
 	fmt.Println("**** Create Object called with ", obj)
 
 	result, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
@@ -50,48 +49,48 @@ func (obj BGPNeighborConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	return objectId, err
 }
 
-func (obj BGPNeighborConfig) DeleteObjectFromDb(objKey string, dbHdl *sql.DB) error {
+func (obj BGPPeerGroup) DeleteObjectFromDb(objKey string, dbHdl *sql.DB) error {
 	sqlKey, err := obj.GetSqlKeyStr(objKey)
 	if err != nil {
-		fmt.Println("GetSqlKeyStr for BGPNeighborConfig with key", objKey, "failed with error", err)
+		fmt.Println("GetSqlKeyStr for BGPPeerGroup with key", objKey, "failed with error", err)
 		return err
 	}
 
-	dbCmd := "delete from BGPNeighborConfig where " + sqlKey
-	fmt.Println("### DB Deleting BGPNeighborConfig\n")
+	dbCmd := "delete from BGPPeerGroup where " + sqlKey
+	fmt.Println("### DB Deleting BGPPeerGroup\n")
 	_, err = dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
 
-func (obj BGPNeighborConfig) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, error) {
-	var object BGPNeighborConfig
+func (obj BGPPeerGroup) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, error) {
+	var object BGPPeerGroup
 	sqlKey, err := obj.GetSqlKeyStr(objKey)
-	dbCmd := "select * from BGPNeighborConfig where " + sqlKey
+	dbCmd := "select * from BGPPeerGroup where " + sqlKey
 	var tmp6 string
 	var tmp7 string
-	err = dbHdl.QueryRow(dbCmd).Scan(&object.PeerAS, &object.LocalAS, &object.AuthPassword, &object.Description, &object.NeighborAddress, &object.RouteReflectorClusterId, &tmp6, &tmp7, &object.MultiHopTTL, &object.ConnectRetryTime, &object.HoldTime, &object.KeepaliveTime, &object.PeerGroup)
-	fmt.Println("### DB Get BGPNeighborConfig\n", err)
+	err = dbHdl.QueryRow(dbCmd).Scan(&object.PeerAS, &object.LocalAS, &object.AuthPassword, &object.Description, &object.Name, &object.RouteReflectorClusterId, &tmp6, &tmp7, &object.MultiHopTTL, &object.ConnectRetryTime, &object.HoldTime, &object.KeepaliveTime)
+	fmt.Println("### DB Get BGPPeerGroup\n", err)
 	object.RouteReflectorClient = dbutils.ConvertStrBoolIntToBool(tmp6)
 	object.MultiHopEnable = dbutils.ConvertStrBoolIntToBool(tmp7)
 	return object, err
 }
 
-func (obj BGPNeighborConfig) GetKey() (string, error) {
-	key := string(obj.NeighborAddress)
+func (obj BGPPeerGroup) GetKey() (string, error) {
+	key := string(obj.Name)
 	return key, nil
 }
 
-func (obj BGPNeighborConfig) GetSqlKeyStr(objKey string) (string, error) {
+func (obj BGPPeerGroup) GetSqlKeyStr(objKey string) (string, error) {
 	keys := strings.Split(objKey, "#")
-	sqlKey := "NeighborAddress = " + "\"" + keys[0] + "\""
+	sqlKey := "Name = " + "\"" + keys[0] + "\""
 	return sqlKey, nil
 }
 
-func (obj *BGPNeighborConfig) GetAllObjFromDb(dbHdl *sql.DB) (objList []*BGPNeighborConfig, e error) {
-	dbCmd := "select * from BGPNeighborConfig"
+func (obj *BGPPeerGroup) GetAllObjFromDb(dbHdl *sql.DB) (objList []*BGPPeerGroup, e error) {
+	dbCmd := "select * from BGPPeerGroup"
 	rows, err := dbHdl.Query(dbCmd)
 	if err != nil {
-		fmt.Println(fmt.Sprintf("DB method Query failed for 'BGPNeighborConfig' with error BGPNeighborConfig", dbCmd, err))
+		fmt.Println(fmt.Sprintf("DB method Query failed for 'BGPPeerGroup' with error BGPPeerGroup", dbCmd, err))
 		return objList, err
 	}
 
@@ -101,10 +100,10 @@ func (obj *BGPNeighborConfig) GetAllObjFromDb(dbHdl *sql.DB) (objList []*BGPNeig
 	var tmp7 string
 	for rows.Next() {
 
-		object := new(BGPNeighborConfig)
-		if err = rows.Scan(&object.PeerAS, &object.LocalAS, &object.AuthPassword, &object.Description, &object.NeighborAddress, &object.RouteReflectorClusterId, &tmp6, &tmp7, &object.MultiHopTTL, &object.ConnectRetryTime, &object.HoldTime, &object.KeepaliveTime, &object.PeerGroup); err != nil {
+		object := new(BGPPeerGroup)
+		if err = rows.Scan(&object.PeerAS, &object.LocalAS, &object.AuthPassword, &object.Description, &object.Name, &object.RouteReflectorClusterId, &tmp6, &tmp7, &object.MultiHopTTL, &object.ConnectRetryTime, &object.HoldTime, &object.KeepaliveTime); err != nil {
 
-			fmt.Println("Db method Scan failed when interating over BGPNeighborConfig")
+			fmt.Println("Db method Scan failed when interating over BGPPeerGroup")
 		}
 		object.RouteReflectorClient = dbutils.ConvertStrBoolIntToBool(tmp6)
 		object.MultiHopEnable = dbutils.ConvertStrBoolIntToBool(tmp7)
@@ -112,8 +111,8 @@ func (obj *BGPNeighborConfig) GetAllObjFromDb(dbHdl *sql.DB) (objList []*BGPNeig
 	}
 	return objList, nil
 }
-func (obj BGPNeighborConfig) CompareObjectsAndDiff(updateKeys map[string]bool, dbObj ConfigObj) ([]bool, error) {
-	dbV4Route := dbObj.(BGPNeighborConfig)
+func (obj BGPPeerGroup) CompareObjectsAndDiff(updateKeys map[string]bool, dbObj ConfigObj) ([]bool, error) {
+	dbV4Route := dbObj.(BGPPeerGroup)
 	objTyp := reflect.TypeOf(obj)
 	objVal := reflect.ValueOf(obj)
 	dbObjVal := reflect.ValueOf(dbV4Route)
@@ -187,12 +186,12 @@ func (obj BGPNeighborConfig) CompareObjectsAndDiff(updateKeys map[string]bool, d
 	return attrIds[:idx], nil
 }
 
-func (obj BGPNeighborConfig) MergeDbAndConfigObj(dbObj ConfigObj, attrSet []bool) (ConfigObj, error) {
-	var mergedBGPNeighborConfig BGPNeighborConfig
+func (obj BGPPeerGroup) MergeDbAndConfigObj(dbObj ConfigObj, attrSet []bool) (ConfigObj, error) {
+	var mergedBGPPeerGroup BGPPeerGroup
 	objTyp := reflect.TypeOf(obj)
 	objVal := reflect.ValueOf(obj)
 	dbObjVal := reflect.ValueOf(dbObj)
-	mergedObjVal := reflect.ValueOf(&mergedBGPNeighborConfig)
+	mergedObjVal := reflect.ValueOf(&mergedBGPPeerGroup)
 	idx := 0
 	for i := 0; i < objTyp.NumField(); i++ {
 		if fieldTyp := objTyp.Field(i); fieldTyp.Anonymous {
@@ -241,15 +240,15 @@ func (obj BGPNeighborConfig) MergeDbAndConfigObj(dbObj ConfigObj, attrSet []bool
 		idx++
 
 	}
-	return mergedBGPNeighborConfig, nil
+	return mergedBGPPeerGroup, nil
 }
 
-func (obj BGPNeighborConfig) UpdateObjectInDb(dbObj ConfigObj, attrSet []bool, dbHdl *sql.DB) error {
+func (obj BGPPeerGroup) UpdateObjectInDb(dbObj ConfigObj, attrSet []bool, dbHdl *sql.DB) error {
 	var fieldSqlStr string
-	dbBGPNeighborConfig := dbObj.(BGPNeighborConfig)
-	objKey, err := dbBGPNeighborConfig.GetKey()
-	objSqlKey, err := dbBGPNeighborConfig.GetSqlKeyStr(objKey)
-	dbCmd := "update " + "BGPNeighborConfig" + " set"
+	dbBGPPeerGroup := dbObj.(BGPPeerGroup)
+	objKey, err := dbBGPPeerGroup.GetKey()
+	objSqlKey, err := dbBGPPeerGroup.GetSqlKeyStr(objKey)
+	dbCmd := "update " + "BGPPeerGroup" + " set"
 	objTyp := reflect.TypeOf(obj)
 	objVal := reflect.ValueOf(obj)
 	idx := 0
