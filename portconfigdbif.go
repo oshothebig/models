@@ -11,19 +11,17 @@ import (
 func (obj PortConfig) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS PortConfig " +
 		"( " +
-		"IfIndex INTEGER, " +
-		"Name TEXT, " +
+		"PortNum INTEGER, " +
 		"Description TEXT, " +
-		"Type TEXT, " +
+		"PhyIntfType TEXT, " +
 		"AdminState TEXT, " +
-		"OperState TEXT, " +
 		"MacAddr TEXT, " +
 		"Speed INTEGER, " +
 		"Duplex TEXT, " +
 		"Autoneg TEXT, " +
 		"MediaType TEXT, " +
 		"Mtu INTEGER, " +
-		"PRIMARY KEY(IfIndex) " +
+		"PRIMARY KEY(PortNum) " +
 		")"
 
 	_, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
@@ -32,8 +30,8 @@ func (obj PortConfig) CreateDBTable(dbHdl *sql.DB) error {
 
 func (obj PortConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	var objectId int64
-	dbCmd := fmt.Sprintf("INSERT INTO PortConfig (IfIndex, Name, Description, Type, AdminState, OperState, MacAddr, Speed, Duplex, Autoneg, MediaType, Mtu) VALUES ('%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v') ;",
-		obj.IfIndex, obj.Name, obj.Description, obj.Type, obj.AdminState, obj.OperState, obj.MacAddr, obj.Speed, obj.Duplex, obj.Autoneg, obj.MediaType, obj.Mtu)
+	dbCmd := fmt.Sprintf("INSERT INTO PortConfig (PortNum, Description, PhyIntfType, AdminState, MacAddr, Speed, Duplex, Autoneg, MediaType, Mtu) VALUES ('%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v') ;",
+		obj.PortNum, obj.Description, obj.PhyIntfType, obj.AdminState, obj.MacAddr, obj.Speed, obj.Duplex, obj.Autoneg, obj.MediaType, obj.Mtu)
 	fmt.Println("**** Create Object called with ", obj)
 
 	result, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
@@ -66,19 +64,19 @@ func (obj PortConfig) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, 
 	var object PortConfig
 	sqlKey, err := obj.GetSqlKeyStr(objKey)
 	dbCmd := "select * from PortConfig where " + sqlKey
-	err = dbHdl.QueryRow(dbCmd).Scan(&object.IfIndex, &object.Name, &object.Description, &object.Type, &object.AdminState, &object.OperState, &object.MacAddr, &object.Speed, &object.Duplex, &object.Autoneg, &object.MediaType, &object.Mtu)
+	err = dbHdl.QueryRow(dbCmd).Scan(&object.PortNum, &object.Description, &object.PhyIntfType, &object.AdminState, &object.MacAddr, &object.Speed, &object.Duplex, &object.Autoneg, &object.MediaType, &object.Mtu)
 	fmt.Println("### DB Get PortConfig\n", err)
 	return object, err
 }
 
 func (obj PortConfig) GetKey() (string, error) {
-	key := string(obj.IfIndex)
+	key := string(obj.PortNum)
 	return key, nil
 }
 
 func (obj PortConfig) GetSqlKeyStr(objKey string) (string, error) {
 	keys := strings.Split(objKey, "#")
-	sqlKey := "IfIndex = " + "\"" + keys[0] + "\""
+	sqlKey := "PortNum = " + "\"" + keys[0] + "\""
 	return sqlKey, nil
 }
 
@@ -95,7 +93,7 @@ func (obj *PortConfig) GetAllObjFromDb(dbHdl *sql.DB) (objList []*PortConfig, e 
 	for rows.Next() {
 
 		object := new(PortConfig)
-		if err = rows.Scan(&object.IfIndex, &object.Name, &object.Description, &object.Type, &object.AdminState, &object.OperState, &object.MacAddr, &object.Speed, &object.Duplex, &object.Autoneg, &object.MediaType, &object.Mtu); err != nil {
+		if err = rows.Scan(&object.PortNum, &object.Description, &object.PhyIntfType, &object.AdminState, &object.MacAddr, &object.Speed, &object.Duplex, &object.Autoneg, &object.MediaType, &object.Mtu); err != nil {
 
 			fmt.Println("Db method Scan failed when interating over PortConfig")
 		}

@@ -1,16 +1,11 @@
 {
-	"VlanConfig"     : {
-		"access": "w",
+	"Vlan"     : {
+		"access": "rw",
 		"Owner": "asicd",
 		"Listeners":[]
 	},
-	"VlanState"     : {
-		"access": "r",
-		"Owner": "asicd",
-		"Listeners":[]
-	},
- 	"IPv4Intf" : {
-		"access": "w",
+	"IPv4Intf" : {
+		"access": "rw",
 		"Owner": "asicd",
 		"Listeners" : []
 	},
@@ -145,7 +140,7 @@
 		"Listeners": []
     },
 	"PortConfig" : {
-		"access": "w",	
+		"access": "rw",
 		"Owner": "asicd",
 		"Listeners" : []
 	},
