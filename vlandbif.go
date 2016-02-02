@@ -8,10 +8,13 @@ import (
 	"utils/dbutils"
 )
 
-func (obj VlanConfig) CreateDBTable(dbHdl *sql.DB) error {
-	dbCmd := "CREATE TABLE IF NOT EXISTS VlanConfig " +
+func (obj Vlan) CreateDBTable(dbHdl *sql.DB) error {
+	dbCmd := "CREATE TABLE IF NOT EXISTS Vlan " +
 		"( " +
 		"VlanId INTEGER, " +
+		"VlanName TEXT, " +
+		"OperState TEXT, " +
+		"IfIndex INTEGER, " +
 		"IfIndexList TEXT, " +
 		"UntagIfIndexList TEXT, " +
 		"PRIMARY KEY(VlanId) " +
@@ -21,10 +24,10 @@ func (obj VlanConfig) CreateDBTable(dbHdl *sql.DB) error {
 	return err
 }
 
-func (obj VlanConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
+func (obj Vlan) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	var objectId int64
-	dbCmd := fmt.Sprintf("INSERT INTO VlanConfig (VlanId, IfIndexList, UntagIfIndexList) VALUES ('%v', '%v', '%v') ;",
-		obj.VlanId, obj.IfIndexList, obj.UntagIfIndexList)
+	dbCmd := fmt.Sprintf("INSERT INTO Vlan (VlanId, VlanName, OperState, IfIndex, IfIndexList, UntagIfIndexList) VALUES ('%v', '%v', '%v', '%v', '%v', '%v') ;",
+		obj.VlanId, obj.VlanName, obj.OperState, obj.IfIndex, obj.IfIndexList, obj.UntagIfIndexList)
 	fmt.Println("**** Create Object called with ", obj)
 
 	result, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
@@ -40,44 +43,44 @@ func (obj VlanConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	return objectId, err
 }
 
-func (obj VlanConfig) DeleteObjectFromDb(objKey string, dbHdl *sql.DB) error {
+func (obj Vlan) DeleteObjectFromDb(objKey string, dbHdl *sql.DB) error {
 	sqlKey, err := obj.GetSqlKeyStr(objKey)
 	if err != nil {
-		fmt.Println("GetSqlKeyStr for VlanConfig with key", objKey, "failed with error", err)
+		fmt.Println("GetSqlKeyStr for Vlan with key", objKey, "failed with error", err)
 		return err
 	}
 
-	dbCmd := "delete from VlanConfig where " + sqlKey
-	fmt.Println("### DB Deleting VlanConfig\n")
+	dbCmd := "delete from Vlan where " + sqlKey
+	fmt.Println("### DB Deleting Vlan\n")
 	_, err = dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
 
-func (obj VlanConfig) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, error) {
-	var object VlanConfig
+func (obj Vlan) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, error) {
+	var object Vlan
 	sqlKey, err := obj.GetSqlKeyStr(objKey)
-	dbCmd := "select * from VlanConfig where " + sqlKey
-	err = dbHdl.QueryRow(dbCmd).Scan(&object.VlanId, &object.IfIndexList, &object.UntagIfIndexList)
-	fmt.Println("### DB Get VlanConfig\n", err)
+	dbCmd := "select * from Vlan where " + sqlKey
+	err = dbHdl.QueryRow(dbCmd).Scan(&object.VlanId, &object.VlanName, &object.OperState, &object.IfIndex, &object.IfIndexList, &object.UntagIfIndexList)
+	fmt.Println("### DB Get Vlan\n", err)
 	return object, err
 }
 
-func (obj VlanConfig) GetKey() (string, error) {
+func (obj Vlan) GetKey() (string, error) {
 	key := string(obj.VlanId)
 	return key, nil
 }
 
-func (obj VlanConfig) GetSqlKeyStr(objKey string) (string, error) {
+func (obj Vlan) GetSqlKeyStr(objKey string) (string, error) {
 	keys := strings.Split(objKey, "#")
 	sqlKey := "VlanId = " + "\"" + keys[0] + "\""
 	return sqlKey, nil
 }
 
-func (obj *VlanConfig) GetAllObjFromDb(dbHdl *sql.DB) (objList []*VlanConfig, e error) {
-	dbCmd := "select * from VlanConfig"
+func (obj *Vlan) GetAllObjFromDb(dbHdl *sql.DB) (objList []*Vlan, e error) {
+	dbCmd := "select * from Vlan"
 	rows, err := dbHdl.Query(dbCmd)
 	if err != nil {
-		fmt.Println(fmt.Sprintf("DB method Query failed for 'VlanConfig' with error VlanConfig", dbCmd, err))
+		fmt.Println(fmt.Sprintf("DB method Query failed for 'Vlan' with error Vlan", dbCmd, err))
 		return objList, err
 	}
 
@@ -85,17 +88,17 @@ func (obj *VlanConfig) GetAllObjFromDb(dbHdl *sql.DB) (objList []*VlanConfig, e 
 
 	for rows.Next() {
 
-		object := new(VlanConfig)
-		if err = rows.Scan(&object.VlanId, &object.IfIndexList, &object.UntagIfIndexList); err != nil {
+		object := new(Vlan)
+		if err = rows.Scan(&object.VlanId, &object.VlanName, &object.OperState, &object.IfIndex, &object.IfIndexList, &object.UntagIfIndexList); err != nil {
 
-			fmt.Println("Db method Scan failed when interating over VlanConfig")
+			fmt.Println("Db method Scan failed when interating over Vlan")
 		}
 		objList = append(objList, object)
 	}
 	return objList, nil
 }
-func (obj VlanConfig) CompareObjectsAndDiff(updateKeys map[string]bool, dbObj ConfigObj) ([]bool, error) {
-	dbV4Route := dbObj.(VlanConfig)
+func (obj Vlan) CompareObjectsAndDiff(updateKeys map[string]bool, dbObj ConfigObj) ([]bool, error) {
+	dbV4Route := dbObj.(Vlan)
 	objTyp := reflect.TypeOf(obj)
 	objVal := reflect.ValueOf(obj)
 	dbObjVal := reflect.ValueOf(dbV4Route)
@@ -169,12 +172,12 @@ func (obj VlanConfig) CompareObjectsAndDiff(updateKeys map[string]bool, dbObj Co
 	return attrIds[:idx], nil
 }
 
-func (obj VlanConfig) MergeDbAndConfigObj(dbObj ConfigObj, attrSet []bool) (ConfigObj, error) {
-	var mergedVlanConfig VlanConfig
+func (obj Vlan) MergeDbAndConfigObj(dbObj ConfigObj, attrSet []bool) (ConfigObj, error) {
+	var mergedVlan Vlan
 	objTyp := reflect.TypeOf(obj)
 	objVal := reflect.ValueOf(obj)
 	dbObjVal := reflect.ValueOf(dbObj)
-	mergedObjVal := reflect.ValueOf(&mergedVlanConfig)
+	mergedObjVal := reflect.ValueOf(&mergedVlan)
 	idx := 0
 	for i := 0; i < objTyp.NumField(); i++ {
 		if fieldTyp := objTyp.Field(i); fieldTyp.Anonymous {
@@ -223,15 +226,15 @@ func (obj VlanConfig) MergeDbAndConfigObj(dbObj ConfigObj, attrSet []bool) (Conf
 		idx++
 
 	}
-	return mergedVlanConfig, nil
+	return mergedVlan, nil
 }
 
-func (obj VlanConfig) UpdateObjectInDb(dbObj ConfigObj, attrSet []bool, dbHdl *sql.DB) error {
+func (obj Vlan) UpdateObjectInDb(dbObj ConfigObj, attrSet []bool, dbHdl *sql.DB) error {
 	var fieldSqlStr string
-	dbVlanConfig := dbObj.(VlanConfig)
-	objKey, err := dbVlanConfig.GetKey()
-	objSqlKey, err := dbVlanConfig.GetSqlKeyStr(objKey)
-	dbCmd := "update " + "VlanConfig" + " set"
+	dbVlan := dbObj.(Vlan)
+	objKey, err := dbVlan.GetKey()
+	objSqlKey, err := dbVlan.GetSqlKeyStr(objKey)
+	dbCmd := "update " + "Vlan" + " set"
 	objTyp := reflect.TypeOf(obj)
 	objVal := reflect.ValueOf(obj)
 	idx := 0
