@@ -8,8 +8,8 @@ import (
 	"reflect"
 )
 
-func (obj PolicyDefinition) CreateDBTable(dbHdl *sql.DB) error {
-	dbCmd := "CREATE TABLE IF NOT EXISTS PolicyDefinition " +
+func (obj PolicyDefinitionStmtRouteDispositionAction) CreateDBTable(dbHdl *sql.DB) error {
+	dbCmd := "CREATE TABLE IF NOT EXISTS PolicyDefinitionStmtRouteDispositionAction " +
 		"( " +
 		"Name TEXT, " +
 		"PRIMARY KEY(Name) " +
@@ -19,9 +19,9 @@ func (obj PolicyDefinition) CreateDBTable(dbHdl *sql.DB) error {
 	return err
 }
 
-func (obj PolicyDefinition) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
+func (obj PolicyDefinitionStmtRouteDispositionAction) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	var objectId int64
-	dbCmd := fmt.Sprintf("INSERT INTO PolicyDefinition (Name) VALUES ('%v') ;",
+	dbCmd := fmt.Sprintf("INSERT INTO PolicyDefinitionStmtRouteDispositionAction (Name) VALUES ('%v') ;",
 		obj.Name)
 	fmt.Println("**** Create Object called with ", obj)
 
@@ -38,44 +38,44 @@ func (obj PolicyDefinition) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	return objectId, err
 }
 
-func (obj PolicyDefinition) DeleteObjectFromDb(objKey string, dbHdl *sql.DB) error {
+func (obj PolicyDefinitionStmtRouteDispositionAction) DeleteObjectFromDb(objKey string, dbHdl *sql.DB) error {
 	sqlKey, err := obj.GetSqlKeyStr(objKey)
 	if err != nil {
-		fmt.Println("GetSqlKeyStr for PolicyDefinition with key", objKey, "failed with error", err)
+		fmt.Println("GetSqlKeyStr for PolicyDefinitionStmtRouteDispositionAction with key", objKey, "failed with error", err)
 		return err
 	}
 
-	dbCmd := "delete from PolicyDefinition where " + sqlKey
-	fmt.Println("### DB Deleting PolicyDefinition\n")
+	dbCmd := "delete from PolicyDefinitionStmtRouteDispositionAction where " + sqlKey
+	fmt.Println("### DB Deleting PolicyDefinitionStmtRouteDispositionAction\n")
 	_, err = dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
 
-func (obj PolicyDefinition) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, error) {
-	var object PolicyDefinition
+func (obj PolicyDefinitionStmtRouteDispositionAction) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, error) {
+	var object PolicyDefinitionStmtRouteDispositionAction
 	sqlKey, err := obj.GetSqlKeyStr(objKey)
-	dbCmd := "select * from PolicyDefinition where " + sqlKey
+	dbCmd := "select * from PolicyDefinitionStmtRouteDispositionAction where " + sqlKey
 	err = dbHdl.QueryRow(dbCmd).Scan(&object.Name, )
-	fmt.Println("### DB Get PolicyDefinition\n", err)
+	fmt.Println("### DB Get PolicyDefinitionStmtRouteDispositionAction\n", err)
 	return object, err
 }
 
-func (obj PolicyDefinition) GetKey() (string, error) {
+func (obj PolicyDefinitionStmtRouteDispositionAction) GetKey() (string, error) {
 	key := string(obj.Name)
 	return key, nil
 }
 
-func (obj PolicyDefinition) GetSqlKeyStr(objKey string) (string, error) {
+func (obj PolicyDefinitionStmtRouteDispositionAction) GetSqlKeyStr(objKey string) (string, error) {
 	keys := strings.Split(objKey, "#")
 	sqlKey := "Name = "+ "\"" + keys[0] + "\""
 	return sqlKey, nil
 }
 
-func (obj *PolicyDefinition) GetAllObjFromDb(dbHdl *sql.DB) (objList []*PolicyDefinition, e error) {
-	dbCmd := "select * from PolicyDefinition"
+func (obj *PolicyDefinitionStmtRouteDispositionAction) GetAllObjFromDb(dbHdl *sql.DB) (objList []*PolicyDefinitionStmtRouteDispositionAction, e error) {
+	dbCmd := "select * from PolicyDefinitionStmtRouteDispositionAction"
 	rows, err := dbHdl.Query(dbCmd)
 	if err != nil {
-		fmt.Println(fmt.Sprintf("DB method Query failed for 'PolicyDefinition' with error PolicyDefinition", dbCmd, err))
+		fmt.Println(fmt.Sprintf("DB method Query failed for 'PolicyDefinitionStmtRouteDispositionAction' with error PolicyDefinitionStmtRouteDispositionAction", dbCmd, err))
 		return objList, err
 	}
 
@@ -83,17 +83,17 @@ func (obj *PolicyDefinition) GetAllObjFromDb(dbHdl *sql.DB) (objList []*PolicyDe
     
 	for rows.Next() {
 
-             object := new(PolicyDefinition)
+             object := new(PolicyDefinitionStmtRouteDispositionAction)
              if err = rows.Scan(&object.Name, ); err != nil {
 
-             fmt.Println("Db method Scan failed when interating over PolicyDefinition")
+             fmt.Println("Db method Scan failed when interating over PolicyDefinitionStmtRouteDispositionAction")
              }
 	objList = append(objList, object)
     }
     return objList, nil
     }
-    func (obj PolicyDefinition) CompareObjectsAndDiff(updateKeys map[string]bool, dbObj ConfigObj) ([]bool, error) {
-	dbV4Route := dbObj.(PolicyDefinition)
+    func (obj PolicyDefinitionStmtRouteDispositionAction) CompareObjectsAndDiff(updateKeys map[string]bool, dbObj ConfigObj) ([]bool, error) {
+	dbV4Route := dbObj.(PolicyDefinitionStmtRouteDispositionAction)
 	objTyp := reflect.TypeOf(obj)
 	objVal := reflect.ValueOf(obj)
 	dbObjVal := reflect.ValueOf(dbV4Route)
@@ -167,12 +167,12 @@ func (obj *PolicyDefinition) GetAllObjFromDb(dbHdl *sql.DB) (objList []*PolicyDe
 	return attrIds[:idx], nil
 }
 
-    func (obj PolicyDefinition) MergeDbAndConfigObj(dbObj ConfigObj, attrSet []bool) (ConfigObj, error) {
-	var mergedPolicyDefinition PolicyDefinition
+    func (obj PolicyDefinitionStmtRouteDispositionAction) MergeDbAndConfigObj(dbObj ConfigObj, attrSet []bool) (ConfigObj, error) {
+	var mergedPolicyDefinitionStmtRouteDispositionAction PolicyDefinitionStmtRouteDispositionAction
 	objTyp := reflect.TypeOf(obj)
 	objVal := reflect.ValueOf(obj)
 	dbObjVal := reflect.ValueOf(dbObj)
-	mergedObjVal := reflect.ValueOf(&mergedPolicyDefinition)
+	mergedObjVal := reflect.ValueOf(&mergedPolicyDefinitionStmtRouteDispositionAction)
 	idx := 0
 	for i:=0; i<objTyp.NumField(); i++ {
 		if fieldTyp := objTyp.Field(i); fieldTyp.Anonymous {
@@ -221,15 +221,15 @@ func (obj *PolicyDefinition) GetAllObjFromDb(dbHdl *sql.DB) (objList []*PolicyDe
 		idx++
 
 	}
-	return mergedPolicyDefinition, nil
+	return mergedPolicyDefinitionStmtRouteDispositionAction, nil
 }
 
-    func (obj PolicyDefinition) UpdateObjectInDb(dbObj ConfigObj, attrSet []bool, dbHdl *sql.DB) error {
+    func (obj PolicyDefinitionStmtRouteDispositionAction) UpdateObjectInDb(dbObj ConfigObj, attrSet []bool, dbHdl *sql.DB) error {
 	var fieldSqlStr string
-	dbPolicyDefinition := dbObj.(PolicyDefinition)
-	objKey, err := dbPolicyDefinition.GetKey()
-	objSqlKey, err := dbPolicyDefinition.GetSqlKeyStr(objKey)
-	dbCmd := "update " + "PolicyDefinition" + " set"
+	dbPolicyDefinitionStmtRouteDispositionAction := dbObj.(PolicyDefinitionStmtRouteDispositionAction)
+	objKey, err := dbPolicyDefinitionStmtRouteDispositionAction.GetKey()
+	objSqlKey, err := dbPolicyDefinitionStmtRouteDispositionAction.GetSqlKeyStr(objKey)
+	dbCmd := "update " + "PolicyDefinitionStmtRouteDispositionAction" + " set"
 objTyp := reflect.TypeOf(obj)
 	objVal := reflect.ValueOf(obj)
 	idx := 0

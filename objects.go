@@ -47,9 +47,11 @@ func (obj IPV4Route) UnmarshalObject(body []byte) (ConfigObj, error) {
 
 type IPV4RouteState struct {
 	BaseObj
-	DestinationNw string `SNAPROUTE: "KEY"`
-	NetworkMask   string `SNAPROUTE: "KEY"`
-	PolicyList    []string
+	DestinationNw    string `SNAPROUTE: "KEY"`
+	NetworkMask      string `SNAPROUTE: "KEY"`
+	PolicyList       []string
+	RouteCreatedTime string
+	RouteUpdatedTime string
 }
 
 func (obj IPV4RouteState) UnmarshalObject(body []byte) (ConfigObj, error) {
@@ -207,19 +209,21 @@ func (obj BGPNeighborState) UnmarshalObject(body []byte) (ConfigObj, error) {
 	return nState, err
 }
 
-type VlanConfig struct {
+/* Start asicd owned objects */
+/*
+ * Vlan object and Route objects are exception cases, i.e
+ * they are not seperated into config and state, sub-objects.
+ * This approach is followed for objects that can be both
+ * statically and dynamically created.
+ */
+type Vlan struct {
 	BaseObj
 	VlanId           int32 `SNAPROUTE: "KEY"`
+	VlanName         string
+	OperState        string
+	IfIndex          int32
 	IfIndexList      string
 	UntagIfIndexList string
-}
-
-type VlanState struct {
-	BaseObj
-	VlanId    int32
-	IfIndex   int32
-	VlanName  string
-	OperState string
 }
 
 type IPv4Intf struct {
@@ -228,38 +232,49 @@ type IPv4Intf struct {
 	IfIndex int32
 }
 
-func (obj VlanConfig) UnmarshalObject(body []byte) (ConfigObj, error) {
-	var vlanObj VlanConfig
-	var err error
-	if len(body) > 0 {
-		if err = json.Unmarshal(body, &vlanObj); err != nil {
-			fmt.Println("### Trouble in unmarshaling VlanConfig from Json", body)
-		}
-	}
-	return vlanObj, err
+type PortConfig struct {
+	BaseObj
+	PortNum     int32 `SNAPROUTE: "KEY"`
+	Description string
+	PhyIntfType string
+	AdminState  string
+	MacAddr     string
+	Speed       int32
+	Duplex      string
+	Autoneg     string
+	MediaType   string
+	Mtu         int32
 }
 
-func (obj VlanState) UnmarshalObject(body []byte) (ConfigObj, error) {
-	var vlanObj VlanState
-	var err error
-	if len(body) > 0 {
-		if err = json.Unmarshal(body, &vlanObj); err != nil {
-			fmt.Println("### Trouble in unmarshaling VlanState from Json", body)
-		}
-	}
-	return vlanObj, err
+type PortState struct {
+	BaseObj
+	PortNum           int32
+	IfIndex           int32
+	Name              string
+	OperState         string
+	IfInOctets        int64
+	IfInUcastPkts     int64
+	IfInDiscards      int64
+	IfInErrors        int64
+	IfInUnknownProtos int64
+	IfOutOctets       int64
+	IfOutUcastPkts    int64
+	IfOutDiscards     int64
+	IfOutErrors       int64
 }
 
-func (obj IPv4Intf) UnmarshalObject(body []byte) (ConfigObj, error) {
-	var v4Intf IPv4Intf
+func (obj PortState) UnmarshalObject(body []byte) (ConfigObj, error) {
+	var gConf PortState
 	var err error
 	if len(body) > 0 {
-		if err = json.Unmarshal(body, &v4Intf); err != nil {
-			fmt.Println("### Trouble in unmarshaling IPv4Intf from Json", body)
+		if err = json.Unmarshal(body, &gConf); err != nil {
+			fmt.Println("### Trouble in unmarshalling PortState from Json", body)
 		}
 	}
-	return v4Intf, err
+	return gConf, err
 }
+
+/* End asicd owned objects */
 
 /* ARP */
 type ArpConfig struct {
@@ -299,53 +314,6 @@ func (obj ArpEntry) UnmarshalObject(body []byte) (ConfigObj, error) {
 		}
 	}
 	return arpEntryObj, err
-}
-
-/* PortInterface */
-type PortConfig struct {
-	BaseObj
-	IfIndex     int32 `SNAPROUTE: "KEY"`
-	Name        string
-	Description string
-	Type        string
-	AdminState  string
-	OperState   string
-	MacAddr     string
-	Speed       int32
-	Duplex      string
-	Autoneg     string
-	MediaType   string
-	Mtu         int32
-}
-
-func (obj PortConfig) UnmarshalObject(body []byte) (ConfigObj, error) {
-	var portConfigObj PortConfig
-	var err error
-	if len(body) > 0 {
-		if err = json.Unmarshal(body, &portConfigObj); err != nil {
-			fmt.Println("### Trouble in unmarshaling PortIntfConfig from Json", body)
-		}
-	}
-
-	return portConfigObj, err
-}
-
-type PortState struct {
-	BaseObj
-	IfIndex   int32
-	PortStats []int64
-}
-
-func (obj PortState) UnmarshalObject(body []byte) (ConfigObj, error) {
-	var portStateObj PortState
-	var err error
-	if len(body) > 0 {
-		if err = json.Unmarshal(body, &portStateObj); err != nil {
-			fmt.Println("### Trouble in unmarshaling PortIntfState from Json", body)
-		}
-	}
-
-	return portStateObj, err
 }
 
 type UserConfig struct {

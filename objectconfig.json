@@ -1,16 +1,11 @@
 {
-	"VlanConfig"     : {
-		"access": "w",
+	"Vlan"     : {
+		"access": "rw",
 		"Owner": "asicd",
 		"Listeners":[]
 	},
-	"VlanState"     : {
-		"access": "r",
-		"Owner": "asicd",
-		"Listeners":[]
-	},
- 	"IPv4Intf" : {
-		"access": "w",
+	"IPv4Intf" : {
+		"access": "rw",
 		"Owner": "asicd",
 		"Listeners" : []
 	},
@@ -94,8 +89,13 @@
 		"Owner": "ribd",
 		"Listeners": []
 	},
- 	"PolicyDefinition": {
-		"access": "rw",
+ 	"PolicyDefinitionConfig": {
+		"access": "w",
+		"Owner": "ribd",
+		"Listeners": []
+	},
+ 	"PolicyDefinitionState": {
+		"access": "r",
 		"Owner": "ribd",
 		"Listeners": []
 	},
@@ -145,7 +145,7 @@
 		"Listeners": []
     },
 	"PortConfig" : {
-		"access": "w",
+		"access": "rw",
 		"Owner": "asicd",
 		"Listeners" : []
 	},

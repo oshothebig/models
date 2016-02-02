@@ -43,4 +43,3 @@ func (b BaseObj) MergeDbAndConfigObj(dbObj ConfigObj, attrSet []bool) (ConfigObj
 func (b BaseObj) UpdateObjectInDb(dbV4Route ConfigObj, attrSet []bool, dbHdl *sql.DB) error {
 	return nil
 }
-
