@@ -8,10 +8,11 @@ import (
 	"reflect"
 )
 
-func (obj PolicyDefinition) CreateDBTable(dbHdl *sql.DB) error {
-	dbCmd := "CREATE TABLE IF NOT EXISTS PolicyDefinition " +
+func (obj PolicyDefinitionConfig) CreateDBTable(dbHdl *sql.DB) error {
+	dbCmd := "CREATE TABLE IF NOT EXISTS PolicyDefinitionConfig " +
 		"( " +
 		"Name TEXT, " +
+		"MatchType TEXT, " +
 		"PRIMARY KEY(Name) " +
 	")"
 
@@ -19,10 +20,10 @@ func (obj PolicyDefinition) CreateDBTable(dbHdl *sql.DB) error {
 	return err
 }
 
-func (obj PolicyDefinition) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
+func (obj PolicyDefinitionConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	var objectId int64
-	dbCmd := fmt.Sprintf("INSERT INTO PolicyDefinition (Name) VALUES ('%v') ;",
-		obj.Name)
+	dbCmd := fmt.Sprintf("INSERT INTO PolicyDefinitionConfig (Name, MatchType) VALUES ('%v', '%v') ;",
+		obj.Name, obj.MatchType)
 	fmt.Println("**** Create Object called with ", obj)
 
 	result, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
@@ -38,44 +39,44 @@ func (obj PolicyDefinition) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	return objectId, err
 }
 
-func (obj PolicyDefinition) DeleteObjectFromDb(objKey string, dbHdl *sql.DB) error {
+func (obj PolicyDefinitionConfig) DeleteObjectFromDb(objKey string, dbHdl *sql.DB) error {
 	sqlKey, err := obj.GetSqlKeyStr(objKey)
 	if err != nil {
-		fmt.Println("GetSqlKeyStr for PolicyDefinition with key", objKey, "failed with error", err)
+		fmt.Println("GetSqlKeyStr for PolicyDefinitionConfig with key", objKey, "failed with error", err)
 		return err
 	}
 
-	dbCmd := "delete from PolicyDefinition where " + sqlKey
-	fmt.Println("### DB Deleting PolicyDefinition\n")
+	dbCmd := "delete from PolicyDefinitionConfig where " + sqlKey
+	fmt.Println("### DB Deleting PolicyDefinitionConfig\n")
 	_, err = dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
 
-func (obj PolicyDefinition) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, error) {
-	var object PolicyDefinition
+func (obj PolicyDefinitionConfig) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, error) {
+	var object PolicyDefinitionConfig
 	sqlKey, err := obj.GetSqlKeyStr(objKey)
-	dbCmd := "select * from PolicyDefinition where " + sqlKey
-	err = dbHdl.QueryRow(dbCmd).Scan(&object.Name, )
-	fmt.Println("### DB Get PolicyDefinition\n", err)
+	dbCmd := "select * from PolicyDefinitionConfig where " + sqlKey
+	err = dbHdl.QueryRow(dbCmd).Scan(&object.Name, &object.MatchType, )
+	fmt.Println("### DB Get PolicyDefinitionConfig\n", err)
 	return object, err
 }
 
-func (obj PolicyDefinition) GetKey() (string, error) {
+func (obj PolicyDefinitionConfig) GetKey() (string, error) {
 	key := string(obj.Name)
 	return key, nil
 }
 
-func (obj PolicyDefinition) GetSqlKeyStr(objKey string) (string, error) {
+func (obj PolicyDefinitionConfig) GetSqlKeyStr(objKey string) (string, error) {
 	keys := strings.Split(objKey, "#")
 	sqlKey := "Name = "+ "\"" + keys[0] + "\""
 	return sqlKey, nil
 }
 
-func (obj *PolicyDefinition) GetAllObjFromDb(dbHdl *sql.DB) (objList []*PolicyDefinition, e error) {
-	dbCmd := "select * from PolicyDefinition"
+func (obj *PolicyDefinitionConfig) GetAllObjFromDb(dbHdl *sql.DB) (objList []*PolicyDefinitionConfig, e error) {
+	dbCmd := "select * from PolicyDefinitionConfig"
 	rows, err := dbHdl.Query(dbCmd)
 	if err != nil {
-		fmt.Println(fmt.Sprintf("DB method Query failed for 'PolicyDefinition' with error PolicyDefinition", dbCmd, err))
+		fmt.Println(fmt.Sprintf("DB method Query failed for 'PolicyDefinitionConfig' with error PolicyDefinitionConfig", dbCmd, err))
 		return objList, err
 	}
 
@@ -83,17 +84,17 @@ func (obj *PolicyDefinition) GetAllObjFromDb(dbHdl *sql.DB) (objList []*PolicyDe
     
 	for rows.Next() {
 
-             object := new(PolicyDefinition)
-             if err = rows.Scan(&object.Name, ); err != nil {
+             object := new(PolicyDefinitionConfig)
+             if err = rows.Scan(&object.Name, &object.MatchType, ); err != nil {
 
-             fmt.Println("Db method Scan failed when interating over PolicyDefinition")
+             fmt.Println("Db method Scan failed when interating over PolicyDefinitionConfig")
              }
 	objList = append(objList, object)
     }
     return objList, nil
     }
-    func (obj PolicyDefinition) CompareObjectsAndDiff(updateKeys map[string]bool, dbObj ConfigObj) ([]bool, error) {
-	dbV4Route := dbObj.(PolicyDefinition)
+    func (obj PolicyDefinitionConfig) CompareObjectsAndDiff(updateKeys map[string]bool, dbObj ConfigObj) ([]bool, error) {
+	dbV4Route := dbObj.(PolicyDefinitionConfig)
 	objTyp := reflect.TypeOf(obj)
 	objVal := reflect.ValueOf(obj)
 	dbObjVal := reflect.ValueOf(dbV4Route)
@@ -167,12 +168,12 @@ func (obj *PolicyDefinition) GetAllObjFromDb(dbHdl *sql.DB) (objList []*PolicyDe
 	return attrIds[:idx], nil
 }
 
-    func (obj PolicyDefinition) MergeDbAndConfigObj(dbObj ConfigObj, attrSet []bool) (ConfigObj, error) {
-	var mergedPolicyDefinition PolicyDefinition
+    func (obj PolicyDefinitionConfig) MergeDbAndConfigObj(dbObj ConfigObj, attrSet []bool) (ConfigObj, error) {
+	var mergedPolicyDefinitionConfig PolicyDefinitionConfig
 	objTyp := reflect.TypeOf(obj)
 	objVal := reflect.ValueOf(obj)
 	dbObjVal := reflect.ValueOf(dbObj)
-	mergedObjVal := reflect.ValueOf(&mergedPolicyDefinition)
+	mergedObjVal := reflect.ValueOf(&mergedPolicyDefinitionConfig)
 	idx := 0
 	for i:=0; i<objTyp.NumField(); i++ {
 		if fieldTyp := objTyp.Field(i); fieldTyp.Anonymous {
@@ -221,15 +222,15 @@ func (obj *PolicyDefinition) GetAllObjFromDb(dbHdl *sql.DB) (objList []*PolicyDe
 		idx++
 
 	}
-	return mergedPolicyDefinition, nil
+	return mergedPolicyDefinitionConfig, nil
 }
 
-    func (obj PolicyDefinition) UpdateObjectInDb(dbObj ConfigObj, attrSet []bool, dbHdl *sql.DB) error {
+    func (obj PolicyDefinitionConfig) UpdateObjectInDb(dbObj ConfigObj, attrSet []bool, dbHdl *sql.DB) error {
 	var fieldSqlStr string
-	dbPolicyDefinition := dbObj.(PolicyDefinition)
-	objKey, err := dbPolicyDefinition.GetKey()
-	objSqlKey, err := dbPolicyDefinition.GetSqlKeyStr(objKey)
-	dbCmd := "update " + "PolicyDefinition" + " set"
+	dbPolicyDefinitionConfig := dbObj.(PolicyDefinitionConfig)
+	objKey, err := dbPolicyDefinitionConfig.GetKey()
+	objSqlKey, err := dbPolicyDefinitionConfig.GetSqlKeyStr(objKey)
+	dbCmd := "update " + "PolicyDefinitionConfig" + " set"
 objTyp := reflect.TypeOf(obj)
 	objVal := reflect.ValueOf(obj)
 	idx := 0

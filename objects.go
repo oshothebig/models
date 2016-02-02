@@ -47,9 +47,11 @@ func (obj IPV4Route) UnmarshalObject(body []byte) (ConfigObj, error) {
 
 type IPV4RouteState struct {
 	BaseObj
-	DestinationNw string `SNAPROUTE: "KEY"`
-	NetworkMask   string `SNAPROUTE: "KEY"`
-	PolicyList    []string
+	DestinationNw    string `SNAPROUTE: "KEY"`
+	NetworkMask      string `SNAPROUTE: "KEY"`
+	PolicyList       []string
+	RouteCreatedTime string
+	RouteUpdatedTime string
 }
 
 func (obj IPV4RouteState) UnmarshalObject(body []byte) (ConfigObj, error) {
