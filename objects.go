@@ -65,6 +65,23 @@ func (obj IPV4RouteState) UnmarshalObject(body []byte) (ConfigObj, error) {
 	return v4RouteState, err
 }
 
+type IPV4EventState struct {
+	BaseObj
+	TimeStamp string
+    EventInfo     string
+}
+
+func (obj IPV4EventState) UnmarshalObject(body []byte) (ConfigObj, error) {
+	var v4EventState IPV4EventState
+	var err error
+	if len(body) > 0 {
+		if err = json.Unmarshal(body, &v4EventState); err != nil {
+			fmt.Println("### Trouble in unmarshaling IPV4EventState from Json", body)
+		}
+	}
+	return v4EventState, err
+}
+
 type BGPGlobalConfig struct {
 	BaseObj
 	ASNum    uint32
