@@ -115,33 +115,38 @@
 		"Listeners": []
 	},
  	"BGPNeighborConfig": {
-		"access": "w",		
+		"access": "w",
 		"Owner": "bgpd",
 		"Listeners": []
 	},
  	"BGPNeighborState": {
-		"access": "r",			
+		"access": "r",
+		"Owner": "bgpd",
+		"Listeners": []
+	},
+ 	"BGPPeerGroup": {
+		"access": "w",
 		"Owner": "bgpd",
 		"Listeners": []
 	},
     "AggregationLacpConfig": {
-		"access": "w",		
-		"Owner": "lacpd", 
+		"access": "w",
+		"Owner": "lacpd",
 		"Listeners": []
     },
 	"AggregationLacpState": {
-			"access": "r",	
+			"access": "r",
 		"Owner": "lacpd",
 		"Listeners": []
 	},
 	"AggregationLacpMemberStateCounters": {
-		"access": "r",	
+		"access": "r",
 		"Owner": "lacpd",
 		"Listeners": []
 	},
 	"EthernetConfig": {
-		"access": "w",	
-		"Owner": "lacpd", 
+		"access": "w",
+		"Owner": "lacpd",
 		"Listeners": []
     },
 	"PortConfig" : {
@@ -213,42 +218,42 @@
 		"access": "w",
 		"Owner": "ospfd",
 		"Listeners" : []
-	},	
+	},
 	"OspfNbrEntryState" : {
 		"access": "r",
 		"Owner": "ospfd",
 		"Listeners" : []
-	},	
+	},
 	"OspfVirtNbrEntryState" : {
 		"access": "r",
 		"Owner": "ospfd",
 		"Listeners" : []
-	},	
+	},
 	"OspfExtLsdbEntryState" : {
 		"access": "r",
 		"Owner": "ospfd",
 		"Listeners" : []
-	},	
+	},
 	"OspfAreaAggregateEntryConfig" : {
 		"access": "w",
 		"Owner": "ospfd",
 		"Listeners" : []
-	},	
+	},
 	"OspfLocalLsdbEntryState" : {
 		"access": "r",
 		"Owner": "ospfd",
 		"Listeners" : []
-	},	
+	},
 	"OspfVirtLocalLsdbEntryState" : {
 		"access": "r",
 		"Owner": "ospfd",
 		"Listeners" : []
-	},	
+	},
 	"OspfAsLsdbEntryState" : {
 		"access": "r",
 		"Owner": "ospfd",
 		"Listeners" : []
-	},	
+	},
 	"OspfAreaLsaCountEntryState" : {
 		"access": "r",
 		"Owner": "ospfd",
@@ -277,7 +282,7 @@
 	"IPV4AddressBlock" : {
 		"access": "w",
 		"Owner": "local",
-		"Listeners" : []		
+		"Listeners" : []
 	},
 	"Dot1dStpPortEntryConfig" : {
 		"access": "w",

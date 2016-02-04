@@ -19,6 +19,7 @@ func ConvertbgpdBGPNeighborConfigObjToThrift(dbobj *BGPNeighborConfig, thriftobj
 	thriftobj.RouteReflectorClusterId = int32(dbobj.RouteReflectorClusterId)
 	thriftobj.RouteReflectorClient = bool(dbobj.RouteReflectorClient)
 	thriftobj.Description = string(dbobj.Description)
+	thriftobj.PeerGroup = string(dbobj.PeerGroup)
 	thriftobj.MultiHopTTL = int8(dbobj.MultiHopTTL)
 	thriftobj.PeerAS = int32(dbobj.PeerAS)
 	thriftobj.KeepaliveTime = int32(dbobj.KeepaliveTime)
@@ -34,6 +35,7 @@ func ConvertThriftTobgpdBGPNeighborConfigObj(thriftobj *bgpd.BGPNeighborConfig, 
 	dbobj.RouteReflectorClusterId = uint32(thriftobj.RouteReflectorClusterId)
 	dbobj.RouteReflectorClient = bool(thriftobj.RouteReflectorClient)
 	dbobj.Description = string(thriftobj.Description)
+	dbobj.PeerGroup = string(thriftobj.PeerGroup)
 	dbobj.MultiHopTTL = uint8(thriftobj.MultiHopTTL)
 	dbobj.PeerAS = uint32(thriftobj.PeerAS)
 	dbobj.KeepaliveTime = uint32(thriftobj.KeepaliveTime)
@@ -42,5 +44,35 @@ func ConvertThriftTobgpdBGPNeighborConfigObj(thriftobj *bgpd.BGPNeighborConfig, 
 	dbobj.NeighborAddress = string(thriftobj.NeighborAddress)
 	dbobj.HoldTime = uint32(thriftobj.HoldTime)
 	dbobj.LocalAS = uint32(thriftobj.LocalAS)
+	dbobj.ConnectRetryTime = uint32(thriftobj.ConnectRetryTime)
+}
+
+func ConvertbgpdBGPPeerGroupObjToThrift(dbobj *BGPPeerGroup, thriftobj *bgpd.BGPPeerGroup) {
+	thriftobj.RouteReflectorClusterId = int32(dbobj.RouteReflectorClusterId)
+	thriftobj.RouteReflectorClient = bool(dbobj.RouteReflectorClient)
+	thriftobj.Description = string(dbobj.Description)
+	thriftobj.MultiHopTTL = int8(dbobj.MultiHopTTL)
+	thriftobj.PeerAS = int32(dbobj.PeerAS)
+	thriftobj.KeepaliveTime = int32(dbobj.KeepaliveTime)
+	thriftobj.LocalAS = int32(dbobj.LocalAS)
+	thriftobj.MultiHopEnable = bool(dbobj.MultiHopEnable)
+	thriftobj.Name = string(dbobj.Name)
+	thriftobj.HoldTime = int32(dbobj.HoldTime)
+	thriftobj.AuthPassword = string(dbobj.AuthPassword)
+	thriftobj.ConnectRetryTime = int32(dbobj.ConnectRetryTime)
+}
+
+func ConvertThriftTobgpdBGPPeerGroupObj(thriftobj *bgpd.BGPPeerGroup, dbobj *BGPPeerGroup) {
+	dbobj.RouteReflectorClusterId = uint32(thriftobj.RouteReflectorClusterId)
+	dbobj.RouteReflectorClient = bool(thriftobj.RouteReflectorClient)
+	dbobj.Description = string(thriftobj.Description)
+	dbobj.MultiHopTTL = uint8(thriftobj.MultiHopTTL)
+	dbobj.PeerAS = uint32(thriftobj.PeerAS)
+	dbobj.KeepaliveTime = uint32(thriftobj.KeepaliveTime)
+	dbobj.LocalAS = uint32(thriftobj.LocalAS)
+	dbobj.MultiHopEnable = bool(thriftobj.MultiHopEnable)
+	dbobj.Name = string(thriftobj.Name)
+	dbobj.HoldTime = uint32(thriftobj.HoldTime)
+	dbobj.AuthPassword = string(thriftobj.AuthPassword)
 	dbobj.ConnectRetryTime = uint32(thriftobj.ConnectRetryTime)
 }
