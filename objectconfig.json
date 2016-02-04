@@ -29,6 +29,11 @@
 		"Owner": "ribd",
 		"Listeners": []
 	},
+ 	"IPV4EventState": {
+		"access": "r",
+		"Owner": "ribd",
+		"Listeners": []
+	},
 	"PolicyDefinitionSetsPrefixSet" : {
 		"access": "rw",
 		"Owner": "ribd",
