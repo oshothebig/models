@@ -333,5 +333,20 @@
 		"access": "r",
 		"Owner": "bfdd",
 		"Listeners" : []
-	}
+	},
+	"DhcpRelayHostDhcpState" : {
+		"access": "r",
+		"Owner": "dhcprelayd",
+		"Listeners" : []
+        },
+	"DhcpRelayIntfState" : {
+		"access": "r",
+		"Owner": "dhcprelayd",
+		"Listeners" : []
+        },
+	"DhcpRelayIntfServerState" : {
+		"access": "r",
+		"Owner": "dhcprelayd",
+		"Listeners" : []
+        }
 }
