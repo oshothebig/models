@@ -14,7 +14,7 @@ var ConfigObjectMap = map[string]ConfigObj{
 	"BGPNeighborState":                              &BGPNeighborState{},  // created before auto YANG
 	"BGPPeerGroup":                                  &BGPPeerGroup{},      // created before auto YANG
 	"PolicyDefinitionSetsPrefixSet":                 &PolicyDefinitionSetsPrefixSet{},
-	"PolicyDefinitionStmtMatchPrefixSetCondition":   &PolicyDefinitionStmtMatchPrefixSetCondition{},
+	"PolicyDefinitionStmtDstIpMatchPrefixSetCondition":   &PolicyDefinitionStmtDstIpMatchPrefixSetCondition{},
 	"PolicyDefinitionStmtMatchNeighborSetCondition": &PolicyDefinitionStmtMatchNeighborSetCondition{},
 	"PolicyDefinitionStmtMatchTagSetCondition":      &PolicyDefinitionStmtMatchTagSetCondition{},
 	"AggregationLacpConfig":                         &AggregationLacpConfig{},

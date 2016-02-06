@@ -15,8 +15,6 @@ func (obj PolicyDefinitionStmtConfig) CreateDBTable(dbHdl *sql.DB) error {
 		"MatchConditions TEXT, " +
 		"Conditions TEXT, " +
 		"Actions TEXT, " +
-		"Export INTEGER, " +
-		"Import INTEGER, " +
 		"PRIMARY KEY(Name) " +
 	")"
 
@@ -26,8 +24,8 @@ func (obj PolicyDefinitionStmtConfig) CreateDBTable(dbHdl *sql.DB) error {
 
 func (obj PolicyDefinitionStmtConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	var objectId int64
-	dbCmd := fmt.Sprintf("INSERT INTO PolicyDefinitionStmtConfig (Name, MatchConditions, Conditions, Actions, Export, Import) VALUES ('%v', '%v', '%v', '%v', '%v', '%v') ;",
-		obj.Name, obj.MatchConditions, obj.Conditions, obj.Actions, dbutils.ConvertBoolToInt(obj.Export), dbutils.ConvertBoolToInt(obj.Import))
+	dbCmd := fmt.Sprintf("INSERT INTO PolicyDefinitionStmtConfig (Name, MatchConditions, Conditions, Actions) VALUES ('%v', '%v', '%v', '%v') ;",
+		obj.Name, obj.MatchConditions, obj.Conditions, obj.Actions)
 	fmt.Println("**** Create Object called with ", obj)
 
 	result, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
@@ -62,9 +60,7 @@ func (obj PolicyDefinitionStmtConfig) GetObjectFromDb(objKey string, dbHdl *sql.
 	dbCmd := "select * from PolicyDefinitionStmtConfig where " + sqlKey
 	var tmp2 string
 	var tmp3 string
-	var tmp4 string
-	var tmp5 string
-	err = dbHdl.QueryRow(dbCmd).Scan(&object.Name, &object.MatchConditions, &tmp2, &tmp3, &tmp4, &tmp5, )
+	err = dbHdl.QueryRow(dbCmd).Scan(&object.Name, &object.MatchConditions, &tmp2, &tmp3, )
 	fmt.Println("### DB Get PolicyDefinitionStmtConfig\n", err)
 convtmpConditions := strings.Split(tmp2, ",")
                         for _, x := range convtmpConditions {
@@ -76,8 +72,6 @@ convtmpActions := strings.Split(tmp3, ",")
                             y := strings.Replace(x, " ", "", 1)
                      object.Actions = append(object.Actions, string(y))
                      }
-	object.Export = dbutils.ConvertStrBoolIntToBool(tmp4)
-	object.Import = dbutils.ConvertStrBoolIntToBool(tmp5)
 	return object, err
 }
 
@@ -104,12 +98,10 @@ func (obj *PolicyDefinitionStmtConfig) GetAllObjFromDb(dbHdl *sql.DB) (objList [
     
 	var tmp2 string
 	var tmp3 string
-	var tmp4 string
-	var tmp5 string
 	for rows.Next() {
 
              object := new(PolicyDefinitionStmtConfig)
-             if err = rows.Scan(&object.Name, &object.MatchConditions, &object.Conditions, &object.Actions, &tmp4, &tmp5, ); err != nil {
+             if err = rows.Scan(&object.Name, &object.MatchConditions, &object.Conditions, &object.Actions, ); err != nil {
 
              fmt.Println("Db method Scan failed when interating over PolicyDefinitionStmtConfig")
              }
@@ -123,8 +115,6 @@ convtmpActions := strings.Split(tmp3, ",")
                             y := strings.Replace(x, " ", "", 1)
                      object.Actions = append(object.Actions, string(y))
                      }
-	object.Export = dbutils.ConvertStrBoolIntToBool(tmp4)
-	object.Import = dbutils.ConvertStrBoolIntToBool(tmp5)
 	objList = append(objList, object)
     }
     return objList, nil

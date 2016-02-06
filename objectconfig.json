@@ -39,7 +39,7 @@
 		"Owner": "ribd",
 		"Listeners": []
 	},
- 	"PolicyDefinitionStmtMatchPrefixSetCondition": {
+ 	"PolicyDefinitionStmtDstIpMatchPrefixSetCondition": {
 		"access": "w",
 		"Owner": "ribd",
 		"Listeners": []

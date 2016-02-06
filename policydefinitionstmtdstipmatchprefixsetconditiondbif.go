@@ -8,8 +8,8 @@ import (
 	"reflect"
 )
 
-func (obj PolicyDefinitionStmtMatchPrefixSetCondition) CreateDBTable(dbHdl *sql.DB) error {
-	dbCmd := "CREATE TABLE IF NOT EXISTS PolicyDefinitionStmtMatchPrefixSetCondition " +
+func (obj PolicyDefinitionStmtDstIpMatchPrefixSetCondition) CreateDBTable(dbHdl *sql.DB) error {
+	dbCmd := "CREATE TABLE IF NOT EXISTS PolicyDefinitionStmtDstIpMatchPrefixSetCondition " +
 		"( " +
 		"Name TEXT, " +
 		"PrefixSet TEXT, " +
@@ -20,9 +20,9 @@ func (obj PolicyDefinitionStmtMatchPrefixSetCondition) CreateDBTable(dbHdl *sql.
 	return err
 }
 
-func (obj PolicyDefinitionStmtMatchPrefixSetCondition) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
+func (obj PolicyDefinitionStmtDstIpMatchPrefixSetCondition) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	var objectId int64
-	dbCmd := fmt.Sprintf("INSERT INTO PolicyDefinitionStmtMatchPrefixSetCondition (Name, PrefixSet) VALUES ('%v', '%v') ;",
+	dbCmd := fmt.Sprintf("INSERT INTO PolicyDefinitionStmtDstIpMatchPrefixSetCondition (Name, PrefixSet) VALUES ('%v', '%v') ;",
 		obj.Name, obj.PrefixSet)
 	fmt.Println("**** Create Object called with ", obj)
 
@@ -39,44 +39,44 @@ func (obj PolicyDefinitionStmtMatchPrefixSetCondition) StoreObjectInDb(dbHdl *sq
 	return objectId, err
 }
 
-func (obj PolicyDefinitionStmtMatchPrefixSetCondition) DeleteObjectFromDb(objKey string, dbHdl *sql.DB) error {
+func (obj PolicyDefinitionStmtDstIpMatchPrefixSetCondition) DeleteObjectFromDb(objKey string, dbHdl *sql.DB) error {
 	sqlKey, err := obj.GetSqlKeyStr(objKey)
 	if err != nil {
-		fmt.Println("GetSqlKeyStr for PolicyDefinitionStmtMatchPrefixSetCondition with key", objKey, "failed with error", err)
+		fmt.Println("GetSqlKeyStr for PolicyDefinitionStmtDstIpMatchPrefixSetCondition with key", objKey, "failed with error", err)
 		return err
 	}
 
-	dbCmd := "delete from PolicyDefinitionStmtMatchPrefixSetCondition where " + sqlKey
-	fmt.Println("### DB Deleting PolicyDefinitionStmtMatchPrefixSetCondition\n")
+	dbCmd := "delete from PolicyDefinitionStmtDstIpMatchPrefixSetCondition where " + sqlKey
+	fmt.Println("### DB Deleting PolicyDefinitionStmtDstIpMatchPrefixSetCondition\n")
 	_, err = dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
 
-func (obj PolicyDefinitionStmtMatchPrefixSetCondition) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, error) {
-	var object PolicyDefinitionStmtMatchPrefixSetCondition
+func (obj PolicyDefinitionStmtDstIpMatchPrefixSetCondition) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, error) {
+	var object PolicyDefinitionStmtDstIpMatchPrefixSetCondition
 	sqlKey, err := obj.GetSqlKeyStr(objKey)
-	dbCmd := "select * from PolicyDefinitionStmtMatchPrefixSetCondition where " + sqlKey
+	dbCmd := "select * from PolicyDefinitionStmtDstIpMatchPrefixSetCondition where " + sqlKey
 	err = dbHdl.QueryRow(dbCmd).Scan(&object.Name, &object.PrefixSet, )
-	fmt.Println("### DB Get PolicyDefinitionStmtMatchPrefixSetCondition\n", err)
+	fmt.Println("### DB Get PolicyDefinitionStmtDstIpMatchPrefixSetCondition\n", err)
 	return object, err
 }
 
-func (obj PolicyDefinitionStmtMatchPrefixSetCondition) GetKey() (string, error) {
+func (obj PolicyDefinitionStmtDstIpMatchPrefixSetCondition) GetKey() (string, error) {
 	key := string(obj.Name)
 	return key, nil
 }
 
-func (obj PolicyDefinitionStmtMatchPrefixSetCondition) GetSqlKeyStr(objKey string) (string, error) {
+func (obj PolicyDefinitionStmtDstIpMatchPrefixSetCondition) GetSqlKeyStr(objKey string) (string, error) {
 	keys := strings.Split(objKey, "#")
 	sqlKey := "Name = "+ "\"" + keys[0] + "\""
 	return sqlKey, nil
 }
 
-func (obj *PolicyDefinitionStmtMatchPrefixSetCondition) GetAllObjFromDb(dbHdl *sql.DB) (objList []*PolicyDefinitionStmtMatchPrefixSetCondition, e error) {
-	dbCmd := "select * from PolicyDefinitionStmtMatchPrefixSetCondition"
+func (obj *PolicyDefinitionStmtDstIpMatchPrefixSetCondition) GetAllObjFromDb(dbHdl *sql.DB) (objList []*PolicyDefinitionStmtDstIpMatchPrefixSetCondition, e error) {
+	dbCmd := "select * from PolicyDefinitionStmtDstIpMatchPrefixSetCondition"
 	rows, err := dbHdl.Query(dbCmd)
 	if err != nil {
-		fmt.Println(fmt.Sprintf("DB method Query failed for 'PolicyDefinitionStmtMatchPrefixSetCondition' with error PolicyDefinitionStmtMatchPrefixSetCondition", dbCmd, err))
+		fmt.Println(fmt.Sprintf("DB method Query failed for 'PolicyDefinitionStmtDstIpMatchPrefixSetCondition' with error PolicyDefinitionStmtDstIpMatchPrefixSetCondition", dbCmd, err))
 		return objList, err
 	}
 
@@ -84,17 +84,17 @@ func (obj *PolicyDefinitionStmtMatchPrefixSetCondition) GetAllObjFromDb(dbHdl *s
     
 	for rows.Next() {
 
-             object := new(PolicyDefinitionStmtMatchPrefixSetCondition)
+             object := new(PolicyDefinitionStmtDstIpMatchPrefixSetCondition)
              if err = rows.Scan(&object.Name, &object.PrefixSet, ); err != nil {
 
-             fmt.Println("Db method Scan failed when interating over PolicyDefinitionStmtMatchPrefixSetCondition")
+             fmt.Println("Db method Scan failed when interating over PolicyDefinitionStmtDstIpMatchPrefixSetCondition")
              }
 	objList = append(objList, object)
     }
     return objList, nil
     }
-    func (obj PolicyDefinitionStmtMatchPrefixSetCondition) CompareObjectsAndDiff(updateKeys map[string]bool, dbObj ConfigObj) ([]bool, error) {
-	dbV4Route := dbObj.(PolicyDefinitionStmtMatchPrefixSetCondition)
+    func (obj PolicyDefinitionStmtDstIpMatchPrefixSetCondition) CompareObjectsAndDiff(updateKeys map[string]bool, dbObj ConfigObj) ([]bool, error) {
+	dbV4Route := dbObj.(PolicyDefinitionStmtDstIpMatchPrefixSetCondition)
 	objTyp := reflect.TypeOf(obj)
 	objVal := reflect.ValueOf(obj)
 	dbObjVal := reflect.ValueOf(dbV4Route)
@@ -168,12 +168,12 @@ func (obj *PolicyDefinitionStmtMatchPrefixSetCondition) GetAllObjFromDb(dbHdl *s
 	return attrIds[:idx], nil
 }
 
-    func (obj PolicyDefinitionStmtMatchPrefixSetCondition) MergeDbAndConfigObj(dbObj ConfigObj, attrSet []bool) (ConfigObj, error) {
-	var mergedPolicyDefinitionStmtMatchPrefixSetCondition PolicyDefinitionStmtMatchPrefixSetCondition
+    func (obj PolicyDefinitionStmtDstIpMatchPrefixSetCondition) MergeDbAndConfigObj(dbObj ConfigObj, attrSet []bool) (ConfigObj, error) {
+	var mergedPolicyDefinitionStmtDstIpMatchPrefixSetCondition PolicyDefinitionStmtDstIpMatchPrefixSetCondition
 	objTyp := reflect.TypeOf(obj)
 	objVal := reflect.ValueOf(obj)
 	dbObjVal := reflect.ValueOf(dbObj)
-	mergedObjVal := reflect.ValueOf(&mergedPolicyDefinitionStmtMatchPrefixSetCondition)
+	mergedObjVal := reflect.ValueOf(&mergedPolicyDefinitionStmtDstIpMatchPrefixSetCondition)
 	idx := 0
 	for i:=0; i<objTyp.NumField(); i++ {
 		if fieldTyp := objTyp.Field(i); fieldTyp.Anonymous {
@@ -222,15 +222,15 @@ func (obj *PolicyDefinitionStmtMatchPrefixSetCondition) GetAllObjFromDb(dbHdl *s
 		idx++
 
 	}
-	return mergedPolicyDefinitionStmtMatchPrefixSetCondition, nil
+	return mergedPolicyDefinitionStmtDstIpMatchPrefixSetCondition, nil
 }
 
-    func (obj PolicyDefinitionStmtMatchPrefixSetCondition) UpdateObjectInDb(dbObj ConfigObj, attrSet []bool, dbHdl *sql.DB) error {
+    func (obj PolicyDefinitionStmtDstIpMatchPrefixSetCondition) UpdateObjectInDb(dbObj ConfigObj, attrSet []bool, dbHdl *sql.DB) error {
 	var fieldSqlStr string
-	dbPolicyDefinitionStmtMatchPrefixSetCondition := dbObj.(PolicyDefinitionStmtMatchPrefixSetCondition)
-	objKey, err := dbPolicyDefinitionStmtMatchPrefixSetCondition.GetKey()
-	objSqlKey, err := dbPolicyDefinitionStmtMatchPrefixSetCondition.GetSqlKeyStr(objKey)
-	dbCmd := "update " + "PolicyDefinitionStmtMatchPrefixSetCondition" + " set"
+	dbPolicyDefinitionStmtDstIpMatchPrefixSetCondition := dbObj.(PolicyDefinitionStmtDstIpMatchPrefixSetCondition)
+	objKey, err := dbPolicyDefinitionStmtDstIpMatchPrefixSetCondition.GetKey()
+	objSqlKey, err := dbPolicyDefinitionStmtDstIpMatchPrefixSetCondition.GetSqlKeyStr(objKey)
+	dbCmd := "update " + "PolicyDefinitionStmtDstIpMatchPrefixSetCondition" + " set"
 objTyp := reflect.TypeOf(obj)
 	objVal := reflect.ValueOf(obj)
 	idx := 0
