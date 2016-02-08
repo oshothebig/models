@@ -13,6 +13,7 @@ var ConfigObjectMap = map[string]ConfigObj{
 	"BGPNeighborConfig":                             &BGPNeighborConfig{}, // created before auto YANG
 	"BGPNeighborState":                              &BGPNeighborState{},  // created before auto YANG
 	"BGPPeerGroup":                                  &BGPPeerGroup{},      // created before auto YANG
+	"BGPRoute":                                      &BGPRoute{},          // created before auto YANG
 	"PolicyDefinitionSetsPrefixSet":                 &PolicyDefinitionSetsPrefixSet{},
 	"PolicyDefinitionStmtDstIpMatchPrefixSetCondition":   &PolicyDefinitionStmtDstIpMatchPrefixSetCondition{},
 	"PolicyDefinitionStmtMatchNeighborSetCondition": &PolicyDefinitionStmtMatchNeighborSetCondition{},
