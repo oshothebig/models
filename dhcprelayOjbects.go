@@ -21,11 +21,9 @@ type DhcpRelayGlobalConfig struct {
  */
 type DhcpRelayIntfConfig struct {
 	BaseObj
-	IpSubnet string `SNAPROUTE: "KEY"`
-	Netmask  string `SNAPROUTE: "KEY"`
-	//@TODO: Need to check if_index type
-	IfIndex string `SNAPROUTE: "KEY"`
-	// Use below field for agent sub-type
+	IpSubnet     string `SNAPROUTE: "KEY"`
+	Netmask      string `SNAPROUTE: "KEY"`
+	IfIndex      string `SNAPROUTE: "KEY"`
 	AgentSubType int32
 	Enable       bool
 	// To make life easy for testing first pass lets have only 1 server
@@ -33,8 +31,40 @@ type DhcpRelayIntfConfig struct {
 	ServerIp string
 }
 
-func (obj DhcpRelayGlobalConfig) UnmarshalObject(body []byte) (ConfigObj, error) {
-	var gConf DhcpRelayGlobalConfig
+type DhcpRelayHostDhcpState struct {
+	BaseObj
+	MacAddr        string
+	ServerIp       string
+	OfferedIp      string
+	GatewayIp      string
+	AcceptedIp     string
+	LeaseDuration  string
+	ClientRequest  string
+	ClientResponse string
+	ServerRequest  string
+	ServerResponse string
+}
+
+type DhcpRelayIntfState struct {
+	BaseObj
+	IntfId            int32
+	TotalDrops        int32
+	TotalDhcpClientRx int32
+	TotalDhcpClientTx int32
+	TotalDhcpServerRx int32
+	TotalDhcpServerTx int32
+}
+
+type DhcpRelayIntfServerState struct {
+	BaseObj
+	IntfId    int32
+	ServerIp  string
+	Request   int32
+	Responses int32
+}
+
+func (obj DhcpRelayHostDhcpState) UnmarshalObject(body []byte) (ConfigObj, error) {
+	var gConf DhcpRelayHostDhcpState
 	var err error
 	if len(body) > 0 {
 		if err = json.Unmarshal(body, &gConf); err != nil {
@@ -44,12 +74,23 @@ func (obj DhcpRelayGlobalConfig) UnmarshalObject(body []byte) (ConfigObj, error)
 	return gConf, err
 }
 
-func (obj DhcpRelayIntfConfig) UnmarshalObject(body []byte) (ConfigObj, error) {
-	var gConf DhcpRelayIntfConfig
+func (obj DhcpRelayIntfState) UnmarshalObject(body []byte) (ConfigObj, error) {
+	var gConf DhcpRelayIntfState
 	var err error
 	if len(body) > 0 {
 		if err = json.Unmarshal(body, &gConf); err != nil {
-			fmt.Println("### Trouble in unmarshalling DhcpRelayIntfConfig from Json", body)
+			fmt.Println("### Trouble in unmarshalling DhcpRelayGlobalConfig from Json", body)
+		}
+	}
+	return gConf, err
+}
+
+func (obj DhcpRelayIntfServerState) UnmarshalObject(body []byte) (ConfigObj, error) {
+	var gConf DhcpRelayIntfServerState
+	var err error
+	if len(body) > 0 {
+		if err = json.Unmarshal(body, &gConf); err != nil {
+			fmt.Println("### Trouble in unmarshalling DhcpRelayGlobalConfig from Json", body)
 		}
 	}
 	return gConf, err

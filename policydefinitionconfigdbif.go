@@ -13,6 +13,8 @@ func (obj PolicyDefinitionConfig) CreateDBTable(dbHdl *sql.DB) error {
 		"( " +
 		"Name TEXT, " +
 		"MatchType TEXT, " +
+		"Export INTEGER, " +
+		"Import INTEGER, " +
 		"PRIMARY KEY(Name) " +
 	")"
 
@@ -22,8 +24,8 @@ func (obj PolicyDefinitionConfig) CreateDBTable(dbHdl *sql.DB) error {
 
 func (obj PolicyDefinitionConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	var objectId int64
-	dbCmd := fmt.Sprintf("INSERT INTO PolicyDefinitionConfig (Name, MatchType) VALUES ('%v', '%v') ;",
-		obj.Name, obj.MatchType)
+	dbCmd := fmt.Sprintf("INSERT INTO PolicyDefinitionConfig (Name, MatchType, Export, Import) VALUES ('%v', '%v', '%v', '%v') ;",
+		obj.Name, obj.MatchType, dbutils.ConvertBoolToInt(obj.Export), dbutils.ConvertBoolToInt(obj.Import))
 	fmt.Println("**** Create Object called with ", obj)
 
 	result, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
@@ -56,8 +58,12 @@ func (obj PolicyDefinitionConfig) GetObjectFromDb(objKey string, dbHdl *sql.DB) 
 	var object PolicyDefinitionConfig
 	sqlKey, err := obj.GetSqlKeyStr(objKey)
 	dbCmd := "select * from PolicyDefinitionConfig where " + sqlKey
-	err = dbHdl.QueryRow(dbCmd).Scan(&object.Name, &object.MatchType, )
+	var tmp2 string
+	var tmp3 string
+	err = dbHdl.QueryRow(dbCmd).Scan(&object.Name, &object.MatchType, &tmp2, &tmp3, )
 	fmt.Println("### DB Get PolicyDefinitionConfig\n", err)
+	object.Export = dbutils.ConvertStrBoolIntToBool(tmp2)
+	object.Import = dbutils.ConvertStrBoolIntToBool(tmp3)
 	return object, err
 }
 
@@ -82,13 +88,17 @@ func (obj *PolicyDefinitionConfig) GetAllObjFromDb(dbHdl *sql.DB) (objList []*Po
 
 	defer rows.Close()
     
+	var tmp2 string
+	var tmp3 string
 	for rows.Next() {
 
              object := new(PolicyDefinitionConfig)
-             if err = rows.Scan(&object.Name, &object.MatchType, ); err != nil {
+             if err = rows.Scan(&object.Name, &object.MatchType, &tmp2, &tmp3, ); err != nil {
 
              fmt.Println("Db method Scan failed when interating over PolicyDefinitionConfig")
              }
+	object.Export = dbutils.ConvertStrBoolIntToBool(tmp2)
+	object.Import = dbutils.ConvertStrBoolIntToBool(tmp3)
 	objList = append(objList, object)
     }
     return objList, nil

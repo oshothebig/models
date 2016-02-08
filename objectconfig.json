@@ -39,7 +39,7 @@
 		"Owner": "ribd",
 		"Listeners": []
 	},
- 	"PolicyDefinitionStmtMatchPrefixSetCondition": {
+ 	"PolicyDefinitionStmtDstIpMatchPrefixSetCondition": {
 		"access": "w",
 		"Owner": "ribd",
 		"Listeners": []
@@ -338,5 +338,20 @@
 		"access": "r",
 		"Owner": "bfdd",
 		"Listeners" : []
-	}
+	},
+	"DhcpRelayHostDhcpState" : {
+		"access": "r",
+		"Owner": "dhcprelayd",
+		"Listeners" : []
+        },
+	"DhcpRelayIntfState" : {
+		"access": "r",
+		"Owner": "dhcprelayd",
+		"Listeners" : []
+        },
+	"DhcpRelayIntfServerState" : {
+		"access": "r",
+		"Owner": "dhcprelayd",
+		"Listeners" : []
+        }
 }
