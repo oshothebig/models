@@ -68,7 +68,7 @@ func (obj IPV4RouteState) UnmarshalObject(body []byte) (ConfigObj, error) {
 type IPV4EventState struct {
 	BaseObj
 	TimeStamp string
-    EventInfo     string
+	EventInfo string
 }
 
 func (obj IPV4EventState) UnmarshalObject(body []byte) (ConfigObj, error) {
@@ -220,10 +220,32 @@ func (obj BGPNeighborState) UnmarshalObject(body []byte) (ConfigObj, error) {
 	var err error
 	if len(body) > 0 {
 		if err = json.Unmarshal(body, &nState); err != nil {
-			fmt.Println("### Trouble in unmarshaling BGPNeighborConfig from Json", body)
+			fmt.Println("### Trouble in unmarshaling BGPNeighborState from Json", body)
 		}
 	}
 	return nState, err
+}
+
+type BGPRoute struct {
+	BaseObj
+	Network   string
+	Mask      string
+	NextHop   string
+	Metric    uint32
+	LocalPref uint32
+	Path      []uint32
+	Updated   string
+}
+
+func (obj BGPRoute) UnmarshalObject(body []byte) (ConfigObj, error) {
+	var bgpRoute BGPRoute
+	var err error
+	if len(body) > 0 {
+		if err = json.Unmarshal(body, &bgpRoute); err != nil {
+			fmt.Println("### Trouble in unmarshaling BGPRoute from Json", body)
+		}
+	}
+	return bgpRoute, err
 }
 
 /* Start asicd owned objects */

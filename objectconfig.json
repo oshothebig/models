@@ -129,6 +129,11 @@
 		"Owner": "bgpd",
 		"Listeners": []
 	},
+ 	"BGPRoute": {
+		"access": "r",
+		"Owner": "bgpd",
+		"Listeners": []
+	},
     "AggregationLacpConfig": {
 		"access": "w",
 		"Owner": "lacpd",
