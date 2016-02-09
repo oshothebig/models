@@ -57,6 +57,37 @@ type BfdIntfConfig struct {
 }
 
 /*
+ * BFD Interface state
+ */
+type BfdIntfState struct {
+	BaseObj
+	InterfaceId               int32
+	Enabled                   bool
+	NumSessions               int32
+	LocalMultiplier           int32
+	DesiredMinTxInterval      int32
+	RequiredMinRxInterval     int32
+	RequiredMinEchoRxInterval int32
+	DemandEnabled             bool
+	AuthenticationEnabled     bool
+	AuthenticationType        int32
+	AuthenticationKeyId       int32
+	SequenceNumber            int32
+	AuthenticationData        string
+}
+
+func (obj BfdIntfState) UnmarshalObject(body []byte) (ConfigObj, error) {
+	var gConf BfdIntfState
+	var err error
+	if len(body) > 0 {
+		if err = json.Unmarshal(body, &gConf); err != nil {
+			fmt.Println("### Trouble in unmarshalling BfdIntfState from Json", body)
+		}
+	}
+	return gConf, err
+}
+
+/*
  * BFD Session state
  */
 type BfdSessionState struct {
