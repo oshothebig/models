@@ -21,8 +21,8 @@ func ConvertdhcprelaydDhcpRelayIntfConfigObjToThrift(dbobj *DhcpRelayIntfConfig,
 	thriftobj.IpSubnet = string(dbobj.IpSubnet)
 	thriftobj.IfIndex = string(dbobj.IfIndex)
 
-	for idx, data4 := range dbobj.ServerIp {
-		thriftobj.ServerIp[idx] = string(data4)
+	for _, data4 := range dbobj.ServerIp {
+		thriftobj.ServerIp = append(thriftobj.ServerIp, string(data4))
 	}
 	thriftobj.AgentSubType = int32(dbobj.AgentSubType)
 }
