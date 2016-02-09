@@ -84,8 +84,12 @@ func (obj IPV4EventState) UnmarshalObject(body []byte) (ConfigObj, error) {
 
 type BGPGlobalConfig struct {
 	BaseObj
-	ASNum    uint32
-	RouterId string `SNAPROUTE: "KEY"`
+	ASNum               uint32
+	RouterId            string `SNAPROUTE: "KEY"`
+	UseMultiplePaths    bool
+	EBGPMaxPaths        uint32
+	EBGPAllowMultipleAS bool
+	IBGPMaxPaths        uint32
 }
 
 func (obj BGPGlobalConfig) UnmarshalObject(body []byte) (ConfigObj, error) {
@@ -101,10 +105,14 @@ func (obj BGPGlobalConfig) UnmarshalObject(body []byte) (ConfigObj, error) {
 
 type BGPGlobalState struct {
 	BaseObj
-	AS            uint32
-	RouterId      string
-	TotalPaths    uint32
-	TotalPrefixes uint32
+	AS                  uint32
+	RouterId            string
+	UseMultiplePaths    bool
+	EBGPMaxPaths        uint32
+	EBGPAllowMultipleAS bool
+	IBGPMaxPaths        uint32
+	TotalPaths          uint32
+	TotalPrefixes       uint32
 }
 
 func (obj BGPGlobalState) UnmarshalObject(body []byte) (ConfigObj, error) {

@@ -13,6 +13,10 @@ func (obj BGPGlobalConfig) CreateDBTable(dbHdl *sql.DB) error {
 		"( " +
 		"ASNum INTEGER, " +
 		"RouterId TEXT, " +
+		"UseMultiplePaths INTEGER, " +
+		"EBGPMaxPaths INTEGER, " +
+		"EBGPAllowMultipleAS INTEGER, " +
+		"IBGPMaxPaths INTEGER, " +
 		"PRIMARY KEY(RouterId) " +
 		")"
 
@@ -22,8 +26,8 @@ func (obj BGPGlobalConfig) CreateDBTable(dbHdl *sql.DB) error {
 
 func (obj BGPGlobalConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	var objectId int64
-	dbCmd := fmt.Sprintf("INSERT INTO BGPGlobalConfig (ASNum, RouterId) VALUES ('%v', '%v') ;",
-		obj.ASNum, obj.RouterId)
+	dbCmd := fmt.Sprintf("INSERT INTO BGPGlobalConfig (ASNum, RouterId, UseMultiplePaths, EBGPMaxPaths, EBGPAllowMultipleAS, IBGPMaxPaths) VALUES ('%v', '%v', '%v', '%v', '%v', '%v') ;",
+		obj.ASNum, obj.RouterId, dbutils.ConvertBoolToInt(obj.UseMultiplePaths), obj.EBGPMaxPaths, dbutils.ConvertBoolToInt(obj.EBGPAllowMultipleAS), obj.IBGPMaxPaths)
 	fmt.Println("**** Create Object called with ", obj)
 
 	result, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
@@ -56,8 +60,12 @@ func (obj BGPGlobalConfig) GetObjectFromDb(objKey string, dbHdl *sql.DB) (Config
 	var object BGPGlobalConfig
 	sqlKey, err := obj.GetSqlKeyStr(objKey)
 	dbCmd := "select * from BGPGlobalConfig where " + sqlKey
-	err = dbHdl.QueryRow(dbCmd).Scan(&object.ASNum, &object.RouterId)
+	var tmp2 string
+	var tmp4 string
+	err = dbHdl.QueryRow(dbCmd).Scan(&object.ASNum, &object.RouterId, &tmp2, &object.EBGPMaxPaths, &tmp4, &object.IBGPMaxPaths)
 	fmt.Println("### DB Get BGPGlobalConfig\n", err)
+	object.UseMultiplePaths = dbutils.ConvertStrBoolIntToBool(tmp2)
+	object.EBGPAllowMultipleAS = dbutils.ConvertStrBoolIntToBool(tmp4)
 	return object, err
 }
 
@@ -82,13 +90,17 @@ func (obj *BGPGlobalConfig) GetAllObjFromDb(dbHdl *sql.DB) (objList []*BGPGlobal
 
 	defer rows.Close()
 
+	var tmp2 string
+	var tmp4 string
 	for rows.Next() {
 
 		object := new(BGPGlobalConfig)
-		if err = rows.Scan(&object.ASNum, &object.RouterId); err != nil {
+		if err = rows.Scan(&object.ASNum, &object.RouterId, &tmp2, &object.EBGPMaxPaths, &tmp4, &object.IBGPMaxPaths); err != nil {
 
 			fmt.Println("Db method Scan failed when interating over BGPGlobalConfig")
 		}
+		object.UseMultiplePaths = dbutils.ConvertStrBoolIntToBool(tmp2)
+		object.EBGPAllowMultipleAS = dbutils.ConvertStrBoolIntToBool(tmp4)
 		objList = append(objList, object)
 	}
 	return objList, nil

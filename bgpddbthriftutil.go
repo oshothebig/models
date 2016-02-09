@@ -8,11 +8,19 @@ import (
 func ConvertbgpdBGPGlobalConfigObjToThrift(dbobj *BGPGlobalConfig, thriftobj *bgpd.BGPGlobalConfig) {
 	thriftobj.RouterId = string(dbobj.RouterId)
 	thriftobj.ASNum = int32(dbobj.ASNum)
+	thriftobj.IBGPMaxPaths = int32(dbobj.IBGPMaxPaths)
+	thriftobj.EBGPMaxPaths = int32(dbobj.EBGPMaxPaths)
+	thriftobj.UseMultiplePaths = bool(dbobj.UseMultiplePaths)
+	thriftobj.EBGPAllowMultipleAS = bool(dbobj.EBGPAllowMultipleAS)
 }
 
 func ConvertThriftTobgpdBGPGlobalConfigObj(thriftobj *bgpd.BGPGlobalConfig, dbobj *BGPGlobalConfig) {
 	dbobj.RouterId = string(thriftobj.RouterId)
 	dbobj.ASNum = uint32(thriftobj.ASNum)
+	dbobj.IBGPMaxPaths = uint32(thriftobj.IBGPMaxPaths)
+	dbobj.EBGPMaxPaths = uint32(thriftobj.EBGPMaxPaths)
+	dbobj.UseMultiplePaths = bool(thriftobj.UseMultiplePaths)
+	dbobj.EBGPAllowMultipleAS = bool(thriftobj.EBGPAllowMultipleAS)
 }
 
 func ConvertbgpdBGPNeighborConfigObjToThrift(dbobj *BGPNeighborConfig, thriftobj *bgpd.BGPNeighborConfig) {
