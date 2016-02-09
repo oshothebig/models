@@ -69,6 +69,11 @@
 		"Owner": "ribd",
 		"Listeners": []
 	},
+	"PolicyDefinitionStmtAdminDistanceAction": {
+		"access": "w",
+		"Owner": "ribd",
+		"Listeners": []
+	},
  	"PolicyDefinitionStmtRedistributionAction": {
 		"access": "w",
 		"Owner": "ribd",

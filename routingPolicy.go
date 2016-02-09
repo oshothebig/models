@@ -222,6 +222,22 @@ func (obj PolicyDefinitionStmtIgpActions) UnmarshalObject(body []byte) (ConfigOb
 	}
 	return policyDefinitionStmtIgpActions, err
 }
+type PolicyDefinitionStmtAdminDistanceAction struct {
+	BaseObj
+	Name string  `SNAPROUTE: "KEY"`
+	Value int
+}
+
+func (obj PolicyDefinitionStmtAdminDistanceAction) UnmarshalObject(body []byte) (ConfigObj, error) {
+	var policyDefinitionStmtAdminDistanceAction PolicyDefinitionStmtAdminDistanceAction
+	var err error
+	if len(body) > 0 {
+		if err = json.Unmarshal(body, &policyDefinitionStmtAdminDistanceAction); err != nil {
+			fmt.Println("### Trouble in unmarshaling PolicyDefinitionStmtAdminDistanceAction from Json", body)
+		}
+	}
+	return policyDefinitionStmtAdminDistanceAction, err
+}
 
 type PolicyDefinitionStmtRouteDispositionAction struct {
 	BaseObj
