@@ -61,9 +61,15 @@ func (obj DhcpRelayIntfConfig) GetObjectFromDb(objKey string, dbHdl *sql.DB) (Co
 	sqlKey, err := obj.GetSqlKeyStr(objKey)
 	dbCmd := "select * from DhcpRelayIntfConfig where " + sqlKey
 	var tmp4 string
-	err = dbHdl.QueryRow(dbCmd).Scan(&object.IpSubnet, &object.Netmask, &object.IfIndex, &object.AgentSubType, &tmp4, &object.ServerIp)
+	var tmp5 string
+	err = dbHdl.QueryRow(dbCmd).Scan(&object.IpSubnet, &object.Netmask, &object.IfIndex, &object.AgentSubType, &tmp4, &tmp5)
 	fmt.Println("### DB Get DhcpRelayIntfConfig\n", err)
 	object.Enable = dbutils.ConvertStrBoolIntToBool(tmp4)
+	convtmpServerIp := strings.Split(tmp5, ",")
+	for _, x := range convtmpServerIp {
+		y := strings.Replace(x, " ", "", 1)
+		object.ServerIp = append(object.ServerIp, string(y))
+	}
 	return object, err
 }
 
@@ -89,6 +95,7 @@ func (obj *DhcpRelayIntfConfig) GetAllObjFromDb(dbHdl *sql.DB) (objList []*DhcpR
 	defer rows.Close()
 
 	var tmp4 string
+	var tmp5 string
 	for rows.Next() {
 
 		object := new(DhcpRelayIntfConfig)
@@ -97,6 +104,11 @@ func (obj *DhcpRelayIntfConfig) GetAllObjFromDb(dbHdl *sql.DB) (objList []*DhcpR
 			fmt.Println("Db method Scan failed when interating over DhcpRelayIntfConfig")
 		}
 		object.Enable = dbutils.ConvertStrBoolIntToBool(tmp4)
+		convtmpServerIp := strings.Split(tmp5, ",")
+		for _, x := range convtmpServerIp {
+			y := strings.Replace(x, " ", "", 1)
+			object.ServerIp = append(object.ServerIp, string(y))
+		}
 		objList = append(objList, object)
 	}
 	return objList, nil
