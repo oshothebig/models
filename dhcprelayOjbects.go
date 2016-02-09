@@ -27,8 +27,8 @@ type DhcpRelayIntfConfig struct {
 	AgentSubType int32
 	Enable       bool
 	// To make life easy for testing first pass lets have only 1 server
-	//ServerIp     []string
-	ServerIp string
+	ServerIp []string
+	//ServerIp string
 }
 
 type DhcpRelayHostDhcpState struct {
