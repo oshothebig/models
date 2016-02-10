@@ -12,6 +12,7 @@ func (obj Dot1dStpPortEntryConfig) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS Dot1dStpPortEntryConfig " +
 		"( " +
 		"Dot1dStpPortKey INTEGER, " +
+		"Dot1dBrgIfIndex INTEGER, " +
 		"Dot1dStpPortPriority INTEGER, " +
 		"Dot1dStpPortEnable INTEGER, " +
 		"Dot1dStpPortPathCost INTEGER, " +
@@ -29,8 +30,8 @@ func (obj Dot1dStpPortEntryConfig) CreateDBTable(dbHdl *sql.DB) error {
 
 func (obj Dot1dStpPortEntryConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	var objectId int64
-	dbCmd := fmt.Sprintf("INSERT INTO Dot1dStpPortEntryConfig (Dot1dStpPortKey, Dot1dStpPortPriority, Dot1dStpPortEnable, Dot1dStpPortPathCost, Dot1dStpPortPathCost32, Dot1dStpPortProtocolMigration, Dot1dStpPortAdminPointToPoint, Dot1dStpPortAdminEdgePort, Dot1dStpPortAdminPathCost) VALUES ('%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v') ;",
-		obj.Dot1dStpPortKey, obj.Dot1dStpPortPriority, obj.Dot1dStpPortEnable, obj.Dot1dStpPortPathCost, obj.Dot1dStpPortPathCost32, obj.Dot1dStpPortProtocolMigration, obj.Dot1dStpPortAdminPointToPoint, obj.Dot1dStpPortAdminEdgePort, obj.Dot1dStpPortAdminPathCost)
+	dbCmd := fmt.Sprintf("INSERT INTO Dot1dStpPortEntryConfig (Dot1dStpPortKey, Dot1dBrgIfIndex, Dot1dStpPortPriority, Dot1dStpPortEnable, Dot1dStpPortPathCost, Dot1dStpPortPathCost32, Dot1dStpPortProtocolMigration, Dot1dStpPortAdminPointToPoint, Dot1dStpPortAdminEdgePort, Dot1dStpPortAdminPathCost) VALUES ('%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v') ;",
+		obj.Dot1dStpPortKey, obj.Dot1dBrgIfIndex, obj.Dot1dStpPortPriority, obj.Dot1dStpPortEnable, obj.Dot1dStpPortPathCost, obj.Dot1dStpPortPathCost32, obj.Dot1dStpPortProtocolMigration, obj.Dot1dStpPortAdminPointToPoint, obj.Dot1dStpPortAdminEdgePort, obj.Dot1dStpPortAdminPathCost)
 	fmt.Println("**** Create Object called with ", obj)
 
 	result, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
@@ -63,7 +64,7 @@ func (obj Dot1dStpPortEntryConfig) GetObjectFromDb(objKey string, dbHdl *sql.DB)
 	var object Dot1dStpPortEntryConfig
 	sqlKey, err := obj.GetSqlKeyStr(objKey)
 	dbCmd := "select * from Dot1dStpPortEntryConfig where " + sqlKey
-	err = dbHdl.QueryRow(dbCmd).Scan(&object.Dot1dStpPortKey, &object.Dot1dStpPortPriority, &object.Dot1dStpPortEnable, &object.Dot1dStpPortPathCost, &object.Dot1dStpPortPathCost32, &object.Dot1dStpPortProtocolMigration, &object.Dot1dStpPortAdminPointToPoint, &object.Dot1dStpPortAdminEdgePort, &object.Dot1dStpPortAdminPathCost)
+	err = dbHdl.QueryRow(dbCmd).Scan(&object.Dot1dStpPortKey, &object.Dot1dBrgIfIndex, &object.Dot1dStpPortPriority, &object.Dot1dStpPortEnable, &object.Dot1dStpPortPathCost, &object.Dot1dStpPortPathCost32, &object.Dot1dStpPortProtocolMigration, &object.Dot1dStpPortAdminPointToPoint, &object.Dot1dStpPortAdminEdgePort, &object.Dot1dStpPortAdminPathCost)
 	fmt.Println("### DB Get Dot1dStpPortEntryConfig\n", err)
 	return object, err
 }
@@ -92,7 +93,7 @@ func (obj *Dot1dStpPortEntryConfig) GetAllObjFromDb(dbHdl *sql.DB) (objList []*D
 	for rows.Next() {
 
 		object := new(Dot1dStpPortEntryConfig)
-		if err = rows.Scan(&object.Dot1dStpPortKey, &object.Dot1dStpPortPriority, &object.Dot1dStpPortEnable, &object.Dot1dStpPortPathCost, &object.Dot1dStpPortPathCost32, &object.Dot1dStpPortProtocolMigration, &object.Dot1dStpPortAdminPointToPoint, &object.Dot1dStpPortAdminEdgePort, &object.Dot1dStpPortAdminPathCost); err != nil {
+		if err = rows.Scan(&object.Dot1dStpPortKey, &object.Dot1dBrgIfIndex, &object.Dot1dStpPortPriority, &object.Dot1dStpPortEnable, &object.Dot1dStpPortPathCost, &object.Dot1dStpPortPathCost32, &object.Dot1dStpPortProtocolMigration, &object.Dot1dStpPortAdminPointToPoint, &object.Dot1dStpPortAdminEdgePort, &object.Dot1dStpPortAdminPathCost); err != nil {
 
 			fmt.Println("Db method Scan failed when interating over Dot1dStpPortEntryConfig")
 		}
