@@ -9,25 +9,39 @@ import (
 )
 
 func (obj DhcpRelayIntfConfig) CreateDBTable(dbHdl *sql.DB) error {
-	dbCmd := "CREATE TABLE IF NOT EXISTS DhcpRelayIntfConfig " +
+	dbCmd := "PRAGMA foreign_keys = ON;"
+	_, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
+
+	dbCmd = "CREATE TABLE IF NOT EXISTS DhcpRelayIntfConfig " +
 		"( " +
 		"IpSubnet TEXT, " +
 		"Netmask TEXT, " +
 		"IfIndex TEXT, " +
 		"AgentSubType INTEGER, " +
 		"Enable INTEGER, " +
-		"ServerIp TEXT, " +
 		"PRIMARY KEY(IpSubnet, Netmask, IfIndex) " +
 		")"
+	_, err = dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
 
-	_, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
+	dbCmd = "CREATE TABLE IF NOT EXISTS DhcpRelayIntfConfigServer " +
+		"( " +
+		"IpSubnet TEXT, " +
+		"Netmask TEXT, " +
+		"IfIndex TEXT, " +
+		"ServerIp TEXT,\n" +
+		`CONSTRAINT FK_DhcpRelayServerList
+		   FOREIGN KEY (IpSubnet, Netmask, IfIndex)
+		   REFERENCES DhcpRelayIntfConfig (IpSubnet, Netmask, IfIndex)
+		   ON DELETE CASCADE` +
+		")"
+	_, err = dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
 
 func (obj DhcpRelayIntfConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	var objectId int64
-	dbCmd := fmt.Sprintf("INSERT INTO DhcpRelayIntfConfig (IpSubnet, Netmask, IfIndex, AgentSubType, Enable, ServerIp) VALUES ('%v', '%v', '%v', '%v', '%v', '%v') ;",
-		obj.IpSubnet, obj.Netmask, obj.IfIndex, obj.AgentSubType, dbutils.ConvertBoolToInt(obj.Enable), obj.ServerIp)
+	dbCmd := fmt.Sprintf("INSERT INTO DhcpRelayIntfConfig (IpSubnet, Netmask, IfIndex, AgentSubType, Enable) VALUES ('%v', '%v', '%v', '%v', '%v') ;",
+		obj.IpSubnet, obj.Netmask, obj.IfIndex, obj.AgentSubType, dbutils.ConvertBoolToInt(obj.Enable))
 	fmt.Println("**** Create Object called with ", obj)
 
 	result, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
@@ -38,7 +52,19 @@ func (obj DhcpRelayIntfConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 		if err != nil {
 			fmt.Println("### Failed to return last object id", err)
 		}
-
+	}
+	for i := 0; i < len(obj.ServerIp); i++ {
+		dbCmd = fmt.Sprintf("INSERT INTO DhcpRelayIntfConfigServer (IpSubnet, Netmask, IfIndex, ServerIp) VALUES ('%v', '%v', '%v', '%v') ;",
+			obj.IpSubnet, obj.Netmask, obj.IfIndex, obj.ServerIp[i])
+		result, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
+		if err != nil {
+			fmt.Println("**** Failed to Create table", err)
+		} else {
+			_, err = result.LastInsertId()
+			if err != nil {
+				fmt.Println("### Failed to return last object id", err)
+			}
+		}
 	}
 	return objectId, err
 }
