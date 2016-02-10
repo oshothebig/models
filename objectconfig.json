@@ -79,6 +79,11 @@
 		"Owner": "ribd",
 		"Listeners": []
 	},
+	"RouteDistanceState": {
+		"access": "r",
+		"Owner": "ribd",
+		"Listeners": []
+	},
  	"PolicyDefinitionStmtConfig": {
 		"access": "w",
 		"Owner": "ribd",
