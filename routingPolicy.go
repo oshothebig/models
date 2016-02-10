@@ -239,6 +239,22 @@ func (obj PolicyDefinitionStmtAdminDistanceAction) UnmarshalObject(body []byte) 
 	return policyDefinitionStmtAdminDistanceAction, err
 }
 
+type RouteDistanceState struct {
+	BaseObj
+	Protocol string `SNAPROUTE: "KEY"`
+	Distance int
+}
+func (obj RouteDistanceState) UnmarshalObject(body []byte) (ConfigObj, error) {
+	var routeDistanceState RouteDistanceState
+	var err error
+	if len(body) > 0 {
+		if err = json.Unmarshal(body, &routeDistanceState); err != nil {
+			fmt.Println("### Trouble in unmarshaling RouteDistanceState from Json", body)
+		}
+	}
+	return routeDistanceState, err
+}
+
 type PolicyDefinitionStmtRouteDispositionAction struct {
 	BaseObj
 	Name string  `SNAPROUTE: "KEY"`
@@ -364,7 +380,7 @@ evaluation at the top of this module.
 	//yang_name: name class: leaf
 	Name string  `SNAPROUTE: "KEY"`
 	ConditionInfo string
-	PolicyList    []string
+	PolicyStmtList    []string
 }
 
 func (obj PolicyDefinitionConditionState) UnmarshalObject(body []byte) (ConfigObj, error) {
@@ -395,7 +411,7 @@ evaluation at the top of this module.
 	//yang_name: name class: leaf
 	Name string  `SNAPROUTE: "KEY"`
 	ActionInfo string
-	PolicyList    []string
+	PolicyStmtList    []string
 }
 
 func (obj PolicyDefinitionActionState) UnmarshalObject(body []byte) (ConfigObj, error) {
@@ -434,6 +450,7 @@ or export configuration statements.
 	MatchType string
 	Export bool
 	Import bool
+	Global bool
 	//yang_name: statement class: list
 	StatementList []interface{} //PolicyDefinitionStmtPrecedence
 }
