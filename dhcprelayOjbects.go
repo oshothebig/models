@@ -33,16 +33,20 @@ type DhcpRelayIntfConfig struct {
 
 type DhcpRelayHostDhcpState struct {
 	BaseObj
-	MacAddr        string
-	ServerIp       string
-	OfferedIp      string
-	GatewayIp      string
-	AcceptedIp     string
-	LeaseDuration  string
-	ClientRequest  string
-	ClientResponse string
-	ServerRequest  string
-	ServerResponse string
+	MacAddr         string
+	ServerIp        string
+	OfferedIp       string
+	GatewayIp       string
+	AcceptedIp      string
+	RequestedIp     string
+	ClientDiscover  string
+	ClientRequest   string
+	ClientRequests  int32
+	ClientResponses int32
+	ServerOffer     string
+	ServerAck       string
+	ServerRequests  int32
+	ServerResponses int32
 }
 
 type DhcpRelayIntfState struct {
