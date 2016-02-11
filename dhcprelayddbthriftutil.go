@@ -16,25 +16,19 @@ func ConvertThriftTodhcprelaydDhcpRelayGlobalConfigObj(thriftobj *dhcprelayd.Dhc
 }
 
 func ConvertdhcprelaydDhcpRelayIntfConfigObjToThrift(dbobj *DhcpRelayIntfConfig, thriftobj *dhcprelayd.DhcpRelayIntfConfig) {
-	thriftobj.Netmask = string(dbobj.Netmask)
+	thriftobj.IfIndex = int32(dbobj.IfIndex)
 	thriftobj.Enable = bool(dbobj.Enable)
-	thriftobj.IpSubnet = string(dbobj.IpSubnet)
-	thriftobj.IfIndex = string(dbobj.IfIndex)
 
-	for _, data4 := range dbobj.ServerIp {
-		thriftobj.ServerIp = append(thriftobj.ServerIp, string(data4))
+	for _, data2 := range dbobj.ServerIp {
+		thriftobj.ServerIp = append(thriftobj.ServerIp, string(data2))
 	}
-	thriftobj.AgentSubType = int32(dbobj.AgentSubType)
 }
 
 func ConvertThriftTodhcprelaydDhcpRelayIntfConfigObj(thriftobj *dhcprelayd.DhcpRelayIntfConfig, dbobj *DhcpRelayIntfConfig) {
-	dbobj.Netmask = string(thriftobj.Netmask)
+	dbobj.IfIndex = int32(thriftobj.IfIndex)
 	dbobj.Enable = bool(thriftobj.Enable)
-	dbobj.IpSubnet = string(thriftobj.IpSubnet)
-	dbobj.IfIndex = string(thriftobj.IfIndex)
 
-	for _, data4 := range thriftobj.ServerIp {
-		dbobj.ServerIp = append(dbobj.ServerIp, string(data4))
+	for _, data2 := range thriftobj.ServerIp {
+		dbobj.ServerIp = append(dbobj.ServerIp, string(data2))
 	}
-	dbobj.AgentSubType = int32(thriftobj.AgentSubType)
 }

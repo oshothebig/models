@@ -21,11 +21,11 @@ type DhcpRelayGlobalConfig struct {
  */
 type DhcpRelayIntfConfig struct {
 	BaseObj
-	IpSubnet     string `SNAPROUTE: "KEY"`
-	Netmask      string `SNAPROUTE: "KEY"`
-	IfIndex      string `SNAPROUTE: "KEY"`
-	AgentSubType int32
-	Enable       bool
+	//IpSubnet     string `SNAPROUTE: "KEY"`
+	//Netmask      string `SNAPROUTE: "KEY"`
+	IfIndex int32 `SNAPROUTE: "KEY"`
+	//AgentSubType int32
+	Enable bool
 	// To make life easy for testing first pass lets have only 1 server
 	ServerIp []string
 	//ServerIp string
