@@ -9,29 +9,21 @@ import (
 )
 
 func (obj DhcpRelayIntfConfig) CreateDBTable(dbHdl *sql.DB) error {
-	dbCmd := "PRAGMA foreign_keys = ON;"
-	_, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
-
-	dbCmd = "CREATE TABLE IF NOT EXISTS DhcpRelayIntfConfig " +
+	dbCmd := "CREATE TABLE IF NOT EXISTS DhcpRelayIntfConfig " +
 		"( " +
-		"IpSubnet TEXT, " +
-		"Netmask TEXT, " +
-		"IfIndex TEXT, " +
-		"AgentSubType INTEGER, " +
+		"IfIndex INTEGER, " +
 		"Enable INTEGER, " +
-		"PRIMARY KEY(IpSubnet, Netmask, IfIndex) " +
+		"PRIMARY KEY(IfIndex) " +
 		")"
-	_, err = dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
 
+	_, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
 	dbCmd = "CREATE TABLE IF NOT EXISTS DhcpRelayIntfConfigServer " +
 		"( " +
-		"IpSubnet TEXT, " +
-		"Netmask TEXT, " +
 		"IfIndex TEXT, " +
 		"ServerIp TEXT,\n" +
 		`CONSTRAINT FK_DhcpRelayServerList
-		   FOREIGN KEY (IpSubnet, Netmask, IfIndex)
-		   REFERENCES DhcpRelayIntfConfig (IpSubnet, Netmask, IfIndex)
+		   FOREIGN KEY (IfIndex)
+		   REFERENCES DhcpRelayIntfConfig (IfIndex)
 		   ON DELETE CASCADE` +
 		")"
 	_, err = dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
@@ -40,8 +32,8 @@ func (obj DhcpRelayIntfConfig) CreateDBTable(dbHdl *sql.DB) error {
 
 func (obj DhcpRelayIntfConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	var objectId int64
-	dbCmd := fmt.Sprintf("INSERT INTO DhcpRelayIntfConfig (IpSubnet, Netmask, IfIndex, AgentSubType, Enable) VALUES ('%v', '%v', '%v', '%v', '%v') ;",
-		obj.IpSubnet, obj.Netmask, obj.IfIndex, obj.AgentSubType, dbutils.ConvertBoolToInt(obj.Enable))
+	dbCmd := fmt.Sprintf("INSERT INTO DhcpRelayIntfConfig (IfIndex, Enable) VALUES ('%v', '%v') ;",
+		obj.IfIndex, dbutils.ConvertBoolToInt(obj.Enable))
 	fmt.Println("**** Create Object called with ", obj)
 
 	result, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
@@ -54,8 +46,8 @@ func (obj DhcpRelayIntfConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 		}
 	}
 	for i := 0; i < len(obj.ServerIp); i++ {
-		dbCmd = fmt.Sprintf("INSERT INTO DhcpRelayIntfConfigServer (IpSubnet, Netmask, IfIndex, ServerIp) VALUES ('%v', '%v', '%v', '%v') ;",
-			obj.IpSubnet, obj.Netmask, obj.IfIndex, obj.ServerIp[i])
+		dbCmd = fmt.Sprintf("INSERT INTO DhcpRelayIntfConfigServer (IfIndex, ServerIp) VALUES ('%v', '%v') ;",
+			obj.IfIndex, obj.ServerIp[i])
 		result, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
 		if err != nil {
 			fmt.Println("**** Failed to Create table", err)
@@ -86,12 +78,12 @@ func (obj DhcpRelayIntfConfig) GetObjectFromDb(objKey string, dbHdl *sql.DB) (Co
 	var object DhcpRelayIntfConfig
 	sqlKey, err := obj.GetSqlKeyStr(objKey)
 	dbCmd := "select * from DhcpRelayIntfConfig where " + sqlKey
-	var tmp4 string
-	var tmp5 string
-	err = dbHdl.QueryRow(dbCmd).Scan(&object.IpSubnet, &object.Netmask, &object.IfIndex, &object.AgentSubType, &tmp4, &tmp5)
+	var tmp1 string
+	var tmp2 string
+	err = dbHdl.QueryRow(dbCmd).Scan(&object.IfIndex, &tmp1, &tmp2)
 	fmt.Println("### DB Get DhcpRelayIntfConfig\n", err)
-	object.Enable = dbutils.ConvertStrBoolIntToBool(tmp4)
-	convtmpServerIp := strings.Split(tmp5, ",")
+	object.Enable = dbutils.ConvertStrBoolIntToBool(tmp1)
+	convtmpServerIp := strings.Split(tmp2, ",")
 	for _, x := range convtmpServerIp {
 		y := strings.Replace(x, " ", "", 1)
 		object.ServerIp = append(object.ServerIp, string(y))
@@ -100,13 +92,13 @@ func (obj DhcpRelayIntfConfig) GetObjectFromDb(objKey string, dbHdl *sql.DB) (Co
 }
 
 func (obj DhcpRelayIntfConfig) GetKey() (string, error) {
-	key := string(obj.IpSubnet) + "#" + string(obj.Netmask) + "#" + string(obj.IfIndex)
+	key := string(obj.IfIndex)
 	return key, nil
 }
 
 func (obj DhcpRelayIntfConfig) GetSqlKeyStr(objKey string) (string, error) {
 	keys := strings.Split(objKey, "#")
-	sqlKey := "IpSubnet = " + "\"" + keys[0] + "\"" + " and " + "Netmask = " + "\"" + keys[1] + "\"" + " and " + "IfIndex = " + "\"" + keys[2] + "\""
+	sqlKey := "IfIndex = " + "\"" + keys[0] + "\""
 	return sqlKey, nil
 }
 
@@ -120,17 +112,17 @@ func (obj *DhcpRelayIntfConfig) GetAllObjFromDb(dbHdl *sql.DB) (objList []*DhcpR
 
 	defer rows.Close()
 
-	var tmp4 string
-	var tmp5 string
+	var tmp1 string
+	var tmp2 string
 	for rows.Next() {
 
 		object := new(DhcpRelayIntfConfig)
-		if err = rows.Scan(&object.IpSubnet, &object.Netmask, &object.IfIndex, &object.AgentSubType, &tmp4, &object.ServerIp); err != nil {
+		if err = rows.Scan(&object.IfIndex, &tmp1, &object.ServerIp); err != nil {
 
 			fmt.Println("Db method Scan failed when interating over DhcpRelayIntfConfig")
 		}
-		object.Enable = dbutils.ConvertStrBoolIntToBool(tmp4)
-		convtmpServerIp := strings.Split(tmp5, ",")
+		object.Enable = dbutils.ConvertStrBoolIntToBool(tmp1)
+		convtmpServerIp := strings.Split(tmp2, ",")
 		for _, x := range convtmpServerIp {
 			y := strings.Replace(x, " ", "", 1)
 			object.ServerIp = append(object.ServerIp, string(y))
