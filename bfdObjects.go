@@ -52,7 +52,6 @@ type BfdIntfConfig struct {
 	AuthenticationEnabled     bool
 	AuthType                  uint32
 	AuthKeyId                 uint32
-	SequenceNumber            uint32
 	AuthData                  string
 }
 
@@ -72,7 +71,6 @@ type BfdIntfState struct {
 	AuthenticationEnabled     bool
 	AuthenticationType        int32
 	AuthenticationKeyId       int32
-	SequenceNumber            int32
 	AuthenticationData        string
 }
 
