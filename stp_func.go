@@ -15,7 +15,7 @@ func (obj Dot1dStpPortEntryConfig) UnmarshalObject(body []byte) (ConfigObj, erro
 	}
 	return obj, err
 }
-func (obj Dot1dStpPortEntryState) UnmarshalObject(body []byte) (ConfigObj, error) {
+func (obj Dot1dStpPortEntryStateCounters) UnmarshalObject(body []byte) (ConfigObj, error) {
 	var err error
 	if len(body) > 0 {
 		if err = json.Unmarshal(body, &obj); err != nil {

@@ -454,7 +454,7 @@ module BRIDGE-MIB {
 
 	}
 list dot1dStpBridge {
-	key "dot1dBridgeAddress dot1dStpPriority";
+	key "dot1dBridgeAddress dot1dStpPriority dot1dStpVlan";
       description   
        "A list of information maintained by every port about
         the Spanning Tree Protocol state for that port.";
@@ -487,6 +487,16 @@ list dot1dStpBridge {
       reference     
        "IEEE 802.1D-1998 clause 8.10.2, Table 8-4,
         IEEE 802.1t clause 8.10.2, Table 8-4, clause 14.3.";
+    }
+	
+	leaf dot1dStpVlan {
+      type uint16;
+      config true;
+      description   
+       "Each bridge is associated with a domain.  Typically this domain
+	   is represented as the vlan; The default domain is typically 1";
+      reference     
+       "Cisco PVST+";
     }
 	
   container Config {

@@ -17,6 +17,8 @@ module RSTP-MIB {
 
   import BRIDGE-MIB { prefix "bridge-mib"; }
   import SNMPv2-TC  { prefix "smiv2"; }
+  import ietf-yang-types { prefix yang; }
+  
 
   /*** META INFORMATION ***/
 
@@ -43,6 +45,69 @@ module RSTP-MIB {
 
 
   /* XXX table comments here XXX */
+
+  grouping dot1d-port-statistics {
+    description
+      "BPDU packet statistics for the bridge interfaces";
+
+    container counters {
+      description
+        "BPDU protocol counters";
+
+	    leaf stp-in-pkts {
+	        type yang:counter64;
+	        description
+	          "Number of STP PDUs received";
+	      }
+
+		leaf stp-out-pkts {
+	        type yang:counter64;
+	        description
+	          "Number of STP BPDUs transmitted";
+	      }
+		
+		leaf rstp-in-pkts {
+	        type yang:counter64;
+	        description
+	          "Number of RSTP BPDUs received";
+	      }
+		leaf rstp-out-pkts {
+	        type yang:counter64;
+	        description
+	          "Number of STP BPDUs transmitted";
+	      }
+		leaf tc-in-pkts {
+	        type yang:counter64;
+	        description
+	          "Number of TC BPDUs received";
+	      }
+		leaf tc-out-pkts {
+	        type yang:counter64;
+	        description
+	          "Number of TC BPDUs transmitted";
+	      }
+		leaf pvst-in-pkts {
+	        type yang:counter64;
+	        description
+	          "Number of PVST BPDUs received";
+	      }
+		leaf pvst-out-pkts {
+	        type yang:counter64;
+	        description
+	          "Number of PVST BPDUs transmitted";
+	      }
+		leaf bpdu-in-pkts {
+	        type yang:counter64;
+	        description
+	          "Number of BPDUs received";
+	      }
+		leaf bpdu-out-pkts {
+	        type yang:counter64;
+	        description
+	          "Number of BPDUs transmitted";
+	      }
+	}
+  }
 
   augment "/bridge-mib:dot1dStpPortEntry/bridge-mib:Config" {
     description     
@@ -179,6 +244,8 @@ leaf dot1dStpPortAdminPointToPoint {
        "IEEE 802.1w clause 6.4.3, 6.5, 14.8.2";
     }
 
-      }
+	uses dot1d-port-statistics;
+
+  }
 
 } /* end of module RSTP-MIB */

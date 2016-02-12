@@ -299,7 +299,7 @@
 		"Owner": "stpd",
 		"Listeners" : []
 	},
-	"Dot1dStpPortEntryState" : {
+	"Dot1dStpPortEntryStateCounters" : {
 		"access": "r",
 		"Owner": "stpd",
 		"Listeners" : []
