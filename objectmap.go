@@ -62,6 +62,7 @@ var ConfigObjectMap = map[string]ConfigObj{
 	"PolicyDefinitionStmtMatchProtocolCondition":       &PolicyDefinitionStmtMatchProtocolCondition{},
 	"PolicyDefinitionStmtIgpActions":                   &PolicyDefinitionStmtIgpActions{},
 	"PolicyDefinitionStmtAdminDistanceAction":          &PolicyDefinitionStmtAdminDistanceAction{},
+        "RouteDistanceState":                               &RouteDistanceState{},
 	"PolicyDefinitionConfig":                           &PolicyDefinitionConfig{},
 	"PortConfig":                                       &PortConfig{},
 	"PortState":                                        &PortState{},

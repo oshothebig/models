@@ -79,6 +79,11 @@
 		"Owner": "ribd",
 		"Listeners": []
 	},
+	"RouteDistanceState": {
+		"access": "r",
+		"Owner": "ribd",
+		"Listeners": []
+	},
  	"PolicyDefinitionStmtConfig": {
 		"access": "w",
 		"Owner": "ribd",
@@ -335,6 +340,11 @@
 		"Listeners" : []
 	},
 	"BfdGlobalState" : {
+		"access": "r",
+		"Owner": "bfdd",
+		"Listeners" : []
+	},
+	"BfdIntfState" : {
 		"access": "r",
 		"Owner": "bfdd",
 		"Listeners" : []
