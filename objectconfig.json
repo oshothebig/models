@@ -349,6 +349,11 @@
 		"Owner": "bfdd",
 		"Listeners" : []
 	},
+	"BfdSessionConfig" : {
+		"access": "w",
+		"Owner": "bfdd",
+		"Listeners" : []
+	},
 	"BfdSessionState" : {
 		"access": "r",
 		"Owner": "bfdd",
