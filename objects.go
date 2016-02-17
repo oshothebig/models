@@ -27,8 +27,8 @@ type IPV4Route struct {
 	BaseObj
 	DestinationNw     string `SNAPROUTE: "KEY"`
 	NetworkMask       string `SNAPROUTE: "KEY"`
+	NextHopIp         string `SNAPROUTE: "KEY"`
 	Cost              uint32
-	NextHopIp         string
 	OutgoingIntfType  string
 	OutgoingInterface string
 	Protocol          string
