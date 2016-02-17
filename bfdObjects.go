@@ -86,6 +86,27 @@ func (obj BfdIntfState) UnmarshalObject(body []byte) (ConfigObj, error) {
 }
 
 /*
+ * BFD Session config
+ */
+type BfdSessionConfig struct {
+	BaseObj
+	IpAddr    string
+	Owner     int32
+	Operation int32
+}
+
+func (obj BfdSessionConfig) UnmarshalObject(body []byte) (ConfigObj, error) {
+	var gConf BfdSessionConfig
+	var err error
+	if len(body) > 0 {
+		if err = json.Unmarshal(body, &gConf); err != nil {
+			fmt.Println("### Trouble in unmarshalling BfdSession from Json", body)
+		}
+	}
+	return gConf, err
+}
+
+/*
  * BFD Session state
  */
 type BfdSessionState struct {

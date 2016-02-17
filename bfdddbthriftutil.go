@@ -40,3 +40,15 @@ func ConvertThriftTobfddBfdIntfConfigObj(thriftobj *bfdd.BfdIntfConfig, dbobj *B
 	dbobj.AuthType = uint32(thriftobj.AuthType)
 	dbobj.LocalMultiplier = uint32(thriftobj.LocalMultiplier)
 }
+
+func ConvertbfddBfdSessionConfigObjToThrift(dbobj *BfdSessionConfig, thriftobj *bfdd.BfdSessionConfig) {
+	thriftobj.Owner = int32(dbobj.Owner)
+	thriftobj.Operation = int32(dbobj.Operation)
+	thriftobj.IpAddr = string(dbobj.IpAddr)
+}
+
+func ConvertThriftTobfddBfdSessionConfigObj(thriftobj *bfdd.BfdSessionConfig, dbobj *BfdSessionConfig) {
+	dbobj.Owner = int32(thriftobj.Owner)
+	dbobj.Operation = int32(thriftobj.Operation)
+	dbobj.IpAddr = string(thriftobj.IpAddr)
+}

@@ -22,6 +22,7 @@ var ConfigObjectMap = map[string]ConfigObj{
 	"EthernetConfig":                                   &EthernetConfig{},
 	"AggregationLacpMemberStateCounters":               &AggregationLacpMemberStateCounters{},
 	"AggregationLacpState":                             &AggregationLacpState{},
+	"BfdSessionConfig":                                 &BfdSessionConfig{},
 	"BfdSessionState":                                  &BfdSessionState{},
 	"BfdGlobalConfig":                                  &BfdGlobalConfig{},
 	"BfdGlobalState":                                   &BfdGlobalState{},

@@ -287,6 +287,11 @@
 		"multiplicity":"*",
 		"srcfile": "objects.go"
 	},
+	"BfdSessionConfig" : {
+		"access": "w",
+		"Owner": "bfdd",
+		"Listeners" : []
+	},
 	"BfdSessionState" : {
 		"access": "r",
 		"Owner": "bfdd",
