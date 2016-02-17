@@ -11,7 +11,7 @@ type VrrpIntfConfig struct {
 	// default value is 100
 	Priority int32
 	// No Default for IPv4 addr.. Can support one or more IPv4 addresses
-	IPv4Addr []string
+	IPv4Addr string
 	// IPv6Addr... will add later when we decide to support IPv6
 
 	// Default is 100 centiseconds which is 1 SEC
