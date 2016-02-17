@@ -2,371 +2,318 @@
 	"Vlan"     : {
 		"access": "rw",
 		"Owner": "asicd",
-		"Listeners":[]
+		"multiplicity":"*",
+		"srcfile": "objects.go"
 	},
 	"IPv4Intf" : {
 		"access": "rw",
 		"Owner": "asicd",
-		"Listeners" : []
+		"multiplicity":"*",
+		"srcfile": "objects.go"
 	},
     "ArpConfig" : {
 		"access": "w",
-        "Owner": "arpd",
-        "Listeners":[]
+      "Owner": "arpd",
+		"multiplicity":"*",
+		"srcfile": "objects.go"
     },
     "ArpEntry" : {
 		"access": "r",
-        "Owner": "arpd",
-        "Listeners":[]
+      "Owner": "arpd",
+		"multiplicity":"*",
+		"srcfile": "objects.go"
     },
  	"IPV4Route": {
 		"access": "rw",
 		"Owner": "ribd",
-		"Listeners": []
+		"multiplicity":"*",
+		"srcfile": "objects.go"
 	},
  	"IPV4RouteState": {
 		"access": "r",
 		"Owner": "ribd",
-		"Listeners": []
+		"multiplicity":"*",
+		"srcfile": "objects.go"
 	},
  	"IPV4EventState": {
 		"access": "r",
 		"Owner": "ribd",
-		"Listeners": []
+		"multiplicity":"*",
+		"srcfile": "objects.go"
 	},
 	"PolicyDefinitionSetsPrefixSet" : {
 		"access": "rw",
 		"Owner": "ribd",
-		"Listeners": []
+		"multiplicity":"*",
+		"srcfile": "objects.go"
 	},
  	"PolicyDefinitionStmtDstIpMatchPrefixSetCondition": {
 		"access": "w",
 		"Owner": "ribd",
-		"Listeners": []
+		"multiplicity":"*",
+		"srcfile": "objects.go"
 	},
  	"PolicyDefinitionStmtMatchNeighborSetCondition": {
 		"access": "w",
 		"Owner": "ribd",
-		"Listeners": []
+		"multiplicity":"*",
+		"srcfile": "objects.go"
 	},
  	"PolicyDefinitionStmtMatchTagSetCondition": {
 		"access": "w",
 		"Owner": "ribd",
-		"Listeners": []
+		"multiplicity":"*",
+		"srcfile": "objects.go"
 	},
  	"PolicyDefinitionStmtMatchProtocolCondition": {
 		"access": "w",
 		"Owner": "ribd",
-		"Listeners": []
+		"multiplicity":"*",
+		"srcfile": "objects.go"
 	},
  	"PolicyDefinitionStmtIgpActions": {
 		"access": "w",
 		"Owner": "ribd",
-		"Listeners": []
+		"multiplicity":"*",
+		"srcfile": "objects.go"
 	},
  	"PolicyDefinitionStmtRouteDispositionAction": {
 		"access": "w",
 		"Owner": "ribd",
-		"Listeners": []
+		"multiplicity":"*",
+		"srcfile": "objects.go"
 	},
 	"PolicyDefinitionStmtAdminDistanceAction": {
 		"access": "w",
 		"Owner": "ribd",
-		"Listeners": []
+		"multiplicity":"*",
+		"srcfile": "objects.go"
 	},
  	"PolicyDefinitionStmtRedistributionAction": {
 		"access": "w",
 		"Owner": "ribd",
-		"Listeners": []
+		"multiplicity":"*",
+		"srcfile": "objects.go"
 	},
 	"RouteDistanceState": {
 		"access": "r",
 		"Owner": "ribd",
-		"Listeners": []
+		"multiplicity":"*",
+		"srcfile": "objects.go"
 	},
  	"PolicyDefinitionStmtConfig": {
 		"access": "w",
 		"Owner": "ribd",
-		"Listeners": []
+		"multiplicity":"*",
+		"srcfile": "objects.go"
 	},
  	"PolicyDefinitionStmtState": {
 		"access": "r",
 		"Owner": "ribd",
-		"Listeners": []
+		"multiplicity":"*",
+		"srcfile": "objects.go"
 	},
  	"PolicyDefinitionConditionState": {
 		"access": "r",
 		"Owner": "ribd",
-		"Listeners": []
+		"multiplicity":"*",
+		"srcfile": "objects.go"
 	},
  	"PolicyDefinitionActionState": {
 		"access": "r",
 		"Owner": "ribd",
-		"Listeners": []
+		"multiplicity":"*",
+		"srcfile": "objects.go"
 	},
  	"PolicyDefinitionConfig": {
 		"access": "w",
 		"Owner": "ribd",
-		"Listeners": []
+		"multiplicity":"*",
+		"srcfile": "objects.go"
 	},
  	"PolicyDefinitionState": {
 		"access": "r",
 		"Owner": "ribd",
-		"Listeners": []
+		"multiplicity":"*",
+		"srcfile": "objects.go"
 	},
  	"BGPGlobalConfig": {
 		"access": "w",
 		"Owner": "bgpd",
-		"Listeners": []
+		"multiplicity":"*",
+		"srcfile": "objects.go"
 	},
  	"BGPGlobalState": {
 		"access": "r",
 		"Owner": "bgpd",
-		"Listeners": []
+		"multiplicity":"*",
+		"srcfile": "objects.go"
 	},
  	"BGPNeighborConfig": {
 		"access": "w",
 		"Owner": "bgpd",
-		"Listeners": []
+		"multiplicity":"*",
+		"srcfile": "objects.go"
 	},
  	"BGPNeighborState": {
 		"access": "r",
 		"Owner": "bgpd",
-		"Listeners": []
+		"multiplicity":"*",
+		"srcfile": "objects.go"
 	},
  	"BGPPeerGroup": {
 		"access": "w",
 		"Owner": "bgpd",
-		"Listeners": []
+		"multiplicity":"*",
+		"srcfile": "objects.go"
 	},
  	"BGPRoute": {
 		"access": "r",
 		"Owner": "bgpd",
-		"Listeners": []
+		"multiplicity":"*",
+		"srcfile": "objects.go"
 	},
     "AggregationLacpConfig": {
 		"access": "w",
 		"Owner": "lacpd",
-		"Listeners": []
+		"multiplicity":"*",
+		"srcfile": "objects.go"
     },
 	"AggregationLacpState": {
-			"access": "r",
+	   "access": "r",
 		"Owner": "lacpd",
-		"Listeners": []
+		"multiplicity":"*",
+		"srcfile": "objects.go"
 	},
 	"AggregationLacpMemberStateCounters": {
 		"access": "r",
 		"Owner": "lacpd",
-		"Listeners": []
+		"multiplicity":"*",
+		"srcfile": "objects.go"
 	},
 	"EthernetConfig": {
 		"access": "w",
 		"Owner": "lacpd",
-		"Listeners": []
+		"multiplicity":"*",
+		"srcfile": "objects.go"
     },
 	"PortConfig" : {
 		"access": "rw",
 		"Owner": "asicd",
-		"Listeners" : []
+		"multiplicity":"*",
+		"srcfile": "objects.go"
 	},
 	"PortState" : {
 		"access": "r",
 		"Owner": "asicd",
-		"Listeners" : []
-	},
-		"OspfAreaEntryConfig" : {
-		"access": "w",
-		"Owner": "ospfd",
-		"Listeners" : []
-	},
-	"OspfAreaEntryState" : {
-		"access": "r",
-		"Owner": "ospfd",
-		"Listeners" : []
-	},
-	"OspfStubAreaEntryConfig" : {
-		"access": "w",
-		"Owner": "ospfd",
-		"Listeners" : []
-	},
-	"OspfLsdbEntryState" : {
-		"access": "r",
-		"Owner": "ospfd",
-		"Listeners" : []
-	},
-	"OspfAreaRangeEntryConfig" : {
-		"access": "w",
-		"Owner": "ospfd",
-		"Listeners" : []
-	},
-	"OspfHostEntryConfig" : {
-		"access": "w",
-		"Owner": "ospfd",
-		"Listeners" : []
-	},
-	"OspfHostEntryState" : {
-		"access": "r",
-		"Owner": "asicd",
-		"Listeners" : []
-	},
-	"OspfIfEntryConfig" : {
-		"access": "w",
-		"Owner": "ospfd",
-		"Listeners" : []
-	},
-	"OspfIfEntryState" : {
-		"access": "r",
-		"Owner": "ospfd",
-		"Listeners" : []
-	},
-	"OspfIfMetricEntryConfig" : {
-		"access": "w",
-		"Owner": "ospfd",
-		"Listeners" : []
-	},
-	"OspfVirtIfEntryConfig" : {
-		"access": "w",
-		"Owner": "ospfd",
-		"Listeners" : []
-	},
-	"OspfNbrEntryConfig" : {
-		"access": "w",
-		"Owner": "ospfd",
-		"Listeners" : []
-	},
-	"OspfNbrEntryState" : {
-		"access": "r",
-		"Owner": "ospfd",
-		"Listeners" : []
-	},
-	"OspfVirtNbrEntryState" : {
-		"access": "r",
-		"Owner": "ospfd",
-		"Listeners" : []
-	},
-	"OspfExtLsdbEntryState" : {
-		"access": "r",
-		"Owner": "ospfd",
-		"Listeners" : []
-	},
-	"OspfAreaAggregateEntryConfig" : {
-		"access": "w",
-		"Owner": "ospfd",
-		"Listeners" : []
-	},
-	"OspfLocalLsdbEntryState" : {
-		"access": "r",
-		"Owner": "ospfd",
-		"Listeners" : []
-	},
-	"OspfVirtLocalLsdbEntryState" : {
-		"access": "r",
-		"Owner": "ospfd",
-		"Listeners" : []
-	},
-	"OspfAsLsdbEntryState" : {
-		"access": "r",
-		"Owner": "ospfd",
-		"Listeners" : []
-	},
-	"OspfAreaLsaCountEntryState" : {
-		"access": "r",
-		"Owner": "ospfd",
-		"Listeners" : []
-	},
-	"OspfGlobalConfig" : {
-		"access": "w",
-		"Owner": "ospfd",
-		"Listeners" : []
-	},
-	"OspfGlobalState" : {
-		"access": "r",
-		"Owner": "ospfd",
-		"Listeners" : []
+		"multiplicity":"*",
+		"srcfile": "objects.go"
 	},
 	"UserConfig" : {
 		"access": "w",
 		"Owner": "local",
-		"Listeners" : []
+		"multiplicity":"*",
+		"srcfile": "objects.go"
 	},
 	"UserState" : {
 		"access": "r",
 		"Owner": "local",
-		"Listeners" : []
+		"multiplicity":"*",
+		"srcfile": "objects.go"
 	},
 	"IPV4AddressBlock" : {
 		"access": "w",
 		"Owner": "local",
-		"Listeners" : []
+		"multiplicity":"*",
+		"srcfile": "objects.go"
 	},
 	"Dot1dStpPortEntryConfig" : {
 		"access": "w",
 		"Owner": "stpd",
-		"Listeners" : []
+		"multiplicity":"*",
+		"srcfile": "objects.go"
 	},
 	"Dot1dStpPortEntryState" : {
 		"access": "r",
 		"Owner": "stpd",
-		"Listeners" : []
+		"multiplicity":"*",
+		"srcfile": "objects.go"
 	},
 	"Dot1dStpBridgeConfig" : {
 		"access": "w",
 		"Owner": "stpd",
-		"Listeners" : []
+		"multiplicity":"*",
+		"srcfile": "objects.go"
 	},
 	"Dot1dStpBridgeState" : {
 		"access": "r",
 		"Owner": "stpd",
-		"Listeners" : []
+		"multiplicity":"*",
+		"srcfile": "objects.go"
 	},
 	"DhcpRelayGlobalConfig" : {
 		"access": "w",
 		"Owner": "dhcprelayd",
-		"Listeners" : []
+		"multiplicity":"*",
+		"srcfile": "objects.go"
 	},
 	"DhcpRelayIntfConfig" : {
 		"access": "w",
 		"Owner": "dhcprelayd",
-		"Listeners" : []
-        },
+		"multiplicity":"*",
+		"srcfile": "objects.go"
+   },
 	"BfdGlobalConfig" : {
 		"access": "w",
 		"Owner": "bfdd",
-		"Listeners" : []
+		"multiplicity":"*",
+		"srcfile": "objects.go"
 	},
 	"BfdIntfConfig" : {
 		"access": "w",
 		"Owner": "bfdd",
-		"Listeners" : []
+		"multiplicity":"*",
+		"srcfile": "objects.go"
 	},
 	"BfdGlobalState" : {
 		"access": "r",
 		"Owner": "bfdd",
-		"Listeners" : []
+		"multiplicity":"*",
+		"srcfile": "objects.go"
 	},
 	"BfdIntfState" : {
 		"access": "r",
+		"Owner": "bfdd",
+		"multiplicity":"*",
+		"srcfile": "objects.go"
+	},
+	"BfdSessionConfig" : {
+		"access": "w",
 		"Owner": "bfdd",
 		"Listeners" : []
 	},
 	"BfdSessionState" : {
 		"access": "r",
 		"Owner": "bfdd",
-		"Listeners" : []
+		"multiplicity":"*",
+		"srcfile": "objects.go"
 	},
 	"DhcpRelayHostDhcpState" : {
 		"access": "r",
 		"Owner": "dhcprelayd",
-		"Listeners" : []
-        },
+		"multiplicity":"*",
+		"srcfile": "objects.go"
+   },
 	"DhcpRelayIntfState" : {
 		"access": "r",
 		"Owner": "dhcprelayd",
-		"Listeners" : []
-        },
+		"multiplicity":"*",
+		"srcfile": "objects.go"
+   },
 	"DhcpRelayIntfServerState" : {
 		"access": "r",
 		"Owner": "dhcprelayd",
-		"Listeners" : []
-        }
+		"multiplicity":"*",
+		"srcfile": "objects.go"
+   }
 }
