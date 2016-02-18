@@ -23,6 +23,8 @@ func (obj BGPNeighborConfig) CreateDBTable(dbHdl *sql.DB) error {
 		"ConnectRetryTime INTEGER, " +
 		"HoldTime INTEGER, " +
 		"KeepaliveTime INTEGER, " +
+		"AddPathsRx INTEGER, " +
+		"AddPathsMaxTx INTEGER, " +
 		"PeerGroup TEXT, " +
 		"PRIMARY KEY(NeighborAddress) " +
 		")"
@@ -33,8 +35,8 @@ func (obj BGPNeighborConfig) CreateDBTable(dbHdl *sql.DB) error {
 
 func (obj BGPNeighborConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	var objectId int64
-	dbCmd := fmt.Sprintf("INSERT INTO BGPNeighborConfig (PeerAS, LocalAS, AuthPassword, Description, NeighborAddress, RouteReflectorClusterId, RouteReflectorClient, MultiHopEnable, MultiHopTTL, ConnectRetryTime, HoldTime, KeepaliveTime, PeerGroup) VALUES ('%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v') ;",
-		obj.PeerAS, obj.LocalAS, obj.AuthPassword, obj.Description, obj.NeighborAddress, obj.RouteReflectorClusterId, dbutils.ConvertBoolToInt(obj.RouteReflectorClient), dbutils.ConvertBoolToInt(obj.MultiHopEnable), obj.MultiHopTTL, obj.ConnectRetryTime, obj.HoldTime, obj.KeepaliveTime, obj.PeerGroup)
+	dbCmd := fmt.Sprintf("INSERT INTO BGPNeighborConfig (PeerAS, LocalAS, AuthPassword, Description, NeighborAddress, RouteReflectorClusterId, RouteReflectorClient, MultiHopEnable, MultiHopTTL, ConnectRetryTime, HoldTime, KeepaliveTime, AddPathsRx, AddPathsMaxTx, PeerGroup) VALUES ('%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v') ;",
+		obj.PeerAS, obj.LocalAS, obj.AuthPassword, obj.Description, obj.NeighborAddress, obj.RouteReflectorClusterId, dbutils.ConvertBoolToInt(obj.RouteReflectorClient), dbutils.ConvertBoolToInt(obj.MultiHopEnable), obj.MultiHopTTL, obj.ConnectRetryTime, obj.HoldTime, obj.KeepaliveTime, dbutils.ConvertBoolToInt(obj.AddPathsRx), obj.AddPathsMaxTx, obj.PeerGroup)
 	fmt.Println("**** Create Object called with ", obj)
 
 	result, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
@@ -69,10 +71,12 @@ func (obj BGPNeighborConfig) GetObjectFromDb(objKey string, dbHdl *sql.DB) (Conf
 	dbCmd := "select * from BGPNeighborConfig where " + sqlKey
 	var tmp6 string
 	var tmp7 string
-	err = dbHdl.QueryRow(dbCmd).Scan(&object.PeerAS, &object.LocalAS, &object.AuthPassword, &object.Description, &object.NeighborAddress, &object.RouteReflectorClusterId, &tmp6, &tmp7, &object.MultiHopTTL, &object.ConnectRetryTime, &object.HoldTime, &object.KeepaliveTime, &object.PeerGroup)
+	var tmp12 string
+	err = dbHdl.QueryRow(dbCmd).Scan(&object.PeerAS, &object.LocalAS, &object.AuthPassword, &object.Description, &object.NeighborAddress, &object.RouteReflectorClusterId, &tmp6, &tmp7, &object.MultiHopTTL, &object.ConnectRetryTime, &object.HoldTime, &object.KeepaliveTime, &tmp12, &object.AddPathsMaxTx, &object.PeerGroup)
 	fmt.Println("### DB Get BGPNeighborConfig\n", err)
 	object.RouteReflectorClient = dbutils.ConvertStrBoolIntToBool(tmp6)
 	object.MultiHopEnable = dbutils.ConvertStrBoolIntToBool(tmp7)
+	object.AddPathsRx = dbutils.ConvertStrBoolIntToBool(tmp12)
 	return object, err
 }
 
@@ -99,15 +103,17 @@ func (obj *BGPNeighborConfig) GetAllObjFromDb(dbHdl *sql.DB) (objList []*BGPNeig
 
 	var tmp6 string
 	var tmp7 string
+	var tmp12 string
 	for rows.Next() {
 
 		object := new(BGPNeighborConfig)
-		if err = rows.Scan(&object.PeerAS, &object.LocalAS, &object.AuthPassword, &object.Description, &object.NeighborAddress, &object.RouteReflectorClusterId, &tmp6, &tmp7, &object.MultiHopTTL, &object.ConnectRetryTime, &object.HoldTime, &object.KeepaliveTime, &object.PeerGroup); err != nil {
+		if err = rows.Scan(&object.PeerAS, &object.LocalAS, &object.AuthPassword, &object.Description, &object.NeighborAddress, &object.RouteReflectorClusterId, &tmp6, &tmp7, &object.MultiHopTTL, &object.ConnectRetryTime, &object.HoldTime, &object.KeepaliveTime, &tmp12, &object.AddPathsMaxTx, &object.PeerGroup); err != nil {
 
 			fmt.Println("Db method Scan failed when interating over BGPNeighborConfig")
 		}
 		object.RouteReflectorClient = dbutils.ConvertStrBoolIntToBool(tmp6)
 		object.MultiHopEnable = dbutils.ConvertStrBoolIntToBool(tmp7)
+		object.AddPathsRx = dbutils.ConvertStrBoolIntToBool(tmp12)
 		objList = append(objList, object)
 	}
 	return objList, nil

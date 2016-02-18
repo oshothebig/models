@@ -23,6 +23,8 @@ func (obj BGPPeerGroup) CreateDBTable(dbHdl *sql.DB) error {
 		"ConnectRetryTime INTEGER, " +
 		"HoldTime INTEGER, " +
 		"KeepaliveTime INTEGER, " +
+		"AddPathsRx INTEGER, " +
+		"AddPathsMaxTx INTEGER, " +
 		"PRIMARY KEY(Name) " +
 		")"
 
@@ -32,8 +34,8 @@ func (obj BGPPeerGroup) CreateDBTable(dbHdl *sql.DB) error {
 
 func (obj BGPPeerGroup) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	var objectId int64
-	dbCmd := fmt.Sprintf("INSERT INTO BGPPeerGroup (PeerAS, LocalAS, AuthPassword, Description, Name, RouteReflectorClusterId, RouteReflectorClient, MultiHopEnable, MultiHopTTL, ConnectRetryTime, HoldTime, KeepaliveTime) VALUES ('%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v') ;",
-		obj.PeerAS, obj.LocalAS, obj.AuthPassword, obj.Description, obj.Name, obj.RouteReflectorClusterId, dbutils.ConvertBoolToInt(obj.RouteReflectorClient), dbutils.ConvertBoolToInt(obj.MultiHopEnable), obj.MultiHopTTL, obj.ConnectRetryTime, obj.HoldTime, obj.KeepaliveTime)
+	dbCmd := fmt.Sprintf("INSERT INTO BGPPeerGroup (PeerAS, LocalAS, AuthPassword, Description, Name, RouteReflectorClusterId, RouteReflectorClient, MultiHopEnable, MultiHopTTL, ConnectRetryTime, HoldTime, KeepaliveTime, AddPathsRx, AddPathsMaxTx) VALUES ('%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v') ;",
+		obj.PeerAS, obj.LocalAS, obj.AuthPassword, obj.Description, obj.Name, obj.RouteReflectorClusterId, dbutils.ConvertBoolToInt(obj.RouteReflectorClient), dbutils.ConvertBoolToInt(obj.MultiHopEnable), obj.MultiHopTTL, obj.ConnectRetryTime, obj.HoldTime, obj.KeepaliveTime, dbutils.ConvertBoolToInt(obj.AddPathsRx), obj.AddPathsMaxTx)
 	fmt.Println("**** Create Object called with ", obj)
 
 	result, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
@@ -68,10 +70,12 @@ func (obj BGPPeerGroup) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj
 	dbCmd := "select * from BGPPeerGroup where " + sqlKey
 	var tmp6 string
 	var tmp7 string
-	err = dbHdl.QueryRow(dbCmd).Scan(&object.PeerAS, &object.LocalAS, &object.AuthPassword, &object.Description, &object.Name, &object.RouteReflectorClusterId, &tmp6, &tmp7, &object.MultiHopTTL, &object.ConnectRetryTime, &object.HoldTime, &object.KeepaliveTime)
+	var tmp12 string
+	err = dbHdl.QueryRow(dbCmd).Scan(&object.PeerAS, &object.LocalAS, &object.AuthPassword, &object.Description, &object.Name, &object.RouteReflectorClusterId, &tmp6, &tmp7, &object.MultiHopTTL, &object.ConnectRetryTime, &object.HoldTime, &object.KeepaliveTime, &tmp12, &object.AddPathsMaxTx)
 	fmt.Println("### DB Get BGPPeerGroup\n", err)
 	object.RouteReflectorClient = dbutils.ConvertStrBoolIntToBool(tmp6)
 	object.MultiHopEnable = dbutils.ConvertStrBoolIntToBool(tmp7)
+	object.AddPathsRx = dbutils.ConvertStrBoolIntToBool(tmp12)
 	return object, err
 }
 
@@ -98,15 +102,17 @@ func (obj *BGPPeerGroup) GetAllObjFromDb(dbHdl *sql.DB) (objList []*BGPPeerGroup
 
 	var tmp6 string
 	var tmp7 string
+	var tmp12 string
 	for rows.Next() {
 
 		object := new(BGPPeerGroup)
-		if err = rows.Scan(&object.PeerAS, &object.LocalAS, &object.AuthPassword, &object.Description, &object.Name, &object.RouteReflectorClusterId, &tmp6, &tmp7, &object.MultiHopTTL, &object.ConnectRetryTime, &object.HoldTime, &object.KeepaliveTime); err != nil {
+		if err = rows.Scan(&object.PeerAS, &object.LocalAS, &object.AuthPassword, &object.Description, &object.Name, &object.RouteReflectorClusterId, &tmp6, &tmp7, &object.MultiHopTTL, &object.ConnectRetryTime, &object.HoldTime, &object.KeepaliveTime, &tmp12, &object.AddPathsMaxTx); err != nil {
 
 			fmt.Println("Db method Scan failed when interating over BGPPeerGroup")
 		}
 		object.RouteReflectorClient = dbutils.ConvertStrBoolIntToBool(tmp6)
 		object.MultiHopEnable = dbutils.ConvertStrBoolIntToBool(tmp7)
+		object.AddPathsRx = dbutils.ConvertStrBoolIntToBool(tmp12)
 		objList = append(objList, object)
 	}
 	return objList, nil

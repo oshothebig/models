@@ -162,6 +162,8 @@ type BGPNeighborConfig struct {
 	ConnectRetryTime        uint32
 	HoldTime                uint32
 	KeepaliveTime           uint32
+	AddPathsRx              bool
+	AddPathsMaxTx           uint8
 	PeerGroup               string
 }
 
@@ -190,6 +192,8 @@ type BGPPeerGroup struct {
 	ConnectRetryTime        uint32
 	HoldTime                uint32
 	KeepaliveTime           uint32
+	AddPathsRx              bool
+	AddPathsMaxTx           uint8
 }
 
 func (obj BGPPeerGroup) UnmarshalObject(body []byte) (ConfigObj, error) {
@@ -221,6 +225,8 @@ type BGPNeighborState struct {
 	ConnectRetryTime        uint32
 	HoldTime                uint32
 	KeepaliveTime           uint32
+	AddPathsRx              bool
+	AddPathsMaxTx           uint8
 }
 
 func (obj BGPNeighborState) UnmarshalObject(body []byte) (ConfigObj, error) {
