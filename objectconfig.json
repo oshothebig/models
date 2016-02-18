@@ -290,6 +290,7 @@
 	"BfdSessionConfig" : {
 		"access": "w",
 		"Owner": "bfdd",
+		"multiplicity":"*",
 		"Listeners" : []
 	},
 	"BfdSessionState" : {
