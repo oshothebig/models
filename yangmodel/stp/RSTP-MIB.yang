@@ -46,6 +46,117 @@ module RSTP-MIB {
 
   /* XXX table comments here XXX */
 
+ grouping dot1d-port-fsm-states {
+	description
+	   "This shall contain the previous and current state of the various state machines;
+	    PIM: Port Information State Machine
+	    PRTM: Port Role Transition State Machine
+	    PRXM: Port Receive State Machine
+	    PSTM: Port State Transition State Machine
+	    TCM: Topology Change State Machine
+	    PPM: Port Protocol Migration State Machine
+	    PTXM: Port Transmit State Machine
+	    PTIM: Port Timers State Machine
+	    BDM: Bridge Detection State Machine";
+		
+	container fsm-states {
+		description 
+		   "Per port state machine states";
+		
+		leaf pim-prev-state {
+			type string;
+			description
+			  "PIM previous fsm state";
+		}
+		leaf pim-curr-state {
+			type string;
+			description
+			  "PIM current fsm state";
+		}
+		leaf prtm-prev-state {
+			type string;
+			description
+			  "PRTM previous fsm state";
+		}
+		leaf prtm-curr-state {
+			type string;
+			description
+			  "PRTM current fsm state";
+		}
+		leaf prxm-prev-state {
+			type string;
+			description
+			  "PRXM previous fsm state";
+		}
+		leaf prxm-curr-state {
+			type string;
+			description
+			  "PRXM current fsm state";
+		}
+		leaf pstm-prev-state {
+			type string;
+			description
+			  "PSTM previous fsm state";
+		}
+		leaf pstm-curr-state {
+			type string;
+			description
+			  "PSTM current fsm state";
+		}
+		leaf tcm-prev-state {
+			type string;
+			description
+			  "TCM previous fsm state";
+		}
+		leaf tcm-curr-state {
+			type string;
+			description
+			  "TCM current fsm state";
+		}
+		leaf ppm-prev-state {
+			type string;
+			description
+			  "PPM previous fsm state";
+		}
+		leaf ppm-curr-state {
+			type string;
+			description
+			  "PPM current fsm state";
+		}
+		leaf ptxm-prev-state {
+			type string;
+			description
+			  "PTXM previous fsm state";
+		}
+		leaf ptxm-curr-state {
+			type string;
+			description
+			  "PTXM current fsm state";
+		}
+		leaf ptim-prev-state {
+			type string;
+			description
+			  "PTIM previous fsm state";
+		}
+		leaf ptim-curr-state {
+			type string;
+			description
+			  "PTIM current fsm state";
+		}
+		leaf bdm-prev-state {
+			type string;
+			description
+			  "BDM previous fsm state";
+		}
+		leaf bdm-curr-state {
+			type string;
+			description
+			  "BDM current fsm state";
+		}		
+	}
+}
+
+
   grouping dot1d-port-statistics {
     description
       "BPDU packet statistics for the bridge interfaces";
@@ -106,6 +217,8 @@ module RSTP-MIB {
 	        description
 	          "Number of BPDUs transmitted";
 	      }
+		
+		uses dot1d-port-fsm-states;
 	}
   }
 
@@ -243,7 +356,54 @@ leaf dot1dStpPortAdminPointToPoint {
       reference     
        "IEEE 802.1w clause 6.4.3, 6.5, 14.8.2";
     }
+	
+	leaf dot1dStpBridgePortMaxAge {
+      type int32;
+      units "centi-seconds";
+      description   
+       "The value that all bridges use for MaxAge as advertised by
+	   the root bridge.  Note that 802.1D-1998
+        specifies that the range for this parameter is related
+        to the value of dot1dStpBridgeHelloTime.  The
+        granularity of this timer is specified by 802.1D-1998 to
+        be 1 second.  An agent may return a badValue error if a
+        set is attempted to a value that is not a whole number
+        of seconds.";
+      reference     
+       "IEEE 802.1D-1998: clause 8.5.3.8";
+    }
 
+    leaf dot1dStpBridgePortHelloTime {
+      type int32;
+      units "centi-seconds";
+      description   
+       "The value that all bridges use for HelloTime as advertised by
+	   the root bridge.  The granularity of this
+        timer is specified by 802.1D-1998 to be 1 second.  An
+        agent may return a badValue error if a set is attempted
+        
+        
+        
+        to a value that is not a whole number of seconds.";
+      reference     
+       "IEEE 802.1D-1998: clause 8.5.3.9";
+    }
+
+    leaf dot1dStpBridgePortForwardDelay {
+      type int32 ;
+      units "centi-seconds";
+      description   
+       "The value that all bridges use for ForwardDelay as advertised by
+	   the root bridge.  Note that
+        802.1D-1998 specifies that the range for this parameter
+        is related to the value of dot1dStpBridgeMaxAge.  The
+        granularity of this timer is specified by 802.1D-1998 to
+        be 1 second.  An agent may return a badValue error if a
+        set is attempted to a value that is not a whole number
+        of seconds.";
+      reference     
+       "IEEE 802.1D-1998: clause 8.5.3.10";
+    }
 	uses dot1d-port-statistics;
 
   }
