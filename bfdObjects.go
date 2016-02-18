@@ -120,6 +120,8 @@ type BfdSessionState struct {
 	AuthType              uint32
 	ReceivedAuthSeq       uint32
 	SentAuthSeq           uint32
+	NumTxPackets          uint32
+	NumRxPackets          uint32
 }
 
 func (obj BfdSessionState) UnmarshalObject(body []byte) (ConfigObj, error) {
