@@ -1,3 +1,4 @@
 {
-"vrrpObjects.go" :	 {"owner": "vrrpd"}
+"vrrpObjects.go" :	 {"owner": "vrrpd",
+						     "location" : "l3/vrrp/server"}
 }
