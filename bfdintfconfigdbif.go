@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	"reflect"
+	"strconv"
 	"strings"
 	"utils/dbutils"
 )
@@ -74,7 +75,7 @@ func (obj BfdIntfConfig) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigOb
 }
 
 func (obj BfdIntfConfig) GetKey() (string, error) {
-	key := string(obj.Interface)
+	key := string(strconv.Itoa(int(obj.Interface)))
 	return key, nil
 }
 
@@ -270,7 +271,7 @@ func (obj BfdIntfConfig) UpdateObjectInDb(dbObj ConfigObj, attrSet []bool, dbHdl
 				fieldVal.Kind() == reflect.Uint32 ||
 				fieldVal.Kind() == reflect.Uint64 {
 				fieldSqlStr = fmt.Sprintf(" %s = '%d' ", fieldTyp.Name, int(fieldVal.Uint()))
-			} else if objVal.Kind() == reflect.Bool {
+			} else if fieldVal.Kind() == reflect.Bool {
 				fieldSqlStr = fmt.Sprintf(" %s = '%d' ", fieldTyp.Name, dbutils.ConvertBoolToInt(bool(fieldVal.Bool())))
 			} else {
 				fieldSqlStr = fmt.Sprintf(" %s = '%s' ", fieldTyp.Name, fieldVal.String())
