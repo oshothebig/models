@@ -57,7 +57,7 @@ var ConfigObjectMap = map[string]ConfigObj{
 	"PolicyPrefixSet":                                  &PolicyPrefixSet{},
 	"PolicyConditionConfig":                            &PolicyConditionConfig{},
 	"PolicyConditionState":                             &PolicyConditionState{},
-	"PolicyActionConfig":                               &PolicyActionConfig{},         
+	"PolicyActionConfig":                               &PolicyActionConfig{},
 	"PolicyActionState":                                &PolicyActionState{},
 	"RouteDistanceState":                               &RouteDistanceState{},
 	"PortConfig":                                       &PortConfig{},
@@ -69,5 +69,5 @@ var ConfigObjectMap = map[string]ConfigObj{
 	"Dot1dStpPortEntryConfig":                          &Dot1dStpPortEntryConfig{},
 	"Dot1dStpBridgeState":                              &Dot1dStpBridgeState{},
 	"Dot1dStpBridgeConfig":                             &Dot1dStpBridgeConfig{},
-	"Dot1dStpPortEntryState":                           &Dot1dStpPortEntryState{},
+	"Dot1dStpPortEntryStateCountersFsmStates":          &Dot1dStpPortEntryStateCountersFsmStates{},
 }
