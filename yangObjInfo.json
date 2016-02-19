@@ -1,0 +1,4 @@
+{
+"OSPF-MIB" : { "owner": "ospfd",
+					"location" : "l3/ospf"}
+}

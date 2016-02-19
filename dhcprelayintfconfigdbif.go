@@ -19,7 +19,7 @@ func (obj DhcpRelayIntfConfig) CreateDBTable(dbHdl *sql.DB) error {
 	_, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
 	dbCmd = "CREATE TABLE IF NOT EXISTS DhcpRelayIntfConfigServer " +
 		"( " +
-		"IfIndex TEXT, " +
+		"IfIndex INTEGER, " +
 		"ServerIp TEXT,\n" +
 		`CONSTRAINT FK_DhcpRelayServerList
 		   FOREIGN KEY (IfIndex)

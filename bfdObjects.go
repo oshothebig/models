@@ -86,6 +86,16 @@ func (obj BfdIntfState) UnmarshalObject(body []byte) (ConfigObj, error) {
 }
 
 /*
+ * BFD Session config
+ */
+type BfdSessionConfig struct {
+	BaseObj
+	IpAddr    string `SNAPROUTE: "KEY"`
+	Owner     int32
+	Operation int32
+}
+
+/*
  * BFD Session state
  */
 type BfdSessionState struct {
@@ -110,6 +120,8 @@ type BfdSessionState struct {
 	AuthType              uint32
 	ReceivedAuthSeq       uint32
 	SentAuthSeq           uint32
+	NumTxPackets          uint32
+	NumRxPackets          uint32
 }
 
 func (obj BfdSessionState) UnmarshalObject(body []byte) (ConfigObj, error) {

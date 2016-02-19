@@ -8,26 +8,23 @@ import (
 	"utils/dbutils"
 )
 
-func (obj OspfAreaAggregateEntryConfig) CreateDBTable(dbHdl *sql.DB) error {
-	dbCmd := "CREATE TABLE IF NOT EXISTS OspfAreaAggregateEntryConfig " +
+func (obj BfdSessionConfig) CreateDBTable(dbHdl *sql.DB) error {
+	dbCmd := "CREATE TABLE IF NOT EXISTS BfdSessionConfig " +
 		"( " +
-		"AreaAggregateMaskKey TEXT, " +
-		"AreaAggregateLsdbTypeKey INTEGER, " +
-		"AreaAggregateNetKey TEXT, " +
-		"AreaAggregateAreaIDKey TEXT, " +
-		"AreaAggregateEffect INTEGER, " +
-		"AreaAggregateExtRouteTag INTEGER, " +
-		"PRIMARY KEY(AreaAggregateMaskKey, AreaAggregateLsdbTypeKey, AreaAggregateNetKey, AreaAggregateAreaIDKey) " +
+		"IpAddr TEXT, " +
+		"Owner INTEGER, " +
+		"Operation INTEGER, " +
+		"PRIMARY KEY(IpAddr) " +
 		")"
 
 	_, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
 
-func (obj OspfAreaAggregateEntryConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
+func (obj BfdSessionConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	var objectId int64
-	dbCmd := fmt.Sprintf("INSERT INTO OspfAreaAggregateEntryConfig (AreaAggregateMaskKey, AreaAggregateLsdbTypeKey, AreaAggregateNetKey, AreaAggregateAreaIDKey, AreaAggregateEffect, AreaAggregateExtRouteTag) VALUES ('%v', '%v', '%v', '%v', '%v', '%v') ;",
-		obj.AreaAggregateMaskKey, obj.AreaAggregateLsdbTypeKey, obj.AreaAggregateNetKey, obj.AreaAggregateAreaIDKey, obj.AreaAggregateEffect, obj.AreaAggregateExtRouteTag)
+	dbCmd := fmt.Sprintf("INSERT INTO BfdSessionConfig (IpAddr, Owner, Operation) VALUES ('%v', '%v', '%v') ;",
+		obj.IpAddr, obj.Owner, obj.Operation)
 	fmt.Println("**** Create Object called with ", obj)
 
 	result, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
@@ -43,44 +40,44 @@ func (obj OspfAreaAggregateEntryConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, e
 	return objectId, err
 }
 
-func (obj OspfAreaAggregateEntryConfig) DeleteObjectFromDb(objKey string, dbHdl *sql.DB) error {
+func (obj BfdSessionConfig) DeleteObjectFromDb(objKey string, dbHdl *sql.DB) error {
 	sqlKey, err := obj.GetSqlKeyStr(objKey)
 	if err != nil {
-		fmt.Println("GetSqlKeyStr for OspfAreaAggregateEntryConfig with key", objKey, "failed with error", err)
+		fmt.Println("GetSqlKeyStr for BfdSessionConfig with key", objKey, "failed with error", err)
 		return err
 	}
 
-	dbCmd := "delete from OspfAreaAggregateEntryConfig where " + sqlKey
-	fmt.Println("### DB Deleting OspfAreaAggregateEntryConfig\n")
+	dbCmd := "delete from BfdSessionConfig where " + sqlKey
+	fmt.Println("### DB Deleting BfdSessionConfig\n")
 	_, err = dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
 
-func (obj OspfAreaAggregateEntryConfig) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, error) {
-	var object OspfAreaAggregateEntryConfig
+func (obj BfdSessionConfig) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, error) {
+	var object BfdSessionConfig
 	sqlKey, err := obj.GetSqlKeyStr(objKey)
-	dbCmd := "select * from OspfAreaAggregateEntryConfig where " + sqlKey
-	err = dbHdl.QueryRow(dbCmd).Scan(&object.AreaAggregateMaskKey, &object.AreaAggregateLsdbTypeKey, &object.AreaAggregateNetKey, &object.AreaAggregateAreaIDKey, &object.AreaAggregateEffect, &object.AreaAggregateExtRouteTag)
-	fmt.Println("### DB Get OspfAreaAggregateEntryConfig\n", err)
+	dbCmd := "select * from BfdSessionConfig where " + sqlKey
+	err = dbHdl.QueryRow(dbCmd).Scan(&object.IpAddr, &object.Owner, &object.Operation)
+	fmt.Println("### DB Get BfdSessionConfig\n", err)
 	return object, err
 }
 
-func (obj OspfAreaAggregateEntryConfig) GetKey() (string, error) {
-	key := string(obj.AreaAggregateMaskKey) + "#" + string(obj.AreaAggregateLsdbTypeKey) + "#" + string(obj.AreaAggregateNetKey) + "#" + string(obj.AreaAggregateAreaIDKey)
+func (obj BfdSessionConfig) GetKey() (string, error) {
+	key := string(obj.IpAddr)
 	return key, nil
 }
 
-func (obj OspfAreaAggregateEntryConfig) GetSqlKeyStr(objKey string) (string, error) {
+func (obj BfdSessionConfig) GetSqlKeyStr(objKey string) (string, error) {
 	keys := strings.Split(objKey, "#")
-	sqlKey := "AreaAggregateMaskKey = " + "\"" + keys[0] + "\"" + " and " + "AreaAggregateLsdbTypeKey = " + "\"" + keys[1] + "\"" + " and " + "AreaAggregateNetKey = " + "\"" + keys[2] + "\"" + " and " + "AreaAggregateAreaIDKey = " + "\"" + keys[3] + "\""
+	sqlKey := "IpAddr = " + "\"" + keys[0] + "\""
 	return sqlKey, nil
 }
 
-func (obj *OspfAreaAggregateEntryConfig) GetAllObjFromDb(dbHdl *sql.DB) (objList []*OspfAreaAggregateEntryConfig, e error) {
-	dbCmd := "select * from OspfAreaAggregateEntryConfig"
+func (obj *BfdSessionConfig) GetAllObjFromDb(dbHdl *sql.DB) (objList []*BfdSessionConfig, e error) {
+	dbCmd := "select * from BfdSessionConfig"
 	rows, err := dbHdl.Query(dbCmd)
 	if err != nil {
-		fmt.Println(fmt.Sprintf("DB method Query failed for 'OspfAreaAggregateEntryConfig' with error OspfAreaAggregateEntryConfig", dbCmd, err))
+		fmt.Println(fmt.Sprintf("DB method Query failed for 'BfdSessionConfig' with error BfdSessionConfig", dbCmd, err))
 		return objList, err
 	}
 
@@ -88,17 +85,17 @@ func (obj *OspfAreaAggregateEntryConfig) GetAllObjFromDb(dbHdl *sql.DB) (objList
 
 	for rows.Next() {
 
-		object := new(OspfAreaAggregateEntryConfig)
-		if err = rows.Scan(&object.AreaAggregateMaskKey, &object.AreaAggregateLsdbTypeKey, &object.AreaAggregateNetKey, &object.AreaAggregateAreaIDKey, &object.AreaAggregateEffect, &object.AreaAggregateExtRouteTag); err != nil {
+		object := new(BfdSessionConfig)
+		if err = rows.Scan(&object.IpAddr, &object.Owner, &object.Operation); err != nil {
 
-			fmt.Println("Db method Scan failed when interating over OspfAreaAggregateEntryConfig")
+			fmt.Println("Db method Scan failed when interating over BfdSessionConfig")
 		}
 		objList = append(objList, object)
 	}
 	return objList, nil
 }
-func (obj OspfAreaAggregateEntryConfig) CompareObjectsAndDiff(updateKeys map[string]bool, dbObj ConfigObj) ([]bool, error) {
-	dbV4Route := dbObj.(OspfAreaAggregateEntryConfig)
+func (obj BfdSessionConfig) CompareObjectsAndDiff(updateKeys map[string]bool, dbObj ConfigObj) ([]bool, error) {
+	dbV4Route := dbObj.(BfdSessionConfig)
 	objTyp := reflect.TypeOf(obj)
 	objVal := reflect.ValueOf(obj)
 	dbObjVal := reflect.ValueOf(dbV4Route)
@@ -172,12 +169,12 @@ func (obj OspfAreaAggregateEntryConfig) CompareObjectsAndDiff(updateKeys map[str
 	return attrIds[:idx], nil
 }
 
-func (obj OspfAreaAggregateEntryConfig) MergeDbAndConfigObj(dbObj ConfigObj, attrSet []bool) (ConfigObj, error) {
-	var mergedOspfAreaAggregateEntryConfig OspfAreaAggregateEntryConfig
+func (obj BfdSessionConfig) MergeDbAndConfigObj(dbObj ConfigObj, attrSet []bool) (ConfigObj, error) {
+	var mergedBfdSessionConfig BfdSessionConfig
 	objTyp := reflect.TypeOf(obj)
 	objVal := reflect.ValueOf(obj)
 	dbObjVal := reflect.ValueOf(dbObj)
-	mergedObjVal := reflect.ValueOf(&mergedOspfAreaAggregateEntryConfig)
+	mergedObjVal := reflect.ValueOf(&mergedBfdSessionConfig)
 	idx := 0
 	for i := 0; i < objTyp.NumField(); i++ {
 		if fieldTyp := objTyp.Field(i); fieldTyp.Anonymous {
@@ -226,15 +223,15 @@ func (obj OspfAreaAggregateEntryConfig) MergeDbAndConfigObj(dbObj ConfigObj, att
 		idx++
 
 	}
-	return mergedOspfAreaAggregateEntryConfig, nil
+	return mergedBfdSessionConfig, nil
 }
 
-func (obj OspfAreaAggregateEntryConfig) UpdateObjectInDb(dbObj ConfigObj, attrSet []bool, dbHdl *sql.DB) error {
+func (obj BfdSessionConfig) UpdateObjectInDb(dbObj ConfigObj, attrSet []bool, dbHdl *sql.DB) error {
 	var fieldSqlStr string
-	dbOspfAreaAggregateEntryConfig := dbObj.(OspfAreaAggregateEntryConfig)
-	objKey, err := dbOspfAreaAggregateEntryConfig.GetKey()
-	objSqlKey, err := dbOspfAreaAggregateEntryConfig.GetSqlKeyStr(objKey)
-	dbCmd := "update " + "OspfAreaAggregateEntryConfig" + " set"
+	dbBfdSessionConfig := dbObj.(BfdSessionConfig)
+	objKey, err := dbBfdSessionConfig.GetKey()
+	objSqlKey, err := dbBfdSessionConfig.GetSqlKeyStr(objKey)
+	dbCmd := "update " + "BfdSessionConfig" + " set"
 	objTyp := reflect.TypeOf(obj)
 	objVal := reflect.ValueOf(obj)
 	idx := 0
