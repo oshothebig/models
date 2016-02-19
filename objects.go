@@ -256,6 +256,24 @@ func (obj BGPRoute) UnmarshalObject(body []byte) (ConfigObj, error) {
 	return bgpRoute, err
 }
 
+type BGPAggregate struct {
+	BaseObj
+	IPPrefix        string `SNAPROUTE: "KEY"`
+	GenerateASSet   bool
+	SendSummaryOnly bool
+}
+
+func (obj BGPAggregate) UnmarshalObject(body []byte) (ConfigObj, error) {
+	var bgpAgg BGPAggregate
+	var err error
+	if len(body) > 0 {
+		if err = json.Unmarshal(body, &bgpAgg); err != nil {
+			fmt.Println("### Trouble in unmarshaling BGPRoute from Json", body)
+		}
+	}
+	return bgpAgg, err
+}
+
 /* Start asicd owned objects */
 /*
  * Vlan object and Route objects are exception cases, i.e

@@ -137,6 +137,12 @@
 		"multiplicity":"*",
 		"srcfile": "objects.go"
 	},
+ 	"BGPAggregate": {
+		"access": "w",
+		"Owner": "bgpd",
+		"multiplicity":"*",
+		"srcfile": "objects.go"
+	},
     "AggregationLacpConfig": {
 		"access": "w",
 		"Owner": "lacpd",
