@@ -203,7 +203,7 @@
 		"multiplicity":"*",
 		"srcfile": "objects.go"
 	},
-	"Dot1dStpPortEntryState" : {
+	"Dot1dStpPortEntryStateCountersFsmStates" : {
 		"access": "r",
 		"Owner": "stpd",
 		"multiplicity":"*",
