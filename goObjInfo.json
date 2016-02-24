@@ -1,4 +1,6 @@
 {
 "vrrpObjects.go" :	 {"owner": "vrrpd",
-						     "location" : "l3/vrrp/server"}
+						     "location" : "l3/vrrp/server"},
+"bfdObjects.go" :	 {"owner": "bfdd",
+						     "location" : "l3/bfd/rpc"}
 }

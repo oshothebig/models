@@ -1,16 +1,13 @@
 package models
 
-import (
-	"encoding/json"
-	"fmt"
-)
+import ()
 
 /*
  * Global Config for BFD
  */
 type BfdGlobalConfig struct {
 	BaseObj
-	Bfd    string `SNAPROUTE: "KEY"`
+	Bfd    string `SNAPROUTE: "KEY", ACCESS:"w",  MULTIPLICITY:"1"`
 	Enable bool
 }
 
@@ -19,6 +16,7 @@ type BfdGlobalConfig struct {
  */
 type BfdGlobalState struct {
 	BaseObj
+	Bfd                  string `SNAPROUTE: "KEY", ACCESS:"r",  MULTIPLICITY:"1"`
 	Enable               bool
 	NumInterfaces        uint32
 	NumTotalSessions     uint32
@@ -27,23 +25,12 @@ type BfdGlobalState struct {
 	NumAdminDownSessions uint32
 }
 
-func (obj BfdGlobalState) UnmarshalObject(body []byte) (ConfigObj, error) {
-	var gConf BfdGlobalState
-	var err error
-	if len(body) > 0 {
-		if err = json.Unmarshal(body, &gConf); err != nil {
-			fmt.Println("### Trouble in unmarshalling BfdGlobalState from Json", body)
-		}
-	}
-	return gConf, err
-}
-
 /*
  * BFD Interface config
  */
 type BfdIntfConfig struct {
 	BaseObj
-	IfIndex                   int32 `SNAPROUTE: "KEY"`
+	IfIndex                   int32 `SNAPROUTE: "KEY", ACCESS:"w",  MULTIPLICITY:"*"`
 	LocalMultiplier           uint32
 	DesiredMinTxInterval      uint32
 	RequiredMinRxInterval     uint32
@@ -60,7 +47,7 @@ type BfdIntfConfig struct {
  */
 type BfdIntfState struct {
 	BaseObj
-	IfIndex                   int32
+	IfIndex                   int32 `SNAPROUTE: "KEY", ACCESS:"r",  MULTIPLICITY:"*"`
 	Enabled                   bool
 	NumSessions               int32
 	LocalMultiplier           int32
@@ -74,23 +61,12 @@ type BfdIntfState struct {
 	AuthenticationData        string
 }
 
-func (obj BfdIntfState) UnmarshalObject(body []byte) (ConfigObj, error) {
-	var gConf BfdIntfState
-	var err error
-	if len(body) > 0 {
-		if err = json.Unmarshal(body, &gConf); err != nil {
-			fmt.Println("### Trouble in unmarshalling BfdIntfState from Json", body)
-		}
-	}
-	return gConf, err
-}
-
 /*
  * BFD Session config
  */
 type BfdSessionConfig struct {
 	BaseObj
-	IpAddr    string `SNAPROUTE: "KEY"`
+	IpAddr    string `SNAPROUTE: "KEY", ACCESS:"w",  MULTIPLICITY:"*"`
 	PerLink   bool
 	Owner     string
 	Operation string
@@ -101,7 +77,7 @@ type BfdSessionConfig struct {
  */
 type BfdSessionState struct {
 	BaseObj
-	SessionId             int32
+	SessionId             int32 `SNAPROUTE: "KEY", ACCESS:"r",  MULTIPLICITY:"*"`
 	LocalIpAddr           string
 	RemoteIpAddr          string
 	IfIndex               int32
@@ -123,15 +99,4 @@ type BfdSessionState struct {
 	SentAuthSeq           uint32
 	NumTxPackets          uint32
 	NumRxPackets          uint32
-}
-
-func (obj BfdSessionState) UnmarshalObject(body []byte) (ConfigObj, error) {
-	var gConf BfdSessionState
-	var err error
-	if len(body) > 0 {
-		if err = json.Unmarshal(body, &gConf); err != nil {
-			fmt.Println("### Trouble in unmarshalling BfdSessionState from Json", body)
-		}
-	}
-	return gConf, err
 }
