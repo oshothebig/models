@@ -20,11 +20,11 @@ func ConvertbfddBfdIntfConfigObjToThrift(dbobj *BfdIntfConfig, thriftobj *bfdd.B
 	thriftobj.AuthenticationEnabled = bool(dbobj.AuthenticationEnabled)
 	thriftobj.DemandEnabled = bool(dbobj.DemandEnabled)
 	thriftobj.RequiredMinRxInterval = int32(dbobj.RequiredMinRxInterval)
-	thriftobj.Interface = int32(dbobj.Interface)
+	thriftobj.IfIndex = int32(dbobj.IfIndex)
 	thriftobj.AuthKeyId = int32(dbobj.AuthKeyId)
 	thriftobj.RequiredMinEchoRxInterval = int32(dbobj.RequiredMinEchoRxInterval)
 	thriftobj.AuthData = string(dbobj.AuthData)
-	thriftobj.AuthType = int32(dbobj.AuthType)
+	thriftobj.AuthType = string(dbobj.AuthType)
 	thriftobj.LocalMultiplier = int32(dbobj.LocalMultiplier)
 }
 
@@ -33,22 +33,24 @@ func ConvertThriftTobfddBfdIntfConfigObj(thriftobj *bfdd.BfdIntfConfig, dbobj *B
 	dbobj.AuthenticationEnabled = bool(thriftobj.AuthenticationEnabled)
 	dbobj.DemandEnabled = bool(thriftobj.DemandEnabled)
 	dbobj.RequiredMinRxInterval = uint32(thriftobj.RequiredMinRxInterval)
-	dbobj.Interface = int32(thriftobj.Interface)
+	dbobj.IfIndex = int32(thriftobj.IfIndex)
 	dbobj.AuthKeyId = uint32(thriftobj.AuthKeyId)
 	dbobj.RequiredMinEchoRxInterval = uint32(thriftobj.RequiredMinEchoRxInterval)
 	dbobj.AuthData = string(thriftobj.AuthData)
-	dbobj.AuthType = uint32(thriftobj.AuthType)
+	dbobj.AuthType = string(thriftobj.AuthType)
 	dbobj.LocalMultiplier = uint32(thriftobj.LocalMultiplier)
 }
 
 func ConvertbfddBfdSessionConfigObjToThrift(dbobj *BfdSessionConfig, thriftobj *bfdd.BfdSessionConfig) {
-	thriftobj.Owner = int32(dbobj.Owner)
-	thriftobj.Operation = int32(dbobj.Operation)
+	thriftobj.Owner = string(dbobj.Owner)
+	thriftobj.Operation = string(dbobj.Operation)
 	thriftobj.IpAddr = string(dbobj.IpAddr)
+	thriftobj.PerLink = bool(dbobj.PerLink)
 }
 
 func ConvertThriftTobfddBfdSessionConfigObj(thriftobj *bfdd.BfdSessionConfig, dbobj *BfdSessionConfig) {
-	dbobj.Owner = int32(thriftobj.Owner)
-	dbobj.Operation = int32(thriftobj.Operation)
+	dbobj.Owner = string(thriftobj.Owner)
+	dbobj.Operation = string(thriftobj.Operation)
 	dbobj.IpAddr = string(thriftobj.IpAddr)
+	dbobj.PerLink = bool(thriftobj.PerLink)
 }
