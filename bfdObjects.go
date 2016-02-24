@@ -43,14 +43,14 @@ func (obj BfdGlobalState) UnmarshalObject(body []byte) (ConfigObj, error) {
  */
 type BfdIntfConfig struct {
 	BaseObj
-	Interface                 int32 `SNAPROUTE: "KEY"`
+	IfIndex                   int32 `SNAPROUTE: "KEY"`
 	LocalMultiplier           uint32
 	DesiredMinTxInterval      uint32
 	RequiredMinRxInterval     uint32
 	RequiredMinEchoRxInterval uint32
 	DemandEnabled             bool
 	AuthenticationEnabled     bool
-	AuthType                  uint32
+	AuthType                  string
 	AuthKeyId                 uint32
 	AuthData                  string
 }
@@ -60,16 +60,16 @@ type BfdIntfConfig struct {
  */
 type BfdIntfState struct {
 	BaseObj
-	InterfaceId               int32
+	IfIndex                   int32
 	Enabled                   bool
 	NumSessions               int32
 	LocalMultiplier           int32
-	DesiredMinTxInterval      int32
-	RequiredMinRxInterval     int32
-	RequiredMinEchoRxInterval int32
+	DesiredMinTxInterval      string
+	RequiredMinRxInterval     string
+	RequiredMinEchoRxInterval string
 	DemandEnabled             bool
 	AuthenticationEnabled     bool
-	AuthenticationType        int32
+	AuthenticationType        string
 	AuthenticationKeyId       int32
 	AuthenticationData        string
 }
@@ -91,8 +91,9 @@ func (obj BfdIntfState) UnmarshalObject(body []byte) (ConfigObj, error) {
 type BfdSessionConfig struct {
 	BaseObj
 	IpAddr    string `SNAPROUTE: "KEY"`
-	Owner     int32
-	Operation int32
+	PerLink   bool
+	Owner     string
+	Operation string
 }
 
 /*
@@ -103,21 +104,21 @@ type BfdSessionState struct {
 	SessionId             int32
 	LocalIpAddr           string
 	RemoteIpAddr          string
-	InterfaceId           int32
+	IfIndex               int32
 	RegisteredProtocols   string
-	SessionState          int32
-	RemoteSessionState    int32
+	SessionState          string
+	RemoteSessionState    string
 	LocalDiscriminator    uint32
 	RemoteDiscriminator   uint32
-	LocalDiagType         int32
-	DesiredMinTxInterval  int32
-	RequiredMinRxInterval int32
-	RemoteMinRxInterval   int32
+	LocalDiagType         string
+	DesiredMinTxInterval  string
+	RequiredMinRxInterval string
+	RemoteMinRxInterval   string
 	DetectionMultiplier   uint32
 	DemandMode            bool
 	RemoteDemandMode      bool
 	AuthSeqKnown          bool
-	AuthType              uint32
+	AuthType              string
 	ReceivedAuthSeq       uint32
 	SentAuthSeq           uint32
 	NumTxPackets          uint32
