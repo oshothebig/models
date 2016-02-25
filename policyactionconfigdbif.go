@@ -8,10 +8,14 @@ import (
 	"reflect"
 )
 
-func (obj PolicyDefinitionStmtMatchProtocolCondition) CreateDBTable(dbHdl *sql.DB) error {
-	dbCmd := "CREATE TABLE IF NOT EXISTS PolicyDefinitionStmtMatchProtocolCondition " +
+func (obj PolicyActionConfig) CreateDBTable(dbHdl *sql.DB) error {
+	dbCmd := "CREATE TABLE IF NOT EXISTS PolicyActionConfig " +
 		"( " +
 		"Name TEXT, " +
+		"ActionType TEXT, " +
+		"SetAdminDistanceValue INTEGER, " +
+		"Accept INTEGER, " +
+		"Reject INTEGER, " +
 		"PRIMARY KEY(Name) " +
 	")"
 
@@ -19,10 +23,10 @@ func (obj PolicyDefinitionStmtMatchProtocolCondition) CreateDBTable(dbHdl *sql.D
 	return err
 }
 
-func (obj PolicyDefinitionStmtMatchProtocolCondition) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
+func (obj PolicyActionConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	var objectId int64
-	dbCmd := fmt.Sprintf("INSERT INTO PolicyDefinitionStmtMatchProtocolCondition (Name) VALUES ('%v') ;",
-		obj.Name)
+	dbCmd := fmt.Sprintf("INSERT INTO PolicyActionConfig (Name, ActionType, SetAdminDistanceValue, Accept, Reject) VALUES ('%v', '%v', '%v', '%v', '%v') ;",
+		obj.Name, obj.ActionType, obj.SetAdminDistanceValue, dbutils.ConvertBoolToInt(obj.Accept), dbutils.ConvertBoolToInt(obj.Reject))
 	fmt.Println("**** Create Object called with ", obj)
 
 	result, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
@@ -38,62 +42,70 @@ func (obj PolicyDefinitionStmtMatchProtocolCondition) StoreObjectInDb(dbHdl *sql
 	return objectId, err
 }
 
-func (obj PolicyDefinitionStmtMatchProtocolCondition) DeleteObjectFromDb(objKey string, dbHdl *sql.DB) error {
+func (obj PolicyActionConfig) DeleteObjectFromDb(objKey string, dbHdl *sql.DB) error {
 	sqlKey, err := obj.GetSqlKeyStr(objKey)
 	if err != nil {
-		fmt.Println("GetSqlKeyStr for PolicyDefinitionStmtMatchProtocolCondition with key", objKey, "failed with error", err)
+		fmt.Println("GetSqlKeyStr for PolicyActionConfig with key", objKey, "failed with error", err)
 		return err
 	}
 
-	dbCmd := "delete from PolicyDefinitionStmtMatchProtocolCondition where " + sqlKey
-	fmt.Println("### DB Deleting PolicyDefinitionStmtMatchProtocolCondition\n")
+	dbCmd := "delete from PolicyActionConfig where " + sqlKey
+	fmt.Println("### DB Deleting PolicyActionConfig\n")
 	_, err = dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
 
-func (obj PolicyDefinitionStmtMatchProtocolCondition) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, error) {
-	var object PolicyDefinitionStmtMatchProtocolCondition
+func (obj PolicyActionConfig) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, error) {
+	var object PolicyActionConfig
 	sqlKey, err := obj.GetSqlKeyStr(objKey)
-	dbCmd := "select * from PolicyDefinitionStmtMatchProtocolCondition where " + sqlKey
-	err = dbHdl.QueryRow(dbCmd).Scan(&object.Name, )
-	fmt.Println("### DB Get PolicyDefinitionStmtMatchProtocolCondition\n", err)
+	dbCmd := "select * from PolicyActionConfig where " + sqlKey
+	var tmp3 string
+	var tmp4 string
+	err = dbHdl.QueryRow(dbCmd).Scan(&object.Name, &object.ActionType, &object.SetAdminDistanceValue, &tmp3, &tmp4, )
+	fmt.Println("### DB Get PolicyActionConfig\n", err)
+	object.Accept = dbutils.ConvertStrBoolIntToBool(tmp3)
+	object.Reject = dbutils.ConvertStrBoolIntToBool(tmp4)
 	return object, err
 }
 
-func (obj PolicyDefinitionStmtMatchProtocolCondition) GetKey() (string, error) {
+func (obj PolicyActionConfig) GetKey() (string, error) {
 	key := string(obj.Name)
 	return key, nil
 }
 
-func (obj PolicyDefinitionStmtMatchProtocolCondition) GetSqlKeyStr(objKey string) (string, error) {
+func (obj PolicyActionConfig) GetSqlKeyStr(objKey string) (string, error) {
 	keys := strings.Split(objKey, "#")
 	sqlKey := "Name = "+ "\"" + keys[0] + "\""
 	return sqlKey, nil
 }
 
-func (obj *PolicyDefinitionStmtMatchProtocolCondition) GetAllObjFromDb(dbHdl *sql.DB) (objList []*PolicyDefinitionStmtMatchProtocolCondition, e error) {
-	dbCmd := "select * from PolicyDefinitionStmtMatchProtocolCondition"
+func (obj *PolicyActionConfig) GetAllObjFromDb(dbHdl *sql.DB) (objList []*PolicyActionConfig, e error) {
+	dbCmd := "select * from PolicyActionConfig"
 	rows, err := dbHdl.Query(dbCmd)
 	if err != nil {
-		fmt.Println(fmt.Sprintf("DB method Query failed for 'PolicyDefinitionStmtMatchProtocolCondition' with error PolicyDefinitionStmtMatchProtocolCondition", dbCmd, err))
+		fmt.Println(fmt.Sprintf("DB method Query failed for 'PolicyActionConfig' with error PolicyActionConfig", dbCmd, err))
 		return objList, err
 	}
 
 	defer rows.Close()
     
+	var tmp3 string
+	var tmp4 string
 	for rows.Next() {
 
-             object := new(PolicyDefinitionStmtMatchProtocolCondition)
-             if err = rows.Scan(&object.Name, ); err != nil {
+             object := new(PolicyActionConfig)
+             if err = rows.Scan(&object.Name, &object.ActionType, &object.SetAdminDistanceValue, &tmp3, &tmp4, ); err != nil {
 
-             fmt.Println("Db method Scan failed when interating over PolicyDefinitionStmtMatchProtocolCondition")
+             fmt.Println("Db method Scan failed when interating over PolicyActionConfig")
              }
+	object.Accept = dbutils.ConvertStrBoolIntToBool(tmp3)
+	object.Reject = dbutils.ConvertStrBoolIntToBool(tmp4)
 	objList = append(objList, object)
     }
     return objList, nil
     }
-    func (obj PolicyDefinitionStmtMatchProtocolCondition) CompareObjectsAndDiff(updateKeys map[string]bool, dbObj ConfigObj) ([]bool, error) {
-	dbV4Route := dbObj.(PolicyDefinitionStmtMatchProtocolCondition)
+    func (obj PolicyActionConfig) CompareObjectsAndDiff(updateKeys map[string]bool, dbObj ConfigObj) ([]bool, error) {
+	dbV4Route := dbObj.(PolicyActionConfig)
 	objTyp := reflect.TypeOf(obj)
 	objVal := reflect.ValueOf(obj)
 	dbObjVal := reflect.ValueOf(dbV4Route)
@@ -167,12 +179,12 @@ func (obj *PolicyDefinitionStmtMatchProtocolCondition) GetAllObjFromDb(dbHdl *sq
 	return attrIds[:idx], nil
 }
 
-    func (obj PolicyDefinitionStmtMatchProtocolCondition) MergeDbAndConfigObj(dbObj ConfigObj, attrSet []bool) (ConfigObj, error) {
-	var mergedPolicyDefinitionStmtMatchProtocolCondition PolicyDefinitionStmtMatchProtocolCondition
+    func (obj PolicyActionConfig) MergeDbAndConfigObj(dbObj ConfigObj, attrSet []bool) (ConfigObj, error) {
+	var mergedPolicyActionConfig PolicyActionConfig
 	objTyp := reflect.TypeOf(obj)
 	objVal := reflect.ValueOf(obj)
 	dbObjVal := reflect.ValueOf(dbObj)
-	mergedObjVal := reflect.ValueOf(&mergedPolicyDefinitionStmtMatchProtocolCondition)
+	mergedObjVal := reflect.ValueOf(&mergedPolicyActionConfig)
 	idx := 0
 	for i:=0; i<objTyp.NumField(); i++ {
 		if fieldTyp := objTyp.Field(i); fieldTyp.Anonymous {
@@ -221,15 +233,15 @@ func (obj *PolicyDefinitionStmtMatchProtocolCondition) GetAllObjFromDb(dbHdl *sq
 		idx++
 
 	}
-	return mergedPolicyDefinitionStmtMatchProtocolCondition, nil
+	return mergedPolicyActionConfig, nil
 }
 
-    func (obj PolicyDefinitionStmtMatchProtocolCondition) UpdateObjectInDb(dbObj ConfigObj, attrSet []bool, dbHdl *sql.DB) error {
+    func (obj PolicyActionConfig) UpdateObjectInDb(dbObj ConfigObj, attrSet []bool, dbHdl *sql.DB) error {
 	var fieldSqlStr string
-	dbPolicyDefinitionStmtMatchProtocolCondition := dbObj.(PolicyDefinitionStmtMatchProtocolCondition)
-	objKey, err := dbPolicyDefinitionStmtMatchProtocolCondition.GetKey()
-	objSqlKey, err := dbPolicyDefinitionStmtMatchProtocolCondition.GetSqlKeyStr(objKey)
-	dbCmd := "update " + "PolicyDefinitionStmtMatchProtocolCondition" + " set"
+	dbPolicyActionConfig := dbObj.(PolicyActionConfig)
+	objKey, err := dbPolicyActionConfig.GetKey()
+	objSqlKey, err := dbPolicyActionConfig.GetSqlKeyStr(objKey)
+	dbCmd := "update " + "PolicyActionConfig" + " set"
 objTyp := reflect.TypeOf(obj)
 	objVal := reflect.ValueOf(obj)
 	idx := 0

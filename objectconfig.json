@@ -41,55 +41,19 @@
 		"multiplicity":"*",
 		"srcfile": "objects.go"
 	},
-	"PolicyDefinitionSetsPrefixSet" : {
+	"PolicyPrefixSet" : {
 		"access": "rw",
 		"Owner": "ribd",
 		"multiplicity":"*",
 		"srcfile": "objects.go"
 	},
- 	"PolicyDefinitionStmtDstIpMatchPrefixSetCondition": {
+ 	"PolicyConditionConfig": {
 		"access": "w",
 		"Owner": "ribd",
 		"multiplicity":"*",
 		"srcfile": "objects.go"
 	},
- 	"PolicyDefinitionStmtMatchNeighborSetCondition": {
-		"access": "w",
-		"Owner": "ribd",
-		"multiplicity":"*",
-		"srcfile": "objects.go"
-	},
- 	"PolicyDefinitionStmtMatchTagSetCondition": {
-		"access": "w",
-		"Owner": "ribd",
-		"multiplicity":"*",
-		"srcfile": "objects.go"
-	},
- 	"PolicyDefinitionStmtMatchProtocolCondition": {
-		"access": "w",
-		"Owner": "ribd",
-		"multiplicity":"*",
-		"srcfile": "objects.go"
-	},
- 	"PolicyDefinitionStmtIgpActions": {
-		"access": "w",
-		"Owner": "ribd",
-		"multiplicity":"*",
-		"srcfile": "objects.go"
-	},
- 	"PolicyDefinitionStmtRouteDispositionAction": {
-		"access": "w",
-		"Owner": "ribd",
-		"multiplicity":"*",
-		"srcfile": "objects.go"
-	},
-	"PolicyDefinitionStmtAdminDistanceAction": {
-		"access": "w",
-		"Owner": "ribd",
-		"multiplicity":"*",
-		"srcfile": "objects.go"
-	},
- 	"PolicyDefinitionStmtRedistributionAction": {
+ 	"PolicyActionConfig": {
 		"access": "w",
 		"Owner": "ribd",
 		"multiplicity":"*",
@@ -101,25 +65,25 @@
 		"multiplicity":"*",
 		"srcfile": "objects.go"
 	},
- 	"PolicyDefinitionStmtConfig": {
+ 	"PolicyStmtConfig": {
 		"access": "w",
 		"Owner": "ribd",
 		"multiplicity":"*",
 		"srcfile": "objects.go"
 	},
- 	"PolicyDefinitionStmtState": {
+ 	"PolicyStmtState": {
 		"access": "r",
 		"Owner": "ribd",
 		"multiplicity":"*",
 		"srcfile": "objects.go"
 	},
- 	"PolicyDefinitionConditionState": {
+ 	"PolicyConditionState": {
 		"access": "r",
 		"Owner": "ribd",
 		"multiplicity":"*",
 		"srcfile": "objects.go"
 	},
- 	"PolicyDefinitionActionState": {
+ 	"PolicyActionState": {
 		"access": "r",
 		"Owner": "ribd",
 		"multiplicity":"*",
@@ -233,7 +197,7 @@
 		"multiplicity":"*",
 		"srcfile": "objects.go"
 	},
-	"Dot1dStpPortEntryState" : {
+	"Dot1dStpPortEntryStateCountersFsmStates" : {
 		"access": "r",
 		"Owner": "stpd",
 		"multiplicity":"*",
@@ -290,6 +254,7 @@
 	"BfdSessionConfig" : {
 		"access": "w",
 		"Owner": "bfdd",
+		"multiplicity":"*",
 		"Listeners" : []
 	},
 	"BfdSessionState" : {
