@@ -237,7 +237,7 @@ func (obj BGPNeighborState) UnmarshalObject(body []byte) (ConfigObj, error) {
 type BGPRoute struct {
 	BaseObj
 	Network   string
-	Mask      string
+	CIDRLen   uint16
 	NextHop   string
 	Metric    uint32
 	LocalPref uint32
