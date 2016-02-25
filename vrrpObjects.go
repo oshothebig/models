@@ -14,3 +14,17 @@ type VrrpIntfConfig struct {
 	AcceptMode              bool   // The default is False.
 	VirtualRouterMACAddress string // MAC address used for the source MAC address in VRRP advertisements
 }
+
+type VrrpIntfState struct {
+	BaseObj
+	IfIndex                 int32 `SNAPROUTE: "KEY", ACCESS:"r",  MULTIPLICITY:"*"`
+	VRID                    int32 `SNAPROUTE: "KEY"`
+	IntfIpAddr              string
+	Priority                int32
+	VirtualIPv4Addr         string
+	AdvertisementInterval   int32
+	PreemptMode             bool
+	VirtualRouterMACAddress string
+	SkewTime                int32
+	MasterDownInterval      int32
+}

@@ -1,16 +1,13 @@
 package models
 
-import (
-	"encoding/json"
-	"fmt"
-)
+import ()
 
 /*
  * Global Config for BFD
  */
 type BfdGlobalConfig struct {
 	BaseObj
-	Bfd    string `SNAPROUTE: "KEY"`
+	Bfd    string `SNAPROUTE: "KEY", ACCESS:"w",  MULTIPLICITY:"1"`
 	Enable bool
 }
 
@@ -19,6 +16,7 @@ type BfdGlobalConfig struct {
  */
 type BfdGlobalState struct {
 	BaseObj
+	Bfd                  string `SNAPROUTE: "KEY", ACCESS:"r",  MULTIPLICITY:"1"`
 	Enable               bool
 	NumInterfaces        uint32
 	NumTotalSessions     uint32
@@ -27,30 +25,19 @@ type BfdGlobalState struct {
 	NumAdminDownSessions uint32
 }
 
-func (obj BfdGlobalState) UnmarshalObject(body []byte) (ConfigObj, error) {
-	var gConf BfdGlobalState
-	var err error
-	if len(body) > 0 {
-		if err = json.Unmarshal(body, &gConf); err != nil {
-			fmt.Println("### Trouble in unmarshalling BfdGlobalState from Json", body)
-		}
-	}
-	return gConf, err
-}
-
 /*
  * BFD Interface config
  */
 type BfdIntfConfig struct {
 	BaseObj
-	Interface                 int32 `SNAPROUTE: "KEY"`
+	IfIndex                   int32 `SNAPROUTE: "KEY", ACCESS:"w",  MULTIPLICITY:"*"`
 	LocalMultiplier           uint32
 	DesiredMinTxInterval      uint32
 	RequiredMinRxInterval     uint32
 	RequiredMinEchoRxInterval uint32
 	DemandEnabled             bool
 	AuthenticationEnabled     bool
-	AuthType                  uint32
+	AuthType                  string
 	AuthKeyId                 uint32
 	AuthData                  string
 }
@@ -60,29 +47,18 @@ type BfdIntfConfig struct {
  */
 type BfdIntfState struct {
 	BaseObj
-	InterfaceId               int32
+	IfIndex                   int32 `SNAPROUTE: "KEY", ACCESS:"r",  MULTIPLICITY:"*"`
 	Enabled                   bool
 	NumSessions               int32
 	LocalMultiplier           int32
-	DesiredMinTxInterval      int32
-	RequiredMinRxInterval     int32
-	RequiredMinEchoRxInterval int32
+	DesiredMinTxInterval      string
+	RequiredMinRxInterval     string
+	RequiredMinEchoRxInterval string
 	DemandEnabled             bool
 	AuthenticationEnabled     bool
-	AuthenticationType        int32
+	AuthenticationType        string
 	AuthenticationKeyId       int32
 	AuthenticationData        string
-}
-
-func (obj BfdIntfState) UnmarshalObject(body []byte) (ConfigObj, error) {
-	var gConf BfdIntfState
-	var err error
-	if len(body) > 0 {
-		if err = json.Unmarshal(body, &gConf); err != nil {
-			fmt.Println("### Trouble in unmarshalling BfdIntfState from Json", body)
-		}
-	}
-	return gConf, err
 }
 
 /*
@@ -90,9 +66,10 @@ func (obj BfdIntfState) UnmarshalObject(body []byte) (ConfigObj, error) {
  */
 type BfdSessionConfig struct {
 	BaseObj
-	IpAddr    string `SNAPROUTE: "KEY"`
-	Owner     int32
-	Operation int32
+	IpAddr    string `SNAPROUTE: "KEY", ACCESS:"w",  MULTIPLICITY:"*"`
+	PerLink   bool
+	Owner     string
+	Operation string
 }
 
 /*
@@ -100,37 +77,26 @@ type BfdSessionConfig struct {
  */
 type BfdSessionState struct {
 	BaseObj
-	SessionId             int32
+	SessionId             int32 `SNAPROUTE: "KEY", ACCESS:"r",  MULTIPLICITY:"*"`
 	LocalIpAddr           string
 	RemoteIpAddr          string
-	InterfaceId           int32
+	IfIndex               int32
 	RegisteredProtocols   string
-	SessionState          int32
-	RemoteSessionState    int32
+	SessionState          string
+	RemoteSessionState    string
 	LocalDiscriminator    uint32
 	RemoteDiscriminator   uint32
-	LocalDiagType         int32
-	DesiredMinTxInterval  int32
-	RequiredMinRxInterval int32
-	RemoteMinRxInterval   int32
+	LocalDiagType         string
+	DesiredMinTxInterval  string
+	RequiredMinRxInterval string
+	RemoteMinRxInterval   string
 	DetectionMultiplier   uint32
 	DemandMode            bool
 	RemoteDemandMode      bool
 	AuthSeqKnown          bool
-	AuthType              uint32
+	AuthType              string
 	ReceivedAuthSeq       uint32
 	SentAuthSeq           uint32
 	NumTxPackets          uint32
 	NumRxPackets          uint32
-}
-
-func (obj BfdSessionState) UnmarshalObject(body []byte) (ConfigObj, error) {
-	var gConf BfdSessionState
-	var err error
-	if len(body) > 0 {
-		if err = json.Unmarshal(body, &gConf); err != nil {
-			fmt.Println("### Trouble in unmarshalling BfdSessionState from Json", body)
-		}
-	}
-	return gConf, err
 }
