@@ -248,6 +248,7 @@ type PolicyStmtState struct {
 	MatchConditions string
 	Conditions []string
 	Actions []string
+	PolicyList    []string
 }
 
 func (obj PolicyStmtState) UnmarshalObject(body []byte) (ConfigObj, error) {
