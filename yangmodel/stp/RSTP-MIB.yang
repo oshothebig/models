@@ -171,9 +171,87 @@ module RSTP-MIB {
 			description
 			  "BDM current fsm state";
 		}		
+		uses dot1d-port-timers;	
 	}
 }
 
+ grouping dot1d-port-timers {
+	description
+	   "802.1d 17.17 State Machine Timers
+		EdgeDelayWhile
+	    FdWhile
+	    HelloWhen
+	    MdelayWhile
+	    RbWhile
+	    RcvdInfoWhile
+	    RrWhile
+	    TcWhile";
+		
+	container port-timer {
+		description 
+		   "Per Port Current Count of the various counters";
+		
+		leaf edge-delay-while {
+			type int32;
+			config false;
+			description
+			  "The Edge Delay timer. The time remaining, in the absence of a 
+			received BPDU, before this port is identified as an operEdgePort.";
+		}
+		leaf fd-while {
+			type int32;
+			config false;
+			description
+			  "The Forward Delay timer. Used to delay Port State transitions 
+			   until other Bridges have received spanning tree information";
+		}
+		leaf hello-when {
+			type int32;
+			config false;
+			description
+			  "The Hello timer. Used to ensure that at least one BPDU is 
+			   transmitted by a Designated Port in each HelloTime period.";
+		}
+		leaf mdelay-while {
+			type int32;
+			config false;
+			description
+			  "The Migration Delay timer. Used by the Port Protocol 
+			   Migration state machine to allow time for another RSTP Bridge 
+			   on the same LAN to synchronize its migration state with this 
+			   Port before the receipt of a BPDU can cause this Port to change 
+			   the BPDU types it transmits. Initialized to MigrateTime (17.13.9).";
+		}
+		leaf rb-while {
+			type int32;
+			config false;
+			description
+			  "The Recent Backup timer. Maintained at its initial value, twice 
+			   HelloTime, while the Port is a Backup Port.";
+		}
+		leaf rcvd-info-while {
+			type int32;
+			config false;
+			description
+			  "The Received Info timer. The time remaining before the spanning 
+			   tree information received by this Port [portPriority (17.19.21) 
+			   and portTimes (17.19.22)] is aged out if not refreshed by the 
+			   receipt of a further Configuration Message.";
+		}
+		leaf rr-while {
+			type int32;
+			config false;
+			description
+			  "The Recent Root timer.";			
+		}
+		leaf tc-while {
+			type int32;
+			config false;
+			description
+			  "The Topology Change timer. TCN Messages are sent while this timer is running";			
+		}
+	}
+  }
 
   grouping dot1d-port-statistics {
     description
