@@ -81,6 +81,9 @@ type BfdSessionState struct {
 	LocalIpAddr           string
 	RemoteIpAddr          string
 	IfIndex               int32
+	PerLinkSession        bool
+	LocalMacAddr          string
+	RemoteMacAddr         string
 	RegisteredProtocols   string
 	SessionState          string
 	RemoteSessionState    string
