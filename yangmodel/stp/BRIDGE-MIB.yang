@@ -267,7 +267,7 @@ module BRIDGE-MIB {
 
 	
   list  dot1dStpPortEntry {
-	key "dot1dStpPort";
+	key "dot1dStpPort dot1dBrgIfIndex";
       description   
        "A list of information maintained by every port about
         the Spanning Tree Protocol state for that port.";
@@ -284,17 +284,18 @@ module BRIDGE-MIB {
          "IEEE 802.1D-1998: clause 14.8.2.1.2";
       }
 	
+	leaf dot1dBrgIfIndex {
+     	type if-mib:InterfaceIndex;
+      	config true;
+         description 
+       	 "The value of the instance of the ifIndex object,
+        	  for the bridge corresponding to this port.";
+      	}
+	
 	container Config {
       	description
 			"configuration data related to stp port";
 
-      	leaf dot1dBrgIfIndex {
-       	 	type if-mib:InterfaceIndex;
-        		config true;
-	         description 
-         	 "The value of the instance of the ifIndex object,
-          	  for the bridge corresponding to this port.";
-      	}
 		
 		leaf dot1dStpPortPriority {
 	        type int32 {
@@ -575,15 +576,6 @@ list dot1dStpBridge {
   }
 
   container State {
-	
-	
-	    leaf dot1dBrgIfIndex {
-       	 	type if-mib:InterfaceIndex;
-        		config false;
-	         description 
-         	 "The value of the instance of the ifIndex object,
-          	  for the bridge";
-      	}
 	
 	  leaf dot1dStpProtocolSpecification {
       type enumeration {
