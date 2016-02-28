@@ -577,6 +577,15 @@ list dot1dStpBridge {
 
   container State {
 	
+	
+	 leaf dot1dBrgIfIndex {
+       	 	type if-mib:InterfaceIndex;
+        		config false;
+	         description 
+         	 "The value of the instance of the ifIndex object,
+          	  for the bridge";
+      }
+	
 	  leaf dot1dStpProtocolSpecification {
       type enumeration {
         enum unknown   { value 1; }
