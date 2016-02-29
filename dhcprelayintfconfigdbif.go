@@ -4,28 +4,27 @@ import (
 	"database/sql"
 	"fmt"
 	"reflect"
+	"strconv"
 	"strings"
 	"utils/dbutils"
 )
 
 func (obj DhcpRelayIntfConfig) CreateDBTable(dbHdl *sql.DB) error {
-	dbCmd := "CREATE TABLE IF NOT EXISTS DhcpRelayIntfConfig " +
+	dbCmd := "PRAGMA foreign_keys = ON;"
+	_, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
+	dbCmd = "CREATE TABLE IF NOT EXISTS DhcpRelayIntfConfig " +
 		"( " +
 		"IfIndex INTEGER, " +
 		"Enable INTEGER, " +
-		"PRIMARY KEY(IfIndex) " +
-		")"
-
-	_, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
+		"PRIMARY KEY(IfIndex)" +
+		");"
+	_, err = dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
 	dbCmd = "CREATE TABLE IF NOT EXISTS DhcpRelayIntfConfigServer " +
 		"( " +
-		"IfIndex INTEGER, " +
+		"IntfId INTEGER NOT NULL,\n" +
 		"ServerIp TEXT,\n" +
-		`CONSTRAINT FK_DhcpRelayServerList
-		   FOREIGN KEY (IfIndex)
-		   REFERENCES DhcpRelayIntfConfig (IfIndex)
-		   ON DELETE CASCADE` +
-		")"
+		"FOREIGN KEY(IntfId) REFERENCES DhcpRelayIntfConfig(IfIndex) ON DELETE CASCADE" +
+		");"
 	_, err = dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
@@ -33,9 +32,7 @@ func (obj DhcpRelayIntfConfig) CreateDBTable(dbHdl *sql.DB) error {
 func (obj DhcpRelayIntfConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	var objectId int64
 	dbCmd := fmt.Sprintf("INSERT INTO DhcpRelayIntfConfig (IfIndex, Enable) VALUES ('%v', '%v') ;",
-		obj.IfIndex, dbutils.ConvertBoolToInt(obj.Enable))
-	fmt.Println("**** Create Object called with ", obj)
-
+		obj.IfIndex, obj.Enable)
 	result, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
 	if err != nil {
 		fmt.Println("**** Failed to Create table", err)
@@ -46,7 +43,7 @@ func (obj DhcpRelayIntfConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 		}
 	}
 	for i := 0; i < len(obj.ServerIp); i++ {
-		dbCmd = fmt.Sprintf("INSERT INTO DhcpRelayIntfConfigServer (IfIndex, ServerIp) VALUES ('%v', '%v') ;",
+		dbCmd = fmt.Sprintf("INSERT INTO DhcpRelayIntfConfigServer (IntfId, ServerIp) VALUES ('%v', '%v') ;",
 			obj.IfIndex, obj.ServerIp[i])
 		result, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
 		if err != nil {
@@ -79,20 +76,14 @@ func (obj DhcpRelayIntfConfig) GetObjectFromDb(objKey string, dbHdl *sql.DB) (Co
 	sqlKey, err := obj.GetSqlKeyStr(objKey)
 	dbCmd := "select * from DhcpRelayIntfConfig where " + sqlKey
 	var tmp1 string
-	var tmp2 string
-	err = dbHdl.QueryRow(dbCmd).Scan(&object.IfIndex, &tmp1, &tmp2)
+	err = dbHdl.QueryRow(dbCmd).Scan(&object.IfIndex, &tmp1) //, &tmp2)
 	fmt.Println("### DB Get DhcpRelayIntfConfig\n", err)
 	object.Enable = dbutils.ConvertStrBoolIntToBool(tmp1)
-	convtmpServerIp := strings.Split(tmp2, ",")
-	for _, x := range convtmpServerIp {
-		y := strings.Replace(x, " ", "", 1)
-		object.ServerIp = append(object.ServerIp, string(y))
-	}
 	return object, err
 }
 
 func (obj DhcpRelayIntfConfig) GetKey() (string, error) {
-	key := string(obj.IfIndex)
+	key := strconv.Itoa(int(obj.IfIndex))
 	return key, nil
 }
 
