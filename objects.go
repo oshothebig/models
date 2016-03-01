@@ -163,6 +163,7 @@ type BGPNeighborConfig struct {
 	HoldTime                uint32
 	KeepaliveTime           uint32
 	PeerGroup               string
+	BfdEnable               bool
 }
 
 func (obj BGPNeighborConfig) UnmarshalObject(body []byte) (ConfigObj, error) {
@@ -221,6 +222,7 @@ type BGPNeighborState struct {
 	ConnectRetryTime        uint32
 	HoldTime                uint32
 	KeepaliveTime           uint32
+	BfdNeighborState        string
 }
 
 func (obj BGPNeighborState) UnmarshalObject(body []byte) (ConfigObj, error) {
