@@ -8,34 +8,23 @@ import (
 	"utils/dbutils"
 )
 
-func (obj BGPNeighborConfig) CreateDBTable(dbHdl *sql.DB) error {
-	dbCmd := "CREATE TABLE IF NOT EXISTS BGPNeighborConfig " +
+func (obj BGPAggregate) CreateDBTable(dbHdl *sql.DB) error {
+	dbCmd := "CREATE TABLE IF NOT EXISTS BGPAggregate " +
 		"( " +
-		"PeerAS INTEGER, " +
-		"LocalAS INTEGER, " +
-		"AuthPassword TEXT, " +
-		"Description TEXT, " +
-		"NeighborAddress TEXT, " +
-		"RouteReflectorClusterId INTEGER, " +
-		"RouteReflectorClient INTEGER, " +
-		"MultiHopEnable INTEGER, " +
-		"MultiHopTTL INTEGER, " +
-		"ConnectRetryTime INTEGER, " +
-		"HoldTime INTEGER, " +
-		"KeepaliveTime INTEGER, " +
-		"PeerGroup TEXT, " +
-		"BfdEnable INTEGER, " +
-		"PRIMARY KEY(NeighborAddress) " +
+		"IPPrefix TEXT, " +
+		"GenerateASSet INTEGER, " +
+		"SendSummaryOnly INTEGER, " +
+		"PRIMARY KEY(IPPrefix) " +
 		")"
 
 	_, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
 
-func (obj BGPNeighborConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
+func (obj BGPAggregate) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	var objectId int64
-	dbCmd := fmt.Sprintf("INSERT INTO BGPNeighborConfig (PeerAS, LocalAS, AuthPassword, Description, NeighborAddress, RouteReflectorClusterId, RouteReflectorClient, MultiHopEnable, MultiHopTTL, ConnectRetryTime, HoldTime, KeepaliveTime, PeerGroup, BfdEnable) VALUES ('%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v') ;",
-		obj.PeerAS, obj.LocalAS, obj.AuthPassword, obj.Description, obj.NeighborAddress, obj.RouteReflectorClusterId, dbutils.ConvertBoolToInt(obj.RouteReflectorClient), dbutils.ConvertBoolToInt(obj.MultiHopEnable), obj.MultiHopTTL, obj.ConnectRetryTime, obj.HoldTime, obj.KeepaliveTime, obj.PeerGroup, dbutils.ConvertBoolToInt(obj.BfdEnable))
+	dbCmd := fmt.Sprintf("INSERT INTO BGPAggregate (IPPrefix, GenerateASSet, SendSummaryOnly) VALUES ('%v', '%v', '%v') ;",
+		obj.IPPrefix, dbutils.ConvertBoolToInt(obj.GenerateASSet), dbutils.ConvertBoolToInt(obj.SendSummaryOnly))
 	fmt.Println("**** Create Object called with ", obj)
 
 	result, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
@@ -51,74 +40,70 @@ func (obj BGPNeighborConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	return objectId, err
 }
 
-func (obj BGPNeighborConfig) DeleteObjectFromDb(objKey string, dbHdl *sql.DB) error {
+func (obj BGPAggregate) DeleteObjectFromDb(objKey string, dbHdl *sql.DB) error {
 	sqlKey, err := obj.GetSqlKeyStr(objKey)
 	if err != nil {
-		fmt.Println("GetSqlKeyStr for BGPNeighborConfig with key", objKey, "failed with error", err)
+		fmt.Println("GetSqlKeyStr for BGPAggregate with key", objKey, "failed with error", err)
 		return err
 	}
 
-	dbCmd := "delete from BGPNeighborConfig where " + sqlKey
-	fmt.Println("### DB Deleting BGPNeighborConfig\n")
+	dbCmd := "delete from BGPAggregate where " + sqlKey
+	fmt.Println("### DB Deleting BGPAggregate\n")
 	_, err = dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
 
-func (obj BGPNeighborConfig) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, error) {
-	var object BGPNeighborConfig
+func (obj BGPAggregate) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, error) {
+	var object BGPAggregate
 	sqlKey, err := obj.GetSqlKeyStr(objKey)
-	dbCmd := "select * from BGPNeighborConfig where " + sqlKey
-	var tmp6 string
-	var tmp7 string
-	var tmp13 string
-	err = dbHdl.QueryRow(dbCmd).Scan(&object.PeerAS, &object.LocalAS, &object.AuthPassword, &object.Description, &object.NeighborAddress, &object.RouteReflectorClusterId, &tmp6, &tmp7, &object.MultiHopTTL, &object.ConnectRetryTime, &object.HoldTime, &object.KeepaliveTime, &object.PeerGroup, &tmp13)
-	fmt.Println("### DB Get BGPNeighborConfig\n", err)
-	object.RouteReflectorClient = dbutils.ConvertStrBoolIntToBool(tmp6)
-	object.MultiHopEnable = dbutils.ConvertStrBoolIntToBool(tmp7)
-	object.BfdEnable = dbutils.ConvertStrBoolIntToBool(tmp13)
+	dbCmd := "select * from BGPAggregate where " + sqlKey
+	var tmp1 string
+	var tmp2 string
+	err = dbHdl.QueryRow(dbCmd).Scan(&object.IPPrefix, &tmp1, &tmp2)
+	fmt.Println("### DB Get BGPAggregate\n", err)
+	object.GenerateASSet = dbutils.ConvertStrBoolIntToBool(tmp1)
+	object.SendSummaryOnly = dbutils.ConvertStrBoolIntToBool(tmp2)
 	return object, err
 }
 
-func (obj BGPNeighborConfig) GetKey() (string, error) {
-	key := string(obj.NeighborAddress)
+func (obj BGPAggregate) GetKey() (string, error) {
+	key := string(obj.IPPrefix)
 	return key, nil
 }
 
-func (obj BGPNeighborConfig) GetSqlKeyStr(objKey string) (string, error) {
+func (obj BGPAggregate) GetSqlKeyStr(objKey string) (string, error) {
 	keys := strings.Split(objKey, "#")
-	sqlKey := "NeighborAddress = " + "\"" + keys[0] + "\""
+	sqlKey := "IPPrefix = " + "\"" + keys[0] + "\""
 	return sqlKey, nil
 }
 
-func (obj *BGPNeighborConfig) GetAllObjFromDb(dbHdl *sql.DB) (objList []*BGPNeighborConfig, e error) {
-	dbCmd := "select * from BGPNeighborConfig"
+func (obj *BGPAggregate) GetAllObjFromDb(dbHdl *sql.DB) (objList []*BGPAggregate, e error) {
+	dbCmd := "select * from BGPAggregate"
 	rows, err := dbHdl.Query(dbCmd)
 	if err != nil {
-		fmt.Println(fmt.Sprintf("DB method Query failed for 'BGPNeighborConfig' with error BGPNeighborConfig", dbCmd, err))
+		fmt.Println(fmt.Sprintf("DB method Query failed for 'BGPAggregate' with error BGPAggregate", dbCmd, err))
 		return objList, err
 	}
 
 	defer rows.Close()
 
-	var tmp6 string
-	var tmp7 string
-	var tmp13 string
+	var tmp1 string
+	var tmp2 string
 	for rows.Next() {
 
-		object := new(BGPNeighborConfig)
-		if err = rows.Scan(&object.PeerAS, &object.LocalAS, &object.AuthPassword, &object.Description, &object.NeighborAddress, &object.RouteReflectorClusterId, &tmp6, &tmp7, &object.MultiHopTTL, &object.ConnectRetryTime, &object.HoldTime, &object.KeepaliveTime, &object.PeerGroup, &tmp13); err != nil {
+		object := new(BGPAggregate)
+		if err = rows.Scan(&object.IPPrefix, &tmp1, &tmp2); err != nil {
 
-			fmt.Println("Db method Scan failed when interating over BGPNeighborConfig")
+			fmt.Println("Db method Scan failed when interating over BGPAggregate")
 		}
-		object.RouteReflectorClient = dbutils.ConvertStrBoolIntToBool(tmp6)
-		object.MultiHopEnable = dbutils.ConvertStrBoolIntToBool(tmp7)
-		object.BfdEnable = dbutils.ConvertStrBoolIntToBool(tmp13)
+		object.GenerateASSet = dbutils.ConvertStrBoolIntToBool(tmp1)
+		object.SendSummaryOnly = dbutils.ConvertStrBoolIntToBool(tmp2)
 		objList = append(objList, object)
 	}
 	return objList, nil
 }
-func (obj BGPNeighborConfig) CompareObjectsAndDiff(updateKeys map[string]bool, dbObj ConfigObj) ([]bool, error) {
-	dbV4Route := dbObj.(BGPNeighborConfig)
+func (obj BGPAggregate) CompareObjectsAndDiff(updateKeys map[string]bool, dbObj ConfigObj) ([]bool, error) {
+	dbV4Route := dbObj.(BGPAggregate)
 	objTyp := reflect.TypeOf(obj)
 	objVal := reflect.ValueOf(obj)
 	dbObjVal := reflect.ValueOf(dbV4Route)
@@ -192,12 +177,12 @@ func (obj BGPNeighborConfig) CompareObjectsAndDiff(updateKeys map[string]bool, d
 	return attrIds[:idx], nil
 }
 
-func (obj BGPNeighborConfig) MergeDbAndConfigObj(dbObj ConfigObj, attrSet []bool) (ConfigObj, error) {
-	var mergedBGPNeighborConfig BGPNeighborConfig
+func (obj BGPAggregate) MergeDbAndConfigObj(dbObj ConfigObj, attrSet []bool) (ConfigObj, error) {
+	var mergedBGPAggregate BGPAggregate
 	objTyp := reflect.TypeOf(obj)
 	objVal := reflect.ValueOf(obj)
 	dbObjVal := reflect.ValueOf(dbObj)
-	mergedObjVal := reflect.ValueOf(&mergedBGPNeighborConfig)
+	mergedObjVal := reflect.ValueOf(&mergedBGPAggregate)
 	idx := 0
 	for i := 0; i < objTyp.NumField(); i++ {
 		if fieldTyp := objTyp.Field(i); fieldTyp.Anonymous {
@@ -246,15 +231,15 @@ func (obj BGPNeighborConfig) MergeDbAndConfigObj(dbObj ConfigObj, attrSet []bool
 		idx++
 
 	}
-	return mergedBGPNeighborConfig, nil
+	return mergedBGPAggregate, nil
 }
 
-func (obj BGPNeighborConfig) UpdateObjectInDb(dbObj ConfigObj, attrSet []bool, dbHdl *sql.DB) error {
+func (obj BGPAggregate) UpdateObjectInDb(dbObj ConfigObj, attrSet []bool, dbHdl *sql.DB) error {
 	var fieldSqlStr string
-	dbBGPNeighborConfig := dbObj.(BGPNeighborConfig)
-	objKey, err := dbBGPNeighborConfig.GetKey()
-	objSqlKey, err := dbBGPNeighborConfig.GetSqlKeyStr(objKey)
-	dbCmd := "update " + "BGPNeighborConfig" + " set"
+	dbBGPAggregate := dbObj.(BGPAggregate)
+	objKey, err := dbBGPAggregate.GetKey()
+	objSqlKey, err := dbBGPAggregate.GetSqlKeyStr(objKey)
+	dbCmd := "update " + "BGPAggregate" + " set"
 	objTyp := reflect.TypeOf(obj)
 	objVal := reflect.ValueOf(obj)
 	idx := 0
@@ -278,7 +263,7 @@ func (obj BGPNeighborConfig) UpdateObjectInDb(dbObj ConfigObj, attrSet []bool, d
 				fieldVal.Kind() == reflect.Uint32 ||
 				fieldVal.Kind() == reflect.Uint64 {
 				fieldSqlStr = fmt.Sprintf(" %s = '%d' ", fieldTyp.Name, int(fieldVal.Uint()))
-			} else if fieldVal.Kind() == reflect.Bool {
+			} else if objVal.Kind() == reflect.Bool {
 				fieldSqlStr = fmt.Sprintf(" %s = '%d' ", fieldTyp.Name, dbutils.ConvertBoolToInt(bool(fieldVal.Bool())))
 			} else {
 				fieldSqlStr = fmt.Sprintf(" %s = '%s' ", fieldTyp.Name, fieldVal.String())
