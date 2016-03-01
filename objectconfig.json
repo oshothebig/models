@@ -137,6 +137,67 @@
 		"multiplicity":"*",
 		"srcfile": "objects.go"
 	},
+ 	"BGPAggregate": {
+		"access": "w",
+		"Owner": "bgp",
+		"multiplicity":"*",
+		"srcfile": "objects.go"
+	},
+ 	"BGPPolicyPrefixSet": {
+		"access": "w",
+		"Owner": "bgp",
+		"multiplicity":"*",
+		"srcfile": "objects.go"
+	},
+
+ 	"BGPPolicyConditionConfig": {
+		"access": "w",
+		"Owner": "bgpd",
+		"multiplicity":"*",
+		"srcfile": "objects.go"
+	},
+ 	"BGPPolicyActionConfig": {
+		"access": "w",
+		"Owner": "bgpd",
+		"multiplicity":"*",
+		"srcfile": "objects.go"
+	},
+ 	"BGPPolicyStmtConfig": {
+		"access": "w",
+		"Owner": "bgpd",
+		"multiplicity":"*",
+		"srcfile": "objects.go"
+	},
+ 	"BGPPolicyStmtState": {
+		"access": "r",
+		"Owner": "bgpd",
+		"multiplicity":"*",
+		"srcfile": "objects.go"
+	},
+ 	"BGPPolicyConditionState": {
+		"access": "r",
+		"Owner": "bgpd",
+		"multiplicity":"*",
+		"srcfile": "objects.go"
+	},
+ 	"BGPPolicyActionState": {
+		"access": "r",
+		"Owner": "bgpd",
+		"multiplicity":"*",
+		"srcfile": "objects.go"
+	},
+ 	"BGPPolicyDefinitionConfig": {
+		"access": "w",
+		"Owner": "bgpd",
+		"multiplicity":"*",
+		"srcfile": "objects.go"
+	},
+ 	"BGPPolicyDefinitionState": {
+		"access": "r",
+		"Owner": "bgpd",
+		"multiplicity":"*",
+		"srcfile": "objects.go"
+	},
     "AggregationLacpConfig": {
 		"access": "w",
 		"Owner": "lacpd",

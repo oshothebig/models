@@ -4,35 +4,29 @@ import (
 	"database/sql"
 	"fmt"
 	"reflect"
-	"strconv"
 	"strings"
 	"utils/dbutils"
 )
 
-func (obj DhcpRelayIntfConfig) CreateDBTable(dbHdl *sql.DB) error {
-	dbCmd := "PRAGMA foreign_keys = ON;"
+func (obj BGPAggregate) CreateDBTable(dbHdl *sql.DB) error {
+	dbCmd := "CREATE TABLE IF NOT EXISTS BGPAggregate " +
+		"( " +
+		"IPPrefix TEXT, " +
+		"GenerateASSet INTEGER, " +
+		"SendSummaryOnly INTEGER, " +
+		"PRIMARY KEY(IPPrefix) " +
+		")"
+
 	_, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
-	dbCmd = "CREATE TABLE IF NOT EXISTS DhcpRelayIntfConfig " +
-		"( " +
-		"IfIndex INTEGER, " +
-		"Enable INTEGER, " +
-		"PRIMARY KEY(IfIndex)" +
-		");"
-	_, err = dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
-	dbCmd = "CREATE TABLE IF NOT EXISTS DhcpRelayIntfConfigServer " +
-		"( " +
-		"IntfId INTEGER NOT NULL,\n" +
-		"ServerIp TEXT,\n" +
-		"FOREIGN KEY(IntfId) REFERENCES DhcpRelayIntfConfig(IfIndex) ON DELETE CASCADE" +
-		");"
-	_, err = dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
 
-func (obj DhcpRelayIntfConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
+func (obj BGPAggregate) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	var objectId int64
-	dbCmd := fmt.Sprintf("INSERT INTO DhcpRelayIntfConfig (IfIndex, Enable) VALUES ('%v', '%v') ;",
-		obj.IfIndex, obj.Enable)
+	dbCmd := fmt.Sprintf("INSERT INTO BGPAggregate (IPPrefix, GenerateASSet, SendSummaryOnly) VALUES ('%v', '%v', '%v') ;",
+		obj.IPPrefix, dbutils.ConvertBoolToInt(obj.GenerateASSet), dbutils.ConvertBoolToInt(obj.SendSummaryOnly))
+	fmt.Println("**** Create Object called with ", obj)
+
 	result, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
 	if err != nil {
 		fmt.Println("**** Failed to Create table", err)
@@ -41,63 +35,53 @@ func (obj DhcpRelayIntfConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 		if err != nil {
 			fmt.Println("### Failed to return last object id", err)
 		}
-	}
-	for i := 0; i < len(obj.ServerIp); i++ {
-		dbCmd = fmt.Sprintf("INSERT INTO DhcpRelayIntfConfigServer (IntfId, ServerIp) VALUES ('%v', '%v') ;",
-			obj.IfIndex, obj.ServerIp[i])
-		result, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
-		if err != nil {
-			fmt.Println("**** Failed to Create table", err)
-		} else {
-			_, err = result.LastInsertId()
-			if err != nil {
-				fmt.Println("### Failed to return last object id", err)
-			}
-		}
+
 	}
 	return objectId, err
 }
 
-func (obj DhcpRelayIntfConfig) DeleteObjectFromDb(objKey string, dbHdl *sql.DB) error {
+func (obj BGPAggregate) DeleteObjectFromDb(objKey string, dbHdl *sql.DB) error {
 	sqlKey, err := obj.GetSqlKeyStr(objKey)
 	if err != nil {
-		fmt.Println("GetSqlKeyStr for DhcpRelayIntfConfig with key", objKey, "failed with error", err)
+		fmt.Println("GetSqlKeyStr for BGPAggregate with key", objKey, "failed with error", err)
 		return err
 	}
 
-	dbCmd := "delete from DhcpRelayIntfConfig where " + sqlKey
-	fmt.Println("### DB Deleting DhcpRelayIntfConfig\n")
+	dbCmd := "delete from BGPAggregate where " + sqlKey
+	fmt.Println("### DB Deleting BGPAggregate\n")
 	_, err = dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
 
-func (obj DhcpRelayIntfConfig) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, error) {
-	var object DhcpRelayIntfConfig
+func (obj BGPAggregate) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, error) {
+	var object BGPAggregate
 	sqlKey, err := obj.GetSqlKeyStr(objKey)
-	dbCmd := "select * from DhcpRelayIntfConfig where " + sqlKey
+	dbCmd := "select * from BGPAggregate where " + sqlKey
 	var tmp1 string
-	err = dbHdl.QueryRow(dbCmd).Scan(&object.IfIndex, &tmp1) //, &tmp2)
-	fmt.Println("### DB Get DhcpRelayIntfConfig\n", err)
-	object.Enable = dbutils.ConvertStrBoolIntToBool(tmp1)
+	var tmp2 string
+	err = dbHdl.QueryRow(dbCmd).Scan(&object.IPPrefix, &tmp1, &tmp2)
+	fmt.Println("### DB Get BGPAggregate\n", err)
+	object.GenerateASSet = dbutils.ConvertStrBoolIntToBool(tmp1)
+	object.SendSummaryOnly = dbutils.ConvertStrBoolIntToBool(tmp2)
 	return object, err
 }
 
-func (obj DhcpRelayIntfConfig) GetKey() (string, error) {
-	key := strconv.Itoa(int(obj.IfIndex))
+func (obj BGPAggregate) GetKey() (string, error) {
+	key := string(obj.IPPrefix)
 	return key, nil
 }
 
-func (obj DhcpRelayIntfConfig) GetSqlKeyStr(objKey string) (string, error) {
+func (obj BGPAggregate) GetSqlKeyStr(objKey string) (string, error) {
 	keys := strings.Split(objKey, "#")
-	sqlKey := "IfIndex = " + "\"" + keys[0] + "\""
+	sqlKey := "IPPrefix = " + "\"" + keys[0] + "\""
 	return sqlKey, nil
 }
 
-func (obj *DhcpRelayIntfConfig) GetAllObjFromDb(dbHdl *sql.DB) (objList []*DhcpRelayIntfConfig, e error) {
-	dbCmd := "select * from DhcpRelayIntfConfig"
+func (obj *BGPAggregate) GetAllObjFromDb(dbHdl *sql.DB) (objList []*BGPAggregate, e error) {
+	dbCmd := "select * from BGPAggregate"
 	rows, err := dbHdl.Query(dbCmd)
 	if err != nil {
-		fmt.Println(fmt.Sprintf("DB method Query failed for 'DhcpRelayIntfConfig' with error DhcpRelayIntfConfig", dbCmd, err))
+		fmt.Println(fmt.Sprintf("DB method Query failed for 'BGPAggregate' with error BGPAggregate", dbCmd, err))
 		return objList, err
 	}
 
@@ -107,23 +91,19 @@ func (obj *DhcpRelayIntfConfig) GetAllObjFromDb(dbHdl *sql.DB) (objList []*DhcpR
 	var tmp2 string
 	for rows.Next() {
 
-		object := new(DhcpRelayIntfConfig)
-		if err = rows.Scan(&object.IfIndex, &tmp1, &object.ServerIp); err != nil {
+		object := new(BGPAggregate)
+		if err = rows.Scan(&object.IPPrefix, &tmp1, &tmp2); err != nil {
 
-			fmt.Println("Db method Scan failed when interating over DhcpRelayIntfConfig")
+			fmt.Println("Db method Scan failed when interating over BGPAggregate")
 		}
-		object.Enable = dbutils.ConvertStrBoolIntToBool(tmp1)
-		convtmpServerIp := strings.Split(tmp2, ",")
-		for _, x := range convtmpServerIp {
-			y := strings.Replace(x, " ", "", 1)
-			object.ServerIp = append(object.ServerIp, string(y))
-		}
+		object.GenerateASSet = dbutils.ConvertStrBoolIntToBool(tmp1)
+		object.SendSummaryOnly = dbutils.ConvertStrBoolIntToBool(tmp2)
 		objList = append(objList, object)
 	}
 	return objList, nil
 }
-func (obj DhcpRelayIntfConfig) CompareObjectsAndDiff(updateKeys map[string]bool, dbObj ConfigObj) ([]bool, error) {
-	dbV4Route := dbObj.(DhcpRelayIntfConfig)
+func (obj BGPAggregate) CompareObjectsAndDiff(updateKeys map[string]bool, dbObj ConfigObj) ([]bool, error) {
+	dbV4Route := dbObj.(BGPAggregate)
 	objTyp := reflect.TypeOf(obj)
 	objVal := reflect.ValueOf(obj)
 	dbObjVal := reflect.ValueOf(dbV4Route)
@@ -197,12 +177,12 @@ func (obj DhcpRelayIntfConfig) CompareObjectsAndDiff(updateKeys map[string]bool,
 	return attrIds[:idx], nil
 }
 
-func (obj DhcpRelayIntfConfig) MergeDbAndConfigObj(dbObj ConfigObj, attrSet []bool) (ConfigObj, error) {
-	var mergedDhcpRelayIntfConfig DhcpRelayIntfConfig
+func (obj BGPAggregate) MergeDbAndConfigObj(dbObj ConfigObj, attrSet []bool) (ConfigObj, error) {
+	var mergedBGPAggregate BGPAggregate
 	objTyp := reflect.TypeOf(obj)
 	objVal := reflect.ValueOf(obj)
 	dbObjVal := reflect.ValueOf(dbObj)
-	mergedObjVal := reflect.ValueOf(&mergedDhcpRelayIntfConfig)
+	mergedObjVal := reflect.ValueOf(&mergedBGPAggregate)
 	idx := 0
 	for i := 0; i < objTyp.NumField(); i++ {
 		if fieldTyp := objTyp.Field(i); fieldTyp.Anonymous {
@@ -251,15 +231,15 @@ func (obj DhcpRelayIntfConfig) MergeDbAndConfigObj(dbObj ConfigObj, attrSet []bo
 		idx++
 
 	}
-	return mergedDhcpRelayIntfConfig, nil
+	return mergedBGPAggregate, nil
 }
 
-func (obj DhcpRelayIntfConfig) UpdateObjectInDb(dbObj ConfigObj, attrSet []bool, dbHdl *sql.DB) error {
+func (obj BGPAggregate) UpdateObjectInDb(dbObj ConfigObj, attrSet []bool, dbHdl *sql.DB) error {
 	var fieldSqlStr string
-	dbDhcpRelayIntfConfig := dbObj.(DhcpRelayIntfConfig)
-	objKey, err := dbDhcpRelayIntfConfig.GetKey()
-	objSqlKey, err := dbDhcpRelayIntfConfig.GetSqlKeyStr(objKey)
-	dbCmd := "update " + "DhcpRelayIntfConfig" + " set"
+	dbBGPAggregate := dbObj.(BGPAggregate)
+	objKey, err := dbBGPAggregate.GetKey()
+	objSqlKey, err := dbBGPAggregate.GetSqlKeyStr(objKey)
+	dbCmd := "update " + "BGPAggregate" + " set"
 	objTyp := reflect.TypeOf(obj)
 	objVal := reflect.ValueOf(obj)
 	idx := 0
