@@ -277,6 +277,7 @@ type IPv4Intf struct {
 	BaseObj
 	IpAddr  string `SNAPROUTE: "KEY"`
 	IfIndex int32
+	IfType  string
 }
 
 type PortConfig struct {
