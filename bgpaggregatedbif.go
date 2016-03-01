@@ -8,29 +8,23 @@ import (
 	"utils/dbutils"
 )
 
-func (obj Dot1dStpPortEntryConfig) CreateDBTable(dbHdl *sql.DB) error {
-	dbCmd := "CREATE TABLE IF NOT EXISTS Dot1dStpPortEntryConfig " +
+func (obj BGPAggregate) CreateDBTable(dbHdl *sql.DB) error {
+	dbCmd := "CREATE TABLE IF NOT EXISTS BGPAggregate " +
 		"( " +
-		"Dot1dStpPortKey INTEGER, " +
-		"Dot1dStpPortPriority INTEGER, " +
-		"Dot1dStpPortEnable INTEGER, " +
-		"Dot1dStpPortPathCost INTEGER, " +
-		"Dot1dStpPortPathCost32 INTEGER, " +
-		"Dot1dStpPortProtocolMigration INTEGER, " +
-		"Dot1dStpPortAdminPointToPoint INTEGER, " +
-		"Dot1dStpPortAdminEdgePort INTEGER, " +
-		"Dot1dStpPortAdminPathCost INTEGER, " +
-		"PRIMARY KEY(Dot1dStpPortKey) " +
+		"IPPrefix TEXT, " +
+		"GenerateASSet INTEGER, " +
+		"SendSummaryOnly INTEGER, " +
+		"PRIMARY KEY(IPPrefix) " +
 		")"
 
 	_, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
 
-func (obj Dot1dStpPortEntryConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
+func (obj BGPAggregate) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	var objectId int64
-	dbCmd := fmt.Sprintf("INSERT INTO Dot1dStpPortEntryConfig (Dot1dStpPortKey, Dot1dStpPortPriority, Dot1dStpPortEnable, Dot1dStpPortPathCost, Dot1dStpPortPathCost32, Dot1dStpPortProtocolMigration, Dot1dStpPortAdminPointToPoint, Dot1dStpPortAdminEdgePort, Dot1dStpPortAdminPathCost) VALUES ('%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v') ;",
-		obj.Dot1dStpPortKey, obj.Dot1dStpPortPriority, obj.Dot1dStpPortEnable, obj.Dot1dStpPortPathCost, obj.Dot1dStpPortPathCost32, obj.Dot1dStpPortProtocolMigration, obj.Dot1dStpPortAdminPointToPoint, obj.Dot1dStpPortAdminEdgePort, obj.Dot1dStpPortAdminPathCost)
+	dbCmd := fmt.Sprintf("INSERT INTO BGPAggregate (IPPrefix, GenerateASSet, SendSummaryOnly) VALUES ('%v', '%v', '%v') ;",
+		obj.IPPrefix, dbutils.ConvertBoolToInt(obj.GenerateASSet), dbutils.ConvertBoolToInt(obj.SendSummaryOnly))
 	fmt.Println("**** Create Object called with ", obj)
 
 	result, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
@@ -46,62 +40,70 @@ func (obj Dot1dStpPortEntryConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, error)
 	return objectId, err
 }
 
-func (obj Dot1dStpPortEntryConfig) DeleteObjectFromDb(objKey string, dbHdl *sql.DB) error {
+func (obj BGPAggregate) DeleteObjectFromDb(objKey string, dbHdl *sql.DB) error {
 	sqlKey, err := obj.GetSqlKeyStr(objKey)
 	if err != nil {
-		fmt.Println("GetSqlKeyStr for Dot1dStpPortEntryConfig with key", objKey, "failed with error", err)
+		fmt.Println("GetSqlKeyStr for BGPAggregate with key", objKey, "failed with error", err)
 		return err
 	}
 
-	dbCmd := "delete from Dot1dStpPortEntryConfig where " + sqlKey
-	fmt.Println("### DB Deleting Dot1dStpPortEntryConfig\n")
+	dbCmd := "delete from BGPAggregate where " + sqlKey
+	fmt.Println("### DB Deleting BGPAggregate\n")
 	_, err = dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
 
-func (obj Dot1dStpPortEntryConfig) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, error) {
-	var object Dot1dStpPortEntryConfig
+func (obj BGPAggregate) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, error) {
+	var object BGPAggregate
 	sqlKey, err := obj.GetSqlKeyStr(objKey)
-	dbCmd := "select * from Dot1dStpPortEntryConfig where " + sqlKey
-	err = dbHdl.QueryRow(dbCmd).Scan(&object.Dot1dStpPortKey, &object.Dot1dStpPortPriority, &object.Dot1dStpPortEnable, &object.Dot1dStpPortPathCost, &object.Dot1dStpPortPathCost32, &object.Dot1dStpPortProtocolMigration, &object.Dot1dStpPortAdminPointToPoint, &object.Dot1dStpPortAdminEdgePort, &object.Dot1dStpPortAdminPathCost)
-	fmt.Println("### DB Get Dot1dStpPortEntryConfig\n", err)
+	dbCmd := "select * from BGPAggregate where " + sqlKey
+	var tmp1 string
+	var tmp2 string
+	err = dbHdl.QueryRow(dbCmd).Scan(&object.IPPrefix, &tmp1, &tmp2)
+	fmt.Println("### DB Get BGPAggregate\n", err)
+	object.GenerateASSet = dbutils.ConvertStrBoolIntToBool(tmp1)
+	object.SendSummaryOnly = dbutils.ConvertStrBoolIntToBool(tmp2)
 	return object, err
 }
 
-func (obj Dot1dStpPortEntryConfig) GetKey() (string, error) {
-	key := string(obj.Dot1dStpPortKey)
+func (obj BGPAggregate) GetKey() (string, error) {
+	key := string(obj.IPPrefix)
 	return key, nil
 }
 
-func (obj Dot1dStpPortEntryConfig) GetSqlKeyStr(objKey string) (string, error) {
+func (obj BGPAggregate) GetSqlKeyStr(objKey string) (string, error) {
 	keys := strings.Split(objKey, "#")
-	sqlKey := "Dot1dStpPortKey = " + "\"" + keys[0] + "\""
+	sqlKey := "IPPrefix = " + "\"" + keys[0] + "\""
 	return sqlKey, nil
 }
 
-func (obj *Dot1dStpPortEntryConfig) GetAllObjFromDb(dbHdl *sql.DB) (objList []*Dot1dStpPortEntryConfig, e error) {
-	dbCmd := "select * from Dot1dStpPortEntryConfig"
+func (obj *BGPAggregate) GetAllObjFromDb(dbHdl *sql.DB) (objList []*BGPAggregate, e error) {
+	dbCmd := "select * from BGPAggregate"
 	rows, err := dbHdl.Query(dbCmd)
 	if err != nil {
-		fmt.Println(fmt.Sprintf("DB method Query failed for 'Dot1dStpPortEntryConfig' with error Dot1dStpPortEntryConfig", dbCmd, err))
+		fmt.Println(fmt.Sprintf("DB method Query failed for 'BGPAggregate' with error BGPAggregate", dbCmd, err))
 		return objList, err
 	}
 
 	defer rows.Close()
 
+	var tmp1 string
+	var tmp2 string
 	for rows.Next() {
 
-		object := new(Dot1dStpPortEntryConfig)
-		if err = rows.Scan(&object.Dot1dStpPortKey, &object.Dot1dStpPortPriority, &object.Dot1dStpPortEnable, &object.Dot1dStpPortPathCost, &object.Dot1dStpPortPathCost32, &object.Dot1dStpPortProtocolMigration, &object.Dot1dStpPortAdminPointToPoint, &object.Dot1dStpPortAdminEdgePort, &object.Dot1dStpPortAdminPathCost); err != nil {
+		object := new(BGPAggregate)
+		if err = rows.Scan(&object.IPPrefix, &tmp1, &tmp2); err != nil {
 
-			fmt.Println("Db method Scan failed when interating over Dot1dStpPortEntryConfig")
+			fmt.Println("Db method Scan failed when interating over BGPAggregate")
 		}
+		object.GenerateASSet = dbutils.ConvertStrBoolIntToBool(tmp1)
+		object.SendSummaryOnly = dbutils.ConvertStrBoolIntToBool(tmp2)
 		objList = append(objList, object)
 	}
 	return objList, nil
 }
-func (obj Dot1dStpPortEntryConfig) CompareObjectsAndDiff(updateKeys map[string]bool, dbObj ConfigObj) ([]bool, error) {
-	dbV4Route := dbObj.(Dot1dStpPortEntryConfig)
+func (obj BGPAggregate) CompareObjectsAndDiff(updateKeys map[string]bool, dbObj ConfigObj) ([]bool, error) {
+	dbV4Route := dbObj.(BGPAggregate)
 	objTyp := reflect.TypeOf(obj)
 	objVal := reflect.ValueOf(obj)
 	dbObjVal := reflect.ValueOf(dbV4Route)
@@ -175,12 +177,12 @@ func (obj Dot1dStpPortEntryConfig) CompareObjectsAndDiff(updateKeys map[string]b
 	return attrIds[:idx], nil
 }
 
-func (obj Dot1dStpPortEntryConfig) MergeDbAndConfigObj(dbObj ConfigObj, attrSet []bool) (ConfigObj, error) {
-	var mergedDot1dStpPortEntryConfig Dot1dStpPortEntryConfig
+func (obj BGPAggregate) MergeDbAndConfigObj(dbObj ConfigObj, attrSet []bool) (ConfigObj, error) {
+	var mergedBGPAggregate BGPAggregate
 	objTyp := reflect.TypeOf(obj)
 	objVal := reflect.ValueOf(obj)
 	dbObjVal := reflect.ValueOf(dbObj)
-	mergedObjVal := reflect.ValueOf(&mergedDot1dStpPortEntryConfig)
+	mergedObjVal := reflect.ValueOf(&mergedBGPAggregate)
 	idx := 0
 	for i := 0; i < objTyp.NumField(); i++ {
 		if fieldTyp := objTyp.Field(i); fieldTyp.Anonymous {
@@ -229,15 +231,15 @@ func (obj Dot1dStpPortEntryConfig) MergeDbAndConfigObj(dbObj ConfigObj, attrSet 
 		idx++
 
 	}
-	return mergedDot1dStpPortEntryConfig, nil
+	return mergedBGPAggregate, nil
 }
 
-func (obj Dot1dStpPortEntryConfig) UpdateObjectInDb(dbObj ConfigObj, attrSet []bool, dbHdl *sql.DB) error {
+func (obj BGPAggregate) UpdateObjectInDb(dbObj ConfigObj, attrSet []bool, dbHdl *sql.DB) error {
 	var fieldSqlStr string
-	dbDot1dStpPortEntryConfig := dbObj.(Dot1dStpPortEntryConfig)
-	objKey, err := dbDot1dStpPortEntryConfig.GetKey()
-	objSqlKey, err := dbDot1dStpPortEntryConfig.GetSqlKeyStr(objKey)
-	dbCmd := "update " + "Dot1dStpPortEntryConfig" + " set"
+	dbBGPAggregate := dbObj.(BGPAggregate)
+	objKey, err := dbBGPAggregate.GetKey()
+	objSqlKey, err := dbBGPAggregate.GetSqlKeyStr(objKey)
+	dbCmd := "update " + "BGPAggregate" + " set"
 	objTyp := reflect.TypeOf(obj)
 	objVal := reflect.ValueOf(obj)
 	idx := 0
