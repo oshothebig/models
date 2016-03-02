@@ -423,6 +423,23 @@ leaf dot1dStpPortAdminPointToPoint {
       reference     
        "IEEE 802.1D-1998: Section 8.5.5.3";
     }
+	leaf BpduGuard {
+		type smiv2:TruthValue;
+		config true;
+		description
+		"A Port as OperEdge which receives BPDU with BpduGuard enabled
+		 will shut the port down.";
+	}
+	
+	leaf BridgeAssurance {
+		 type smiv2:TruthValue;
+		config true;
+		description
+		"When enabled BPDU's will be transmitted out of all stp ports regardless
+		of state.  When an stp port fails to receive a BPDU the port should 
+		transition to a Blocked state.  Upon reception of BDPU after shutdown 
+		should transition port into the bridge.";
+	}
   }
   augment "/bridge-mib:dot1dStpPortEntry/bridge-mib:State" {
     description     
