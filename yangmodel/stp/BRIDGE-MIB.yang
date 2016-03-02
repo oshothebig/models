@@ -287,7 +287,15 @@ module BRIDGE-MIB {
 	container Config {
       	description
 			"configuration data related to stp port";
-	
+
+      	leaf dot1dBrgIfIndex {
+       	 	type if-mib:InterfaceIndex;
+        		config true;
+	         description 
+         	 "The value of the instance of the ifIndex object,
+          	  for the bridge corresponding to this port.";
+      	}
+		
 		leaf dot1dStpPortPriority {
 	        type int32 {
 	          range "0..255";
@@ -367,7 +375,7 @@ module BRIDGE-MIB {
 	  container State {
 		description
 			"status data related to stp port";
-    
+   
       	leaf dot1dStpPortState {
 	        type enumeration {
 	          enum disabled   { value 1; }
@@ -446,7 +454,7 @@ module BRIDGE-MIB {
 
 	}
 list dot1dStpBridge {
-	key "dot1dBridgeAddress dot1dStpPriority";
+	key "dot1dBridgeAddress dot1dStpVlan";
       description   
        "A list of information maintained by every port about
         the Spanning Tree Protocol state for that port.";
@@ -464,6 +472,19 @@ list dot1dStpBridge {
        "IEEE 802.1D-1998: clause 8.5.3.1";
     }
 	
+	
+	leaf dot1dStpVlan {
+      type uint16;
+      config true;
+      description   
+       "Each bridge is associated with a domain.  Typically this domain
+	   is represented as the vlan; The default domain is typically 1";
+      reference     
+       "Cisco PVST+";
+    }
+	
+  container Config {
+  
 	leaf dot1dStpPriority {
       type int32 {
         range "0..65535";
@@ -481,8 +502,7 @@ list dot1dStpBridge {
         IEEE 802.1t clause 8.10.2, Table 8-4, clause 14.3.";
     }
 	
-  container Config {
-  
+
     leaf dot1dStpBridgeMaxAge {
       type int32 {
         range "600..4000";
@@ -556,6 +576,14 @@ list dot1dStpBridge {
 
   container State {
 	
+	
+	    leaf dot1dBrgIfIndex {
+       	 	type if-mib:InterfaceIndex;
+        		config false;
+	         description 
+         	 "The value of the instance of the ifIndex object,
+          	  for the bridge";
+      	}
 	
 	  leaf dot1dStpProtocolSpecification {
       type enumeration {
