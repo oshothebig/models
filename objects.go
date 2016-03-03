@@ -458,21 +458,3 @@ func (obj Logout) UnmarshalObject(body []byte) (ConfigObj, error) {
 
 	return logoutObj, err
 }
-
-type Logging struct {
-	BaseObj
-	Module string `SNAPROUTE: "KEY"`
-	Level  string
-}
-
-func (obj Logging) UnmarshalObject(body []byte) (ConfigObj, error) {
-	var loggingObj Logging
-	var err error
-	if len(body) > 0 {
-		if err = json.Unmarshal(body, &loggingObj); err != nil {
-			fmt.Println("### Trouble in unmarshaling Logging from Json", body)
-		}
-	}
-
-	return loggingObj, err
-}
