@@ -267,7 +267,7 @@ module BRIDGE-MIB {
 
 	
   list  dot1dStpPortEntry {
-	key "dot1dStpPort";
+	key "dot1dStpPort dot1dBrgIfIndex";
       description   
        "A list of information maintained by every port about
         the Spanning Tree Protocol state for that port.";
@@ -284,17 +284,18 @@ module BRIDGE-MIB {
          "IEEE 802.1D-1998: clause 14.8.2.1.2";
       }
 	
+	leaf dot1dBrgIfIndex {
+     	type if-mib:InterfaceIndex;
+      	config true;
+         description 
+       	 "The value of the instance of the ifIndex object,
+        	  for the bridge corresponding to this port.";
+      	}
+	
 	container Config {
       	description
 			"configuration data related to stp port";
 
-      	leaf dot1dBrgIfIndex {
-       	 	type if-mib:InterfaceIndex;
-        		config true;
-	         description 
-         	 "The value of the instance of the ifIndex object,
-          	  for the bridge corresponding to this port.";
-      	}
 		
 		leaf dot1dStpPortPriority {
 	        type int32 {
@@ -454,24 +455,10 @@ module BRIDGE-MIB {
 
 	}
 list dot1dStpBridge {
-	key "dot1dBridgeAddress dot1dStpVlan";
+	key "dot1dStpVlan";
       description   
        "A list of information maintained by every port about
         the Spanning Tree Protocol state for that port.";
-	
-	leaf dot1dBridgeAddress {
-      type ieee:mac-address;
-      config true;
-      description   
-       "The bridge identifier of the root of the spanning
-        tree, as determined by the Spanning Tree Protocol,
-        as executed by this node.  This value is used as
-        the Root Identifier parameter in all Configuration
-        Bridge PDUs originated by this node.";
-      reference     
-       "IEEE 802.1D-1998: clause 8.5.3.1";
-    }
-	
 	
 	leaf dot1dStpVlan {
       type uint16;
@@ -485,6 +472,20 @@ list dot1dStpBridge {
 	
   container Config {
   
+	leaf dot1dBridgeAddress {
+      type ieee:mac-address;
+      config true;
+      description   
+       "The bridge identifier of the root of the spanning
+        tree, as determined by the Spanning Tree Protocol,
+        as executed by this node.  This value is used as
+        the Root Identifier parameter in all Configuration
+        Bridge PDUs originated by this node.";
+      reference     
+       "IEEE 802.1D-1998: clause 8.5.3.1";
+    }
+	
+
 	leaf dot1dStpPriority {
       type int32 {
         range "0..65535";
@@ -577,13 +578,13 @@ list dot1dStpBridge {
   container State {
 	
 	
-	    leaf dot1dBrgIfIndex {
+	 leaf dot1dBrgIfIndex {
        	 	type if-mib:InterfaceIndex;
         		config false;
 	         description 
          	 "The value of the instance of the ifIndex object,
           	  for the bridge";
-      	}
+      }
 	
 	  leaf dot1dStpProtocolSpecification {
       type enumeration {
