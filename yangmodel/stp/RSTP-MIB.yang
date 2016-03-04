@@ -171,9 +171,93 @@ module RSTP-MIB {
 			description
 			  "BDM current fsm state";
 		}		
+		uses dot1d-port-timers;	
 	}
 }
 
+ grouping dot1d-port-timers {
+	description
+	   "802.1d 17.17 State Machine Timers
+		EdgeDelayWhile
+	    FdWhile
+	    HelloWhen
+	    MdelayWhile
+	    RbWhile
+	    RcvdInfoWhile
+	    RrWhile
+	    TcWhile";
+		
+	container port-timer {
+		description 
+		   "Per Port Current Count of the various counters";
+		
+		leaf edge-delay-while {
+			type int32;
+			config false;
+			description
+			  "The Edge Delay timer. The time remaining, in the absence of a 
+			received BPDU, before this port is identified as an operEdgePort.";
+		}
+		leaf fd-while {
+			type int32;
+			config false;
+			description
+			  "The Forward Delay timer. Used to delay Port State transitions 
+			   until other Bridges have received spanning tree information";
+		}
+		leaf hello-when {
+			type int32;
+			config false;
+			description
+			  "The Hello timer. Used to ensure that at least one BPDU is 
+			   transmitted by a Designated Port in each HelloTime period.";
+		}
+		leaf mdelay-while {
+			type int32;
+			config false;
+			description
+			  "The Migration Delay timer. Used by the Port Protocol 
+			   Migration state machine to allow time for another RSTP Bridge 
+			   on the same LAN to synchronize its migration state with this 
+			   Port before the receipt of a BPDU can cause this Port to change 
+			   the BPDU types it transmits. Initialized to MigrateTime (17.13.9).";
+		}
+		leaf rb-while {
+			type int32;
+			config false;
+			description
+			  "The Recent Backup timer. Maintained at its initial value, twice 
+			   HelloTime, while the Port is a Backup Port.";
+		}
+		leaf rcvd-info-while {
+			type int32;
+			config false;
+			description
+			  "The Received Info timer. The time remaining before the spanning 
+			   tree information received by this Port [portPriority (17.19.21) 
+			   and portTimes (17.19.22)] is aged out if not refreshed by the 
+			   receipt of a further Configuration Message.";
+		}
+		leaf rr-while {
+			type int32;
+			config false;
+			description
+			  "The Recent Root timer.";			
+		}
+		leaf tc-while {
+			type int32;
+			config false;
+			description
+			  "The Topology Change timer. TCN Messages are sent while this timer is running";			
+		}
+		leaf ba-while {
+			type int32;
+			config false;
+			description
+			  "Bridge Assurance timer, 3 * Hello Timer";
+		}
+	}
+  }
 
   grouping dot1d-port-statistics {
     description
@@ -345,6 +429,23 @@ leaf dot1dStpPortAdminPointToPoint {
       reference     
        "IEEE 802.1D-1998: Section 8.5.5.3";
     }
+	leaf BpduGuard {
+		type smiv2:TruthValue;
+		config true;
+		description
+		"A Port as OperEdge which receives BPDU with BpduGuard enabled
+		 will shut the port down.";
+	}
+	
+	leaf BridgeAssurance {
+		 type smiv2:TruthValue;
+		config true;
+		description
+		"When enabled BPDU's will be transmitted out of all stp ports regardless
+		of state.  When an stp port fails to receive a BPDU the port should 
+		transition to a Blocked state.  Upon reception of BDPU after shutdown 
+		should transition port into the bridge.";
+	}
   }
   augment "/bridge-mib:dot1dStpPortEntry/bridge-mib:State" {
     description     
@@ -435,6 +536,37 @@ leaf dot1dStpPortAdminPointToPoint {
       reference     
        "IEEE 802.1D-1998: clause 8.5.3.10";
     }
+	
+	leaf BridgeAssurance {
+		type smiv2:TruthValue;
+		config false;
+		description
+		 "Used to make sure that a neighboring switch does not malfunction 
+		and begin forwarding frames when it shouldn’t.  It does this by 
+		monitoring receipt of BPDUs on point-to-point links.  When the 
+		BPDUs stop being received, the port is put into blocking state 
+		(actually a port inconsistent state, which stops forwarding).  
+		When BPDUs restart, the port resumes normal RSTP or MST modes.  
+		This handles unidirectional links as well as the malfunction of a 
+		neighboring switch where STP stops sending BPDUs but the switch 
+		continues to forward frames. ";
+	}
+	leaf BridgeAssuranceInconsistant {
+		type smiv2:TruthValue;
+		config false;
+		description
+		 "When port stops receiving BPDU on a Bridge Assurance enabled
+		port then this will be set.";
+	}
+	
+	leaf BpduGuard {
+		type smiv2:TruthValue;
+		config false;
+		description
+		 "Used in conjuction with AdminEdge to shutdown a port when a BPDU
+		is received.  Protects against loops in the network";
+	}
+	
 	uses dot1d-port-statistics;
 
   }

@@ -160,11 +160,6 @@ func (obj PolicyConditionState) UnmarshalObject(body []byte) (ConfigObj, error) 
 }
 
 
-type PolicyRedistributionAction struct {
-	Redistribute string
-	RedistributeTargetProtocol string 
-}
-
 type PolicyActionConfig  struct {
 	BaseObj 
 	Name                        string `SNAPROUTE: "KEY"`
@@ -172,7 +167,8 @@ type PolicyActionConfig  struct {
 	SetAdminDistanceValue       int
 	Accept                      bool
 	Reject                      bool
-	RedistributeActionInfo      PolicyRedistributionAction
+	RedistributeAction      string
+	RedistributeTargetProtocol string 
 }
 
 func (obj PolicyActionConfig) UnmarshalObject(body []byte) (ConfigObj, error) {
@@ -252,6 +248,7 @@ type PolicyStmtState struct {
 	MatchConditions string
 	Conditions []string
 	Actions []string
+	PolicyList    []string
 }
 
 func (obj PolicyStmtState) UnmarshalObject(body []byte) (ConfigObj, error) {

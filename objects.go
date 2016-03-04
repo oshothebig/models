@@ -48,7 +48,6 @@ func (obj IPV4Route) UnmarshalObject(body []byte) (ConfigObj, error) {
 type IPV4RouteState struct {
 	BaseObj
 	DestinationNw    string `SNAPROUTE: "KEY"`
-	NetworkMask      string `SNAPROUTE: "KEY"`
 	PolicyList       []string
 	RouteCreatedTime string
 	RouteUpdatedTime string
@@ -165,6 +164,7 @@ type BGPNeighborConfig struct {
 	AddPathsRx              bool
 	AddPathsMaxTx           uint8
 	PeerGroup               string
+	BfdEnable               bool
 }
 
 func (obj BGPNeighborConfig) UnmarshalObject(body []byte) (ConfigObj, error) {
@@ -225,6 +225,7 @@ type BGPNeighborState struct {
 	ConnectRetryTime        uint32
 	HoldTime                uint32
 	KeepaliveTime           uint32
+	BfdNeighborState        string
 	AddPathsRx              bool
 	AddPathsMaxTx           uint8
 }
@@ -243,7 +244,7 @@ func (obj BGPNeighborState) UnmarshalObject(body []byte) (ConfigObj, error) {
 type BGPRoute struct {
 	BaseObj
 	Network   string
-	Mask      string
+	CIDRLen   uint16
 	NextHop   string
 	Metric    uint32
 	LocalPref uint32
@@ -260,6 +261,24 @@ func (obj BGPRoute) UnmarshalObject(body []byte) (ConfigObj, error) {
 		}
 	}
 	return bgpRoute, err
+}
+
+type BGPAggregate struct {
+	BaseObj
+	IPPrefix        string `SNAPROUTE: "KEY"`
+	GenerateASSet   bool
+	SendSummaryOnly bool
+}
+
+func (obj BGPAggregate) UnmarshalObject(body []byte) (ConfigObj, error) {
+	var bgpAgg BGPAggregate
+	var err error
+	if len(body) > 0 {
+		if err = json.Unmarshal(body, &bgpAgg); err != nil {
+			fmt.Println("### Trouble in unmarshaling BGPRoute from Json", body)
+		}
+	}
+	return bgpAgg, err
 }
 
 /* Start asicd owned objects */

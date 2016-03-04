@@ -92,3 +92,15 @@ func ConvertThriftTobgpdBGPPeerGroupObj(thriftobj *bgpd.BGPPeerGroup, dbobj *BGP
 	dbobj.AuthPassword = string(thriftobj.AuthPassword)
 	dbobj.ConnectRetryTime = uint32(thriftobj.ConnectRetryTime)
 }
+
+func ConvertbgpdBGPAggregateObjToThrift(dbobj *BGPAggregate, thriftobj *bgpd.BGPAggregate) {
+	thriftobj.SendSummaryOnly = bool(dbobj.SendSummaryOnly)
+	thriftobj.GenerateASSet = bool(dbobj.GenerateASSet)
+	thriftobj.IPPrefix = string(dbobj.IPPrefix)
+}
+
+func ConvertThriftTobgpdBGPAggregateObj(thriftobj *bgpd.BGPAggregate, dbobj *BGPAggregate) {
+	dbobj.SendSummaryOnly = bool(thriftobj.SendSummaryOnly)
+	dbobj.GenerateASSet = bool(thriftobj.GenerateASSet)
+	dbobj.IPPrefix = string(thriftobj.IPPrefix)
+}
