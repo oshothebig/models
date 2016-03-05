@@ -8,8 +8,8 @@ import (
 	"reflect"
 )
 
-func (obj IPV4Route) CreateDBTable(dbHdl *sql.DB) error {
-	dbCmd := "CREATE TABLE IF NOT EXISTS IPV4Route " +
+func (obj IPv4Route) CreateDBTable(dbHdl *sql.DB) error {
+	dbCmd := "CREATE TABLE IF NOT EXISTS IPv4Route " +
 		"( " +
 		"DestinationNw TEXT, " +
 		"NetworkMask TEXT, " +
@@ -25,9 +25,9 @@ func (obj IPV4Route) CreateDBTable(dbHdl *sql.DB) error {
 	return err
 }
 
-func (obj IPV4Route) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
+func (obj IPv4Route) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	var objectId int64
-	dbCmd := fmt.Sprintf("INSERT INTO IPV4Route (DestinationNw, NetworkMask, NextHopIp, Cost, OutgoingIntfType, OutgoingInterface, Protocol) VALUES ('%v', '%v', '%v', '%v', '%v', '%v', '%v') ;",
+	dbCmd := fmt.Sprintf("INSERT INTO IPv4Route (DestinationNw, NetworkMask, NextHopIp, Cost, OutgoingIntfType, OutgoingInterface, Protocol) VALUES ('%v', '%v', '%v', '%v', '%v', '%v', '%v') ;",
 		obj.DestinationNw, obj.NetworkMask, obj.NextHopIp, obj.Cost, obj.OutgoingIntfType, obj.OutgoingInterface, obj.Protocol)
 	fmt.Println("**** Create Object called with ", obj)
 
@@ -44,44 +44,44 @@ func (obj IPV4Route) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	return objectId, err
 }
 
-func (obj IPV4Route) DeleteObjectFromDb(objKey string, dbHdl *sql.DB) error {
+func (obj IPv4Route) DeleteObjectFromDb(objKey string, dbHdl *sql.DB) error {
 	sqlKey, err := obj.GetSqlKeyStr(objKey)
 	if err != nil {
-		fmt.Println("GetSqlKeyStr for IPV4Route with key", objKey, "failed with error", err)
+		fmt.Println("GetSqlKeyStr for IPv4Route with key", objKey, "failed with error", err)
 		return err
 	}
 
-	dbCmd := "delete from IPV4Route where " + sqlKey
-	fmt.Println("### DB Deleting IPV4Route\n")
+	dbCmd := "delete from IPv4Route where " + sqlKey
+	fmt.Println("### DB Deleting IPv4Route\n")
 	_, err = dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
 
-func (obj IPV4Route) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, error) {
-	var object IPV4Route
+func (obj IPv4Route) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, error) {
+	var object IPv4Route
 	sqlKey, err := obj.GetSqlKeyStr(objKey)
-	dbCmd := "select * from IPV4Route where " + sqlKey
+	dbCmd := "select * from IPv4Route where " + sqlKey
 	err = dbHdl.QueryRow(dbCmd).Scan(&object.DestinationNw, &object.NetworkMask, &object.NextHopIp, &object.Cost, &object.OutgoingIntfType, &object.OutgoingInterface, &object.Protocol, )
-	fmt.Println("### DB Get IPV4Route\n", err)
+	fmt.Println("### DB Get IPv4Route\n", err)
 	return object, err
 }
 
-func (obj IPV4Route) GetKey() (string, error) {
+func (obj IPv4Route) GetKey() (string, error) {
 	key := string(obj.DestinationNw) + "#" + string(obj.NetworkMask) + "#" + string(obj.NextHopIp)
 	return key, nil
 }
 
-func (obj IPV4Route) GetSqlKeyStr(objKey string) (string, error) {
+func (obj IPv4Route) GetSqlKeyStr(objKey string) (string, error) {
 	keys := strings.Split(objKey, "#")
 	sqlKey := "DestinationNw = "+ "\"" + keys[0] + "\"" + " and " + "NetworkMask = "+ "\"" + keys[1] + "\"" + " and " + "NextHopIp = "+ "\"" + keys[2] + "\""
 	return sqlKey, nil
 }
 
-func (obj *IPV4Route) GetAllObjFromDb(dbHdl *sql.DB) (objList []*IPV4Route, e error) {
-	dbCmd := "select * from IPV4Route"
+func (obj *IPv4Route) GetAllObjFromDb(dbHdl *sql.DB) (objList []*IPv4Route, e error) {
+	dbCmd := "select * from IPv4Route"
 	rows, err := dbHdl.Query(dbCmd)
 	if err != nil {
-		fmt.Println(fmt.Sprintf("DB method Query failed for 'IPV4Route' with error IPV4Route", dbCmd, err))
+		fmt.Println(fmt.Sprintf("DB method Query failed for 'IPv4Route' with error IPv4Route", dbCmd, err))
 		return objList, err
 	}
 
@@ -89,17 +89,17 @@ func (obj *IPV4Route) GetAllObjFromDb(dbHdl *sql.DB) (objList []*IPV4Route, e er
     
 	for rows.Next() {
 
-             object := new(IPV4Route)
+             object := new(IPv4Route)
              if err = rows.Scan(&object.DestinationNw, &object.NetworkMask, &object.NextHopIp, &object.Cost, &object.OutgoingIntfType, &object.OutgoingInterface, &object.Protocol, ); err != nil {
 
-             fmt.Println("Db method Scan failed when interating over IPV4Route")
+             fmt.Println("Db method Scan failed when interating over IPv4Route")
              }
 	objList = append(objList, object)
     }
     return objList, nil
     }
-    func (obj IPV4Route) CompareObjectsAndDiff(updateKeys map[string]bool, dbObj ConfigObj) ([]bool, error) {
-	dbV4Route := dbObj.(IPV4Route)
+    func (obj IPv4Route) CompareObjectsAndDiff(updateKeys map[string]bool, dbObj ConfigObj) ([]bool, error) {
+	dbV4Route := dbObj.(IPv4Route)
 	objTyp := reflect.TypeOf(obj)
 	objVal := reflect.ValueOf(obj)
 	dbObjVal := reflect.ValueOf(dbV4Route)
@@ -173,12 +173,12 @@ func (obj *IPV4Route) GetAllObjFromDb(dbHdl *sql.DB) (objList []*IPV4Route, e er
 	return attrIds[:idx], nil
 }
 
-    func (obj IPV4Route) MergeDbAndConfigObj(dbObj ConfigObj, attrSet []bool) (ConfigObj, error) {
-	var mergedIPV4Route IPV4Route
+    func (obj IPv4Route) MergeDbAndConfigObj(dbObj ConfigObj, attrSet []bool) (ConfigObj, error) {
+	var mergedIPv4Route IPv4Route
 	objTyp := reflect.TypeOf(obj)
 	objVal := reflect.ValueOf(obj)
 	dbObjVal := reflect.ValueOf(dbObj)
-	mergedObjVal := reflect.ValueOf(&mergedIPV4Route)
+	mergedObjVal := reflect.ValueOf(&mergedIPv4Route)
 	idx := 0
 	for i:=0; i<objTyp.NumField(); i++ {
 		if fieldTyp := objTyp.Field(i); fieldTyp.Anonymous {
@@ -227,15 +227,15 @@ func (obj *IPV4Route) GetAllObjFromDb(dbHdl *sql.DB) (objList []*IPV4Route, e er
 		idx++
 
 	}
-	return mergedIPV4Route, nil
+	return mergedIPv4Route, nil
 }
 
-    func (obj IPV4Route) UpdateObjectInDb(dbObj ConfigObj, attrSet []bool, dbHdl *sql.DB) error {
+    func (obj IPv4Route) UpdateObjectInDb(dbObj ConfigObj, attrSet []bool, dbHdl *sql.DB) error {
 	var fieldSqlStr string
-	dbIPV4Route := dbObj.(IPV4Route)
-	objKey, err := dbIPV4Route.GetKey()
-	objSqlKey, err := dbIPV4Route.GetSqlKeyStr(objKey)
-	dbCmd := "update " + "IPV4Route" + " set"
+	dbIPv4Route := dbObj.(IPv4Route)
+	objKey, err := dbIPv4Route.GetKey()
+	objSqlKey, err := dbIPv4Route.GetSqlKeyStr(objKey)
+	dbCmd := "update " + "IPv4Route" + " set"
 objTyp := reflect.TypeOf(obj)
 	objVal := reflect.ValueOf(obj)
 	idx := 0
@@ -259,7 +259,7 @@ objTyp := reflect.TypeOf(obj)
 			   fieldVal.Kind() == reflect.Uint32 ||
 			   fieldVal.Kind() == reflect.Uint64 {
 			    fieldSqlStr = fmt.Sprintf(" %s = '%d' ", fieldTyp.Name, int(fieldVal.Uint()))
-			} else if objVal.Kind() == reflect.Bool {
+			} else if fieldVal.Kind() == reflect.Bool {
 			    fieldSqlStr = fmt.Sprintf(" %s = '%d' ", fieldTyp.Name, dbutils.ConvertBoolToInt(bool(fieldVal.Bool())))
 			} else {
 				fieldSqlStr = fmt.Sprintf(" %s = '%s' ", fieldTyp.Name, fieldVal.String())
