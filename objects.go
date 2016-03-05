@@ -221,6 +221,7 @@ type BGPNeighborState struct {
 	ConnectRetryTime        uint32
 	HoldTime                uint32
 	KeepaliveTime           uint32
+	PeerGroup               string
 	BfdNeighborState        string
 }
 

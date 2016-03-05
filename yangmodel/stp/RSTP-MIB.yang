@@ -250,6 +250,12 @@ module RSTP-MIB {
 			description
 			  "The Topology Change timer. TCN Messages are sent while this timer is running";			
 		}
+		leaf ba-while {
+			type int32;
+			config false;
+			description
+			  "Bridge Assurance timer, 3 * Hello Timer";
+		}
 	}
   }
 
@@ -530,6 +536,37 @@ leaf dot1dStpPortAdminPointToPoint {
       reference     
        "IEEE 802.1D-1998: clause 8.5.3.10";
     }
+	
+	leaf BridgeAssurance {
+		type smiv2:TruthValue;
+		config false;
+		description
+		 "Used to make sure that a neighboring switch does not malfunction 
+		and begin forwarding frames when it shouldn’t.  It does this by 
+		monitoring receipt of BPDUs on point-to-point links.  When the 
+		BPDUs stop being received, the port is put into blocking state 
+		(actually a port inconsistent state, which stops forwarding).  
+		When BPDUs restart, the port resumes normal RSTP or MST modes.  
+		This handles unidirectional links as well as the malfunction of a 
+		neighboring switch where STP stops sending BPDUs but the switch 
+		continues to forward frames. ";
+	}
+	leaf BridgeAssuranceInconsistant {
+		type smiv2:TruthValue;
+		config false;
+		description
+		 "When port stops receiving BPDU on a Bridge Assurance enabled
+		port then this will be set.";
+	}
+	
+	leaf BpduGuard {
+		type smiv2:TruthValue;
+		config false;
+		description
+		 "Used in conjuction with AdminEdge to shutdown a port when a BPDU
+		is received.  Protects against loops in the network";
+	}
+	
 	uses dot1d-port-statistics;
 
   }
