@@ -243,7 +243,7 @@ type BGPRoute struct {
 	NextHop   string
 	Metric    uint32
 	LocalPref uint32
-	Path      []uint32
+	Path      [][]uint32
 	Updated   string
 }
 
