@@ -2,9 +2,9 @@ package models
 
 var ConfigObjectMap = map[string]ConfigObj{
 	"Vlan":                                             &Vlan{},      // created before auto YANG
-	"IPV4Route":                                        &IPV4Route{}, // created before auto YANG
-	"IPV4RouteState":                                   &IPV4RouteState{},
-	"IPV4EventState":                                   &IPV4EventState{},
+	"IPv4Route":                                        &IPv4Route{}, // created before auto YANG
+	"IPv4RouteState":                                   &IPv4RouteState{},
+	"IPv4EventState":                                   &IPv4EventState{},
 	"IPv4Intf":                                         &IPv4Intf{},          // created before auto YANG
 	"ArpConfig":                                        &ArpConfig{},         // created before auto YANG
 	"ArpEntry":                                         &ArpEntry{},          // created before auto YANG

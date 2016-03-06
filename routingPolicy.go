@@ -169,6 +169,7 @@ type PolicyActionConfig  struct {
 	Reject                      bool
 	RedistributeAction      string
 	RedistributeTargetProtocol string 
+	NetworkStatementTargetProtocol   string    
 }
 
 func (obj PolicyActionConfig) UnmarshalObject(body []byte) (ConfigObj, error) {
