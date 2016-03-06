@@ -12,8 +12,8 @@ type DhcpRelayGlobalConfig struct {
 	BaseObj
 	// This will tell whether DHCP RELAY is enabled/disabled
 	// on the box right now or not.
-	DhcpRelay string `SNAPROUTE: "KEY"`
-	Enable    bool
+	DhcpRelay string `SNAPROUTE: "KEY", DESCRIPTION: "Global Dhcp Relay Agent Information"`
+	Enable    bool   `DESCRIPTION: "Global Config stating whether DHCP Relay Agent is enabled on the box or not"`
 }
 
 /*
@@ -23,48 +23,47 @@ type DhcpRelayIntfConfig struct {
 	BaseObj
 	//IpSubnet     string `SNAPROUTE: "KEY"`
 	//Netmask      string `SNAPROUTE: "KEY"`
-	IfIndex int32 `SNAPROUTE: "KEY"`
+	IfIndex int32 `SNAPROUTE: "KEY", DESCRIPTION:"Interface index for which Relay Agent Config needs to be done"`
 	//AgentSubType int32
-	Enable bool
+	Enable bool `DESCRIPTION: "Enabling/Disabling relay agent per interface"`
 	// To make life easy for testing first pass lets have only 1 server
-	ServerIp []string
-	//ServerIp string
+	ServerIp []string `DESCRIPTION: "Dhcp Server(s) where relay agent can relay client dhcp requests"`
 }
 
 type DhcpRelayHostDhcpState struct {
 	BaseObj
-	MacAddr         string
-	ServerIp        string
-	OfferedIp       string
-	GatewayIp       string
-	AcceptedIp      string
-	RequestedIp     string
-	ClientDiscover  string
-	ClientRequest   string
-	ClientRequests  int32
-	ClientResponses int32
-	ServerOffer     string
-	ServerAck       string
-	ServerRequests  int32
-	ServerResponses int32
+	MacAddr         string `DESCRIPTION: "Host Hardware/Mac Address"`
+	ServerIp        string `DESCRIPTION: "Configured Dhcp Server"`
+	OfferedIp       string `DESCRIPTION: "Ip Address offered by Dhcp Server"`
+	GatewayIp       string `DESCRIPTION: "Ip Address which client needs to use"`
+	AcceptedIp      string `DESCRIPTION: "Ip Address which client accepted"`
+	RequestedIp     string `DESCRIPTION: "Ip Address request from client"`
+	ClientDiscover  string `DESCRIPTION: "Most recent time stamp of client discover message to dhcp server"`
+	ClientRequest   string `DESCRIPTION: "Most recent time stamp of client request message"`
+	ClientRequests  int32  `DESCRIPTION: "Total Number of client request message relayed to server"`
+	ClientResponses int32  `DESCRIPTION: "Total Number of server response relayed to client"`
+	ServerOffer     string `DESCRIPTION: "Most recent time stamp of server offer message"`
+	ServerAck       string `DESCRIPTION: "Most recent time stamp of server ack message"`
+	ServerRequests  int32  `DESCRIPTION: "Total Number of requests relayed to server"`
+	ServerResponses int32  `DESCRIPTION: "Total Number of responses received from server"`
 }
 
 type DhcpRelayIntfState struct {
 	BaseObj
-	IntfId            int32
-	TotalDrops        int32
-	TotalDhcpClientRx int32
-	TotalDhcpClientTx int32
-	TotalDhcpServerRx int32
-	TotalDhcpServerTx int32
+	IntfId            int32 `DESCRIPTION: "Interface Index for which state is required to be collected"`
+	TotalDrops        int32 `DESCRIPTION: "Total number of Dhcp Packets dropped by relay agent"`
+	TotalDhcpClientRx int32 `DESCRIPTION: "Total number of client requests that camde to relay agent"`
+	TotalDhcpClientTx int32 `DESCRIPTION: "Total number of client responses send out by relay agent"`
+	TotalDhcpServerRx int32 `DESCRIPTION: "Total number of server requests made by relay agent"`
+	TotalDhcpServerTx int32 `DESCRIPTION: "Total number of server responses received by relay agent"`
 }
 
 type DhcpRelayIntfServerState struct {
 	BaseObj
-	IntfId    int32
-	ServerIp  string
-	Request   int32
-	Responses int32
+	IntfId    int32  `DESCRIPTION: "Interface Index for which state is required to be collected"`
+	ServerIp  string `DESCRIPTION: "Information about any one of configured Dhcp server"`
+	Request   int32  `DESCRIPTION: "Total number of requests to Server"`
+	Responses int32  `DESCRIPTION: "Total number of responses from Server"`
 }
 
 func (obj DhcpRelayHostDhcpState) UnmarshalObject(body []byte) (ConfigObj, error) {
