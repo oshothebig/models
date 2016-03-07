@@ -234,6 +234,18 @@
 		"multiplicity":"*",
 		"srcfile": "objects.go"
 	},
+	"LogicalIntfConfig" : {
+		"access": "w",
+		"Owner": "asicd",
+		"multiplicity":"*",
+		"srcfile": "objects.go"
+	},
+	"LogicalIntfState" : {
+		"access": "r",
+		"Owner": "asicd",
+		"multiplicity":"*",
+		"srcfile": "objects.go"
+	},
 	"UserConfig" : {
 		"access": "w",
 		"Owner": "local",

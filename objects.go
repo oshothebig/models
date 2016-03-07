@@ -292,7 +292,37 @@ type Vlan struct {
 	IfIndexList      string
 	UntagIfIndexList string
 }
+type LogicalIntfConfig struct {
+	BaseObj
+	Name             string `SNAPROUTE: "KEY"`
+	Type             string  //Loopback/P2P/BCAST..
+}
+type LogicalIntfState struct {
+	BaseObj
+	Name              string
+	IfIndex           int32
+	OperState         string
+	IfInOctets        int64
+	IfInUcastPkts     int64
+	IfInDiscards      int64
+	IfInErrors        int64
+	IfInUnknownProtos int64
+	IfOutOctets       int64
+	IfOutUcastPkts    int64
+	IfOutDiscards     int64
+	IfOutErrors       int64
+}
 
+func (obj LogicalIntfState) UnmarshalObject(body []byte) (ConfigObj, error) {
+	var gConf LogicalIntfState
+	var err error
+	if len(body) > 0 {
+		if err = json.Unmarshal(body, &gConf); err != nil {
+			fmt.Println("### Trouble in unmarshalling LogicalIntfState from Json", body)
+		}
+	}
+	return gConf, err
+}
 type IPv4Intf struct {
 	BaseObj
 	IpAddr  string `SNAPROUTE: "KEY"`
