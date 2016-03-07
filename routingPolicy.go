@@ -286,9 +286,6 @@ or export configuration statements.
 	Name string  `SNAPROUTE: KEY`
 	Precedence int
 	MatchType string
-	Export bool
-	Import bool
-	Global bool
 	//yang_name: statement class: list
 	StatementList []interface{} //PolicyDefinitionStmtPrecedence
 }
