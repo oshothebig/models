@@ -16,11 +16,10 @@ type ComponentLoggingConfig struct {
 
 type IpTableAclConfig struct {
 	BaseObj
-	Name     string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", DESCRIPTION: "Ip Table ACL rule name"`
-	IfIndex  int32  `DESCRIPTION: "IfIndex where the acl rule is to be applied", DEFAULT: 0`
-	Access   string `DESCRIPTION: "permit or deny"`
-	IpAddr   string `DESCRIPTION: "ip address of subnet or host"`
-	NetMask  string `DESCRIPTION: "netmask for ip addr", DEFAULT: "0.0.0.0"`
-	Protocol string `DESCRITION: "protocol for which rule is to be applied, e.g TCP, UDP"`
-	Port     string `DESCRITION: "port for protocol"`
+	Name         string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", DESCRIPTION: "Ip Table ACL rule name"`
+	PhysicalPort string `DESCRIPTION: "IfIndex where the acl rule is to be applied", DEFAULT: "all"`
+	Action       string `DESCRIPTION: "permit or deny"`
+	IpAddr       string `DESCRIPTION: "ip address of subnet or host, e.g: 192.168.1.0/24, 192.168.1.1"`
+	Protocol     string `DESCRITION: "protocol for which rule is to be applied, e.g TCP, UDP"`
+	Port         string `DESCRITION: "port for protocol, e.g for dhcprelay port is 68", DEFAULT: "all"`
 }
