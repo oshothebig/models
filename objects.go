@@ -367,7 +367,7 @@ type ArpEntry struct {
 	BaseObj
 	IpAddr         string `SNAPROUTE: "KEY"`
 	MacAddr        string
-	Vlan           uint32
+	Vlan           int32
 	Intf           string
 	ExpiryTimeLeft string
 }
