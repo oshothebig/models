@@ -169,6 +169,7 @@ type PolicyActionConfig  struct {
 	Reject                      bool
 	RedistributeAction      string
 	RedistributeTargetProtocol string 
+	NetworkStatementTargetProtocol   string    
 }
 
 func (obj PolicyActionConfig) UnmarshalObject(body []byte) (ConfigObj, error) {
@@ -285,9 +286,6 @@ or export configuration statements.
 	Name string  `SNAPROUTE: KEY`
 	Precedence int
 	MatchType string
-	Export bool
-	Import bool
-	Global bool
 	//yang_name: statement class: list
 	StatementList []interface{} //PolicyDefinitionStmtPrecedence
 }

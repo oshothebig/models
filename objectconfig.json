@@ -23,19 +23,19 @@
 		"multiplicity":"*",
 		"srcfile": "objects.go"
     },
- 	"IPV4Route": {
+ 	"IPv4Route": {
 		"access": "rw",
 		"Owner": "ribd",
 		"multiplicity":"*",
 		"srcfile": "objects.go"
 	},
- 	"IPV4RouteState": {
+ 	"IPv4RouteState": {
 		"access": "r",
 		"Owner": "ribd",
 		"multiplicity":"*",
 		"srcfile": "objects.go"
 	},
- 	"IPV4EventState": {
+ 	"IPv4EventState": {
 		"access": "r",
 		"Owner": "ribd",
 		"multiplicity":"*",
