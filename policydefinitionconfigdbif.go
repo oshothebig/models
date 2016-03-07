@@ -12,9 +12,8 @@ func (obj PolicyDefinitionConfig) CreateDBTable(dbHdl *sql.DB) error {
 	dbCmd := "CREATE TABLE IF NOT EXISTS PolicyDefinitionConfig " +
 		"( " +
 		"Name TEXT, " +
+		"Precedence INTEGER, " +
 		"MatchType TEXT, " +
-		"Export INTEGER, " +
-		"Import INTEGER, " +
 		"PRIMARY KEY(Name) " +
 	")"
 
@@ -24,8 +23,8 @@ func (obj PolicyDefinitionConfig) CreateDBTable(dbHdl *sql.DB) error {
 
 func (obj PolicyDefinitionConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	var objectId int64
-	dbCmd := fmt.Sprintf("INSERT INTO PolicyDefinitionConfig (Name, MatchType, Export, Import) VALUES ('%v', '%v', '%v', '%v') ;",
-		obj.Name, obj.MatchType, dbutils.ConvertBoolToInt(obj.Export), dbutils.ConvertBoolToInt(obj.Import))
+	dbCmd := fmt.Sprintf("INSERT INTO PolicyDefinitionConfig (Name, Precedence, MatchType) VALUES ('%v', '%v', '%v') ;",
+		obj.Name, obj.Precedence, obj.MatchType)
 	fmt.Println("**** Create Object called with ", obj)
 
 	result, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
@@ -58,12 +57,8 @@ func (obj PolicyDefinitionConfig) GetObjectFromDb(objKey string, dbHdl *sql.DB) 
 	var object PolicyDefinitionConfig
 	sqlKey, err := obj.GetSqlKeyStr(objKey)
 	dbCmd := "select * from PolicyDefinitionConfig where " + sqlKey
-	var tmp2 string
-	var tmp3 string
-	err = dbHdl.QueryRow(dbCmd).Scan(&object.Name, &object.MatchType, &tmp2, &tmp3, )
+	err = dbHdl.QueryRow(dbCmd).Scan(&object.Name, &object.Precedence, &object.MatchType, )
 	fmt.Println("### DB Get PolicyDefinitionConfig\n", err)
-	object.Export = dbutils.ConvertStrBoolIntToBool(tmp2)
-	object.Import = dbutils.ConvertStrBoolIntToBool(tmp3)
 	return object, err
 }
 
@@ -88,17 +83,13 @@ func (obj *PolicyDefinitionConfig) GetAllObjFromDb(dbHdl *sql.DB) (objList []*Po
 
 	defer rows.Close()
     
-	var tmp2 string
-	var tmp3 string
 	for rows.Next() {
 
              object := new(PolicyDefinitionConfig)
-             if err = rows.Scan(&object.Name, &object.MatchType, &tmp2, &tmp3, ); err != nil {
+             if err = rows.Scan(&object.Name, &object.Precedence, &object.MatchType, ); err != nil {
 
              fmt.Println("Db method Scan failed when interating over PolicyDefinitionConfig")
              }
-	object.Export = dbutils.ConvertStrBoolIntToBool(tmp2)
-	object.Import = dbutils.ConvertStrBoolIntToBool(tmp3)
 	objList = append(objList, object)
     }
     return objList, nil
@@ -264,7 +255,7 @@ objTyp := reflect.TypeOf(obj)
 			   fieldVal.Kind() == reflect.Uint32 ||
 			   fieldVal.Kind() == reflect.Uint64 {
 			    fieldSqlStr = fmt.Sprintf(" %s = '%d' ", fieldTyp.Name, int(fieldVal.Uint()))
-			} else if objVal.Kind() == reflect.Bool {
+			} else if fieldVal.Kind() == reflect.Bool {
 			    fieldSqlStr = fmt.Sprintf(" %s = '%d' ", fieldTyp.Name, dbutils.ConvertBoolToInt(bool(fieldVal.Bool())))
 			} else {
 				fieldSqlStr = fmt.Sprintf(" %s = '%s' ", fieldTyp.Name, fieldVal.String())
