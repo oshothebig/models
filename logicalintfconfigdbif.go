@@ -8,36 +8,22 @@ import (
 	"reflect"
 )
 
-func (obj PolicyStmtConfig) CreateDBTable(dbHdl *sql.DB) error {
-	dbCmd := "CREATE TABLE IF NOT EXISTS PolicyStmtConfig " +
+func (obj LogicalIntfConfig) CreateDBTable(dbHdl *sql.DB) error {
+	dbCmd := "CREATE TABLE IF NOT EXISTS LogicalIntfConfig " +
 		"( " +
 		"Name TEXT, " +
-		"MatchConditions TEXT, " +
+		"Type TEXT, " +
 		"PRIMARY KEY(Name) " +
 	")"
+
 	_, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
-	dbCmd = "CREATE TABLE IF NOT EXISTS PolicyStmtConfigConditions " +
-		"( " +
-		"ListName TEXT NOT NULL,\n" +
-		"Conditions TEXT,\n" +
-		"FOREIGN KEY(ListName) REFERENCES PolicyStmtConfig(Name) ON DELETE CASCADE" +
-		");"
-	_, err = dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
-	dbCmd = "CREATE TABLE IF NOT EXISTS PolicyStmtConfigActions " +
-		"( " +
-		"ListName TEXT NOT NULL,\n" +
-		"Actions TEXT,\n" +
-		"FOREIGN KEY(ListName) REFERENCES PolicyStmtConfig(Name) ON DELETE CASCADE" +
-		");"
-	_, err = dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
 
-func (obj PolicyStmtConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
+func (obj LogicalIntfConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	var objectId int64
-	var i int
-	dbCmd := fmt.Sprintf("INSERT INTO PolicyStmtConfig (Name, MatchConditions) VALUES ('%v', '%v') ;",
-		obj.Name, obj.MatchConditions)
+	dbCmd := fmt.Sprintf("INSERT INTO LogicalIntfConfig (Name, Type) VALUES ('%v', '%v') ;",
+		obj.Name, obj.Type)
 	fmt.Println("**** Create Object called with ", obj)
 
 	result, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
@@ -50,115 +36,65 @@ func (obj PolicyStmtConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	    }
 
 	}
-	for i = 0; i < len(obj.Conditions); i++ {
-		dbCmd = fmt.Sprintf("INSERT INTO PolicyStmtConfigConditions (ListName, Conditions) VALUES ('%v', '%v') ;",
-			obj.Name, obj.Conditions[i])
-		result, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
-		if err != nil {
-			fmt.Println("**** Failed to Create table", err)
-		} else {
-			_, err = result.LastInsertId()
-			if err != nil {
-				fmt.Println("### Failed to return last object id", err)
-			}
-		}
-	}
-	for i = 0; i < len(obj.Actions); i++ {
-		dbCmd = fmt.Sprintf("INSERT INTO PolicyStmtConfigActions (ListName, Actions) VALUES ('%v', '%v') ;",
-			obj.Name, obj.Actions[i])
-		result, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
-		if err != nil {
-			fmt.Println("**** Failed to Create table", err)
-		} else {
-			_, err = result.LastInsertId()
-			if err != nil {
-				fmt.Println("### Failed to return last object id", err)
-			}
-		}
-	}
 	return objectId, err
 }
 
-func (obj PolicyStmtConfig) DeleteObjectFromDb(objKey string, dbHdl *sql.DB) error {
+func (obj LogicalIntfConfig) DeleteObjectFromDb(objKey string, dbHdl *sql.DB) error {
 	sqlKey, err := obj.GetSqlKeyStr(objKey)
 	if err != nil {
-		fmt.Println("GetSqlKeyStr for PolicyStmtConfig with key", objKey, "failed with error", err)
+		fmt.Println("GetSqlKeyStr for LogicalIntfConfig with key", objKey, "failed with error", err)
 		return err
 	}
 
-	dbCmd := "delete from PolicyStmtConfig where " + sqlKey
-	fmt.Println("### DB Deleting PolicyStmtConfig\n")
+	dbCmd := "delete from LogicalIntfConfig where " + sqlKey
+	fmt.Println("### DB Deleting LogicalIntfConfig\n")
 	_, err = dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
 
-func (obj PolicyStmtConfig) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, error) {
-	var object PolicyStmtConfig
+func (obj LogicalIntfConfig) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, error) {
+	var object LogicalIntfConfig
 	sqlKey, err := obj.GetSqlKeyStr(objKey)
-	dbCmd := "select * from PolicyStmtConfig where " + sqlKey
-	var tmp2 string
-	var tmp3 string
-	err = dbHdl.QueryRow(dbCmd).Scan(&object.Name, &object.MatchConditions, &tmp2, &tmp3, )
-	fmt.Println("### DB Get PolicyStmtConfig\n", err)
-convtmpConditions := strings.Split(tmp2, ",")
-                        for _, x := range convtmpConditions {
-                            y := strings.Replace(x, " ", "", 1)
-                     object.Conditions = append(object.Conditions, string(y))
-                     }
-convtmpActions := strings.Split(tmp3, ",")
-                        for _, x := range convtmpActions {
-                            y := strings.Replace(x, " ", "", 1)
-                     object.Actions = append(object.Actions, string(y))
-                     }
+	dbCmd := "select * from LogicalIntfConfig where " + sqlKey
+	err = dbHdl.QueryRow(dbCmd).Scan(&object.Name, &object.Type, )
+	fmt.Println("### DB Get LogicalIntfConfig\n", err)
 	return object, err
 }
 
-func (obj PolicyStmtConfig) GetKey() (string, error) {
+func (obj LogicalIntfConfig) GetKey() (string, error) {
 	key := string(obj.Name)
 	return key, nil
 }
 
-func (obj PolicyStmtConfig) GetSqlKeyStr(objKey string) (string, error) {
+func (obj LogicalIntfConfig) GetSqlKeyStr(objKey string) (string, error) {
 	keys := strings.Split(objKey, "#")
 	sqlKey := "Name = "+ "\"" + keys[0] + "\""
 	return sqlKey, nil
 }
 
-func (obj *PolicyStmtConfig) GetAllObjFromDb(dbHdl *sql.DB) (objList []*PolicyStmtConfig, e error) {
-	dbCmd := "select * from PolicyStmtConfig"
+func (obj *LogicalIntfConfig) GetAllObjFromDb(dbHdl *sql.DB) (objList []*LogicalIntfConfig, e error) {
+	dbCmd := "select * from LogicalIntfConfig"
 	rows, err := dbHdl.Query(dbCmd)
 	if err != nil {
-		fmt.Println(fmt.Sprintf("DB method Query failed for 'PolicyStmtConfig' with error PolicyStmtConfig", dbCmd, err))
+		fmt.Println(fmt.Sprintf("DB method Query failed for 'LogicalIntfConfig' with error LogicalIntfConfig", dbCmd, err))
 		return objList, err
 	}
 
 	defer rows.Close()
     
-	var tmp2 string
-	var tmp3 string
 	for rows.Next() {
 
-             object := new(PolicyStmtConfig)
-             if err = rows.Scan(&object.Name, &object.MatchConditions, &object.Conditions, &object.Actions, ); err != nil {
+             object := new(LogicalIntfConfig)
+             if err = rows.Scan(&object.Name, &object.Type, ); err != nil {
 
-             fmt.Println("Db method Scan failed when interating over PolicyStmtConfig")
+             fmt.Println("Db method Scan failed when interating over LogicalIntfConfig")
              }
-convtmpConditions := strings.Split(tmp2, ",")
-                        for _, x := range convtmpConditions {
-                            y := strings.Replace(x, " ", "", 1)
-                     object.Conditions = append(object.Conditions, string(y))
-                     }
-convtmpActions := strings.Split(tmp3, ",")
-                        for _, x := range convtmpActions {
-                            y := strings.Replace(x, " ", "", 1)
-                     object.Actions = append(object.Actions, string(y))
-                     }
 	objList = append(objList, object)
     }
     return objList, nil
     }
-    func (obj PolicyStmtConfig) CompareObjectsAndDiff(updateKeys map[string]bool, dbObj ConfigObj) ([]bool, error) {
-	dbV4Route := dbObj.(PolicyStmtConfig)
+    func (obj LogicalIntfConfig) CompareObjectsAndDiff(updateKeys map[string]bool, dbObj ConfigObj) ([]bool, error) {
+	dbV4Route := dbObj.(LogicalIntfConfig)
 	objTyp := reflect.TypeOf(obj)
 	objVal := reflect.ValueOf(obj)
 	dbObjVal := reflect.ValueOf(dbV4Route)
@@ -232,12 +168,12 @@ convtmpActions := strings.Split(tmp3, ",")
 	return attrIds[:idx], nil
 }
 
-    func (obj PolicyStmtConfig) MergeDbAndConfigObj(dbObj ConfigObj, attrSet []bool) (ConfigObj, error) {
-	var mergedPolicyStmtConfig PolicyStmtConfig
+    func (obj LogicalIntfConfig) MergeDbAndConfigObj(dbObj ConfigObj, attrSet []bool) (ConfigObj, error) {
+	var mergedLogicalIntfConfig LogicalIntfConfig
 	objTyp := reflect.TypeOf(obj)
 	objVal := reflect.ValueOf(obj)
 	dbObjVal := reflect.ValueOf(dbObj)
-	mergedObjVal := reflect.ValueOf(&mergedPolicyStmtConfig)
+	mergedObjVal := reflect.ValueOf(&mergedLogicalIntfConfig)
 	idx := 0
 	for i:=0; i<objTyp.NumField(); i++ {
 		if fieldTyp := objTyp.Field(i); fieldTyp.Anonymous {
@@ -286,15 +222,15 @@ convtmpActions := strings.Split(tmp3, ",")
 		idx++
 
 	}
-	return mergedPolicyStmtConfig, nil
+	return mergedLogicalIntfConfig, nil
 }
 
-    func (obj PolicyStmtConfig) UpdateObjectInDb(dbObj ConfigObj, attrSet []bool, dbHdl *sql.DB) error {
+    func (obj LogicalIntfConfig) UpdateObjectInDb(dbObj ConfigObj, attrSet []bool, dbHdl *sql.DB) error {
 	var fieldSqlStr string
-	dbPolicyStmtConfig := dbObj.(PolicyStmtConfig)
-	objKey, err := dbPolicyStmtConfig.GetKey()
-	objSqlKey, err := dbPolicyStmtConfig.GetSqlKeyStr(objKey)
-	dbCmd := "update " + "PolicyStmtConfig" + " set"
+	dbLogicalIntfConfig := dbObj.(LogicalIntfConfig)
+	objKey, err := dbLogicalIntfConfig.GetKey()
+	objSqlKey, err := dbLogicalIntfConfig.GetSqlKeyStr(objKey)
+	dbCmd := "update " + "LogicalIntfConfig" + " set"
 objTyp := reflect.TypeOf(obj)
 	objVal := reflect.ValueOf(obj)
 	idx := 0
@@ -318,7 +254,7 @@ objTyp := reflect.TypeOf(obj)
 			   fieldVal.Kind() == reflect.Uint32 ||
 			   fieldVal.Kind() == reflect.Uint64 {
 			    fieldSqlStr = fmt.Sprintf(" %s = '%d' ", fieldTyp.Name, int(fieldVal.Uint()))
-			} else if objVal.Kind() == reflect.Bool {
+			} else if fieldVal.Kind() == reflect.Bool {
 			    fieldSqlStr = fmt.Sprintf(" %s = '%d' ", fieldTyp.Name, dbutils.ConvertBoolToInt(bool(fieldVal.Bool())))
 			} else {
 				fieldSqlStr = fmt.Sprintf(" %s = '%s' ", fieldTyp.Name, fieldVal.String())

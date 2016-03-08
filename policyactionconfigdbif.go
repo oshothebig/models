@@ -16,6 +16,9 @@ func (obj PolicyActionConfig) CreateDBTable(dbHdl *sql.DB) error {
 		"SetAdminDistanceValue INTEGER, " +
 		"Accept INTEGER, " +
 		"Reject INTEGER, " +
+		"RedistributeAction TEXT, " +
+		"RedistributeTargetProtocol TEXT, " +
+		"NetworkStatementTargetProtocol TEXT, " +
 		"PRIMARY KEY(Name) " +
 	")"
 
@@ -25,8 +28,8 @@ func (obj PolicyActionConfig) CreateDBTable(dbHdl *sql.DB) error {
 
 func (obj PolicyActionConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	var objectId int64
-	dbCmd := fmt.Sprintf("INSERT INTO PolicyActionConfig (Name, ActionType, SetAdminDistanceValue, Accept, Reject) VALUES ('%v', '%v', '%v', '%v', '%v') ;",
-		obj.Name, obj.ActionType, obj.SetAdminDistanceValue, dbutils.ConvertBoolToInt(obj.Accept), dbutils.ConvertBoolToInt(obj.Reject))
+	dbCmd := fmt.Sprintf("INSERT INTO PolicyActionConfig (Name, ActionType, SetAdminDistanceValue, Accept, Reject, RedistributeAction, RedistributeTargetProtocol, NetworkStatementTargetProtocol) VALUES ('%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v') ;",
+		obj.Name, obj.ActionType, obj.SetAdminDistanceValue, dbutils.ConvertBoolToInt(obj.Accept), dbutils.ConvertBoolToInt(obj.Reject), obj.RedistributeAction, obj.RedistributeTargetProtocol, obj.NetworkStatementTargetProtocol)
 	fmt.Println("**** Create Object called with ", obj)
 
 	result, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
@@ -61,7 +64,7 @@ func (obj PolicyActionConfig) GetObjectFromDb(objKey string, dbHdl *sql.DB) (Con
 	dbCmd := "select * from PolicyActionConfig where " + sqlKey
 	var tmp3 string
 	var tmp4 string
-	err = dbHdl.QueryRow(dbCmd).Scan(&object.Name, &object.ActionType, &object.SetAdminDistanceValue, &tmp3, &tmp4, )
+	err = dbHdl.QueryRow(dbCmd).Scan(&object.Name, &object.ActionType, &object.SetAdminDistanceValue, &tmp3, &tmp4, &object.RedistributeAction, &object.RedistributeTargetProtocol, &object.NetworkStatementTargetProtocol, )
 	fmt.Println("### DB Get PolicyActionConfig\n", err)
 	object.Accept = dbutils.ConvertStrBoolIntToBool(tmp3)
 	object.Reject = dbutils.ConvertStrBoolIntToBool(tmp4)
@@ -94,7 +97,7 @@ func (obj *PolicyActionConfig) GetAllObjFromDb(dbHdl *sql.DB) (objList []*Policy
 	for rows.Next() {
 
              object := new(PolicyActionConfig)
-             if err = rows.Scan(&object.Name, &object.ActionType, &object.SetAdminDistanceValue, &tmp3, &tmp4, ); err != nil {
+             if err = rows.Scan(&object.Name, &object.ActionType, &object.SetAdminDistanceValue, &tmp3, &tmp4, &object.RedistributeAction, &object.RedistributeTargetProtocol, &object.NetworkStatementTargetProtocol, ); err != nil {
 
              fmt.Println("Db method Scan failed when interating over PolicyActionConfig")
              }
@@ -265,7 +268,7 @@ objTyp := reflect.TypeOf(obj)
 			   fieldVal.Kind() == reflect.Uint32 ||
 			   fieldVal.Kind() == reflect.Uint64 {
 			    fieldSqlStr = fmt.Sprintf(" %s = '%d' ", fieldTyp.Name, int(fieldVal.Uint()))
-			} else if objVal.Kind() == reflect.Bool {
+			} else if fieldVal.Kind() == reflect.Bool {
 			    fieldSqlStr = fmt.Sprintf(" %s = '%d' ", fieldTyp.Name, dbutils.ConvertBoolToInt(bool(fieldVal.Bool())))
 			} else {
 				fieldSqlStr = fmt.Sprintf(" %s = '%s' ", fieldTyp.Name, fieldVal.String())

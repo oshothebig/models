@@ -2,10 +2,12 @@ package models
 
 var ConfigObjectMap = map[string]ConfigObj{
 	"Vlan":                                             &Vlan{},      // created before auto YANG
-	"IPV4Route":                                        &IPV4Route{}, // created before auto YANG
-	"IPV4RouteState":                                   &IPV4RouteState{},
-	"IPV4EventState":                                   &IPV4EventState{},
+	"IPv4Route":                                        &IPv4Route{}, // created before auto YANG
+	"IPv4RouteState":                                   &IPv4RouteState{},
+	"IPv4EventState":                                   &IPv4EventState{},
 	"IPv4Intf":                                         &IPv4Intf{},          // created before auto YANG
+    "LogicalIntfConfig":                                &LogicalIntfConfig{},
+	"LogicalIntfState" :                                &LogicalIntfState{},
 	"ArpConfig":                                        &ArpConfig{},         // created before auto YANG
 	"ArpEntry":                                         &ArpEntry{},          // created before auto YANG
 	"BGPGlobalConfig":                                  &BGPGlobalConfig{},   // created before auto YANG
@@ -42,7 +44,6 @@ var ConfigObjectMap = map[string]ConfigObj{
 	"PolicyDefinitionState":                            &PolicyDefinitionState{},
 	"PolicyStmtConfig":                                 &PolicyStmtConfig{},
 	"PolicyStmtState":                                  &PolicyStmtState{},
-	"PolicyPrefixSet":                                  &PolicyPrefixSet{},
 	"PolicyConditionConfig":                            &PolicyConditionConfig{},
 	"PolicyConditionState":                             &PolicyConditionState{},
 	"PolicyActionConfig":                               &PolicyActionConfig{},
