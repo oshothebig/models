@@ -66,10 +66,9 @@ type BfdIntfState struct {
  */
 type BfdSessionConfig struct {
 	BaseObj
-	IpAddr    string `SNAPROUTE: "KEY", ACCESS:"w",  MULTIPLICITY:"*", DESCRIPTION: "BFD neighbor IP address"`
-	PerLink   bool   `DESCRIPTION: "Run BFD sessions on individual link of a LAG if the neighbor is reachable through LAG", DEFAULT: "false"`
-	Owner     string `DESCRIPTION: "Module requesting BFD session configuration", DEFAULT: "user"`
-	Operation string `DESCRIPTION: "Opcode of the session configuration", DEFAULT: "create"`
+	IpAddr  string `SNAPROUTE: "KEY", ACCESS:"w",  MULTIPLICITY:"*", DESCRIPTION: "BFD neighbor IP address"`
+	PerLink bool   `DESCRIPTION: "Run BFD sessions on individual link of a LAG if the neighbor is reachable through LAG", DEFAULT: "false"`
+	Owner   string `DESCRIPTION: "Module requesting BFD session configuration", DEFAULT: "user"`
 }
 
 /*
