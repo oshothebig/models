@@ -295,11 +295,21 @@ type Vlan struct {
 type LogicalIntfConfig struct {
 	BaseObj
 	Name             string `SNAPROUTE: "KEY"`
-	Type             string  //Loopback/P2P/BCAST..
+	Type             string
+}
+func (obj LogicalIntfConfig) UnmarshalObject(body []byte) (ConfigObj, error) {
+	    var gConf LogicalIntfConfig
+        var err error
+        if len(body) > 0 {
+            if err = json.Unmarshal(body, &gConf); err != nil  {
+                fmt.Println("### LogicalIntfConfig called, unmarshal failed",body)
+            }
+        }
+        return gConf, err
 }
 type LogicalIntfState struct {
 	BaseObj
-	Name              string
+	Name              string `SNAPROUTE: "KEY"`
 	IfIndex           int32
 	OperState         string
 	IfInOctets        int64

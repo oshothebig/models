@@ -13,19 +13,31 @@ func (obj PolicyStmtConfig) CreateDBTable(dbHdl *sql.DB) error {
 		"( " +
 		"Name TEXT, " +
 		"MatchConditions TEXT, " +
-		"Conditions TEXT, " +
-		"Actions TEXT, " +
 		"PRIMARY KEY(Name) " +
 	")"
-
 	_, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
+	dbCmd = "CREATE TABLE IF NOT EXISTS PolicyStmtConfigConditions " +
+		"( " +
+		"ListName TEXT NOT NULL,\n" +
+		"Conditions TEXT,\n" +
+		"FOREIGN KEY(ListName) REFERENCES PolicyStmtConfig(Name) ON DELETE CASCADE" +
+		");"
+	_, err = dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
+	dbCmd = "CREATE TABLE IF NOT EXISTS PolicyStmtConfigActions " +
+		"( " +
+		"ListName TEXT NOT NULL,\n" +
+		"Actions TEXT,\n" +
+		"FOREIGN KEY(ListName) REFERENCES PolicyStmtConfig(Name) ON DELETE CASCADE" +
+		");"
+	_, err = dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
 
 func (obj PolicyStmtConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	var objectId int64
-	dbCmd := fmt.Sprintf("INSERT INTO PolicyStmtConfig (Name, MatchConditions, Conditions, Actions) VALUES ('%v', '%v', '%v', '%v') ;",
-		obj.Name, obj.MatchConditions, obj.Conditions, obj.Actions)
+	var i int
+	dbCmd := fmt.Sprintf("INSERT INTO PolicyStmtConfig (Name, MatchConditions) VALUES ('%v', '%v') ;",
+		obj.Name, obj.MatchConditions)
 	fmt.Println("**** Create Object called with ", obj)
 
 	result, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
@@ -37,6 +49,32 @@ func (obj PolicyStmtConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 		    fmt.Println("### Failed to return last object id", err)
 	    }
 
+	}
+	for i = 0; i < len(obj.Conditions); i++ {
+		dbCmd = fmt.Sprintf("INSERT INTO PolicyStmtConfigConditions (ListName, Conditions) VALUES ('%v', '%v') ;",
+			obj.Name, obj.Conditions[i])
+		result, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
+		if err != nil {
+			fmt.Println("**** Failed to Create table", err)
+		} else {
+			_, err = result.LastInsertId()
+			if err != nil {
+				fmt.Println("### Failed to return last object id", err)
+			}
+		}
+	}
+	for i = 0; i < len(obj.Actions); i++ {
+		dbCmd = fmt.Sprintf("INSERT INTO PolicyStmtConfigActions (ListName, Actions) VALUES ('%v', '%v') ;",
+			obj.Name, obj.Actions[i])
+		result, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
+		if err != nil {
+			fmt.Println("**** Failed to Create table", err)
+		} else {
+			_, err = result.LastInsertId()
+			if err != nil {
+				fmt.Println("### Failed to return last object id", err)
+			}
+		}
 	}
 	return objectId, err
 }

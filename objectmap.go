@@ -4,7 +4,7 @@ var ConfigObjectMap = map[string]ConfigObj{
 	"Vlan":                                             &Vlan{},      // created before auto YANG
 	"IPv4Route":                                        &IPv4Route{}, // created before auto YANG
 	"IPv4RouteState":                                   &IPv4RouteState{},
-	"IPv4EventState":                                   &IPv4EventState,
+	"IPv4EventState":                                   &IPv4EventState{},
 	"IPv4Intf":                                         &IPv4Intf{},          // created before auto YANG
     "LogicalIntfConfig":                                &LogicalIntfConfig{},
 	"LogicalIntfState" :                                &LogicalIntfState{},
@@ -44,7 +44,6 @@ var ConfigObjectMap = map[string]ConfigObj{
 	"PolicyDefinitionState":                            &PolicyDefinitionState{},
 	"PolicyStmtConfig":                                 &PolicyStmtConfig{},
 	"PolicyStmtState":                                  &PolicyStmtState{},
-	"PolicyPrefixSet":                                  &PolicyPrefixSet{},
 	"PolicyConditionConfig":                            &PolicyConditionConfig{},
 	"PolicyConditionState":                             &PolicyConditionState{},
 	"PolicyActionConfig":                               &PolicyActionConfig{},
