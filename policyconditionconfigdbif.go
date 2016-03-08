@@ -14,6 +14,8 @@ func (obj PolicyConditionConfig) CreateDBTable(dbHdl *sql.DB) error {
 		"Name TEXT, " +
 		"ConditionType TEXT, " +
 		"MatchProtocolConditionInfo TEXT, " +
+		"MatchDstIpConditionIpPrefix TEXT, " +
+		"MatchDstIpConditionMaskLengthRange TEXT, " +
 		"PRIMARY KEY(Name) " +
 	")"
 
@@ -23,8 +25,8 @@ func (obj PolicyConditionConfig) CreateDBTable(dbHdl *sql.DB) error {
 
 func (obj PolicyConditionConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	var objectId int64
-	dbCmd := fmt.Sprintf("INSERT INTO PolicyConditionConfig (Name, ConditionType, MatchProtocolConditionInfo) VALUES ('%v', '%v', '%v') ;",
-		obj.Name, obj.ConditionType, obj.MatchProtocolConditionInfo)
+	dbCmd := fmt.Sprintf("INSERT INTO PolicyConditionConfig (Name, ConditionType, MatchProtocolConditionInfo, MatchDstIpConditionIpPrefix, MatchDstIpConditionMaskLengthRange) VALUES ('%v', '%v', '%v', '%v', '%v') ;",
+		obj.Name, obj.ConditionType, obj.MatchProtocolConditionInfo, obj.MatchDstIpConditionIpPrefix, obj.MatchDstIpConditionMaskLengthRange)
 	fmt.Println("**** Create Object called with ", obj)
 
 	result, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
@@ -57,7 +59,7 @@ func (obj PolicyConditionConfig) GetObjectFromDb(objKey string, dbHdl *sql.DB) (
 	var object PolicyConditionConfig
 	sqlKey, err := obj.GetSqlKeyStr(objKey)
 	dbCmd := "select * from PolicyConditionConfig where " + sqlKey
-	err = dbHdl.QueryRow(dbCmd).Scan(&object.Name, &object.ConditionType, &object.MatchProtocolConditionInfo, )
+	err = dbHdl.QueryRow(dbCmd).Scan(&object.Name, &object.ConditionType, &object.MatchProtocolConditionInfo, &object.MatchDstIpConditionIpPrefix, &object.MatchDstIpConditionMaskLengthRange, )
 	fmt.Println("### DB Get PolicyConditionConfig\n", err)
 	return object, err
 }
@@ -86,7 +88,7 @@ func (obj *PolicyConditionConfig) GetAllObjFromDb(dbHdl *sql.DB) (objList []*Pol
 	for rows.Next() {
 
              object := new(PolicyConditionConfig)
-             if err = rows.Scan(&object.Name, &object.ConditionType, &object.MatchProtocolConditionInfo, ); err != nil {
+             if err = rows.Scan(&object.Name, &object.ConditionType, &object.MatchProtocolConditionInfo, &object.MatchDstIpConditionIpPrefix, &object.MatchDstIpConditionMaskLengthRange, ); err != nil {
 
              fmt.Println("Db method Scan failed when interating over PolicyConditionConfig")
              }
@@ -255,7 +257,7 @@ objTyp := reflect.TypeOf(obj)
 			   fieldVal.Kind() == reflect.Uint32 ||
 			   fieldVal.Kind() == reflect.Uint64 {
 			    fieldSqlStr = fmt.Sprintf(" %s = '%d' ", fieldTyp.Name, int(fieldVal.Uint()))
-			} else if objVal.Kind() == reflect.Bool {
+			} else if fieldVal.Kind() == reflect.Bool {
 			    fieldSqlStr = fmt.Sprintf(" %s = '%d' ", fieldTyp.Name, dbutils.ConvertBoolToInt(bool(fieldVal.Bool())))
 			} else {
 				fieldSqlStr = fmt.Sprintf(" %s = '%s' ", fieldTyp.Name, fieldVal.String())
