@@ -124,9 +124,8 @@ type PolicyConditionConfig struct {
 	Name                                 string  `SNAPROUTE: "KEY"`
 	ConditionType                        string
 	MatchProtocolConditionInfo           string
-    MatchDstIpPrefixConditionInfo        PolicyDstIpMatchPrefixSetCondition
-    MatchNeighborConditionInfo           PolicyMatchNeighborSetCondition
-	MatchTagConditionInfo                PolicyMatchTagSetCondition
+	MatchDstIpConditionIpPrefix          string
+	MatchDstIpConditionMaskLengthRange  string
 }
 
 func (obj PolicyConditionConfig) UnmarshalObject(body []byte) (ConfigObj, error) {
@@ -162,14 +161,14 @@ func (obj PolicyConditionState) UnmarshalObject(body []byte) (ConfigObj, error) 
 
 type PolicyActionConfig  struct {
 	BaseObj 
-	Name                        string `SNAPROUTE: "KEY"`
-	ActionType                  string
-	SetAdminDistanceValue       int
-	Accept                      bool
-	Reject                      bool
-	RedistributeAction      string
-	RedistributeTargetProtocol string 
-	NetworkStatementTargetProtocol   string    
+	Name                             string `SNAPROUTE: "KEY"`
+	ActionType                       string
+	SetAdminDistanceValue            int
+	Accept                           bool
+	Reject                           bool
+	RedistributeAction               string
+	RedistributeTargetProtocol       string
+	NetworkStatementTargetProtocol   string
 }
 
 func (obj PolicyActionConfig) UnmarshalObject(body []byte) (ConfigObj, error) {
@@ -287,7 +286,7 @@ or export configuration statements.
 	Precedence int
 	MatchType string
 	//yang_name: statement class: list
-	StatementList []interface{} //PolicyDefinitionStmtPrecedence
+	StatementList [] PolicyDefinitionStmtPrecedence
 }
 
 func (obj PolicyDefinitionConfig) UnmarshalObject(body []byte) (ConfigObj, error) {

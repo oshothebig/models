@@ -41,12 +41,6 @@
 		"multiplicity":"*",
 		"srcfile": "objects.go"
 	},
-	"PolicyPrefixSet" : {
-		"access": "rw",
-		"Owner": "ribd",
-		"multiplicity":"*",
-		"srcfile": "objects.go"
-	},
  	"PolicyConditionConfig": {
 		"access": "w",
 		"Owner": "ribd",
@@ -229,6 +223,18 @@
 		"srcfile": "objects.go"
 	},
 	"PortState" : {
+		"access": "r",
+		"Owner": "asicd",
+		"multiplicity":"*",
+		"srcfile": "objects.go"
+	},
+	"LogicalIntfConfig" : {
+		"access": "w",
+		"Owner": "asicd",
+		"multiplicity":"*",
+		"srcfile": "objects.go"
+	},
+	"LogicalIntfState" : {
 		"access": "r",
 		"Owner": "asicd",
 		"multiplicity":"*",
