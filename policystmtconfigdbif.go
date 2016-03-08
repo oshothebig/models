@@ -96,11 +96,11 @@ func (obj PolicyStmtConfig) GetObjectFromDb(objKey string, dbHdl *sql.DB) (Confi
 	var object PolicyStmtConfig
 	sqlKey, err := obj.GetSqlKeyStr(objKey)
 	dbCmd := "select * from PolicyStmtConfig where " + sqlKey
-	var tmp2 string
-	var tmp3 string
-	err = dbHdl.QueryRow(dbCmd).Scan(&object.Name, &object.MatchConditions, &tmp2, &tmp3, )
+	//var tmp2 string
+	//var tmp3 string
+	err = dbHdl.QueryRow(dbCmd).Scan(&object.Name, &object.MatchConditions)//, &tmp2, &tmp3, )
 	fmt.Println("### DB Get PolicyStmtConfig\n", err)
-convtmpConditions := strings.Split(tmp2, ",")
+/*convtmpConditions := strings.Split(tmp2, ",")
                         for _, x := range convtmpConditions {
                             y := strings.Replace(x, " ", "", 1)
                      object.Conditions = append(object.Conditions, string(y))
@@ -109,7 +109,7 @@ convtmpActions := strings.Split(tmp3, ",")
                         for _, x := range convtmpActions {
                             y := strings.Replace(x, " ", "", 1)
                      object.Actions = append(object.Actions, string(y))
-                     }
+                     }*/
 	return object, err
 }
 
@@ -134,16 +134,16 @@ func (obj *PolicyStmtConfig) GetAllObjFromDb(dbHdl *sql.DB) (objList []*PolicySt
 
 	defer rows.Close()
     
-	var tmp2 string
-	var tmp3 string
+	//var tmp2 string
+	//var tmp3 string
 	for rows.Next() {
 
              object := new(PolicyStmtConfig)
-             if err = rows.Scan(&object.Name, &object.MatchConditions, &object.Conditions, &object.Actions, ); err != nil {
+             if err = rows.Scan(&object.Name, &object.MatchConditions, ); err != nil {
 
              fmt.Println("Db method Scan failed when interating over PolicyStmtConfig")
              }
-convtmpConditions := strings.Split(tmp2, ",")
+/*convtmpConditions := strings.Split(tmp2, ",")
                         for _, x := range convtmpConditions {
                             y := strings.Replace(x, " ", "", 1)
                      object.Conditions = append(object.Conditions, string(y))
@@ -152,7 +152,7 @@ convtmpActions := strings.Split(tmp3, ",")
                         for _, x := range convtmpActions {
                             y := strings.Replace(x, " ", "", 1)
                      object.Actions = append(object.Actions, string(y))
-                     }
+                     }*/
 	objList = append(objList, object)
     }
     return objList, nil
