@@ -305,6 +305,18 @@ module RSTP-MIB {
 	        description
 	          "Number of TC BPDUs transmitted";
 	      }
+		leaf tcAck-in-pkts {
+	        type yang:counter64;
+			config false;			
+	        description
+	          "Number of TC Ack BPDUs received";
+	      }
+		leaf tcAck-out-pkts {
+	        type yang:counter64;
+			config false;			
+	        description
+	          "Number of TC Ack BPDUs transmitted";
+	      }
 		leaf pvst-in-pkts {
 	        type yang:counter64;
 			config false;			
