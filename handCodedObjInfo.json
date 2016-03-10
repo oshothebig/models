@@ -19,7 +19,7 @@
 "IPv4Intf" : {
   "access": "w",
   "owner": "ospfd",
-  "srcfile": "ospf.go",
+  "srcfile": "objects.go",
   "multiplicity": "*"
  },
 "ArpConfig" : {
@@ -232,40 +232,10 @@
   "srcfile": "objects.go",
   "multiplicity": "*"
  },
-"IPV4AddressBlock" : {
-  "access": "w",
-  "owner": "confd",
-  "srcfile": "ipaddrblock.go",
-  "multiplicity": "*"
- },
 "UserState" : {
   "access": "r",
   "owner": "confd",
   "srcfile": "ipaddrblock.go",
-  "multiplicity": "*"
- },
-"Dot1dStpPortEntryConfig" : {
-  "access": "w",
-  "owner": "stpd",
-  "srcfile": "stp.go",
-  "multiplicity": "*"
- },
-"Dot1dStpBridgeState" : {
-  "access": "r",
-  "owner": "stpd",
-  "srcfile": "stp.go",
-  "multiplicity": "1"
- },
-"Dot1dStpBridgeConfig" : {
-  "access": "w",
-  "owner": "stpd",
-  "srcfile": "stp.go",
-  "multiplicity": "*"
- },
-"Dot1dStpPortEntryStateCountersFsmStates" : {
-  "access": "r",
-  "owner": "stpd",
-  "srcfile": "stp.go",
   "multiplicity": "*"
  }
 }
