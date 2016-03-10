@@ -70,17 +70,21 @@ func (obj PortConfig) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, 
 }
 
 func (obj PortConfig) GetKey() (string, error) {
-	key := string(obj.PortNum)
+	keyName := "PortConfig"
+	keyName = strings.TrimSuffix(keyName, "Config")
+	keyName = strings.TrimSuffix(keyName, "State")
+	key := keyName + "#" + string(fmt.Sprintf("%d", obj.PortNum))
 	return key, nil
 }
 
 func (obj PortConfig) GetSqlKeyStr(objKey string) (string, error) {
 	keys := strings.Split(objKey, "#")
-	sqlKey := "PortNum = " + "\"" + keys[0] + "\""
+	sqlKey := "PortNum = " + "\"" + keys[1] + "\""
 	return sqlKey, nil
 }
 
-func (obj *PortConfig) GetAllObjFromDb(dbHdl *sql.DB) (objList []*PortConfig, e error) {
+func (obj PortConfig) GetAllObjFromDb(dbHdl *sql.DB) (objList []ConfigObj, err error) {
+	var object PortConfig
 	dbCmd := "select * from PortConfig"
 	rows, err := dbHdl.Query(dbCmd)
 	if err != nil {
@@ -92,7 +96,6 @@ func (obj *PortConfig) GetAllObjFromDb(dbHdl *sql.DB) (objList []*PortConfig, e 
 
 	for rows.Next() {
 
-		object := new(PortConfig)
 		if err = rows.Scan(&object.PortNum, &object.Description, &object.PhyIntfType, &object.AdminState, &object.MacAddr, &object.Speed, &object.Duplex, &object.Autoneg, &object.MediaType, &object.Mtu); err != nil {
 
 			fmt.Println("Db method Scan failed when interating over PortConfig")
@@ -101,6 +104,7 @@ func (obj *PortConfig) GetAllObjFromDb(dbHdl *sql.DB) (objList []*PortConfig, e 
 	}
 	return objList, nil
 }
+
 func (obj PortConfig) CompareObjectsAndDiff(updateKeys map[string]bool, dbObj ConfigObj) ([]bool, error) {
 	dbV4Route := dbObj.(PortConfig)
 	objTyp := reflect.TypeOf(obj)

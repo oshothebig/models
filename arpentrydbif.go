@@ -65,17 +65,21 @@ func (obj ArpEntry) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, er
 }
 
 func (obj ArpEntry) GetKey() (string, error) {
-	key := string(obj.IpAddr)
+	keyName := "ArpEntry"
+	keyName = strings.TrimSuffix(keyName, "Config")
+	keyName = strings.TrimSuffix(keyName, "State")
+	key := keyName + "#" + string(obj.IpAddr)
 	return key, nil
 }
 
 func (obj ArpEntry) GetSqlKeyStr(objKey string) (string, error) {
 	keys := strings.Split(objKey, "#")
-	sqlKey := "IpAddr = " + "\"" + keys[0] + "\""
+	sqlKey := "IpAddr = " + "\"" + keys[1] + "\""
 	return sqlKey, nil
 }
 
-func (obj *ArpEntry) GetAllObjFromDb(dbHdl *sql.DB) (objList []*ArpEntry, e error) {
+func (obj ArpEntry) GetAllObjFromDb(dbHdl *sql.DB) (objList []ConfigObj, err error) {
+	var object ArpEntry
 	dbCmd := "select * from ArpEntry"
 	rows, err := dbHdl.Query(dbCmd)
 	if err != nil {
@@ -87,7 +91,6 @@ func (obj *ArpEntry) GetAllObjFromDb(dbHdl *sql.DB) (objList []*ArpEntry, e erro
 
 	for rows.Next() {
 
-		object := new(ArpEntry)
 		if err = rows.Scan(&object.IpAddr, &object.MacAddr, &object.Vlan, &object.Intf, &object.ExpiryTimeLeft); err != nil {
 
 			fmt.Println("Db method Scan failed when interating over ArpEntry")
@@ -96,6 +99,7 @@ func (obj *ArpEntry) GetAllObjFromDb(dbHdl *sql.DB) (objList []*ArpEntry, e erro
 	}
 	return objList, nil
 }
+
 func (obj ArpEntry) CompareObjectsAndDiff(updateKeys map[string]bool, dbObj ConfigObj) ([]bool, error) {
 	dbV4Route := dbObj.(ArpEntry)
 	objTyp := reflect.TypeOf(obj)
@@ -257,7 +261,7 @@ func (obj ArpEntry) UpdateObjectInDb(dbObj ConfigObj, attrSet []bool, dbHdl *sql
 				fieldVal.Kind() == reflect.Uint32 ||
 				fieldVal.Kind() == reflect.Uint64 {
 				fieldSqlStr = fmt.Sprintf(" %s = '%d' ", fieldTyp.Name, int(fieldVal.Uint()))
-			} else if objVal.Kind() == reflect.Bool {
+			} else if fieldVal.Kind() == reflect.Bool {
 				fieldSqlStr = fmt.Sprintf(" %s = '%d' ", fieldTyp.Name, dbutils.ConvertBoolToInt(bool(fieldVal.Bool())))
 			} else {
 				fieldSqlStr = fmt.Sprintf(" %s = '%s' ", fieldTyp.Name, fieldVal.String())

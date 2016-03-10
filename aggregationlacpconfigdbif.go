@@ -74,17 +74,21 @@ func (obj AggregationLacpConfig) GetObjectFromDb(objKey string, dbHdl *sql.DB) (
 }
 
 func (obj AggregationLacpConfig) GetKey() (string, error) {
-	key := string(obj.NameKey)
+	keyName := "AggregationLacpConfig"
+	keyName = strings.TrimSuffix(keyName, "Config")
+	keyName = strings.TrimSuffix(keyName, "State")
+	key := keyName + "#" + string(obj.NameKey)
 	return key, nil
 }
 
 func (obj AggregationLacpConfig) GetSqlKeyStr(objKey string) (string, error) {
 	keys := strings.Split(objKey, "#")
-	sqlKey := "NameKey = " + "\"" + keys[0] + "\""
+	sqlKey := "NameKey = " + "\"" + keys[1] + "\""
 	return sqlKey, nil
 }
 
-func (obj *AggregationLacpConfig) GetAllObjFromDb(dbHdl *sql.DB) (objList []*AggregationLacpConfig, e error) {
+func (obj AggregationLacpConfig) GetAllObjFromDb(dbHdl *sql.DB) (objList []ConfigObj, err error) {
+	var object AggregationLacpConfig
 	dbCmd := "select * from AggregationLacpConfig"
 	rows, err := dbHdl.Query(dbCmd)
 	if err != nil {
@@ -97,7 +101,6 @@ func (obj *AggregationLacpConfig) GetAllObjFromDb(dbHdl *sql.DB) (objList []*Agg
 	var tmp1 string
 	for rows.Next() {
 
-		object := new(AggregationLacpConfig)
 		if err = rows.Scan(&object.LagType, &tmp1, &object.Description, &object.Mtu, &object.Type, &object.MinLinks, &object.NameKey, &object.Interval, &object.LacpMode, &object.SystemIdMac, &object.SystemPriority, &object.LagHash); err != nil {
 
 			fmt.Println("Db method Scan failed when interating over AggregationLacpConfig")
@@ -107,6 +110,7 @@ func (obj *AggregationLacpConfig) GetAllObjFromDb(dbHdl *sql.DB) (objList []*Agg
 	}
 	return objList, nil
 }
+
 func (obj AggregationLacpConfig) CompareObjectsAndDiff(updateKeys map[string]bool, dbObj ConfigObj) ([]bool, error) {
 	dbV4Route := dbObj.(AggregationLacpConfig)
 	objTyp := reflect.TypeOf(obj)
@@ -268,7 +272,7 @@ func (obj AggregationLacpConfig) UpdateObjectInDb(dbObj ConfigObj, attrSet []boo
 				fieldVal.Kind() == reflect.Uint32 ||
 				fieldVal.Kind() == reflect.Uint64 {
 				fieldSqlStr = fmt.Sprintf(" %s = '%d' ", fieldTyp.Name, int(fieldVal.Uint()))
-			} else if objVal.Kind() == reflect.Bool {
+			} else if fieldVal.Kind() == reflect.Bool {
 				fieldSqlStr = fmt.Sprintf(" %s = '%d' ", fieldTyp.Name, dbutils.ConvertBoolToInt(bool(fieldVal.Bool())))
 			} else {
 				fieldSqlStr = fmt.Sprintf(" %s = '%s' ", fieldTyp.Name, fieldVal.String())

@@ -68,17 +68,21 @@ func (obj BGPPolicyActionConfig) GetObjectFromDb(objKey string, dbHdl *sql.DB) (
 }
 
 func (obj BGPPolicyActionConfig) GetKey() (string, error) {
-	key := string(obj.Name)
+	keyName := "BGPPolicyActionConfig"
+	keyName = strings.TrimSuffix(keyName, "Config")
+	keyName = strings.TrimSuffix(keyName, "State")
+	key := keyName + "#" + string(obj.Name)
 	return key, nil
 }
 
 func (obj BGPPolicyActionConfig) GetSqlKeyStr(objKey string) (string, error) {
 	keys := strings.Split(objKey, "#")
-	sqlKey := "Name = " + "\"" + keys[0] + "\""
+	sqlKey := "Name = " + "\"" + keys[1] + "\""
 	return sqlKey, nil
 }
 
-func (obj *BGPPolicyActionConfig) GetAllObjFromDb(dbHdl *sql.DB) (objList []*BGPPolicyActionConfig, e error) {
+func (obj BGPPolicyActionConfig) GetAllObjFromDb(dbHdl *sql.DB) (objList []ConfigObj, err error) {
+	var object BGPPolicyActionConfig
 	dbCmd := "select * from BGPPolicyActionConfig"
 	rows, err := dbHdl.Query(dbCmd)
 	if err != nil {
@@ -92,7 +96,6 @@ func (obj *BGPPolicyActionConfig) GetAllObjFromDb(dbHdl *sql.DB) (objList []*BGP
 	var tmp3 string
 	for rows.Next() {
 
-		object := new(BGPPolicyActionConfig)
 		if err = rows.Scan(&object.Name, &object.ActionType, &tmp2, &tmp3); err != nil {
 
 			fmt.Println("Db method Scan failed when interating over BGPPolicyActionConfig")

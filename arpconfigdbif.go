@@ -62,17 +62,21 @@ func (obj ArpConfig) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, e
 }
 
 func (obj ArpConfig) GetKey() (string, error) {
-	key := string(obj.ArpConfigKey)
+	keyName := "ArpConfig"
+	keyName = strings.TrimSuffix(keyName, "Config")
+	keyName = strings.TrimSuffix(keyName, "State")
+	key := keyName + "#" + string(obj.ArpConfigKey)
 	return key, nil
 }
 
 func (obj ArpConfig) GetSqlKeyStr(objKey string) (string, error) {
 	keys := strings.Split(objKey, "#")
-	sqlKey := "ArpConfigKey = " + "\"" + keys[0] + "\""
+	sqlKey := "ArpConfigKey = " + "\"" + keys[1] + "\""
 	return sqlKey, nil
 }
 
-func (obj *ArpConfig) GetAllObjFromDb(dbHdl *sql.DB) (objList []*ArpConfig, e error) {
+func (obj ArpConfig) GetAllObjFromDb(dbHdl *sql.DB) (objList []ConfigObj, err error) {
+	var object ArpConfig
 	dbCmd := "select * from ArpConfig"
 	rows, err := dbHdl.Query(dbCmd)
 	if err != nil {
@@ -84,7 +88,6 @@ func (obj *ArpConfig) GetAllObjFromDb(dbHdl *sql.DB) (objList []*ArpConfig, e er
 
 	for rows.Next() {
 
-		object := new(ArpConfig)
 		if err = rows.Scan(&object.ArpConfigKey, &object.Timeout); err != nil {
 
 			fmt.Println("Db method Scan failed when interating over ArpConfig")
@@ -93,6 +96,7 @@ func (obj *ArpConfig) GetAllObjFromDb(dbHdl *sql.DB) (objList []*ArpConfig, e er
 	}
 	return objList, nil
 }
+
 func (obj ArpConfig) CompareObjectsAndDiff(updateKeys map[string]bool, dbObj ConfigObj) ([]bool, error) {
 	dbV4Route := dbObj.(ArpConfig)
 	objTyp := reflect.TypeOf(obj)
@@ -254,7 +258,7 @@ func (obj ArpConfig) UpdateObjectInDb(dbObj ConfigObj, attrSet []bool, dbHdl *sq
 				fieldVal.Kind() == reflect.Uint32 ||
 				fieldVal.Kind() == reflect.Uint64 {
 				fieldSqlStr = fmt.Sprintf(" %s = '%d' ", fieldTyp.Name, int(fieldVal.Uint()))
-			} else if objVal.Kind() == reflect.Bool {
+			} else if fieldVal.Kind() == reflect.Bool {
 				fieldSqlStr = fmt.Sprintf(" %s = '%d' ", fieldTyp.Name, dbutils.ConvertBoolToInt(bool(fieldVal.Bool())))
 			} else {
 				fieldSqlStr = fmt.Sprintf(" %s = '%s' ", fieldTyp.Name, fieldVal.String())
