@@ -305,6 +305,18 @@ module RSTP-MIB {
 	        description
 	          "Number of TC BPDUs transmitted";
 	      }
+		leaf tcAck-in-pkts {
+	        type yang:counter64;
+			config false;			
+	        description
+	          "Number of TC Ack BPDUs received";
+	      }
+		leaf tcAck-out-pkts {
+	        type yang:counter64;
+			config false;			
+	        description
+	          "Number of TC Ack BPDUs transmitted";
+	      }
 		leaf pvst-in-pkts {
 	        type yang:counter64;
 			config false;			
@@ -436,6 +448,17 @@ leaf dot1dStpPortAdminPointToPoint {
 		"A Port as OperEdge which receives BPDU with BpduGuard enabled
 		 will shut the port down.";
 	}
+	leaf BpduGuardInterval {
+	type int32;
+      config true;	
+      units "seconds";
+      description   
+       "The interval time to which a port will try to recover from BPDU Guard err-disable
+	   state.  If no BPDU frames are detected after this timeout plus 3 Times Hello
+	   Time then the port will transition back to Up state.  If condition is cleared
+	   manually then this operation is ignored.  If set to zero then timer is inactive
+	   and recovery is based on manual intervention.";
+	}
 	
 	leaf BridgeAssurance {
 		 type smiv2:TruthValue;
@@ -566,7 +589,25 @@ leaf dot1dStpPortAdminPointToPoint {
 		 "Used in conjuction with AdminEdge to shutdown a port when a BPDU
 		is received.  Protects against loops in the network";
 	}
+	leaf BpduGuardInterval {
+	type int32;
+      config false;	
+      units "seconds";
+      description   
+       "The interval time to which a port will try to recover from BPDU Guard err-disable
+	   state.  If no BPDU frames are detected after this timeout plus 3 Times Hello
+	   Time then the port will transition back to Up state.  If condition is cleared
+	   manually then this operation is ignored.  If set to zero then timer is inactive
+	   and recovery is based on manual intervention.";
+	}
 	
+	leaf BpduGuardDetected {
+	  type smiv2:TruthValue;
+	  config false;	
+      description
+	   "Indicates whether a BPDU frame was received on this STP port if the port 
+	    is and Edge Port and BPDU Guard is enabled";
+	}
 	uses dot1d-port-statistics;
 
   }

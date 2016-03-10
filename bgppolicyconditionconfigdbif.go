@@ -13,6 +13,8 @@ func (obj BGPPolicyConditionConfig) CreateDBTable(dbHdl *sql.DB) error {
 		"( " +
 		"Name TEXT, " +
 		"ConditionType TEXT, " +
+		"IpPrefix TEXT, " +
+		"MaskLengthRange TEXT, " +
 		"PRIMARY KEY(Name) " +
 		")"
 
@@ -22,8 +24,8 @@ func (obj BGPPolicyConditionConfig) CreateDBTable(dbHdl *sql.DB) error {
 
 func (obj BGPPolicyConditionConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	var objectId int64
-	dbCmd := fmt.Sprintf("INSERT INTO BGPPolicyConditionConfig (Name, ConditionType) VALUES ('%v', '%v') ;",
-		obj.Name, obj.ConditionType)
+	dbCmd := fmt.Sprintf("INSERT INTO BGPPolicyConditionConfig (Name, ConditionType, IpPrefix, MaskLengthRange) VALUES ('%v', '%v', '%v', '%v') ;",
+		obj.Name, obj.ConditionType, obj.IpPrefix, obj.MaskLengthRange)
 	fmt.Println("**** Create Object called with ", obj)
 
 	result, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
@@ -56,8 +58,8 @@ func (obj BGPPolicyConditionConfig) GetObjectFromDb(objKey string, dbHdl *sql.DB
 	var object BGPPolicyConditionConfig
 	sqlKey, err := obj.GetSqlKeyStr(objKey)
 	dbCmd := "select * from BGPPolicyConditionConfig where " + sqlKey
-	err = dbHdl.QueryRow(dbCmd).Scan(&object.Name, &object.ConditionType)
-	fmt.Println("### DB Get BGPPolicyConditionConfig\n", err)
+	err = dbHdl.QueryRow(dbCmd).Scan(&object.Name, &object.ConditionType, &object.IpPrefix, &object.MaskLengthRange)
+	fmt.Println("### DB Get BGPPolicyConditionConfig err =", err, "object =", object)
 	return object, err
 }
 
@@ -88,7 +90,7 @@ func (obj BGPPolicyConditionConfig) GetAllObjFromDb(dbHdl *sql.DB) (objList []Co
 
 	for rows.Next() {
 
-		if err = rows.Scan(&object.Name, &object.ConditionType); err != nil {
+		if err = rows.Scan(&object.Name, &object.ConditionType, &object.IpPrefix, &object.MaskLengthRange); err != nil {
 
 			fmt.Println("Db method Scan failed when interating over BGPPolicyConditionConfig")
 		}
@@ -96,7 +98,6 @@ func (obj BGPPolicyConditionConfig) GetAllObjFromDb(dbHdl *sql.DB) (objList []Co
 	}
 	return objList, nil
 }
-
 func (obj BGPPolicyConditionConfig) CompareObjectsAndDiff(updateKeys map[string]bool, dbObj ConfigObj) ([]bool, error) {
 	dbV4Route := dbObj.(BGPPolicyConditionConfig)
 	objTyp := reflect.TypeOf(obj)

@@ -13,31 +13,79 @@ func (obj BGPPolicyStmtConfig) CreateDBTable(dbHdl *sql.DB) error {
 		"( " +
 		"Name TEXT, " +
 		"MatchConditions TEXT, " +
-		"Conditions TEXT, " +
-		"Actions TEXT, " +
 		"PRIMARY KEY(Name) " +
 		")"
 
 	_, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
+
+	dbCmd = "CREATE TABLE IF NOT EXISTS BGPPolicyStmtCondition " +
+		"( " +
+		"Statement TEXT, " +
+		"Condition TEXT, " +
+		"FOREIGN KEY(Statement) REFERENCES BGPPolicyStmtConfig(Name) ON DELETE CASCADE, " +
+		"FOREIGN KEY(Condition) REFERENCES BGPPolicyConditionConfig(Name) ON DELETE CASCADE, " +
+		"PRIMARY KEY(Statement, Condition) " +
+		")"
+
+	_, err1 := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
+	if err == nil {
+		err = err1
+	}
+
+	dbCmd = "CREATE TABLE IF NOT EXISTS BGPPolicyStmtAction " +
+		"( " +
+		"Statement TEXT, " +
+		"Action TEXT, " +
+		"FOREIGN KEY(Statement) REFERENCES BGPPolicyStmtConfig(Name) ON DELETE CASCADE, " +
+		"FOREIGN KEY(Action) REFERENCES BGPPolicyActionConfig(Name) ON DELETE CASCADE, " +
+		"PRIMARY KEY(Statement, Action) " +
+		")"
+
+	_, err2 := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
+	if err == nil {
+		err = err2
+	}
 	return err
 }
 
 func (obj BGPPolicyStmtConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	var objectId int64
-	dbCmd := fmt.Sprintf("INSERT INTO BGPPolicyStmtConfig (Name, MatchConditions, Conditions, Actions) VALUES ('%v', '%v', '%v', '%v') ;",
-		obj.Name, obj.MatchConditions, obj.Conditions, obj.Actions)
-	fmt.Println("**** Create Object called with ", obj)
+	dbCmd := fmt.Sprintf("INSERT INTO BGPPolicyStmtConfig (Name, MatchConditions) VALUES ('%v', '%v') ;",
+		obj.Name, obj.MatchConditions)
+	fmt.Println("**** Insert BGPPolicyStmtConfig called with ", obj)
 
 	result, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
 	if err != nil {
-		fmt.Println("**** Failed to Create table", err)
+		fmt.Println("**** Failed to execute statement", dbCmd, "on BGPPolicyStmtConfig", err)
 	} else {
 		objectId, err = result.LastInsertId()
 		if err != nil {
 			fmt.Println("### Failed to return last object id", err)
 		}
-
 	}
+
+	for conditionIdx := 0; conditionIdx < len(obj.Conditions); conditionIdx++ {
+		dbCmd = fmt.Sprintf("INSERT INTO BGPPolicyStmtCondition (Statement, Condition) VALUES ('%v', '%v') ;",
+			obj.Name, obj.Conditions[conditionIdx])
+		fmt.Println("**** Insert BGPPolicyStmtCondition called with ", obj)
+
+		result, err = dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
+		if err != nil {
+			fmt.Println("**** Failed to execute statement", dbCmd, "on BGPPolicyStmtCondition", err)
+		}
+	}
+
+	for actionIdx := 0; actionIdx < len(obj.Actions); actionIdx++ {
+		dbCmd = fmt.Sprintf("INSERT INTO BGPPolicyStmtAction (Statement, Action) VALUES ('%v', '%v') ;",
+			obj.Name, obj.Actions[actionIdx])
+		fmt.Println("**** Insert BGPPolicyStmtAction called with ", obj)
+
+		result, err = dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
+		if err != nil {
+			fmt.Println("**** Failed to execute statement", dbCmd, "on BGPPolicyStmtAction", err)
+		}
+	}
+
 	return objectId, err
 }
 
@@ -60,18 +108,37 @@ func (obj BGPPolicyStmtConfig) GetObjectFromDb(objKey string, dbHdl *sql.DB) (Co
 	dbCmd := "select * from BGPPolicyStmtConfig where " + sqlKey
 	var tmp2 string
 	var tmp3 string
-	err = dbHdl.QueryRow(dbCmd).Scan(&object.Name, &object.MatchConditions, &tmp2, &tmp3)
+	err = dbHdl.QueryRow(dbCmd).Scan(&object.Name, &object.MatchConditions)
 	fmt.Println("### DB Get BGPPolicyStmtConfig\n", err)
-	convtmpConditions := strings.Split(tmp2, ",")
-	for _, x := range convtmpConditions {
-		y := strings.Replace(x, " ", "", 1)
-		object.Conditions = append(object.Conditions, string(y))
+
+	if err == nil {
+		dbCmd = "select * from BGPPolicyStmtCondition where STATEMENT=\"" + object.Name + "\""
+		conditionRows, err1 := dbHdl.Query(dbCmd)
+		if err1 == nil {
+			defer conditionRows.Close()
+			for conditionRows.Next() {
+				if err1 = conditionRows.Scan(&tmp2, &tmp3); err1 == nil {
+					object.Conditions = append(object.Conditions, tmp3)
+				}
+			}
+		} else if err == nil {
+			err = err1
+		}
+
+		dbCmd = "select * from BGPPolicyStmtAction where STATEMENT =\"" + object.Name + "\""
+		actionRows, err2 := dbHdl.Query(dbCmd)
+		if err2 == nil {
+			defer actionRows.Close()
+			for actionRows.Next() {
+				if err2 = actionRows.Scan(&tmp2, &tmp3); err2 == nil {
+					object.Actions = append(object.Actions, tmp3)
+				}
+			}
+		} else if err == nil {
+			err = err2
+		}
 	}
-	convtmpActions := strings.Split(tmp3, ",")
-	for _, x := range convtmpActions {
-		y := strings.Replace(x, " ", "", 1)
-		object.Actions = append(object.Actions, string(y))
-	}
+
 	return object, err
 }
 
@@ -104,25 +171,35 @@ func (obj BGPPolicyStmtConfig) GetAllObjFromDb(dbHdl *sql.DB) (objList []ConfigO
 	var tmp3 string
 	for rows.Next() {
 
-		if err = rows.Scan(&object.Name, &object.MatchConditions, &object.Conditions, &object.Actions); err != nil {
+		if err = rows.Scan(&object.Name, &object.MatchConditions); err != nil {
 
 			fmt.Println("Db method Scan failed when interating over BGPPolicyStmtConfig")
 		}
-		convtmpConditions := strings.Split(tmp2, ",")
-		for _, x := range convtmpConditions {
-			y := strings.Replace(x, " ", "", 1)
-			object.Conditions = append(object.Conditions, string(y))
+
+		conditionCmd := "select * from BGPPolicyStmtCondition where STATEMENT =\"" + object.Name + "\""
+		conditionRows, err := dbHdl.Query(conditionCmd)
+		if err == nil {
+			for conditionRows.Next() {
+				if err = conditionRows.Scan(&tmp2, &tmp3); err == nil {
+					object.Conditions = append(object.Conditions, tmp3)
+				}
+			}
+			conditionRows.Close()
 		}
-		convtmpActions := strings.Split(tmp3, ",")
-		for _, x := range convtmpActions {
-			y := strings.Replace(x, " ", "", 1)
-			object.Actions = append(object.Actions, string(y))
+
+		actionCmd := "select * from BGPPolicyStmtAction where STATEMENT =\"" + object.Name + "\""
+		actionRows, err := dbHdl.Query(actionCmd)
+		if err == nil {
+			for actionRows.Next() {
+				if err = actionRows.Scan(&tmp2, &tmp3); err == nil {
+					object.Actions = append(object.Actions, tmp3)
+				}
+			}
+			actionRows.Close()
 		}
-		objList = append(objList, object)
 	}
 	return objList, nil
 }
-
 func (obj BGPPolicyStmtConfig) CompareObjectsAndDiff(updateKeys map[string]bool, dbObj ConfigObj) ([]bool, error) {
 	dbV4Route := dbObj.(BGPPolicyStmtConfig)
 	objTyp := reflect.TypeOf(obj)

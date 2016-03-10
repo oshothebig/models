@@ -372,6 +372,7 @@ type PortState struct {
 	IfOutUcastPkts    int64
 	IfOutDiscards     int64
 	IfOutErrors       int64
+	ErrDisableReason  string
 }
 
 func (obj PortState) UnmarshalObject(body []byte) (ConfigObj, error) {

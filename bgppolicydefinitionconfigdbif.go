@@ -21,6 +21,22 @@ func (obj BGPPolicyDefinitionConfig) CreateDBTable(dbHdl *sql.DB) error {
 		")"
 
 	_, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
+
+	dbCmd = "CREATE TABLE IF NOT EXISTS BGPPolicyDefStmtPrecedence " +
+		"( " +
+		"Policy TEXT, " +
+		"Statement TEXT, " +
+		"Precedence INTEGER, " +
+		"FOREIGN KEY(Policy) REFERENCES BGPPolicyDefinitionConfig(Name) ON DELETE CASCADE, " +
+		"FOREIGN KEY(Statement) REFERENCES BGPPolicyStmtConfig(Name) ON DELETE CASCADE, " +
+		"PRIMARY KEY(Policy, Statement) " +
+		")"
+
+	_, err1 := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
+	if err == nil {
+		err = err1
+	}
+
 	return err
 }
 
@@ -38,8 +54,19 @@ func (obj BGPPolicyDefinitionConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, erro
 		if err != nil {
 			fmt.Println("### Failed to return last object id", err)
 		}
-
 	}
+
+	for idx := 0; idx < len(obj.StatementList); idx++ {
+		dbCmd = fmt.Sprintf("INSERT INTO BGPPolicyDefStmtPrecedence (Policy, Statement, Precedence) VALUES ('%v', '%v', '%v') ;",
+			obj.Name, obj.StatementList[idx].Statement, obj.StatementList[idx].Precedence)
+		fmt.Println("**** Insert BGPPolicyDefStmtPrecedence called with ", obj)
+
+		result, err = dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
+		if err != nil {
+			fmt.Println("**** Failed to execute statement", dbCmd, "on BGPPolicyDefStmtPrecedence", err)
+		}
+	}
+
 	return objectId, err
 }
 
@@ -68,6 +95,24 @@ func (obj BGPPolicyDefinitionConfig) GetObjectFromDb(objKey string, dbHdl *sql.D
 	object.Export = dbutils.ConvertStrBoolIntToBool(tmp3)
 	object.Import = dbutils.ConvertStrBoolIntToBool(tmp4)
 	object.Global = dbutils.ConvertStrBoolIntToBool(tmp5)
+	object.StatementList = make([]PolicyDefinitionStmtPrecedence, 0)
+
+	if err == nil {
+		dbCmd = "select * from BGPPolicyDefStmtPrecedence where POLICY=\"" + object.Name + "\""
+		rows, err1 := dbHdl.Query(dbCmd)
+		if err1 == nil {
+			defer rows.Close()
+			for rows.Next() {
+				stmtPrecedenceObj := PolicyDefinitionStmtPrecedence{}
+				if err = rows.Scan(&tmp3, &stmtPrecedenceObj.Statement, &stmtPrecedenceObj.Precedence); err == nil {
+					object.StatementList = append(object.StatementList, stmtPrecedenceObj)
+				}
+			}
+		} else {
+			err = err1
+		}
+	}
+
 	return object, err
 }
 
@@ -108,11 +153,23 @@ func (obj BGPPolicyDefinitionConfig) GetAllObjFromDb(dbHdl *sql.DB) (objList []C
 		object.Export = dbutils.ConvertStrBoolIntToBool(tmp3)
 		object.Import = dbutils.ConvertStrBoolIntToBool(tmp4)
 		object.Global = dbutils.ConvertStrBoolIntToBool(tmp5)
+
+		stmtPrecDBCmd := "select * from BGPPolicyDefStmtPrecedence where POLICY=\"" + object.Name + "\""
+		stmtPrecRows, err := dbHdl.Query(stmtPrecDBCmd)
+		if err == nil {
+			for stmtPrecRows.Next() {
+				stmtPrecedenceObj := PolicyDefinitionStmtPrecedence{}
+				if err = stmtPrecRows.Scan(&tmp3, &stmtPrecedenceObj.Statement, &stmtPrecedenceObj.Precedence); err == nil {
+					object.StatementList = append(object.StatementList, stmtPrecedenceObj)
+				}
+			}
+			stmtPrecRows.Close()
+		}
+
 		objList = append(objList, object)
 	}
 	return objList, nil
 }
-
 func (obj BGPPolicyDefinitionConfig) CompareObjectsAndDiff(updateKeys map[string]bool, dbObj ConfigObj) ([]bool, error) {
 	dbV4Route := dbObj.(BGPPolicyDefinitionConfig)
 	objTyp := reflect.TypeOf(obj)

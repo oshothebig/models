@@ -4,5 +4,7 @@
 "BRIDGE-MIB" : { "owner": "stpd",
                  "location" : "l2/stp/rpc/"},
 "RSTP-MIB" : { "owner": "stpd",
-               "location": "l2/stp/rpc/"}
+               "location": "l2/stp/rpc/"},
+"vxlan" : { "owner": "vxland",
+            "location": "l3/tunnel/vxlan/rpc/"}
 }

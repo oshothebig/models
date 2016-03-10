@@ -13,6 +13,8 @@ func (obj BGPPolicyActionConfig) CreateDBTable(dbHdl *sql.DB) error {
 		"( " +
 		"Name TEXT, " +
 		"ActionType TEXT, " +
+		"GenerateASSet INTEGER, " +
+		"SendSummaryOnly INTEGER, " +
 		"PRIMARY KEY(Name) " +
 		")"
 
@@ -22,8 +24,8 @@ func (obj BGPPolicyActionConfig) CreateDBTable(dbHdl *sql.DB) error {
 
 func (obj BGPPolicyActionConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	var objectId int64
-	dbCmd := fmt.Sprintf("INSERT INTO BGPPolicyActionConfig (Name, ActionType) VALUES ('%v', '%v') ;",
-		obj.Name, obj.ActionType)
+	dbCmd := fmt.Sprintf("INSERT INTO BGPPolicyActionConfig (Name, ActionType, GenerateASSet, SendSummaryOnly) VALUES ('%v', '%v', '%v', '%v') ;",
+		obj.Name, obj.ActionType, dbutils.ConvertBoolToInt(obj.GenerateASSet), dbutils.ConvertBoolToInt(obj.SendSummaryOnly))
 	fmt.Println("**** Create Object called with ", obj)
 
 	result, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
@@ -56,8 +58,12 @@ func (obj BGPPolicyActionConfig) GetObjectFromDb(objKey string, dbHdl *sql.DB) (
 	var object BGPPolicyActionConfig
 	sqlKey, err := obj.GetSqlKeyStr(objKey)
 	dbCmd := "select * from BGPPolicyActionConfig where " + sqlKey
-	err = dbHdl.QueryRow(dbCmd).Scan(&object.Name, &object.ActionType)
-	fmt.Println("### DB Get BGPPolicyActionConfig\n", err)
+	var tmp2 string
+	var tmp3 string
+	err = dbHdl.QueryRow(dbCmd).Scan(&object.Name, &object.ActionType, &tmp2, &tmp3)
+	object.GenerateASSet = dbutils.ConvertStrBoolIntToBool(tmp2)
+	object.SendSummaryOnly = dbutils.ConvertStrBoolIntToBool(tmp3)
+	fmt.Println("### DB Get BGPPolicyActionConfig err =", err, "object =", object)
 	return object, err
 }
 
@@ -86,17 +92,20 @@ func (obj BGPPolicyActionConfig) GetAllObjFromDb(dbHdl *sql.DB) (objList []Confi
 
 	defer rows.Close()
 
+	var tmp2 string
+	var tmp3 string
 	for rows.Next() {
 
-		if err = rows.Scan(&object.Name, &object.ActionType); err != nil {
+		if err = rows.Scan(&object.Name, &object.ActionType, &tmp2, &tmp3); err != nil {
 
 			fmt.Println("Db method Scan failed when interating over BGPPolicyActionConfig")
 		}
+		object.GenerateASSet = dbutils.ConvertStrBoolIntToBool(tmp2)
+		object.SendSummaryOnly = dbutils.ConvertStrBoolIntToBool(tmp3)
 		objList = append(objList, object)
 	}
 	return objList, nil
 }
-
 func (obj BGPPolicyActionConfig) CompareObjectsAndDiff(updateKeys map[string]bool, dbObj ConfigObj) ([]bool, error) {
 	dbV4Route := dbObj.(BGPPolicyActionConfig)
 	objTyp := reflect.TypeOf(obj)
