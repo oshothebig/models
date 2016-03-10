@@ -262,7 +262,7 @@ func (obj PortConfig) UpdateObjectInDb(dbObj ConfigObj, attrSet []bool, dbHdl *s
 				fieldVal.Kind() == reflect.Uint32 ||
 				fieldVal.Kind() == reflect.Uint64 {
 				fieldSqlStr = fmt.Sprintf(" %s = '%d' ", fieldTyp.Name, int(fieldVal.Uint()))
-			} else if objVal.Kind() == reflect.Bool {
+			} else if fieldVal.Kind() == reflect.Bool {
 				fieldSqlStr = fmt.Sprintf(" %s = '%d' ", fieldTyp.Name, dbutils.ConvertBoolToInt(bool(fieldVal.Bool())))
 			} else {
 				fieldSqlStr = fmt.Sprintf(" %s = '%s' ", fieldTyp.Name, fieldVal.String())
