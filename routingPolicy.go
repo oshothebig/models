@@ -122,9 +122,9 @@ type PolicyConditionConfig struct {
 	BaseObj
 	Name                          string `SNAPROUTE: "KEY"`
 	ConditionType                 string
-	MatchProtocolConditionInfo    string
-	MatchDstIpConditionIpPrefix          string
-	MatchDstIpConditionMaskLengthRange  string
+	MatchProtocol                 string
+	IpPrefix                      string
+	MaskLengthRange               string
 }
 
 func (obj PolicyConditionConfig) UnmarshalObject(body []byte) (ConfigObj, error) {
