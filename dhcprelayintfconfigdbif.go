@@ -83,17 +83,21 @@ func (obj DhcpRelayIntfConfig) GetObjectFromDb(objKey string, dbHdl *sql.DB) (Co
 }
 
 func (obj DhcpRelayIntfConfig) GetKey() (string, error) {
-	key := strconv.Itoa(int(obj.IfIndex))
+	keyName := "DhcpRelayIntfConfig"
+	keyName = strings.TrimSuffix(keyName, "Config")
+	keyName = strings.TrimSuffix(keyName, "State")
+	key := keyName + "#" + strconv.Itoa(int(obj.IfIndex))
 	return key, nil
 }
 
 func (obj DhcpRelayIntfConfig) GetSqlKeyStr(objKey string) (string, error) {
 	keys := strings.Split(objKey, "#")
-	sqlKey := "IfIndex = " + "\"" + keys[0] + "\""
+	sqlKey := "IfIndex = " + "\"" + keys[1] + "\""
 	return sqlKey, nil
 }
 
-func (obj *DhcpRelayIntfConfig) GetAllObjFromDb(dbHdl *sql.DB) (objList []*DhcpRelayIntfConfig, e error) {
+func (obj DhcpRelayIntfConfig) GetAllObjFromDb(dbHdl *sql.DB) (objList []ConfigObj, e error) {
+	var object DhcpRelayIntfConfig
 	dbCmd := "select * from DhcpRelayIntfConfig"
 	rows, err := dbHdl.Query(dbCmd)
 	if err != nil {
@@ -107,7 +111,6 @@ func (obj *DhcpRelayIntfConfig) GetAllObjFromDb(dbHdl *sql.DB) (objList []*DhcpR
 	var tmp2 string
 	for rows.Next() {
 
-		object := new(DhcpRelayIntfConfig)
 		if err = rows.Scan(&object.IfIndex, &tmp1, &object.ServerIp); err != nil {
 
 			fmt.Println("Db method Scan failed when interating over DhcpRelayIntfConfig")

@@ -62,17 +62,21 @@ func (obj IPv4Intf) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, er
 }
 
 func (obj IPv4Intf) GetKey() (string, error) {
-	key := string(obj.IpAddr)
+	keyName := "IPv4Intf"
+	keyName = strings.TrimSuffix(keyName, "Config")
+	keyName = strings.TrimSuffix(keyName, "State")
+	key := keyName + "#" + string(obj.IpAddr)
 	return key, nil
 }
 
 func (obj IPv4Intf) GetSqlKeyStr(objKey string) (string, error) {
 	keys := strings.Split(objKey, "#")
-	sqlKey := "IpAddr = " + "\"" + keys[0] + "\""
+	sqlKey := "IpAddr = " + "\"" + keys[1] + "\""
 	return sqlKey, nil
 }
 
-func (obj *IPv4Intf) GetAllObjFromDb(dbHdl *sql.DB) (objList []*IPv4Intf, e error) {
+func (obj IPv4Intf) GetAllObjFromDb(dbHdl *sql.DB) (objList []ConfigObj, err error) {
+	var object IPv4Intf
 	dbCmd := "select * from IPv4Intf"
 	rows, err := dbHdl.Query(dbCmd)
 	if err != nil {
@@ -84,7 +88,6 @@ func (obj *IPv4Intf) GetAllObjFromDb(dbHdl *sql.DB) (objList []*IPv4Intf, e erro
 
 	for rows.Next() {
 
-		object := new(IPv4Intf)
 		if err = rows.Scan(&object.IpAddr, &object.IfIndex); err != nil {
 
 			fmt.Println("Db method Scan failed when interating over IPv4Intf")
@@ -93,6 +96,7 @@ func (obj *IPv4Intf) GetAllObjFromDb(dbHdl *sql.DB) (objList []*IPv4Intf, e erro
 	}
 	return objList, nil
 }
+
 func (obj IPv4Intf) CompareObjectsAndDiff(updateKeys map[string]bool, dbObj ConfigObj) ([]bool, error) {
 	dbV4Route := dbObj.(IPv4Intf)
 	objTyp := reflect.TypeOf(obj)
@@ -254,7 +258,7 @@ func (obj IPv4Intf) UpdateObjectInDb(dbObj ConfigObj, attrSet []bool, dbHdl *sql
 				fieldVal.Kind() == reflect.Uint32 ||
 				fieldVal.Kind() == reflect.Uint64 {
 				fieldSqlStr = fmt.Sprintf(" %s = '%d' ", fieldTyp.Name, int(fieldVal.Uint()))
-			} else if objVal.Kind() == reflect.Bool {
+			} else if fieldVal.Kind() == reflect.Bool {
 				fieldSqlStr = fmt.Sprintf(" %s = '%d' ", fieldTyp.Name, dbutils.ConvertBoolToInt(bool(fieldVal.Bool())))
 			} else {
 				fieldSqlStr = fmt.Sprintf(" %s = '%s' ", fieldTyp.Name, fieldVal.String())

@@ -18,6 +18,7 @@ type ConfigObj interface {
 	CompareObjectsAndDiff(updateKeys map[string]bool, dbObj ConfigObj) ([]bool, error)
 	MergeDbAndConfigObj(dbObj ConfigObj, attrSet []bool) (ConfigObj, error)
 	UpdateObjectInDb(dbV4Route ConfigObj, attrSet []bool, dbHdl *sql.DB) error
+	GetAllObjFromDb(dbHdl *sql.DB) ([]ConfigObj, error)
 }
 
 //
@@ -105,7 +106,7 @@ func (obj BGPGlobalConfig) UnmarshalObject(body []byte) (ConfigObj, error) {
 type BGPGlobalState struct {
 	BaseObj
 	AS                  uint32
-	RouterId            string
+	RouterId            string `SNAPROUTE: "KEY"`
 	UseMultiplePaths    bool
 	EBGPMaxPaths        uint32
 	EBGPAllowMultipleAS bool
@@ -210,7 +211,7 @@ type BGPNeighborState struct {
 	PeerType                PeerType
 	AuthPassword            string
 	Description             string
-	NeighborAddress         string
+	NeighborAddress         string `SNAPROUTE: "KEY"`
 	SessionState            uint32
 	Messages                BGPMessages
 	Queues                  BGPQueues
@@ -294,19 +295,21 @@ type Vlan struct {
 }
 type LogicalIntfConfig struct {
 	BaseObj
-	Name             string `SNAPROUTE: "KEY"`
-	Type             string
+	Name string `SNAPROUTE: "KEY"`
+	Type string
 }
+
 func (obj LogicalIntfConfig) UnmarshalObject(body []byte) (ConfigObj, error) {
-	    var gConf LogicalIntfConfig
-        var err error
-        if len(body) > 0 {
-            if err = json.Unmarshal(body, &gConf); err != nil  {
-                fmt.Println("### LogicalIntfConfig called, unmarshal failed",body)
-            }
-        }
-        return gConf, err
+	var gConf LogicalIntfConfig
+	var err error
+	if len(body) > 0 {
+		if err = json.Unmarshal(body, &gConf); err != nil {
+			fmt.Println("### LogicalIntfConfig called, unmarshal failed", body)
+		}
+	}
+	return gConf, err
 }
+
 type LogicalIntfState struct {
 	BaseObj
 	Name              string `SNAPROUTE: "KEY"`
@@ -333,6 +336,7 @@ func (obj LogicalIntfState) UnmarshalObject(body []byte) (ConfigObj, error) {
 	}
 	return gConf, err
 }
+
 type IPv4Intf struct {
 	BaseObj
 	IpAddr  string `SNAPROUTE: "KEY"`
@@ -355,7 +359,7 @@ type PortConfig struct {
 
 type PortState struct {
 	BaseObj
-	PortNum           int32
+	PortNum           int32 `SNAPROUTE: "KEY"`
 	IfIndex           int32
 	Name              string
 	OperState         string
@@ -445,7 +449,7 @@ func (obj UserConfig) UnmarshalObject(body []byte) (ConfigObj, error) {
 
 type UserState struct {
 	BaseObj
-	UserName      string
+	UserName      string `SNAPROUTE: "KEY"`
 	LastLoginTime time.Time
 	LastLoginIp   string
 	NumAPICalled  uint32

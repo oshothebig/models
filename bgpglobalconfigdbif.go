@@ -70,17 +70,21 @@ func (obj BGPGlobalConfig) GetObjectFromDb(objKey string, dbHdl *sql.DB) (Config
 }
 
 func (obj BGPGlobalConfig) GetKey() (string, error) {
-	key := string(obj.RouterId)
+	keyName := "BGPGlobalConfig"
+	keyName = strings.TrimSuffix(keyName, "Config")
+	keyName = strings.TrimSuffix(keyName, "State")
+	key := keyName + "#" + string(obj.RouterId)
 	return key, nil
 }
 
 func (obj BGPGlobalConfig) GetSqlKeyStr(objKey string) (string, error) {
 	keys := strings.Split(objKey, "#")
-	sqlKey := "RouterId = " + "\"" + keys[0] + "\""
+	sqlKey := "RouterId = " + "\"" + keys[1] + "\""
 	return sqlKey, nil
 }
 
-func (obj *BGPGlobalConfig) GetAllObjFromDb(dbHdl *sql.DB) (objList []*BGPGlobalConfig, e error) {
+func (obj BGPGlobalConfig) GetAllObjFromDb(dbHdl *sql.DB) (objList []ConfigObj, err error) {
+	var object BGPGlobalConfig
 	dbCmd := "select * from BGPGlobalConfig"
 	rows, err := dbHdl.Query(dbCmd)
 	if err != nil {
@@ -94,7 +98,6 @@ func (obj *BGPGlobalConfig) GetAllObjFromDb(dbHdl *sql.DB) (objList []*BGPGlobal
 	var tmp4 string
 	for rows.Next() {
 
-		object := new(BGPGlobalConfig)
 		if err = rows.Scan(&object.ASNum, &object.RouterId, &tmp2, &object.EBGPMaxPaths, &tmp4, &object.IBGPMaxPaths); err != nil {
 
 			fmt.Println("Db method Scan failed when interating over BGPGlobalConfig")
@@ -105,6 +108,7 @@ func (obj *BGPGlobalConfig) GetAllObjFromDb(dbHdl *sql.DB) (objList []*BGPGlobal
 	}
 	return objList, nil
 }
+
 func (obj BGPGlobalConfig) CompareObjectsAndDiff(updateKeys map[string]bool, dbObj ConfigObj) ([]bool, error) {
 	dbV4Route := dbObj.(BGPGlobalConfig)
 	objTyp := reflect.TypeOf(obj)
@@ -266,7 +270,7 @@ func (obj BGPGlobalConfig) UpdateObjectInDb(dbObj ConfigObj, attrSet []bool, dbH
 				fieldVal.Kind() == reflect.Uint32 ||
 				fieldVal.Kind() == reflect.Uint64 {
 				fieldSqlStr = fmt.Sprintf(" %s = '%d' ", fieldTyp.Name, int(fieldVal.Uint()))
-			} else if objVal.Kind() == reflect.Bool {
+			} else if fieldVal.Kind() == reflect.Bool {
 				fieldSqlStr = fmt.Sprintf(" %s = '%d' ", fieldTyp.Name, dbutils.ConvertBoolToInt(bool(fieldVal.Bool())))
 			} else {
 				fieldSqlStr = fmt.Sprintf(" %s = '%s' ", fieldTyp.Name, fieldVal.String())

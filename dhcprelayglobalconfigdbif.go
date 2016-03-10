@@ -64,17 +64,21 @@ func (obj DhcpRelayGlobalConfig) GetObjectFromDb(objKey string, dbHdl *sql.DB) (
 }
 
 func (obj DhcpRelayGlobalConfig) GetKey() (string, error) {
-	key := string(obj.DhcpRelay)
+	keyName := "DhcpRelayGlobalConfig"
+	keyName = strings.TrimSuffix(keyName, "Config")
+	keyName = strings.TrimSuffix(keyName, "State")
+	key := keyName + "#" + string(obj.DhcpRelay)
 	return key, nil
 }
 
 func (obj DhcpRelayGlobalConfig) GetSqlKeyStr(objKey string) (string, error) {
 	keys := strings.Split(objKey, "#")
-	sqlKey := "DhcpRelay = " + "\"" + keys[0] + "\""
+	sqlKey := "DhcpRelay = " + "\"" + keys[1] + "\""
 	return sqlKey, nil
 }
 
-func (obj *DhcpRelayGlobalConfig) GetAllObjFromDb(dbHdl *sql.DB) (objList []*DhcpRelayGlobalConfig, e error) {
+func (obj DhcpRelayGlobalConfig) GetAllObjFromDb(dbHdl *sql.DB) (objList []ConfigObj, e error) {
+	var object DhcpRelayGlobalConfig
 	dbCmd := "select * from DhcpRelayGlobalConfig"
 	rows, err := dbHdl.Query(dbCmd)
 	if err != nil {
@@ -87,7 +91,6 @@ func (obj *DhcpRelayGlobalConfig) GetAllObjFromDb(dbHdl *sql.DB) (objList []*Dhc
 	var tmp1 string
 	for rows.Next() {
 
-		object := new(DhcpRelayGlobalConfig)
 		if err = rows.Scan(&object.DhcpRelay, &tmp1); err != nil {
 
 			fmt.Println("Db method Scan failed when interating over DhcpRelayGlobalConfig")
