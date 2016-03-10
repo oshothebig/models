@@ -77,17 +77,21 @@ func (obj EthernetConfig) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigO
 }
 
 func (obj EthernetConfig) GetKey() (string, error) {
-	key := string(obj.NameKey)
+	keyName := "EthernetConfig"
+	keyName = strings.TrimSuffix(keyName, "Config")
+	keyName = strings.TrimSuffix(keyName, "State")
+	key := keyName + "#" + string(obj.NameKey)
 	return key, nil
 }
 
 func (obj EthernetConfig) GetSqlKeyStr(objKey string) (string, error) {
 	keys := strings.Split(objKey, "#")
-	sqlKey := "NameKey = " + "\"" + keys[0] + "\""
+	sqlKey := "NameKey = " + "\"" + keys[1] + "\""
 	return sqlKey, nil
 }
 
-func (obj *EthernetConfig) GetAllObjFromDb(dbHdl *sql.DB) (objList []*EthernetConfig, e error) {
+func (obj EthernetConfig) GetAllObjFromDb(dbHdl *sql.DB) (objList []ConfigObj, err error) {
+	var object EthernetConfig
 	dbCmd := "select * from EthernetConfig"
 	rows, err := dbHdl.Query(dbCmd)
 	if err != nil {
@@ -102,7 +106,6 @@ func (obj *EthernetConfig) GetAllObjFromDb(dbHdl *sql.DB) (objList []*EthernetCo
 	var tmp9 string
 	for rows.Next() {
 
-		object := new(EthernetConfig)
 		if err = rows.Scan(&object.NameKey, &tmp1, &object.Description, &object.Mtu, &object.Type, &object.MacAddress, &object.DuplexMode, &tmp7, &object.Speed, &tmp9, &object.AggregateId); err != nil {
 
 			fmt.Println("Db method Scan failed when interating over EthernetConfig")
@@ -114,6 +117,7 @@ func (obj *EthernetConfig) GetAllObjFromDb(dbHdl *sql.DB) (objList []*EthernetCo
 	}
 	return objList, nil
 }
+
 func (obj EthernetConfig) CompareObjectsAndDiff(updateKeys map[string]bool, dbObj ConfigObj) ([]bool, error) {
 	dbV4Route := dbObj.(EthernetConfig)
 	objTyp := reflect.TypeOf(obj)
@@ -275,7 +279,7 @@ func (obj EthernetConfig) UpdateObjectInDb(dbObj ConfigObj, attrSet []bool, dbHd
 				fieldVal.Kind() == reflect.Uint32 ||
 				fieldVal.Kind() == reflect.Uint64 {
 				fieldSqlStr = fmt.Sprintf(" %s = '%d' ", fieldTyp.Name, int(fieldVal.Uint()))
-			} else if objVal.Kind() == reflect.Bool {
+			} else if fieldVal.Kind() == reflect.Bool {
 				fieldSqlStr = fmt.Sprintf(" %s = '%d' ", fieldTyp.Name, dbutils.ConvertBoolToInt(bool(fieldVal.Bool())))
 			} else {
 				fieldSqlStr = fmt.Sprintf(" %s = '%s' ", fieldTyp.Name, fieldVal.String())
