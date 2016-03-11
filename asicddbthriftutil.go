@@ -22,6 +22,15 @@ func ConvertThriftToasicdVlanObj(thriftobj *asicdServices.Vlan, dbobj *Vlan) {
 	dbobj.OperState = string(thriftobj.OperState)
 	dbobj.VlanId = int32(thriftobj.VlanId)
 }
+func ConvertasicdLogicalIntfConfigObjToThrift(dbobj *LogicalIntfConfig, thriftobj *asicdServices.LogicalIntfConfig) {
+	thriftobj.Name = dbobj.Name
+	thriftobj.Type = dbobj.Type
+}
+
+func ConvertThriftToasicdLogicalIntfConfigObj(thriftobj *asicdServices.LogicalIntfConfig, dbobj *LogicalIntfConfig) {
+	dbobj.Name = thriftobj.Name
+	dbobj.Type = thriftobj.Type
+}
 
 func ConvertasicdIPv4IntfObjToThrift(dbobj *IPv4Intf, thriftobj *asicdServices.IPv4Intf) {
 	thriftobj.IfIndex = int32(dbobj.IfIndex)

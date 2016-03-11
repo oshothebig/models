@@ -64,17 +64,21 @@ func (obj UserConfig) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, 
 }
 
 func (obj UserConfig) GetKey() (string, error) {
-	key := string(obj.UserName)
+	keyName := "UserConfig"
+	keyName = strings.TrimSuffix(keyName, "Config")
+	keyName = strings.TrimSuffix(keyName, "State")
+	key := keyName + "#" + string(obj.UserName)
 	return key, nil
 }
 
 func (obj UserConfig) GetSqlKeyStr(objKey string) (string, error) {
 	keys := strings.Split(objKey, "#")
-	sqlKey := "UserName = " + "\"" + keys[0] + "\""
+	sqlKey := "UserName = " + "\"" + keys[1] + "\""
 	return sqlKey, nil
 }
 
-func (obj *UserConfig) GetAllObjFromDb(dbHdl *sql.DB) (objList []*UserConfig, e error) {
+func (obj UserConfig) GetAllObjFromDb(dbHdl *sql.DB) (objList []ConfigObj, err error) {
+	var object UserConfig
 	dbCmd := "select * from UserConfig"
 	rows, err := dbHdl.Query(dbCmd)
 	if err != nil {
@@ -86,7 +90,6 @@ func (obj *UserConfig) GetAllObjFromDb(dbHdl *sql.DB) (objList []*UserConfig, e 
 
 	for rows.Next() {
 
-		object := new(UserConfig)
 		if err = rows.Scan(&object.UserName, &object.Password, &object.Description, &object.Previledge); err != nil {
 
 			fmt.Println("Db method Scan failed when interating over UserConfig")
@@ -95,6 +98,7 @@ func (obj *UserConfig) GetAllObjFromDb(dbHdl *sql.DB) (objList []*UserConfig, e 
 	}
 	return objList, nil
 }
+
 func (obj UserConfig) CompareObjectsAndDiff(updateKeys map[string]bool, dbObj ConfigObj) ([]bool, error) {
 	dbV4Route := dbObj.(UserConfig)
 	objTyp := reflect.TypeOf(obj)
@@ -256,7 +260,7 @@ func (obj UserConfig) UpdateObjectInDb(dbObj ConfigObj, attrSet []bool, dbHdl *s
 				fieldVal.Kind() == reflect.Uint32 ||
 				fieldVal.Kind() == reflect.Uint64 {
 				fieldSqlStr = fmt.Sprintf(" %s = '%d' ", fieldTyp.Name, int(fieldVal.Uint()))
-			} else if objVal.Kind() == reflect.Bool {
+			} else if fieldVal.Kind() == reflect.Bool {
 				fieldSqlStr = fmt.Sprintf(" %s = '%d' ", fieldTyp.Name, dbutils.ConvertBoolToInt(bool(fieldVal.Bool())))
 			} else {
 				fieldSqlStr = fmt.Sprintf(" %s = '%s' ", fieldTyp.Name, fieldVal.String())

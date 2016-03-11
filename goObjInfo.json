@@ -1,6 +1,8 @@
 {
 "vrrpObjects.go" :	 {"owner": "vrrpd",
-						     "location" : "l3/vrrp/server"},
+						     "location" : "l3/vrrp/rpc"},
 "bfdObjects.go" :	 {"owner": "bfdd",
-						     "location" : "l3/bfd/rpc"}
+						     "location" : "l3/bfd/rpc"},
+"sysObjects.go" :	 {"owner": "sysd",
+						     "location" : "infra/sysd/rpc"}
 }

@@ -80,17 +80,21 @@ func (obj BGPPeerGroup) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj
 }
 
 func (obj BGPPeerGroup) GetKey() (string, error) {
-	key := string(obj.Name)
+	keyName := "BGPPeerGroup"
+	keyName = strings.TrimSuffix(keyName, "Config")
+	keyName = strings.TrimSuffix(keyName, "State")
+	key := keyName + "#" + string(obj.Name)
 	return key, nil
 }
 
 func (obj BGPPeerGroup) GetSqlKeyStr(objKey string) (string, error) {
 	keys := strings.Split(objKey, "#")
-	sqlKey := "Name = " + "\"" + keys[0] + "\""
+	sqlKey := "Name = " + "\"" + keys[1] + "\""
 	return sqlKey, nil
 }
 
-func (obj *BGPPeerGroup) GetAllObjFromDb(dbHdl *sql.DB) (objList []*BGPPeerGroup, e error) {
+func (obj BGPPeerGroup) GetAllObjFromDb(dbHdl *sql.DB) (objList []ConfigObj, err error) {
+	var object BGPPeerGroup
 	dbCmd := "select * from BGPPeerGroup"
 	rows, err := dbHdl.Query(dbCmd)
 	if err != nil {
@@ -105,7 +109,6 @@ func (obj *BGPPeerGroup) GetAllObjFromDb(dbHdl *sql.DB) (objList []*BGPPeerGroup
 	var tmp12 string
 	for rows.Next() {
 
-		object := new(BGPPeerGroup)
 		if err = rows.Scan(&object.PeerAS, &object.LocalAS, &object.AuthPassword, &object.Description, &object.Name, &object.RouteReflectorClusterId, &tmp6, &tmp7, &object.MultiHopTTL, &object.ConnectRetryTime, &object.HoldTime, &object.KeepaliveTime, &tmp12, &object.AddPathsMaxTx); err != nil {
 
 			fmt.Println("Db method Scan failed when interating over BGPPeerGroup")
@@ -117,6 +120,7 @@ func (obj *BGPPeerGroup) GetAllObjFromDb(dbHdl *sql.DB) (objList []*BGPPeerGroup
 	}
 	return objList, nil
 }
+
 func (obj BGPPeerGroup) CompareObjectsAndDiff(updateKeys map[string]bool, dbObj ConfigObj) ([]bool, error) {
 	dbV4Route := dbObj.(BGPPeerGroup)
 	objTyp := reflect.TypeOf(obj)
@@ -278,7 +282,7 @@ func (obj BGPPeerGroup) UpdateObjectInDb(dbObj ConfigObj, attrSet []bool, dbHdl 
 				fieldVal.Kind() == reflect.Uint32 ||
 				fieldVal.Kind() == reflect.Uint64 {
 				fieldSqlStr = fmt.Sprintf(" %s = '%d' ", fieldTyp.Name, int(fieldVal.Uint()))
-			} else if objVal.Kind() == reflect.Bool {
+			} else if fieldVal.Kind() == reflect.Bool {
 				fieldSqlStr = fmt.Sprintf(" %s = '%d' ", fieldTyp.Name, dbutils.ConvertBoolToInt(bool(fieldVal.Bool())))
 			} else {
 				fieldSqlStr = fmt.Sprintf(" %s = '%s' ", fieldTyp.Name, fieldVal.String())

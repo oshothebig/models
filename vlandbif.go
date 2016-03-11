@@ -66,17 +66,21 @@ func (obj Vlan) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, error)
 }
 
 func (obj Vlan) GetKey() (string, error) {
-	key := string(obj.VlanId)
+	keyName := "Vlan"
+	keyName = strings.TrimSuffix(keyName, "Config")
+	keyName = strings.TrimSuffix(keyName, "State")
+	key := keyName + "#" + string(fmt.Sprintf("%d", obj.VlanId))
 	return key, nil
 }
 
 func (obj Vlan) GetSqlKeyStr(objKey string) (string, error) {
 	keys := strings.Split(objKey, "#")
-	sqlKey := "VlanId = " + "\"" + keys[0] + "\""
+	sqlKey := "VlanId = " + "\"" + keys[1] + "\""
 	return sqlKey, nil
 }
 
-func (obj *Vlan) GetAllObjFromDb(dbHdl *sql.DB) (objList []*Vlan, e error) {
+func (obj Vlan) GetAllObjFromDb(dbHdl *sql.DB) (objList []ConfigObj, err error) {
+	var object Vlan
 	dbCmd := "select * from Vlan"
 	rows, err := dbHdl.Query(dbCmd)
 	if err != nil {
@@ -88,7 +92,6 @@ func (obj *Vlan) GetAllObjFromDb(dbHdl *sql.DB) (objList []*Vlan, e error) {
 
 	for rows.Next() {
 
-		object := new(Vlan)
 		if err = rows.Scan(&object.VlanId, &object.VlanName, &object.OperState, &object.IfIndex, &object.IfIndexList, &object.UntagIfIndexList); err != nil {
 
 			fmt.Println("Db method Scan failed when interating over Vlan")
@@ -97,6 +100,7 @@ func (obj *Vlan) GetAllObjFromDb(dbHdl *sql.DB) (objList []*Vlan, e error) {
 	}
 	return objList, nil
 }
+
 func (obj Vlan) CompareObjectsAndDiff(updateKeys map[string]bool, dbObj ConfigObj) ([]bool, error) {
 	dbV4Route := dbObj.(Vlan)
 	objTyp := reflect.TypeOf(obj)
@@ -258,7 +262,7 @@ func (obj Vlan) UpdateObjectInDb(dbObj ConfigObj, attrSet []bool, dbHdl *sql.DB)
 				fieldVal.Kind() == reflect.Uint32 ||
 				fieldVal.Kind() == reflect.Uint64 {
 				fieldSqlStr = fmt.Sprintf(" %s = '%d' ", fieldTyp.Name, int(fieldVal.Uint()))
-			} else if objVal.Kind() == reflect.Bool {
+			} else if fieldVal.Kind() == reflect.Bool {
 				fieldSqlStr = fmt.Sprintf(" %s = '%d' ", fieldTyp.Name, dbutils.ConvertBoolToInt(bool(fieldVal.Bool())))
 			} else {
 				fieldSqlStr = fmt.Sprintf(" %s = '%s' ", fieldTyp.Name, fieldVal.String())

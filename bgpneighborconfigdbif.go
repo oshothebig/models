@@ -84,17 +84,21 @@ func (obj BGPNeighborConfig) GetObjectFromDb(objKey string, dbHdl *sql.DB) (Conf
 }
 
 func (obj BGPNeighborConfig) GetKey() (string, error) {
-	key := string(obj.NeighborAddress)
+	keyName := "BGPNeighborConfig"
+	keyName = strings.TrimSuffix(keyName, "Config")
+	keyName = strings.TrimSuffix(keyName, "State")
+	key := keyName + "#" + string(obj.NeighborAddress)
 	return key, nil
 }
 
 func (obj BGPNeighborConfig) GetSqlKeyStr(objKey string) (string, error) {
 	keys := strings.Split(objKey, "#")
-	sqlKey := "NeighborAddress = " + "\"" + keys[0] + "\""
+	sqlKey := "NeighborAddress = " + "\"" + keys[1] + "\""
 	return sqlKey, nil
 }
 
-func (obj *BGPNeighborConfig) GetAllObjFromDb(dbHdl *sql.DB) (objList []*BGPNeighborConfig, e error) {
+func (obj BGPNeighborConfig) GetAllObjFromDb(dbHdl *sql.DB) (objList []ConfigObj, err error) {
+	var object BGPNeighborConfig
 	dbCmd := "select * from BGPNeighborConfig"
 	rows, err := dbHdl.Query(dbCmd)
 	if err != nil {
@@ -110,7 +114,6 @@ func (obj *BGPNeighborConfig) GetAllObjFromDb(dbHdl *sql.DB) (objList []*BGPNeig
 	var tmp13 string
 	for rows.Next() {
 
-		object := new(BGPNeighborConfig)
 		if err = rows.Scan(&object.PeerAS, &object.LocalAS, &object.AuthPassword, &object.Description, &object.NeighborAddress, &object.RouteReflectorClusterId, &tmp6, &tmp7, &object.MultiHopTTL, &object.ConnectRetryTime, &object.HoldTime, &object.KeepaliveTime, &tmp12, &object.AddPathsMaxTx, &object.PeerGroup, &tmp13); err != nil {
 
 			fmt.Println("Db method Scan failed when interating over BGPNeighborConfig")
@@ -123,6 +126,7 @@ func (obj *BGPNeighborConfig) GetAllObjFromDb(dbHdl *sql.DB) (objList []*BGPNeig
 	}
 	return objList, nil
 }
+
 func (obj BGPNeighborConfig) CompareObjectsAndDiff(updateKeys map[string]bool, dbObj ConfigObj) ([]bool, error) {
 	dbV4Route := dbObj.(BGPNeighborConfig)
 	objTyp := reflect.TypeOf(obj)
