@@ -23,3 +23,15 @@ type IpTableAclConfig struct {
 	Protocol     string `DESCRITION: "protocol for which rule is to be applied, e.g TCP, UDP"`
 	Port         string `DESCRITION: "port for protocol, e.g for dhcprelay port is 68", DEFAULT: "all"`
 }
+
+/*
+type IpTableAclState struct {
+	BaseObj
+	Name         string `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Ip Table ACL rule name"`
+	PhysicalPort string `DESCRIPTION: "IfIndex where the acl rule is to be applied", DEFAULT: "all"`
+	Action       string `DESCRIPTION: "ACCEPT or DROP"`
+	IpAddr       string `DESCRIPTION: "ip address of subnet or host, e.g: 192.168.1.0/24, 192.168.1.1"`
+	Protocol     string `DESCRITION: "protocol for which rule is to be applied, e.g TCP, UDP"`
+	Port         string `DESCRITION: "port for protocol, e.g for dhcprelay port is 68", DEFAULT: "all"`
+}
+*/
