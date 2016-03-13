@@ -1,8 +1,14 @@
 {
 "vrrpObjects.go" :{"owner": "vrrpd",
-						 "location" : "l3/vrrp/rpc"},
+						 "location" : "l3/vrrp/rpc",
+                                                 "svcName" : "nil"},
 "bfdObjects.go" :	 {"owner": "bfdd",
-						  "location" : "l3/bfd/rpc"},
+						  "location" : "l3/bfd/rpc",
+                                                  "svcName" : "nil"},
+"arpObjects.go" :	 {"owner": "arpd",
+						  "location" : "l3/arp/rpc",
+                                                  "svcName" : "arpdInt"},
 "sysObjects.go" :	 {"owner": "sysd",
-						  "location" : "infra/sysd/rpc"}
+						  "location" : "infra/sysd/rpc",
+                                                  "svcName" : "nil"}
 }

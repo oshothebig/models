@@ -28,18 +28,6 @@
   "srcfile": "objects.go",
   "multiplicity": "*"
  },
-"ArpConfig" : {
-  "access": "w",
-  "owner": "arpd",
-  "srcfile": "objects.go",
-  "multiplicity": "1"
- },
-"ArpEntry" : {
-  "access": "r",
-  "owner": "arpd",
-  "srcfile": "objects.go",
-  "multiplicity": "*"
- },
 "BGPGlobalConfig" : {
   "access": "w",
   "owner": "bgpd",
