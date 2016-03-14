@@ -9,7 +9,15 @@ import (
 )
 
 func (obj PolicyDefinitionConfig) CreateDBTable(dbHdl *sql.DB) error {
-	dbCmd := "CREATE TABLE IF NOT EXISTS PolicyDefinitionStmtPrecedence " +
+	dbCmd := "CREATE TABLE IF NOT EXISTS PolicyDefinitionConfig " +
+		"( " +
+		"Name TEXT, " +
+		"Precedence INTEGER, " +
+		"MatchType TEXT, " +
+		"PRIMARY KEY(Name) " +
+	");"
+	_, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
+	dbCmd = "CREATE TABLE IF NOT EXISTS PolicyDefinitionStmtPrecedence " +
 		"( " +
 		"ListPolicyName TEXT NOT NULL, " +
 		"ListPolicyStmtName TEXT NOT NULL, " +
@@ -19,12 +27,13 @@ func (obj PolicyDefinitionConfig) CreateDBTable(dbHdl *sql.DB) error {
 		"FOREIGN KEY(ListPolicyName) REFERENCES PolicyDefinitionConfig(Name) ON DELETE CASCADE\n" +
 		"FOREIGN KEY(ListPolicyStmtName) REFERENCES PolicyStmtConfig(Name) ON DELETE CASCADE" +
 		");"
-	_, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
+	_, err = dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
 
 func (obj PolicyDefinitionConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	var objectId int64
+	var i int
 	dbCmd := fmt.Sprintf("INSERT INTO PolicyDefinitionConfig (Name, Precedence, MatchType) VALUES ('%v', '%v', '%v') ;",
 		obj.Name, obj.Precedence, obj.MatchType)
 	fmt.Println("**** Create Object called with ", obj)
@@ -39,16 +48,20 @@ func (obj PolicyDefinitionConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, error) 
 		}
 
 	}
-	for i := 0; i < len(obj.StatementList); i++ {
+	for i = 0; i < len(obj.StatementList); i++ {
 		dbCmd = fmt.Sprintf("INSERT INTO PolicyDefinitionStmtPrecedence (ListPolicyName,ListPolicyStmtName, Statement, StmtPrecedence) VALUES ('%v', '%v', '%v', '%v') ;",
 			obj.Name, obj.StatementList[i].Statement, obj.StatementList[i].Statement, obj.StatementList[i].Precedence)
-		fmt.Println("Inserting into PolicyDefinitionStmtPrecedence : ListPolicyName/ListPolicyStmtName/Statement:Precedence - ", obj.Name, "/", obj.StatementList[i].Statement, obj.StatementList[i].Statement, ": ", obj.StatementList[i].Precedence)
-		_, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
+        fmt.Println("Inserting into PolicyDefinitionStmtPrecedence : ListPolicyName/ListPolicyStmtName/Statement:Precedence - ", obj.Name, "/", obj.StatementList[i].Statement, obj.StatementList[i].Statement,": ", obj.StatementList[i].Precedence)
+		result, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
 		if err != nil {
-			fmt.Println("### Failed to return last object id", err)
+			fmt.Println("**** Failed to Create table", err)
+		} else {
+			_, err = result.LastInsertId()
+			if err != nil {
+				fmt.Println("### Failed to return last object id", err)
+			}
 		}
-
-	}
+	}	
 	return objectId, err
 }
 
@@ -232,6 +245,8 @@ func (obj PolicyDefinitionConfig) MergeDbAndConfigObj(dbObj ConfigObj, attrSet [
 				mergedObjVal.Elem().Field(i).SetUint(dbObjField.Uint())
 			} else if dbObjField.Kind() == reflect.Bool {
 				mergedObjVal.Elem().Field(i).SetBool(dbObjField.Bool())
+			} else if dbObjField.Kind() == reflect.Slice {
+				fmt.Println("slice type")
 			} else {
 				mergedObjVal.Elem().Field(i).SetString(dbObjField.String())
 			}

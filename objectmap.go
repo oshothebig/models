@@ -5,26 +5,26 @@ var ConfigObjectMap = map[string]ConfigObj{
 	"IPv4Route":                                        &IPv4Route{}, // created before auto YANG
 	"IPv4RouteState":                                   &IPv4RouteState{},
 	"IPv4EventState":                                   &IPv4EventState{},
-	"IPv4Intf":                                         &IPv4Intf{},          // created before auto YANG
-    "LogicalIntfConfig":                                &LogicalIntfConfig{},
-	"LogicalIntfState" :                                &LogicalIntfState{},
-	"ArpConfig":                                        &ArpConfig{},         // created before auto YANG
-	"ArpEntry":                                         &ArpEntry{},          // created before auto YANG
+	"IPv4Intf":                                         &IPv4Intf{}, // created before auto YANG
+	"LogicalIntfConfig":                                &LogicalIntfConfig{},
+	"LogicalIntfState":                                 &LogicalIntfState{},
+	//"ArpConfig":                                        &ArpConfig{},         // created before auto YANG
+	//"ArpEntry":                                         &ArpEntry{},          // created before auto YANG
 	"BGPGlobalConfig":                                  &BGPGlobalConfig{},   // created before auto YANG
 	"BGPGlobalState":                                   &BGPGlobalState{},    // created before auto YANG
 	"BGPNeighborConfig":                                &BGPNeighborConfig{}, // created before auto YANG
 	"BGPNeighborState":                                 &BGPNeighborState{},  // created before auto YANG
 	"BGPPeerGroup":                                     &BGPPeerGroup{},      // created before auto YANG
 	"BGPRoute":                                         &BGPRoute{},          // created before auto YANG
-		"BGPPolicyDefinitionConfig":                           &BGPPolicyDefinitionConfig{},
-	"BGPPolicyDefinitionState":                            &BGPPolicyDefinitionState{},
-	"BGPPolicyStmtConfig":                                 &BGPPolicyStmtConfig{},
-	"BGPPolicyStmtState":                                  &BGPPolicyStmtState{},
-	"BGPPolicyPrefixSet":                                  &BGPPolicyPrefixSet{},
-	"BGPPolicyConditionConfig":                            &BGPPolicyConditionConfig{},
-	"BGPPolicyConditionState":                             &BGPPolicyConditionState{},
-	"BGPPolicyActionConfig":                               &BGPPolicyActionConfig{},         
-	"BGPPolicyActionState":                                &BGPPolicyActionState{},
+	"BGPPolicyDefinitionConfig":                        &BGPPolicyDefinitionConfig{},
+	"BGPPolicyDefinitionState":                         &BGPPolicyDefinitionState{},
+	"BGPPolicyStmtConfig":                              &BGPPolicyStmtConfig{},
+	"BGPPolicyStmtState":                               &BGPPolicyStmtState{},
+	"BGPPolicyPrefixSet":                               &BGPPolicyPrefixSet{},
+	"BGPPolicyConditionConfig":                         &BGPPolicyConditionConfig{},
+	"BGPPolicyConditionState":                          &BGPPolicyConditionState{},
+	"BGPPolicyActionConfig":                            &BGPPolicyActionConfig{},
+	"BGPPolicyActionState":                             &BGPPolicyActionState{},
 	"AggregationLacpConfig":                            &AggregationLacpConfig{},
 	"EthernetConfig":                                   &EthernetConfig{},
 	"AggregationLacpMemberStateCounters":               &AggregationLacpMemberStateCounters{},

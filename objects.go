@@ -394,46 +394,6 @@ func (obj PortState) UnmarshalObject(body []byte) (ConfigObj, error) {
 
 /* End asicd owned objects */
 
-/* ARP */
-type ArpConfig struct {
-	BaseObj
-	// placeholder to create a key
-	ArpConfigKey string `SNAPROUTE: "KEY"`
-	Timeout      int32
-}
-
-func (obj ArpConfig) UnmarshalObject(body []byte) (ConfigObj, error) {
-	var arpConfigObj ArpConfig
-	var err error
-	if len(body) > 0 {
-		if err = json.Unmarshal(body, &arpConfigObj); err != nil {
-			fmt.Println("### Trouble in unmarshaling ArpConfig from Json", body)
-		}
-	}
-
-	return arpConfigObj, err
-}
-
-type ArpEntry struct {
-	BaseObj
-	IpAddr         string `SNAPROUTE: "KEY"`
-	MacAddr        string
-	Vlan           int32
-	Intf           string
-	ExpiryTimeLeft string
-}
-
-func (obj ArpEntry) UnmarshalObject(body []byte) (ConfigObj, error) {
-	var arpEntryObj ArpEntry
-	var err error
-	if len(body) > 0 {
-		if err = json.Unmarshal(body, &arpEntryObj); err != nil {
-			fmt.Println("### Trouble in unmarshaling ArpConfig from Json", body)
-		}
-	}
-	return arpEntryObj, err
-}
-
 type UserConfig struct {
 	BaseObj
 	UserName    string `SNAPROUTE: "KEY"`
