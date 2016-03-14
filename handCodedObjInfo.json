@@ -4,14 +4,20 @@
   "srcfile": "objects.go",
   "multiplicity": "*"
  },
-"IPV4Route" : {
+"IPv4Route" : {
   "access": "w",
   "owner": "ribd",
   "srcfile": "objects.go",
   "multiplicity": "*"
  },
-"IPV4RouteState" : {
-  "access": "w",
+"IPv4RouteState" : {
+  "access": "r",
+  "owner": "ribd",
+  "srcfile": "objects.go",
+  "multiplicity": "*"
+ },
+"IPv4EventState" : {
+  "access": "r",
   "owner": "ribd",
   "srcfile": "objects.go",
   "multiplicity": "*"
@@ -19,18 +25,6 @@
 "IPv4Intf" : {
   "access": "w",
   "owner": "ospfd",
-  "srcfile": "objects.go",
-  "multiplicity": "*"
- },
-"ArpConfig" : {
-  "access": "w",
-  "owner": "arpd",
-  "srcfile": "objects.go",
-  "multiplicity": "1"
- },
-"ArpEntry" : {
-  "access": "r",
-  "owner": "arpd",
   "srcfile": "objects.go",
   "multiplicity": "*"
  },
