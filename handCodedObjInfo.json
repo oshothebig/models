@@ -4,24 +4,6 @@
   "srcfile": "objects.go",
   "multiplicity": "*"
  },
-"IPv4Route" : {
-  "access": "w",
-  "owner": "ribd",
-  "srcfile": "objects.go",
-  "multiplicity": "*"
- },
-"IPv4RouteState" : {
-  "access": "r",
-  "owner": "ribd",
-  "srcfile": "objects.go",
-  "multiplicity": "*"
- },
-"IPv4EventState" : {
-  "access": "r",
-  "owner": "ribd",
-  "srcfile": "objects.go",
-  "multiplicity": "*"
- },
 "IPv4Intf" : {
   "access": "w",
   "owner": "ospfd",
@@ -178,31 +160,13 @@
   "srcfile": "routingPolicy.go",
   "multiplicity": "*"
  },
-"PolicyConditionConfig" : {
-  "access": "w",
-  "owner": "ribd",
-  "srcfile": "routingPolicy.go",
-  "multiplicity": "*"
- },
 "PolicyConditionState" : {
   "access": "w",
   "owner": "ribd",
   "srcfile": "routingPolicy.go",
   "multiplicity": "*"
  },
-"PolicyActionConfig" : {
-  "access": "w",
-  "owner": "ribd",
-  "srcfile": "routingPolicy.go",
-  "multiplicity": "*"
- },
 "PolicyActionState" : {
-  "access": "r",
-  "owner": "ribd",
-  "srcfile": "routingPolicy.go",
-  "multiplicity": "*"
- },
-"RouteDistanceState" : {
   "access": "r",
   "owner": "ribd",
   "srcfile": "routingPolicy.go",

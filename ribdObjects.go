@@ -1,0 +1,55 @@
+package models
+
+type IPv4Route struct {
+	BaseObj
+	DestinationNw     string `SNAPROUTE: "KEY", ACCESS:"rw", MULTIPLICITY:"*", DESCRIPTION: "IP address of the route"`
+	NetworkMask       string `SNAPROUTE: "KEY", ACCESS:"rw", MULTIPLICITY:"*", DESCRIPTION: "mask of the route"`
+	NextHopIp         string `SNAPROUTE: "KEY", ACCESS:"rw", MULTIPLICITY:"*", DESCRIPTION: "next hop ip of the route"`
+	Cost              uint32 `DESCRIPTION "Cost of this route"`
+	OutgoingIntfType  string `DESCRIPTION "Interface type of the next hop interface"`
+	OutgoingInterface string `DESCRIPTION "Interface ID of the next hop interface"`
+	Protocol          string `DESCRIPTION "Protocol type of the route"`
+}
+type IPv4RouteState struct {
+	BaseObj
+	DestinationNw    string `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "IP address of the route"`
+	PolicyList       []string `DESCRIPTION "List of policies applied on this route"`
+	RouteCreatedTime string   `DESCRIPTION "Time when the route was added"`
+	RouteUpdatedTime string   `DESCRIPTION "Time when the route was last updated"`
+}
+
+type IPv4EventState struct {
+	BaseObj
+	Index     uint32          `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Evemt ID"`
+	TimeStamp string          `DESCRIPTION "Time when the event occured"`
+	EventInfo string          `DESCRIPTION "Detailed description of the event"`
+}
+
+
+type PolicyConditionConfig struct {
+	BaseObj
+	Name                          string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", DESCRIPTION: "PolicyConditionName"`
+	ConditionType                 string `DESCRIPTION: "Specifies the match criterion this condition defines - eg: MatchProtocol/MatchDstIpPrefix"`
+	MatchProtocol                 string `DESCRIPTION: "Protocol to match on if the ConditionType is set to MatchProtocol"`
+	IpPrefix                      string `DESCRIPTION: "Used in conjunction with MaskLengthRange to specify the IP Prefix to match on when the ConditionType is MatchDstIpPrefix/MatchSrcIpPrefix."`
+	MaskLengthRange               string `DESCRIPTION: "Used in conjuction with IpPrefix to specify specify the IP Prefix to match on when the ConditionType is MatchDstIpPrefix/MatchSrcIpPrefix."`
+}
+
+type PolicyActionConfig struct {
+	BaseObj
+	Name                             string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", DESCRIPTION: "PolicyActionName"`
+	ActionType                       string `DESCRIPTION: "Specifies the type of the action  - eg: RouteDisposition/NetworkStatementAdvertise/Redistribution/SetAdminDistance"`
+	SetAdminDistanceValue            int32    `DESCRIPTION "Specifies the value of the admin distance/protocol preference when the action type is SetAdminDistance"`
+	Accept                           bool   `DESCRIPTION "When set to true, along with action type RouteDisposition, indicates to accept the policy entity"`
+	Reject                           bool   `DESCRIPTION "When set to true, along with action type RouteDisposition, indicates to reject the policy entity"`
+	RedistributeAction               string `DESCRIPTION "Used in conjuction with RedistributeTargetProtocol for action type Redistribute, indicates to allow/block redistribution"`
+	RedistributeTargetProtocol       string `DESCRIPTION "Used in conjuction with RedistributeAction for action type Redistribute, indicates the target protocol for redistribution"`
+	NetworkStatementTargetProtocol   string `DESCRIPTION "Used for action type NetworkStatementAdvertise, indicates the target protocol for Network Statement Advertisement"`
+}
+
+type RouteDistanceState struct {
+	BaseObj
+	Protocol string `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "RouteDistanceState protocol"`
+	Distance int32    `DESCRIPTION: "The current value of the admin distance of this protocol"`
+}
+

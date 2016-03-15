@@ -10,5 +10,8 @@
                                                   "svcName" : "arpdInt"},
 "sysObjects.go" :	 {"owner": "sysd",
 						  "location" : "infra/sysd/rpc",
-                                                  "svcName" : "nil"}
+                                                  "svcName" : "nil"},
+"ribdObjects.go" :	 {"owner": "ribd",
+						  "location" : "l3/rib",
+                                                  "svcName" : "ribdInt"}
 }
