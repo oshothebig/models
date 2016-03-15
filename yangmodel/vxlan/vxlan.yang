@@ -139,12 +139,12 @@ module vxlan {
              description
               "VxLAN ID or VNI";
            }
-           leaf group {
+           leaf mc-dest-ip {
               type string;
               config true;
               mandatory true ;
               description
-                 "VxLAN multicast IP address.";
+                 "VxLAN multicast IP address used when destination is uknown";
            }
 
            leaf vlan-id {
