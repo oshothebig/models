@@ -27,5 +27,6 @@ type VrrpIntfState struct {
 	PreemptMode             bool   `DESCRIPTION: "States Whether Preempt is Supported or not"`
 	VirtualRouterMACAddress string `DESCRIPTION: "VRRP router's Mac Address"`
 	SkewTime                int32  `DESCRIPTION: "Time to skew Master Down Interval"`
-	MasterDownInterval      int32  `DESCRIPTION: "Time interval for Backup to declare Master down"`
+	MasterDownTimer         int32  `DESCRIPTION: "Time interval for Backup to declare Master down"`
+	AdverTimer              int32  `DESCRIPTION: "Timer that fires to trigger sending of ADVERTISEMENT"`
 }
