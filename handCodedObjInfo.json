@@ -130,48 +130,6 @@
   "srcfile": "dhcprelayOjbects.go",
   "multiplicity": "1"
  },
-"PolicyDefinitionConfig" : {
-  "access": "w",
-  "owner": "ribd",
-  "srcfile": "routingPolicy.go",
-  "multiplicity": "*"
- },
-"PolicyDefinitionState" : {
-  "access": "w",
-  "owner": "ribd",
-  "srcfile": "routingPolicy.go",
-  "multiplicity": "*"
- },
-"PolicyStmtConfig" : {
-  "access": "w",
-  "owner": "ribd",
-  "srcfile": "routingPolicy.go",
-  "multiplicity": "*"
- },
-"PolicyStmtState" : {
-  "access": "r",
-  "owner": "ribd",
-  "srcfile": "routingPolicy.go",
-  "multiplicity": "*"
- },
-"PolicyPrefixSet" : {
-  "access": "w",
-  "owner": "ribd",
-  "srcfile": "routingPolicy.go",
-  "multiplicity": "*"
- },
-"PolicyConditionState" : {
-  "access": "w",
-  "owner": "ribd",
-  "srcfile": "routingPolicy.go",
-  "multiplicity": "*"
- },
-"PolicyActionState" : {
-  "access": "r",
-  "owner": "ribd",
-  "srcfile": "routingPolicy.go",
-  "multiplicity": "*"
- },
 "PortConfig" : {
   "access": "w",
   "owner": "asicd",
