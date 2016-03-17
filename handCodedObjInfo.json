@@ -10,42 +10,6 @@
   "srcfile": "objects.go",
   "multiplicity": "*"
  },
-"BGPGlobalConfig" : {
-  "access": "w",
-  "owner": "bgpd",
-  "srcfile": "objects.go",
-  "multiplicity": "1"
- },
-"BGPGlobalState" : {
-  "access": "r",
-  "owner": "bgpd",
-  "srcfile": "objects.go",
-  "multiplicity": "1"
- },
-"BGPNeighborConfig" : {
-  "access": "w",
-  "owner": "bgpd",
-  "srcfile": "objects.go",
-  "multiplicity": "*"
- },
-"BGPNeighborState" : {
-  "access": "r",
-  "owner": "bgpd",
-  "srcfile": "objects.go",
-  "multiplicity": "*"
- },
-"BGPPeerGroup" : {
-  "access": "w",
-  "owner": "bgpd",
-  "srcfile": "objects.go",
-  "multiplicity": "*"
- },
-"BGPRoute" : {
-  "access": "r",
-  "owner": "bgpd",
-  "srcfile": "objects.go",
-  "multiplicity": "*"
- },
 "AggregationLacpConfig" : {
   "access": "w",
   "owner": "lacpd",

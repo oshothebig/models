@@ -10,21 +10,6 @@ var ConfigObjectMap = map[string]ConfigObj{
 	"LogicalIntfState":                                 &LogicalIntfState{},
 	//"ArpConfig":                                        &ArpConfig{},         // created before auto YANG
 	//"ArpEntry":                                         &ArpEntry{},          // created before auto YANG
-	"BGPGlobalConfig":                                  &BGPGlobalConfig{},   // created before auto YANG
-	"BGPGlobalState":                                   &BGPGlobalState{},    // created before auto YANG
-	"BGPNeighborConfig":                                &BGPNeighborConfig{}, // created before auto YANG
-	"BGPNeighborState":                                 &BGPNeighborState{},  // created before auto YANG
-	"BGPPeerGroup":                                     &BGPPeerGroup{},      // created before auto YANG
-	"BGPRoute":                                         &BGPRoute{},          // created before auto YANG
-	"BGPPolicyDefinitionConfig":                        &BGPPolicyDefinitionConfig{},
-	"BGPPolicyDefinitionState":                         &BGPPolicyDefinitionState{},
-	"BGPPolicyStmtConfig":                              &BGPPolicyStmtConfig{},
-	"BGPPolicyStmtState":                               &BGPPolicyStmtState{},
-	"BGPPolicyPrefixSet":                               &BGPPolicyPrefixSet{},
-	"BGPPolicyConditionConfig":                         &BGPPolicyConditionConfig{},
-	"BGPPolicyConditionState":                          &BGPPolicyConditionState{},
-	"BGPPolicyActionConfig":                            &BGPPolicyActionConfig{},
-	"BGPPolicyActionState":                             &BGPPolicyActionState{},
 	"AggregationLacpConfig":                            &AggregationLacpConfig{},
 	"EthernetConfig":                                   &EthernetConfig{},
 	"AggregationLacpMemberStateCounters":               &AggregationLacpMemberStateCounters{},
