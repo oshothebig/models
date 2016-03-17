@@ -4,63 +4,9 @@
   "srcfile": "objects.go",
   "multiplicity": "*"
  },
-"IPv4Route" : {
-  "access": "w",
-  "owner": "ribd",
-  "srcfile": "objects.go",
-  "multiplicity": "*"
- },
-"IPv4RouteState" : {
-  "access": "r",
-  "owner": "ribd",
-  "srcfile": "objects.go",
-  "multiplicity": "*"
- },
-"IPv4EventState" : {
-  "access": "r",
-  "owner": "ribd",
-  "srcfile": "objects.go",
-  "multiplicity": "*"
- },
 "IPv4Intf" : {
   "access": "w",
   "owner": "ospfd",
-  "srcfile": "objects.go",
-  "multiplicity": "*"
- },
-"BGPGlobalConfig" : {
-  "access": "w",
-  "owner": "bgpd",
-  "srcfile": "objects.go",
-  "multiplicity": "1"
- },
-"BGPGlobalState" : {
-  "access": "r",
-  "owner": "bgpd",
-  "srcfile": "objects.go",
-  "multiplicity": "1"
- },
-"BGPNeighborConfig" : {
-  "access": "w",
-  "owner": "bgpd",
-  "srcfile": "objects.go",
-  "multiplicity": "*"
- },
-"BGPNeighborState" : {
-  "access": "r",
-  "owner": "bgpd",
-  "srcfile": "objects.go",
-  "multiplicity": "*"
- },
-"BGPPeerGroup" : {
-  "access": "w",
-  "owner": "bgpd",
-  "srcfile": "objects.go",
-  "multiplicity": "*"
- },
-"BGPRoute" : {
-  "access": "r",
-  "owner": "bgpd",
   "srcfile": "objects.go",
   "multiplicity": "*"
  },
@@ -121,92 +67,32 @@
 "DhcpRelayHostDhcpState" : {
   "access": "r",
   "owner": "dhcprelayd",
-  "srcfile": "dhcprelayOjbects.go",
+  "srcfile": "dhcprelayObjects.go",
   "multiplicity": "*"
  },
 "DhcpRelayIntfServerState" : {
   "access": "r",
   "owner": "dhcprelayd",
-  "srcfile": "dhcprelayOjbects.go",
+  "srcfile": "dhcprelayObjects.go",
   "multiplicity": "*"
  },
 "DhcpRelayIntfConfig" : {
   "access": "w",
   "owner": "dhcprelayd",
-  "srcfile": "dhcprelayOjbects.go",
+  "srcfile": "dhcprelayObjects.go",
   "multiplicity": "*"
  },
 "DhcpRelayIntfState" : {
   "access": "r",
   "owner": "dhcprelayd",
-  "srcfile": "dhcprelayOjbects.go",
+  "srcfile": "dhcprelayObjects.go",
   "multiplicity": "*"
  },
 "DhcpRelayGlobalConfig" : {
   "access": "w",
   "owner": "dhcprelayd",
-  "srcfile": "dhcprelayOjbects.go",
+  "srcfile": "dhcprelayObjects.go",
   "multiplicity": "1"
- },
-"PolicyDefinitionConfig" : {
-  "access": "w",
-  "owner": "ribd",
-  "srcfile": "routingPolicy.go",
-  "multiplicity": "*"
- },
-"PolicyDefinitionState" : {
-  "access": "w",
-  "owner": "ribd",
-  "srcfile": "routingPolicy.go",
-  "multiplicity": "*"
- },
-"PolicyStmtConfig" : {
-  "access": "w",
-  "owner": "ribd",
-  "srcfile": "routingPolicy.go",
-  "multiplicity": "*"
- },
-"PolicyStmtState" : {
-  "access": "r",
-  "owner": "ribd",
-  "srcfile": "routingPolicy.go",
-  "multiplicity": "*"
- },
-"PolicyPrefixSet" : {
-  "access": "w",
-  "owner": "ribd",
-  "srcfile": "routingPolicy.go",
-  "multiplicity": "*"
- },
-"PolicyConditionConfig" : {
-  "access": "w",
-  "owner": "ribd",
-  "srcfile": "routingPolicy.go",
-  "multiplicity": "*"
- },
-"PolicyConditionState" : {
-  "access": "w",
-  "owner": "ribd",
-  "srcfile": "routingPolicy.go",
-  "multiplicity": "*"
- },
-"PolicyActionConfig" : {
-  "access": "w",
-  "owner": "ribd",
-  "srcfile": "routingPolicy.go",
-  "multiplicity": "*"
- },
-"PolicyActionState" : {
-  "access": "r",
-  "owner": "ribd",
-  "srcfile": "routingPolicy.go",
-  "multiplicity": "*"
- },
-"RouteDistanceState" : {
-  "access": "r",
-  "owner": "ribd",
-  "srcfile": "routingPolicy.go",
-  "multiplicity": "*"
  },
 "PortConfig" : {
   "access": "w",
