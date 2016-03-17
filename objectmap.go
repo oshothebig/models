@@ -2,9 +2,9 @@ package models
 
 var ConfigObjectMap = map[string]ConfigObj{
 	"Vlan":                                             &Vlan{},      // created before auto YANG
-	"IPv4Route":                                        &IPv4Route{}, // created before auto YANG
-	"IPv4RouteState":                                   &IPv4RouteState{},
-	"IPv4EventState":                                   &IPv4EventState{},
+	//"IPv4Route":                                        &IPv4Route{}, // created before auto YANG
+	//"IPv4RouteState":                                   &IPv4RouteState{},
+	//"IPv4EventState":                                   &IPv4EventState{},
 	"IPv4Intf":                                         &IPv4Intf{}, // created before auto YANG
 	"LogicalIntfConfig":                                &LogicalIntfConfig{},
 	"LogicalIntfState":                                 &LogicalIntfState{},
@@ -25,15 +25,15 @@ var ConfigObjectMap = map[string]ConfigObj{
 	"DhcpRelayIntfConfig":                              &DhcpRelayIntfConfig{},
 	"DhcpRelayIntfState":                               &DhcpRelayIntfState{},
 	"DhcpRelayGlobalConfig":                            &DhcpRelayGlobalConfig{},
-	"PolicyDefinitionConfig":                           &PolicyDefinitionConfig{},
-	"PolicyDefinitionState":                            &PolicyDefinitionState{},
-	"PolicyStmtConfig":                                 &PolicyStmtConfig{},
-	"PolicyStmtState":                                  &PolicyStmtState{},
-	"PolicyConditionConfig":                            &PolicyConditionConfig{},
-	"PolicyConditionState":                             &PolicyConditionState{},
-	"PolicyActionConfig":                               &PolicyActionConfig{},
-	"PolicyActionState":                                &PolicyActionState{},
-	"RouteDistanceState":                               &RouteDistanceState{},
+	//"PolicyDefinitionConfig":                           &PolicyDefinitionConfig{},
+	//"PolicyDefinitionState":                            &PolicyDefinitionState{},
+	//"PolicyStmtConfig":                                 &PolicyStmtConfig{},
+	//"PolicyStmtState":                                  &PolicyStmtState{},
+	//"PolicyConditionConfig":                            &PolicyConditionConfig{},
+	//"PolicyConditionState":                             &PolicyConditionState{},
+	//"PolicyActionConfig":                               &PolicyActionConfig{},
+	//"PolicyActionState":                                &PolicyActionState{},
+	//"RouteDistanceState":                               &RouteDistanceState{},
 	"PortConfig":                                       &PortConfig{},
 	"PortState":                                        &PortState{},
 	"UserConfig":                                       &UserConfig{},
