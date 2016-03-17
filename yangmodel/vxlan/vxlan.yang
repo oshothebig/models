@@ -187,7 +187,7 @@ module vxlan {
                   type int32;
 				  config true;
                   description
-                     "Source interface ifIndex.";
+                     "Source physical interface ifIndex.";
                 }
                 leaf UDP {
                    type uint16;
@@ -256,18 +256,18 @@ module vxlan {
                    "VxLAN ID.";
               }
 
-              leaf tunnel-source-ip {
-                    type inet:ipv4-address;
-                    config true;
-                    description
-                     "Source IP address for the static VxLAN tunnel";
-              }
-
-              leaf tunnel-destination-ip {
+              leaf dst-ip {
                     type inet:ipv4-address;
                     config true;
                     description
                      "Destination IP address for the static VxLAN tunnel";
+              }
+
+              leaf dst-mac {
+                    type yang:mac-address;
+                    config true;
+                    description
+                     "Destination MAC address for the static VxLAN tunnel";
               }
 
               leaf vlan-id {
@@ -277,14 +277,6 @@ module vxlan {
                     "Vlan Id to encapsulate with the vtep tunnel ethernet header";
               }
 
-              leaf src-mac {
-                type yang:mac-address;
-                config true;
-                description
-                    "Src Mac assigned to the VTEP within this VxLAN.
-                    If an address is not assigned the the local
-                    switch address will be used.";
-              }
             }
              description
                 "VTEP instance.";
