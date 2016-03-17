@@ -3,7 +3,7 @@ package models
 /*
  * This DS will be used while Created/Deleting Vrrp Intf Config
  */
-type VrrpIntfConfig struct {
+type VrrpIntf struct {
 	BaseObj
 	IfIndex  int32 `SNAPROUTE: "KEY", ACCESS:"w",  MULTIPLICITY:"*", DESCRIPTION: ""Interface index for which VRRP Config needs to be done"`
 	VRID     int32 `SNAPROUTE: "KEY", DESCRIPTION: "Virtual Router's Unique Identifier"`
