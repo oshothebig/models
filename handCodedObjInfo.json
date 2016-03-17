@@ -85,31 +85,31 @@
 "DhcpRelayHostDhcpState" : {
   "access": "r",
   "owner": "dhcprelayd",
-  "srcfile": "dhcprelayOjbects.go",
+  "srcfile": "dhcprelayObjects.go",
   "multiplicity": "*"
  },
 "DhcpRelayIntfServerState" : {
   "access": "r",
   "owner": "dhcprelayd",
-  "srcfile": "dhcprelayOjbects.go",
+  "srcfile": "dhcprelayObjects.go",
   "multiplicity": "*"
  },
 "DhcpRelayIntfConfig" : {
   "access": "w",
   "owner": "dhcprelayd",
-  "srcfile": "dhcprelayOjbects.go",
+  "srcfile": "dhcprelayObjects.go",
   "multiplicity": "*"
  },
 "DhcpRelayIntfState" : {
   "access": "r",
   "owner": "dhcprelayd",
-  "srcfile": "dhcprelayOjbects.go",
+  "srcfile": "dhcprelayObjects.go",
   "multiplicity": "*"
  },
 "DhcpRelayGlobalConfig" : {
   "access": "w",
   "owner": "dhcprelayd",
-  "srcfile": "dhcprelayOjbects.go",
+  "srcfile": "dhcprelayObjects.go",
   "multiplicity": "1"
  },
 "PolicyDefinitionConfig" : {
