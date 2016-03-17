@@ -8,6 +8,9 @@
 "arpObjects.go" :	 {"owner": "arpd",
 						  "location" : "l3/arp/rpc",
                                                   "svcName" : "arpdInt"},
+"bgpObjects.go" :	 {"owner": "bgpd",
+						  "location" : "l3/bgp/rpc",
+                                                  "svcName" : "bgpdInt"},
 "sysObjects.go" :	 {"owner": "sysd",
 						  "location" : "infra/sysd/rpc",
                                                   "svcName" : "nil"}
