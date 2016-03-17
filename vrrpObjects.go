@@ -9,11 +9,10 @@ type VrrpIntfConfig struct {
 	VRID     int32 `SNAPROUTE: "KEY", DESCRIPTION: "Virtual Router's Unique Identifier"`
 	Priority int32 `DESCRIPTION: "Sending VRRP router's priority for
 	   the virtual router", DEFAULT: "100"`
-	VirtualIPv4Addr         string `DESCRIPTION: "Virtual Router Identifier"`
-	AdvertisementInterval   int32  `DESCRIPTION: "Time interval between ADVERTISEMENTS", DEFAULT:"1"`
-	PreemptMode             bool   `DESCRIPTION: "Controls whether a (starting or restarting) higher-priority Backup router preempts a lower-priority Master router", DEFAULT: "true"`
-	AcceptMode              bool   `DESCRIPTION: "Controls whether a virtual router in Master state will accept packets addressed to the address owner's IPvX address as its own if it is not the IPvX address owner.", DEFAULT:"false"`
-	VirtualRouterMACAddress string `DESCRIPTION: "MAC address used as source MAC address in VRRP advertisements and advertised in ARP responses as the MAC address to use for IP_Addresses"`
+	VirtualIPv4Addr       string `DESCRIPTION: "Virtual Router Identifier"`
+	AdvertisementInterval int32  `DESCRIPTION: "Time interval between ADVERTISEMENTS", DEFAULT:"1"`
+	PreemptMode           bool   `DESCRIPTION: "Controls whether a (starting or restarting) higher-priority Backup router preempts a lower-priority Master router", DEFAULT: "true"`
+	AcceptMode            bool   `DESCRIPTION: "Controls whether a virtual router in Master state will accept packets addressed to the address owner's IPvX address as its own if it is not the IPvX address owner.", DEFAULT:"false"`
 }
 
 type VrrpIntfState struct {
