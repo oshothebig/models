@@ -5,7 +5,7 @@ import ()
 /*
  * Global Config for BFD
  */
-type BfdGlobalConfig struct {
+type BfdGlobal struct {
 	BaseObj
 	Bfd    string `SNAPROUTE: "KEY", ACCESS:"w",  MULTIPLICITY:"1", DESCRIPTION: "VRF id where BFD is globally enabled or disabled"`
 	Enable bool   `DESCRIPTION: "Global BFD state in this VRF", DEFAULT: "true"`
@@ -28,7 +28,7 @@ type BfdGlobalState struct {
 /*
  * BFD Interface config
  */
-type BfdIntfConfig struct {
+type BfdInterface struct {
 	BaseObj
 	IfIndex                   int32  `SNAPROUTE: "KEY", ACCESS:"w",  MULTIPLICITY:"*", DESCRIPTION: "Interface index on which BFD configuration will be applied"`
 	LocalMultiplier           uint32 `DESCRIPTION: "Detection multiplier", DEFAULT: "3"`
@@ -45,7 +45,7 @@ type BfdIntfConfig struct {
 /*
  * BFD Interface state
  */
-type BfdIntfState struct {
+type BfdInterfaceState struct {
 	BaseObj
 	IfIndex                   int32  `SNAPROUTE: "KEY", ACCESS:"r",  MULTIPLICITY:"*", DESCRIPTION: "Interface index for which BFD state is requested"`
 	Enabled                   bool   `DESCRIPTION: "BFD state on this interface"`
@@ -64,7 +64,7 @@ type BfdIntfState struct {
 /*
  * BFD Session config
  */
-type BfdSessionConfig struct {
+type BfdSession struct {
 	BaseObj
 	IpAddr  string `SNAPROUTE: "KEY", ACCESS:"w",  MULTIPLICITY:"*", DESCRIPTION: "BFD neighbor IP address"`
 	PerLink bool   `DESCRIPTION: "Run BFD sessions on individual link of a LAG if the neighbor is reachable through LAG", DEFAULT: "false"`
