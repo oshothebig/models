@@ -23,13 +23,13 @@ func ConvertThriftToasicdVlanObj(thriftobj *asicdServices.Vlan, dbobj *Vlan) {
 	dbobj.VlanId = int32(thriftobj.VlanId)
 }
 func ConvertasicdLogicalIntfConfigObjToThrift(dbobj *LogicalIntfConfig, thriftobj *asicdServices.LogicalIntfConfig) {
-	thriftobj.Name = dbobj.Name
-	thriftobj.Type = dbobj.Type
+	thriftobj.Name = string(dbobj.Name)
+	thriftobj.Type = string(dbobj.Type)
 }
 
 func ConvertThriftToasicdLogicalIntfConfigObj(thriftobj *asicdServices.LogicalIntfConfig, dbobj *LogicalIntfConfig) {
-	dbobj.Name = thriftobj.Name
-	dbobj.Type = thriftobj.Type
+	dbobj.Name = string(thriftobj.Name)
+	dbobj.Type = string(thriftobj.Type)
 }
 
 func ConvertasicdIPv4IntfObjToThrift(dbobj *IPv4Intf, thriftobj *asicdServices.IPv4Intf) {
