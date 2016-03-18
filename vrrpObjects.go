@@ -27,4 +27,5 @@ type VrrpIntfState struct {
 	VirtualRouterMACAddress string `DESCRIPTION: "VRRP router's Mac Address"`
 	SkewTime                int32  `DESCRIPTION: "Time to skew Master Down Interval"`
 	MasterDownTimer         int32  `DESCRIPTION: "Time interval for Backup to declare Master down"`
+	VrrpState               string `DESCRIPTION: "Current vrrp state i.e. backup or master"`
 }
