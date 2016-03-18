@@ -29,7 +29,7 @@ type IPv4EventState struct {
 	EventInfo string          `DESCRIPTION "Detailed description of the event"`
 }
 
-type PolicyConditionConfig struct {
+type PolicyCondition struct {
 	BaseObj
 	Name                          string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", DESCRIPTION: "PolicyConditionName"`
 	ConditionType                 string `DESCRIPTION: "Specifies the match criterion this condition defines - eg: MatchProtocol/MatchDstIpPrefix"`
@@ -44,7 +44,7 @@ type PolicyConditionState struct {
 	PolicyStmtList []string `DESCRIPTION: "List of policy statements using this condition"`
 }
 
-type PolicyActionConfig struct {
+type PolicyAction struct {
 	BaseObj
 	Name                             string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", DESCRIPTION: "PolicyActionName"`
 	ActionType                       string `DESCRIPTION: "Specifies the type of the action  - eg: RouteDisposition/NetworkStatementAdvertise/Redistribution/SetAdminDistance"`
@@ -62,7 +62,7 @@ type PolicyActionState struct {
 	ActionInfo     string
 	PolicyStmtList []string `DESCRIPTION: "List of policy statements using this condition"`
 }
-type PolicyStmtConfig struct {
+type PolicyStmt struct {
 	BaseObj
 	Name string                   `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", DESCRIPTION: "Policy Statement Name"`
 	MatchConditions string        `DESCRIPTION "Specifies whether to match all/any of the conditions of this policy statement"`
@@ -81,7 +81,7 @@ type PolicyDefinitionStmtPrecedence struct {
 	Precedence int32
 	Statement  string
 }
-type PolicyDefinitionConfig struct {
+type PolicyDefinition struct {
 	BaseObj
 	Name       string               `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", DESCRIPTION: "Policy Name"`
 	Precedence int32                  `DESCRIPTION "Priority of the policy w.r.t other policies configured"`
