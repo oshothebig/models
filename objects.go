@@ -39,7 +39,7 @@ type Vlan struct {
 	IfIndex          int32
 	IfIndexList      string
 	UntagIfIndexList string
-}	
+}
 type LogicalIntfConfig struct {
 	BaseObj
 	Name string `SNAPROUTE: "KEY"`
@@ -61,6 +61,7 @@ type LogicalIntfState struct {
 	BaseObj
 	Name              string `SNAPROUTE: "KEY"`
 	IfIndex           int32
+	SrcMac            string
 	OperState         string
 	IfInOctets        int64
 	IfInUcastPkts     int64

@@ -3,7 +3,7 @@
  *
  *      smidump -f yang BRIDGE-MIB
  *
- * Do not edit. Edit the source file instead!
+ * Modify to make easier for REST API
  */
 
 module BRIDGE-MIB {
@@ -22,31 +22,10 @@ module BRIDGE-MIB {
   /*** META INFORMATION ***/
 
   organization      
-   "IETF Bridge MIB Working Group";
+   "Snaproute";
 
   contact           
-   "Email: bridge-mib@ietf.org
-    
-    K.C. Norseth (Editor)
-    L-3 Communications
-    Tel: +1 801-594-2809
-    Email: kenyon.c.norseth@L-3com.com
-    Postal: 640 N. 2200 West.
-    Salt Lake City, Utah 84116-0850
-    
-    
-    
-    
-    Les Bell (Editor)
-    3Com Europe Limited
-    Phone: +44 1442 438025
-    Email: elbell@ntlworld.com
-    Postal: 3Com Centre, Boundary Way
-    Hemel Hempstead
-    Herts.  HP2 7YU
-    UK
-    
-    Send comments to <bridge-mib@ietf.org>";
+   "Email: ccordes@snaproute.com";
 
   description       
    "The Bridge MIB module for managing devices that support
@@ -64,13 +43,13 @@ module BRIDGE-MIB {
       Conformance statements have been added and some
       description and reference clauses have been updated.
       
-      The object dot1dStpPortPathCost32 was added to
+      The object PortPathCost32 was added to
       support IEEE 802.1t and the permissible values of
-      dot1dStpPriority and dot1dStpPortPriority have been
+      Priority and PortPriority have been
       clarified for bridges supporting IEEE 802.1t or
       IEEE 802.1w.
       
-      The interpretation of dot1dStpTimeSinceTopologyChange
+      The interpretation of TimeSinceTopologyChange
       has been clarified for bridges supporting the Rapid
       Spanning Tree Protocol (RSTP).";
   }
@@ -144,135 +123,14 @@ module BRIDGE-MIB {
       done in the order specified (i.e., multiply first,
       divide second).";
   }
-
-  container dot1dBase {
-
-    leaf dot1dBaseBridgeAddress {
-      type ieee:mac-address;
-      config false;
-      description   
-       "The MAC address used by this bridge when it must be
-        referred to in a unique fashion.  It is recommended
-        that this be the numerically smallest MAC address of
-        all ports that belong to this bridge.  However, it is only
-        
-        
-        
-        required to be unique.  When concatenated with
-        dot1dStpPriority, a unique BridgeIdentifier is formed,
-        which is used in the Spanning Tree Protocol.";
-      reference     
-       "IEEE 802.1D-1998: clauses 14.4.1.1.3 and 7.12.5";
-    }
-
-    leaf dot1dBaseNumPorts {
-      type int32;
-      units "ports";
-      config false;
-      description   
-       "The number of ports controlled by this bridging
-        entity.";
-      reference     
-       "IEEE 802.1D-1998: clause 14.4.1.1.3";
-    }
-
-    leaf dot1dBaseType {
-      type enumeration {
-        enum unknown          { value 1; }
-        enum transparent-only { value 2; }
-        enum sourceroute-only { value 3; }
-        enum srt              { value 4; }
-      }
-      config false;
-      description   
-       "Indicates what type of bridging this bridge can
-        perform.  If a bridge is actually performing a
-        certain type of bridging, this will be indicated by
-        entries in the port table for the given type.";
-    }
-
-
-    /* XXX table comments here XXX */
-
-    list dot1dBasePortEntry {
-
-      key "dot1dBasePort";
-      description   
-       "A list of information for each port of the bridge.";
-      reference     
-       "IEEE 802.1D-1998: clause 14.4.2, 14.6.1";
-
-
-      leaf dot1dBasePort {
-        type int32 {
-          range "1..65535";
-        }
-        //config false;
-        description 
-         "The port number of the port for which this entry
-          contains bridge management information.";
-      }
-
-      leaf dot1dBasePortIfIndex {
-        type if-mib:InterfaceIndex;
-        config false;
-        description 
-         "The value of the instance of the ifIndex object,
-          defined in IF-MIB, for the interface corresponding
-          to this port.";
-      }
-
-      leaf dot1dBasePortCircuit {
-        type yang:object-identifier;
-        config false;
-        description 
-         "For a port that (potentially) has the same value of
-          dot1dBasePortIfIndex as another port on the same bridge.
-          This object contains the name of an object instance
-          unique to this port.  For example, in the case where
-          multiple ports correspond one-to-one with multiple X.25
-          virtual circuits, this value might identify an (e.g.,
-          the first) object instance associated with the X.25
-          virtual circuit corresponding to this port.
-          
-          For a port which has a unique value of
-          dot1dBasePortIfIndex, this object can have the value
-          { 0 0 }.";
-      }
-
-      leaf dot1dBasePortDelayExceededDiscards {
-        type yang:counter32;
-        config false;
-        description 
-         "The number of frames discarded by this port due
-          to excessive transit delay through the bridge.  It
-          is incremented by both transparent and source
-          route bridges.";
-        reference   
-         "IEEE 802.1D-1998: clause 14.6.1.1.3";
-      }
-
-      leaf dot1dBasePortMtuExceededDiscards {
-        type yang:counter32;
-        config false;
-        description 
-         "The number of frames discarded by this port due
-          to an excessive size.  It is incremented by both
-          transparent and source route bridges.";
-        reference   
-         "IEEE 802.1D-1998: clause 14.6.1.1.3";
-      }
-    }
-  }
-
 	
-  list  dot1dStpPortEntry {
-	key "dot1dStpPort dot1dBrgIfIndex";
+  list  Stp {
+	key "IfIndex BrgIfIndex";
       description   
        "A list of information maintained by every port about
         the Spanning Tree Protocol state for that port.";
 
-	leaf dot1dStpPort {
+	leaf IfIndex {
         type int32 {
           range "1..65535";
         }
@@ -284,20 +142,21 @@ module BRIDGE-MIB {
          "IEEE 802.1D-1998: clause 14.8.2.1.2";
       }
 	
-	leaf dot1dBrgIfIndex {
+	leaf BrgIfIndex {
      	type if-mib:InterfaceIndex;
       	config true;
          description 
        	 "The value of the instance of the ifIndex object,
         	  for the bridge corresponding to this port.";
       	}
-	
-	container Config {
+
+	// Config
+	container Port {
       	description
 			"configuration data related to stp port";
 
 		
-		leaf dot1dStpPortPriority {
+		leaf Priority {
 	        type int32 {
 	          range "0..255";
 	        }
@@ -306,7 +165,7 @@ module BRIDGE-MIB {
 	         "The value of the priority field that is contained in
 	          the first (in network byte order) octet of the (2 octet
 	          long) Port ID.  The other octet of the Port ID is given
-	          by the value of dot1dStpPort.
+	          by the value of StpPort.
 	          On bridges supporting IEEE 802.1t or IEEE 802.1w,
 	          permissible values are 0-240, in steps of 16.";
 	        reference   
@@ -316,7 +175,7 @@ module BRIDGE-MIB {
 	          
 	          IEEE 802.1t clause 8.10.2, Table 8-4, clause 14.3.";
 	      }
-		leaf dot1dStpPortEnable {
+		leaf Enable {
 	        type enumeration {
 	          enum enabled  { value 1; }
 	          enum disabled { value 2; }
@@ -328,7 +187,7 @@ module BRIDGE-MIB {
 	         "IEEE 802.1D-1998: clause 8.5.5.2";
 	    }
 		
-	    leaf dot1dStpPortPathCost {
+	    leaf PathCost {
 	        type int32 {
 	          range "1..65535";
 	        }
@@ -343,17 +202,17 @@ module BRIDGE-MIB {
 	          
 	          the speed of the attached LAN.
 	          
-	          New implementations should support dot1dStpPortPathCost32.
+	          New implementations should support PathCost32.
 	          If the port path costs exceeds the maximum value of this
 	          object then this object should report the maximum value,
 	          namely 65535.  Applications should try to read the
-	          dot1dStpPortPathCost32 object if this object reports
+	          PathCost32 object if this object reports
 	          the maximum value.";
 	        reference   
 	         "IEEE 802.1D-1998: clause 8.5.5.3";
 	      }
 
-      	leaf dot1dStpPortPathCost32 {
+      	leaf PathCost32 {
 	        type int32 {
 	          range "1..200000000";
 	        }
@@ -365,7 +224,7 @@ module BRIDGE-MIB {
 	          value of this parameter be in inverse proportion to
 	          the speed of the attached LAN.
 	          
-	          This object replaces dot1dStpPortPathCost to support
+	          This object replaces PathCost to support
 	          IEEE 802.1t.";
 	        reference   
 	         "IEEE 802.1t clause 8.10.2, Table 8-5.";
@@ -373,11 +232,85 @@ module BRIDGE-MIB {
 	  } // end config
 
 
-	  container State {
+	  container PortState {
 		description
 			"status data related to stp port";
-   
-      	leaf dot1dStpPortState {
+
+        leaf Priority {
+	        type int32 {
+	          range "0..255";
+	        }
+	        config false;
+	        description
+	         "The value of the priority field that is contained in
+	          the first (in network byte order) octet of the (2 octet
+	          long) Port ID.  The other octet of the Port ID is given
+	          by the value of StpPort.
+	          On bridges supporting IEEE 802.1t or IEEE 802.1w,
+	          permissible values are 0-240, in steps of 16.";
+	        reference
+	         "IEEE 802.1D-1998 clause 8.10.2, Table 8-4,
+
+
+
+	          IEEE 802.1t clause 8.10.2, Table 8-4, clause 14.3.";
+	      }
+		leaf Enable {
+	        type enumeration {
+	          enum enabled  { value 1; }
+	          enum disabled { value 2; }
+	        }
+	        config false;
+	        description
+	         "The enabled/disabled status of the port.";
+	        reference
+	         "IEEE 802.1D-1998: clause 8.5.5.2";
+	    }
+
+	    leaf PathCost {
+	        type int32 {
+	          range "1..65535";
+	        }
+	        config false;
+	        description
+	         "The contribution of this port to the path cost of
+	          paths towards the spanning tree root which include
+	          this port.  802.1D-1998 recommends that the default
+	          value of this parameter be in inverse proportion to
+
+
+
+	          the speed of the attached LAN.
+
+	          New implementations should support PathCost32.
+	          If the port path costs exceeds the maximum value of this
+	          object then this object should report the maximum value,
+	          namely 65535.  Applications should try to read the
+	          PathCost32 object if this object reports
+	          the maximum value.";
+	        reference
+	         "IEEE 802.1D-1998: clause 8.5.5.3";
+	      }
+
+      	leaf PathCost32 {
+	        type int32 {
+	          range "1..200000000";
+	        }
+	        config false;
+	        description
+	         "The contribution of this port to the path cost of
+	          paths towards the spanning tree root which include
+	          this port.  802.1D-1998 recommends that the default
+	          value of this parameter be in inverse proportion to
+	          the speed of the attached LAN.
+
+	          This object replaces PathCost to support
+	          IEEE 802.1t.";
+	        reference
+	         "IEEE 802.1t clause 8.10.2, Table 8-5.";
+	      }
+
+      	leaf State {
 	        type enumeration {
 	          enum disabled   { value 1; }
 	          enum blocking   { value 2; }
@@ -393,13 +326,13 @@ module BRIDGE-MIB {
 	          action a port takes on reception of a frame.  If the
 	          bridge has detected a port that is malfunctioning, it
 	          will place that port into the broken(6) state.  For
-	          ports that are disabled (see dot1dStpPortEnable), this
+	          ports that are disabled (see Enable), this
 	          object will have a value of disabled(1).";
 	        reference   
 	         "IEEE 802.1D-1998: clause 8.5.5.2";
 	    }
 		
-		leaf dot1dStpPortDesignatedRoot {
+		leaf DesignatedRoot {
 	        type bridge-mib:BridgeId;
 	        config false;
 	        description 
@@ -411,7 +344,7 @@ module BRIDGE-MIB {
 	         "IEEE 802.1D-1998: clause 8.5.5.4";
 	    }
 		
-      	leaf dot1dStpPortDesignatedCost {
+      	leaf DesignatedCost {
 	        type int32;
 	        config false;
 	        description 
@@ -421,7 +354,7 @@ module BRIDGE-MIB {
 	        reference   
 	         "IEEE 802.1D-1998: clause 8.5.5.5";
 	      }
-		leaf dot1dStpPortDesignatedBridge {
+		leaf DesignatedBridge {
 	        type bridge-mib:BridgeId;
 	        config false;
 	        description 
@@ -432,7 +365,7 @@ module BRIDGE-MIB {
 	         "IEEE 802.1D-1998: clause 8.5.5.6";
 	      }
       
-      	leaf dot1dStpPortDesignatedPort {
+      	leaf DesignatedPort {
 	        type binary {
 	          length "2";
 	        }
@@ -443,7 +376,7 @@ module BRIDGE-MIB {
 	        reference   
 	         "IEEE 802.1D-1998: clause 8.5.5.7";
 	      }
-		leaf dot1dStpPortForwardTransitions {
+		leaf ForwardTransitions {
 	        type yang:counter32;
 	        config false;
 	        description 
@@ -454,13 +387,13 @@ module BRIDGE-MIB {
 	  } // end state
 
 	}
-list dot1dStpBridge {
-	key "dot1dStpVlan";
+list StpBridge {
+	key "Vlan";
       description   
        "A list of information maintained by every port about
         the Spanning Tree Protocol state for that port.";
 	
-	leaf dot1dStpVlan {
+	leaf Vlan {
       type uint16;
       config true;
       description   
@@ -470,9 +403,9 @@ list dot1dStpBridge {
        "Cisco PVST+";
     }
 	
-  container Config {
+  container Instance {
   
-	leaf dot1dBridgeAddress {
+	leaf Address {
       type ieee:mac-address;
       config true;
       description   
@@ -486,7 +419,7 @@ list dot1dStpBridge {
     }
 	
 
-	leaf dot1dStpPriority {
+	leaf Priority {
       type int32 {
         range "0..65535";
       }
@@ -495,7 +428,7 @@ list dot1dStpBridge {
        "The value of the write-able portion of the Bridge ID
         (i.e., the first two octets of the (8 octet long) Bridge
         ID).  The other (last) 6 octets of the Bridge ID are
-        given by the value of dot1dBridgeAddress.
+        given by the value of Address.
         On bridges supporting IEEE 802.1t or IEEE 802.1w,
         permissible values are 0-61440, in steps of 4096.";
       reference     
@@ -504,7 +437,7 @@ list dot1dStpBridge {
     }
 	
 
-    leaf dot1dStpBridgeMaxAge {
+    leaf MaxAge {
       type int32 {
         range "600..4000";
       }
@@ -514,7 +447,7 @@ list dot1dStpBridge {
        "The value that all bridges use for MaxAge when this
         bridge is acting as the root.  Note that 802.1D-1998
         specifies that the range for this parameter is related
-        to the value of dot1dStpBridgeHelloTime.  The
+        to the value of HelloTime.  The
         granularity of this timer is specified by 802.1D-1998 to
         be 1 second.  An agent may return a badValue error if a
         set is attempted to a value that is not a whole number
@@ -523,7 +456,7 @@ list dot1dStpBridge {
        "IEEE 802.1D-1998: clause 8.5.3.8";
     }
 
-    leaf dot1dStpBridgeHelloTime {
+    leaf HelloTime {
       type int32 {
         range "100..1000";
       }
@@ -542,7 +475,7 @@ list dot1dStpBridge {
        "IEEE 802.1D-1998: clause 8.5.3.9";
     }
 
-    leaf dot1dStpBridgeForwardDelay {
+    leaf ForwardDelay {
       type int32 {
         range "400..3000";
       }
@@ -552,7 +485,7 @@ list dot1dStpBridge {
        "The value that all bridges use for ForwardDelay when
         this bridge is acting as the root.  Note that
         802.1D-1998 specifies that the range for this parameter
-        is related to the value of dot1dStpBridgeMaxAge.  The
+        is related to the value of MaxAge.  The
         granularity of this timer is specified by 802.1D-1998 to
         be 1 second.  An agent may return a badValue error if a
         set is attempted to a value that is not a whole number
@@ -560,13 +493,13 @@ list dot1dStpBridge {
       reference     
        "IEEE 802.1D-1998: clause 8.5.3.10";
     }
-    leaf dot1dStpBridgeForceVersion {
+    leaf ForceVersion {
 		type int32;
 		config true;
 		description
 		 "TODO";
     }
-    leaf dot1dStpBridgeTxHoldCount {
+    leaf TxHoldCount {
 		type int32;
 		config true;
 		description
@@ -578,15 +511,45 @@ list dot1dStpBridge {
   container State {
 	
 	
-	 leaf dot1dBrgIfIndex {
+	 leaf IfIndex {
        	 	type if-mib:InterfaceIndex;
         		config false;
 	         description 
          	 "The value of the instance of the ifIndex object,
           	  for the bridge";
       }
-	
-	  leaf dot1dStpProtocolSpecification {
+	leaf Address {
+      type ieee:mac-address;
+      config false;
+      description
+       "The bridge identifier of the root of the spanning
+        tree, as determined by the Spanning Tree Protocol,
+        as executed by this node.  This value is used as
+        the Root Identifier parameter in all Configuration
+        Bridge PDUs originated by this node.";
+      reference
+       "IEEE 802.1D-1998: clause 8.5.3.1";
+    }
+
+
+	leaf Priority {
+      type int32 {
+        range "0..65535";
+      }
+      config false;
+      description
+       "The value of the write-able portion of the Bridge ID
+        (i.e., the first two octets of the (8 octet long) Bridge
+        ID).  The other (last) 6 octets of the Bridge ID are
+        given by the value of Address.
+        On bridges supporting IEEE 802.1t or IEEE 802.1w,
+        permissible values are 0-61440, in steps of 4096.";
+      reference
+       "IEEE 802.1D-1998 clause 8.10.2, Table 8-4,
+        IEEE 802.1t clause 8.10.2, Table 8-4, clause 14.3.";
+    }
+
+	  leaf ProtocolSpecification {
       type enumeration {
         enum unknown   { value 1; }
         enum decLb100  { value 2; }
@@ -602,7 +565,7 @@ list dot1dStpBridge {
         that are incompatible with the current version
         are released a new value will be defined.";
     }
-  leaf dot1dStpTimeSinceTopologyChange {
+  leaf TimeSinceTopologyChange {
       type yang:timeticks;
       units "centi-seconds";
       config false;
@@ -617,7 +580,7 @@ list dot1dStpBridge {
         IEEE 802.1w clause 14.8.1.1.";
     }
 
-    leaf dot1dStpTopChanges {
+    leaf TopChanges {
       type yang:counter32;
       config false;
       description   
@@ -628,7 +591,7 @@ list dot1dStpBridge {
        "IEEE 802.1D-1998 clause 14.8.1.1.";
     }
 
-    leaf dot1dStpDesignatedRoot {
+    leaf DesignatedRoot {
       type bridge-mib:BridgeId;
       config false;
       description   
@@ -641,7 +604,7 @@ list dot1dStpBridge {
        "IEEE 802.1D-1998: clause 8.5.3.1";
     }
 
-    leaf dot1dStpRootCost {
+    leaf RootCost {
       type int32;
       config false;
       description   
@@ -651,7 +614,7 @@ list dot1dStpBridge {
        "IEEE 802.1D-1998: clause 8.5.3.2";
     }
 
-    leaf dot1dStpRootPort {
+    leaf RootPort {
       type int32;
       config false;
       description   
@@ -661,7 +624,7 @@ list dot1dStpBridge {
        "IEEE 802.1D-1998: clause 8.5.3.3";
     }
 
-    leaf dot1dStpMaxAge {
+    leaf MaxAge {
       type int32;
       units "centi-seconds";
       config false;
@@ -674,7 +637,7 @@ list dot1dStpBridge {
        "IEEE 802.1D-1998: clause 8.5.3.4";
     }
 
-    leaf dot1dStpHelloTime {
+    leaf HelloTime {
       type int32;
       units "centi-seconds";
       config false;
@@ -688,7 +651,7 @@ list dot1dStpBridge {
        "IEEE 802.1D-1998: clause 8.5.3.5";
     }
 
-    leaf dot1dStpHoldTime {
+    leaf HoldTime {
       type int32;
       units "centi-seconds";
       config false;
@@ -701,7 +664,7 @@ list dot1dStpBridge {
        "IEEE 802.1D-1998: clause 8.5.3.14";
     }
 
-    leaf dot1dStpForwardDelay {
+    leaf ForwardDelay {
       type int32;
       units "centi-seconds";
       config false;
@@ -716,306 +679,82 @@ list dot1dStpBridge {
         age all dynamic entries in the Forwarding Database.
         [Note that this value is the one that this bridge is
         currently using, in contrast to
-        dot1dStpBridgeForwardDelay, which is the value that this
+        ForwardDelay, which is the value that this
         bridge and all others would start using if/when this
         bridge were to become the root.]";
       reference     
        "IEEE 802.1D-1998: clause 8.5.3.6";
     }
+    leaf BridgeMaxAge {
+      type int32;
+      units "centi-seconds";
+      config false;
+      description
+       "The maximum age of Spanning Tree Protocol information
+        learned from the network on any port before it is
+        discarded, in units of hundredths of a second.  This is
+        the provisioned value of the local bridge.";
+      reference
+       "IEEE 802.1D-1998: clause 8.5.3.4";
+    }
+
+    leaf BridgeHelloTime {
+      type int32;
+      units "centi-seconds";
+      config false;
+      description
+       "The amount of time between the transmission of
+        Configuration bridge PDUs by this node on any port when
+        it is the root of the spanning tree, or trying to become
+        so, in units of hundredths of a second.  This is
+        the provisioned value of the local bridge   .";
+      reference
+       "IEEE 802.1D-1998: clause 8.5.3.5";
+    }
+
+    leaf BridgeHoldTime {
+      type int32;
+      units "centi-seconds";
+      config false;
+      description
+       "This time value determines the interval length
+        during which no more than two Configuration bridge
+        PDUs shall be transmitted by this node, in units
+        of hundredths of a second. This is
+        the provisioned value of the local bridge";
+      reference
+       "IEEE 802.1D-1998: clause 8.5.3.14";
+    }
+
+    leaf BridgeForwardDelay {
+      type int32;
+      units "centi-seconds";
+      config false;
+      description
+       "This time value, measured in units of hundredths of a
+        second, controls how fast a port changes its spanning
+        state when moving towards the Forwarding state.  The
+        value determines how long the port stays in each of the
+        Listening and Learning states, which precede the
+        Forwarding state.  This value is also used when a
+        topology change has been detected and is underway, to
+        age all dynamic entries in the Forwarding Database.
+        [Note This is
+        the provisioned value of the local bridge, in contrast to
+        ForwardDelay, which is the value that this
+        bridge and all others would start using if/when this
+        bridge were to become the root.]";
+      reference
+       "IEEE 802.1D-1998: clause 8.5.3.6";
+    }
+    leaf TxHoldCount {
+		type int32;
+		config false;
+		description
+		 "TODO";
+    }
   }
 }
-  container dot1dTp {
-
-    leaf dot1dTpLearnedEntryDiscards {
-      type yang:counter32;
-      config false;
-      description   
-       "The total number of Forwarding Database entries that
-        have been or would have been learned, but have been
-        discarded due to a lack of storage space in the
-        Forwarding Database.  If this counter is increasing, it
-        indicates that the Forwarding Database is regularly
-        becoming full (a condition that has unpleasant
-        performance effects on the subnetwork).  If this counter
-        has a significant value but is not presently increasing,
-        it indicates that the problem has been occurring but is
-        not persistent.";
-      reference     
-       "IEEE 802.1D-1998: clause 14.7.1.1.3";
-    }
-
-    leaf dot1dTpAgingTime {
-      type int32 {
-        range "10..1000000";
-      }
-      units "seconds";
-      config true;
-      description   
-       "The timeout period in seconds for aging out
-        dynamically-learned forwarding information.
-        802.1D-1998 recommends a default of 300 seconds.";
-      reference     
-       "IEEE 802.1D-1998: clause 14.7.1.1.3";
-    }
-
-
-    /* XXX table comments here XXX */
-
-    list dot1dTpFdbEntry {
-
-      key "dot1dTpFdbAddress";
-      description   
-       "Information about a specific unicast MAC address
-        for which the bridge has some forwarding and/or
-        filtering information.";
-
-
-      leaf dot1dTpFdbAddress {
-        type ieee:mac-address;
-        //config false;
-        description 
-         "A unicast MAC address for which the bridge has
-          forwarding and/or filtering information.";
-        reference   
-         "IEEE 802.1D-1998: clause 7.9.1, 7.9.2";
-      }
-
-      leaf dot1dTpFdbPort {
-        type int32;
-        config false;
-        description 
-         "Either the value '0', or the port number of the port on
-          which a frame having a source address equal to the value
-          of the corresponding instance of dot1dTpFdbAddress has
-          been seen.  A value of '0' indicates that the port
-          number has not been learned, but that the bridge does
-          have some forwarding/filtering information about this
-          address (e.g., in the dot1dStaticTable).  Implementors
-          are encouraged to assign the port value to this object
-          whenever it is learned, even for addresses for which the
-          corresponding value of dot1dTpFdbStatus is not
-          learned(3).";
-      }
-
-      leaf dot1dTpFdbStatus {
-        type enumeration {
-          enum other   { value 1; }
-          enum invalid { value 2; }
-          enum learned { value 3; }
-          enum self    { value 4; }
-          enum mgmt    { value 5; }
-        }
-        config false;
-        description 
-         "The status of this entry.  The meanings of the
-          values are:
-              other(1) - none of the following.  This would
-                  include the case where some other MIB object
-                  (not the corresponding instance of
-                  dot1dTpFdbPort, nor an entry in the
-                  dot1dStaticTable) is being used to determine if
-                  and how frames addressed to the value of the
-                  corresponding instance of dot1dTpFdbAddress are
-                  being forwarded.
-              invalid(2) - this entry is no longer valid (e.g.,
-                  it was learned but has since aged out), but has
-                  not yet been flushed from the table.
-              learned(3) - the value of the corresponding instance
-                  of dot1dTpFdbPort was learned, and is being
-                  used.
-              self(4) - the value of the corresponding instance of
-                  dot1dTpFdbAddress represents one of the bridge's
-                  addresses.  The corresponding instance of
-                  dot1dTpFdbPort indicates which of the bridge's
-                  ports has this address.
-              mgmt(5) - the value of the corresponding instance of
-                  dot1dTpFdbAddress is also the value of an
-                  existing instance of dot1dStaticAddress.";
-      }
-    }
-
-
-    /* XXX table comments here XXX */
-
-    list dot1dTpPortEntry {
-
-      key "dot1dTpPort";
-      description   
-       "A list of information for each port of a transparent
-        bridge.";
-
-
-      leaf dot1dTpPort {
-        type int32 {
-          range "1..65535";
-        }
-        //config false;
-        description 
-         "The port number of the port for which this entry
-          contains Transparent bridging management information.";
-      }
-
-      leaf dot1dTpPortMaxInfo {
-        type int32;
-        units "bytes";
-        config false;
-        description 
-         "The maximum size of the INFO (non-MAC) field that
-          
-          
-          
-          this port will receive or transmit.";
-      }
-
-      leaf dot1dTpPortInFrames {
-        type yang:counter32;
-        units "frames";
-        config false;
-        description 
-         "The number of frames that have been received by this
-          port from its segment.  Note that a frame received on the
-          interface corresponding to this port is only counted by
-          this object if and only if it is for a protocol being
-          processed by the local bridging function, including
-          bridge management frames.";
-        reference   
-         "IEEE 802.1D-1998: clause 14.6.1.1.3";
-      }
-
-      leaf dot1dTpPortOutFrames {
-        type yang:counter32;
-        units "frames";
-        config false;
-        description 
-         "The number of frames that have been transmitted by this
-          port to its segment.  Note that a frame transmitted on
-          the interface corresponding to this port is only counted
-          by this object if and only if it is for a protocol being
-          processed by the local bridging function, including
-          bridge management frames.";
-        reference   
-         "IEEE 802.1D-1998: clause 14.6.1.1.3";
-      }
-
-      leaf dot1dTpPortInDiscards {
-        type yang:counter32;
-        units "frames";
-        config false;
-        description 
-         "Count of received valid frames that were discarded
-          (i.e., filtered) by the Forwarding Process.";
-        reference   
-         "IEEE 802.1D-1998: clause 14.6.1.1.3";
-      }
-    }
-  }
-
-  container dot1dStatic {
-
-
-    /* XXX table comments here XXX */
-
-    list dot1dStaticEntry {
-
-      key "dot1dStaticAddress dot1dStaticReceivePort";
-      description   
-       "Filtering information configured into the bridge by
-        (local or network) management specifying the set of
-        ports to which frames received from a specific port and
-        containing a specific destination address are allowed to
-        be forwarded.";
-      reference     
-       "IEEE 802.1D-1998: clause 14.7.2";
-
-
-      leaf dot1dStaticAddress {
-        type ieee:mac-address;
-        config true;
-        description 
-         "The destination MAC address in a frame to which this
-          entry's filtering information applies.  This object can
-          take the value of a unicast address, a group address, or
-          the broadcast address.";
-        reference   
-         "IEEE 802.1D-1998: clause 7.9.1, 7.9.2";
-      }
-
-      leaf dot1dStaticReceivePort {
-        type int32 {
-          range "0..65535";
-        }
-        config true;
-        description 
-         "Either the value '0', or the port number of the port
-          from which a frame must be received in order for this
-          entry's filtering information to apply.  A value of zero
-          indicates that this entry applies on all ports of the
-          bridge for which there is no other applicable entry.";
-      }
-
-      leaf dot1dStaticAllowedToGoTo {
-        type binary {
-          length "0..512";
-        }
-        config true;
-        description 
-         "The set of ports to which frames received from a
-          specific port and destined for a specific MAC address,
-          are allowed to be forwarded.  Each octet within the
-          value of this object specifies a set of eight ports,
-          with the first octet specifying ports 1 through 8, the
-          second octet specifying ports 9 through 16, etc.  Within
-          each octet, the most significant bit represents the
-          lowest numbered port, and the least significant bit
-          represents the highest numbered port.  Thus, each port
-          of the bridge is represented by a single bit within the
-          value of this object.  If that bit has a value of '1',
-          then that port is included in the set of ports; the port
-          is not included if its bit has a value of '0'.  (Note
-          that the setting of the bit corresponding to the port
-          from which a frame is received is irrelevant.)  The
-          default value of this object is a string of ones of
-          appropriate length.
-          
-          
-          
-          
-          The value of this object may exceed the required minimum
-          maximum message size of some SNMP transport (484 bytes,
-          in the case of SNMP over UDP, see RFC 3417, section 3.2).
-          SNMP engines on bridges supporting a large number of
-          ports must support appropriate maximum message sizes.";
-      }
-
-      leaf dot1dStaticStatus {
-        type enumeration {
-          enum other           { value 1; }
-          enum invalid         { value 2; }
-          enum permanent       { value 3; }
-          enum deleteOnReset   { value 4; }
-          enum deleteOnTimeout { value 5; }
-        }
-        config true;
-        description 
-         "This object indicates the status of this entry.
-          The default value is permanent(3).
-              other(1) - this entry is currently in use but the
-                  conditions under which it will remain so are
-                  different from each of the following values.
-              invalid(2) - writing this value to the object
-                  removes the corresponding entry.
-              permanent(3) - this entry is currently in use and
-                  will remain so after the next reset of the
-                  bridge.
-              deleteOnReset(4) - this entry is currently in use
-                  and will remain so until the next reset of the
-                  bridge.
-              deleteOnTimeout(5) - this entry is currently in use
-                  and will remain so until it is aged out.";
-      }
-    }
-  }
-
   notification newRoot {
     description     
      "The newRoot trap indicates that the sending agent has
