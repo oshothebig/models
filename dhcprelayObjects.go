@@ -1,10 +1,6 @@
 package models
 
-import (
-	"encoding/json"
-	"fmt"
-)
-
+import () 
 /*
  * Global DataStructure for DHCP RELAY
  */
@@ -32,7 +28,7 @@ type DhcpRelayIntfConfig struct {
 
 type DhcpRelayHostDhcpState struct {
 	BaseObj
-	MacAddr         string `ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Host Hardware/Mac Address"`
+	MacAddr         string `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Host Hardware/Mac Address"`
 	ServerIp        string `DESCRIPTION: "Configured Dhcp Server"`
 	OfferedIp       string `DESCRIPTION: "Ip Address offered by Dhcp Server"`
 	GatewayIp       string `DESCRIPTION: "Ip Address which client needs to use"`
@@ -50,7 +46,7 @@ type DhcpRelayHostDhcpState struct {
 
 type DhcpRelayIntfState struct {
 	BaseObj
-	IntfId            int32 `ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Interface Index for which state is required to be collected"`
+	IntfId            int32 `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Interface Index for which state is required to be collected"`
 	TotalDrops        int32 `DESCRIPTION: "Total number of Dhcp Packets dropped by relay agent"`
 	TotalDhcpClientRx int32 `DESCRIPTION: "Total number of client requests that camde to relay agent"`
 	TotalDhcpClientTx int32 `DESCRIPTION: "Total number of client responses send out by relay agent"`
@@ -60,41 +56,9 @@ type DhcpRelayIntfState struct {
 
 type DhcpRelayIntfServerState struct {
 	BaseObj
-	IntfId    int32  `ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Interface Index for which state is required to be collected"`
+	IntfId    int32  `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Interface Index for which state is required to be collected"`
 	ServerIp  string `DESCRIPTION: "Information about any one of configured Dhcp server"`
 	Request   int32  `DESCRIPTION: "Total number of requests to Server"`
 	Responses int32  `DESCRIPTION: "Total number of responses from Server"`
 }
 
-func (obj DhcpRelayHostDhcpState) UnmarshalObject(body []byte) (ConfigObj, error) {
-	var gConf DhcpRelayHostDhcpState
-	var err error
-	if len(body) > 0 {
-		if err = json.Unmarshal(body, &gConf); err != nil {
-			fmt.Println("### Trouble in unmarshalling DhcpRelayGlobalConfig from Json", body)
-		}
-	}
-	return gConf, err
-}
-
-func (obj DhcpRelayIntfState) UnmarshalObject(body []byte) (ConfigObj, error) {
-	var gConf DhcpRelayIntfState
-	var err error
-	if len(body) > 0 {
-		if err = json.Unmarshal(body, &gConf); err != nil {
-			fmt.Println("### Trouble in unmarshalling DhcpRelayGlobalConfig from Json", body)
-		}
-	}
-	return gConf, err
-}
-
-func (obj DhcpRelayIntfServerState) UnmarshalObject(body []byte) (ConfigObj, error) {
-	var gConf DhcpRelayIntfServerState
-	var err error
-	if len(body) > 0 {
-		if err = json.Unmarshal(body, &gConf); err != nil {
-			fmt.Println("### Trouble in unmarshalling DhcpRelayGlobalConfig from Json", body)
-		}
-	}
-	return gConf, err
-}

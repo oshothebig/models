@@ -20,5 +20,9 @@
 "asicdObjects.go" :	 {"owner": "asicd",
 						  "location" : "asicd/rpc",
                                                   "svcName" : "asicdInt",
-                                                        "finalSvcName" : "asicdServices"}
+                                                        "finalSvcName" : "asicdServices"},
+"dhcprelayObjects.go" :	 {"owner": "dhcprelayd",
+						  "location" : "l3/dhcp_relay/server", 
+						  "svcName" : "nil"}
+																  
 }
