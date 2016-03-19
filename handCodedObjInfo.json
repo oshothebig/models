@@ -1,4 +1,7 @@
-{"Vlan" : {
+{
+<<<<<<< HEAD
+=======
+"Vlan" : {
   "access": "w",
   "owner": "asicd",
   "srcfile": "objects.go",
@@ -10,6 +13,7 @@
   "srcfile": "objects.go",
   "multiplicity": "*"
  },
+>>>>>>> upstream/master
 "AggregationLacpConfig" : {
   "access": "w",
   "owner": "lacpd",
@@ -93,18 +97,6 @@
   "owner": "dhcprelayd",
   "srcfile": "dhcprelayObjects.go",
   "multiplicity": "1"
- },
-"PortConfig" : {
-  "access": "w",
-  "owner": "asicd",
-  "srcfile": "objects.go",
-  "multiplicity": "*"
- },
-"PortState" : {
-  "access": "r",
-  "owner": "asicd",
-  "srcfile": "objects.go",
-  "multiplicity": "*"
  },
 "UserConfig" : {
   "access": "w",

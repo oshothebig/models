@@ -1,13 +1,13 @@
 package models
 
 var ConfigObjectMap = map[string]ConfigObj{
-	"Vlan": &Vlan{}, // created before auto YANG
+	//"Vlan": &Vlan{}, // created before auto YANG
 	//"IPv4Route":                                        &IPv4Route{}, // created before auto YANG
 	//"IPv4RouteState":                                   &IPv4RouteState{},
 	//"IPv4EventState":                                   &IPv4EventState{},
-	"IPv4Intf":          &IPv4Intf{}, // created before auto YANG
-	"LogicalIntfConfig": &LogicalIntfConfig{},
-	"LogicalIntfState":  &LogicalIntfState{},
+	//"IPv4Intf":          &IPv4Intf{}, // created before auto YANG
+	//"LogicalIntfConfig": &LogicalIntfConfig{},
+	//"LogicalIntfState":  &LogicalIntfState{},
 	//"ArpConfig":                                        &ArpConfig{},         // created before auto YANG
 	//"ArpEntry":                                         &ArpEntry{},          // created before auto YANG
 	"AggregationLacpConfig":              &AggregationLacpConfig{},
@@ -34,8 +34,6 @@ var ConfigObjectMap = map[string]ConfigObj{
 	//"PolicyActionConfig":                               &PolicyActionConfig{},
 	//"PolicyActionState":                                &PolicyActionState{},
 	//"RouteDistanceState":                               &RouteDistanceState{},
-	"PortConfig":       &PortConfig{},
-	"PortState":        &PortState{},
 	"UserConfig":       &UserConfig{},
 	"IPV4AddressBlock": &IPV4AddressBlock{},
 	"UserState":        &UserState{},
