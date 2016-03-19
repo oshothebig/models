@@ -16,5 +16,9 @@
                                                   "svcName" : "nil"},
 "ribdObjects.go" :	 {"owner": "ribd",
 						  "location" : "l3/rib",
-                                                  "svcName" : "ribdInt"}
+                                                  "svcName" : "ribdInt"},
+"dhcprelayObjects.go" :	 {"owner": "dhcprelayd",
+						  "location" : "l3/dhcp_relay/server", 
+						  "svcName" : "nil"}
+																  
 }
