@@ -1,15 +1,4 @@
-{"Vlan" : {
-  "access": "w",
-  "owner": "asicd",
-  "srcfile": "objects.go",
-  "multiplicity": "*"
- },
-"IPv4Intf" : {
-  "access": "w",
-  "owner": "ospfd",
-  "srcfile": "objects.go",
-  "multiplicity": "*"
- },
+{
 "AggregationLacpConfig" : {
   "access": "w",
   "owner": "lacpd",
@@ -93,18 +82,6 @@
   "owner": "dhcprelayd",
   "srcfile": "dhcprelayObjects.go",
   "multiplicity": "1"
- },
-"PortConfig" : {
-  "access": "w",
-  "owner": "asicd",
-  "srcfile": "objects.go",
-  "multiplicity": "*"
- },
-"PortState" : {
-  "access": "r",
-  "owner": "asicd",
-  "srcfile": "objects.go",
-  "multiplicity": "*"
  },
 "UserConfig" : {
   "access": "w",
