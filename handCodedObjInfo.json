@@ -1,19 +1,4 @@
 {
-<<<<<<< HEAD
-=======
-"Vlan" : {
-  "access": "w",
-  "owner": "asicd",
-  "srcfile": "objects.go",
-  "multiplicity": "*"
- },
-"IPv4Intf" : {
-  "access": "w",
-  "owner": "ospfd",
-  "srcfile": "objects.go",
-  "multiplicity": "*"
- },
->>>>>>> upstream/master
 "AggregationLacpConfig" : {
   "access": "w",
   "owner": "lacpd",
@@ -31,72 +16,6 @@
   "owner": "lacpd",
   "srcfile": "genInterface.go",
   "multiplicity": "*"
- },
-"BfdSessionConfig" : {
-  "access": "w",
-  "owner": "bfdd",
-  "srcfile": "bfdObjects.go",
-  "multiplicity": "*"
- },
-"BfdSessionState" : {
-  "access": "r",
-  "owner": "bfdd",
-  "srcfile": "bfdObjects.go",
-  "multiplicity": "*"
- },
-"BfdGlobalConfig" : {
-  "access": "w",
-  "owner": "bfdd",
-  "srcfile": "bfdObjects.go",
-  "multiplicity": "1"
- },
-"BfdGlobalState" : {
-  "access": "r",
-  "owner": "bfdd",
-  "srcfile": "bfdObjects.go",
-  "multiplicity": "1"
- },
-"BfdIntfConfig" : {
-  "access": "w",
-  "owner": "bfdd",
-  "srcfile": "bfdObjects.go",
-  "multiplicity": "*"
- },
-"BfdIntfState" : {
-  "access": "w",
-  "owner": "bfdd",
-  "srcfile": "bfdObjects.go",
-  "multiplicity": "*"
- },
-"DhcpRelayHostDhcpState" : {
-  "access": "r",
-  "owner": "dhcprelayd",
-  "srcfile": "dhcprelayObjects.go",
-  "multiplicity": "*"
- },
-"DhcpRelayIntfServerState" : {
-  "access": "r",
-  "owner": "dhcprelayd",
-  "srcfile": "dhcprelayObjects.go",
-  "multiplicity": "*"
- },
-"DhcpRelayIntfConfig" : {
-  "access": "w",
-  "owner": "dhcprelayd",
-  "srcfile": "dhcprelayObjects.go",
-  "multiplicity": "*"
- },
-"DhcpRelayIntfState" : {
-  "access": "r",
-  "owner": "dhcprelayd",
-  "srcfile": "dhcprelayObjects.go",
-  "multiplicity": "*"
- },
-"DhcpRelayGlobalConfig" : {
-  "access": "w",
-  "owner": "dhcprelayd",
-  "srcfile": "dhcprelayObjects.go",
-  "multiplicity": "1"
  },
 "UserConfig" : {
   "access": "w",
