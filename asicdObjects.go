@@ -58,6 +58,7 @@ type LogicalIntfState struct {
 	BaseObj
 	Name              string `SNAPROUTE: "KEY", ACCESS:"r", DESCRIPTION: "Name of logical interface"`
 	IfIndex           int32  `DESCRIPTION: "System assigned interface id for this logical interface"`
+	SrcMac            string `DESCRIPTION: "Source Mac assigned to the interface"`
 	OperState         string `DESCRIPTION: "Operational state of logical interface"`
 	IfInOctets        int64  `DESCRIPTION: "RFC2233 Total number of octets received on this port"`
 	IfInUcastPkts     int64  `DESCRIPTION: "RFC2233 Total number of unicast packets received on this port"`
