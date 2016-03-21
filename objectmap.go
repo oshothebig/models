@@ -1,13 +1,13 @@
 package models
 
 var ConfigObjectMap = map[string]ConfigObj{
-	"Vlan": &Vlan{}, // created before auto YANG
+	//"Vlan": &Vlan{}, // created before auto YANG
 	//"IPv4Route":                                        &IPv4Route{}, // created before auto YANG
 	//"IPv4RouteState":                                   &IPv4RouteState{},
 	//"IPv4EventState":                                   &IPv4EventState{},
-	"IPv4Intf":          &IPv4Intf{}, // created before auto YANG
-	"LogicalIntfConfig": &LogicalIntfConfig{},
-	"LogicalIntfState":  &LogicalIntfState{},
+	//"IPv4Intf":          &IPv4Intf{}, // created before auto YANG
+	//"LogicalIntfConfig": &LogicalIntfConfig{},
+	//"LogicalIntfState":  &LogicalIntfState{},
 	//"ArpConfig":                                        &ArpConfig{},         // created before auto YANG
 	//"ArpEntry":                                         &ArpEntry{},          // created before auto YANG
 	"AggregationLacpConfig":              &AggregationLacpConfig{},
@@ -20,11 +20,11 @@ var ConfigObjectMap = map[string]ConfigObj{
 	//"BfdGlobalState":                                   &BfdGlobalState{},
 	//"BfdInterface":                                     &BfdInterface{},
 	//"BfdInterfaceState":                                &BfdInterfaceState{},
-	"DhcpRelayHostDhcpState":   &DhcpRelayHostDhcpState{},
-	"DhcpRelayIntfServerState": &DhcpRelayIntfServerState{},
-	"DhcpRelayIntfConfig":      &DhcpRelayIntfConfig{},
-	"DhcpRelayIntfState":       &DhcpRelayIntfState{},
-	"DhcpRelayGlobalConfig":    &DhcpRelayGlobalConfig{},
+	//"DhcpRelayHostDhcpState":   &DhcpRelayHostDhcpState{},
+	//"DhcpRelayIntfServerState": &DhcpRelayIntfServerState{},
+	//"DhcpRelayIntfConfig":      &DhcpRelayIntfConfig{},
+	//"DhcpRelayIntfState":       &DhcpRelayIntfState{},
+	//"DhcpRelayGlobalConfig":    &DhcpRelayGlobalConfig{},
 	//"PolicyDefinitionConfig":                           &PolicyDefinitionConfig{},
 	//"PolicyDefinitionState":                            &PolicyDefinitionState{},
 	//"PolicyStmtConfig":                                 &PolicyStmtConfig{},
@@ -34,13 +34,7 @@ var ConfigObjectMap = map[string]ConfigObj{
 	//"PolicyActionConfig":                               &PolicyActionConfig{},
 	//"PolicyActionState":                                &PolicyActionState{},
 	//"RouteDistanceState":                               &RouteDistanceState{},
-	"PortConfig":                                       &PortConfig{},
-	"PortState":                                        &PortState{},
-	"UserConfig":                                       &UserConfig{},
-	"IPV4AddressBlock":                                 &IPV4AddressBlock{},
-	"UserState":                                        &UserState{},
-	"Dot1dStpPortEntryConfig":                          &Dot1dStpPortEntryConfig{},
-	"Dot1dStpBridgeState":                              &Dot1dStpBridgeState{},
-	"Dot1dStpBridgeConfig":                             &Dot1dStpBridgeConfig{},
-	"Dot1dStpPortEntryStateCountersFsmStatesPortTimer": &Dot1dStpPortEntryStateCountersFsmStatesPortTimer{},
+	"UserConfig":       &UserConfig{},
+	"IPV4AddressBlock": &IPV4AddressBlock{},
+	"UserState":        &UserState{},
 }
