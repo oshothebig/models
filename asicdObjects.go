@@ -19,7 +19,7 @@ type IPv4Intf struct {
 type Port struct {
 	BaseObj
 	PortNum     int32  `SNAPROUTE: "KEY", ACCESS:"rw", DESCRIPTION: "Front panel port number"`
-	Description string `DESCRIPTION: "User provided string description"i, DEFAULT: "FP Port"`
+	Description string `DESCRIPTION: "User provided string description", DEFAULT: "FP Port"`
 	PhyIntfType string `DESCRIPTION: "Type of internal phy interface"`
 	AdminState  string `DESCRIPTION: "Administrative state of this port"`
 	MacAddr     string `DESCRIPTION: "Mac address associated with this port"`
