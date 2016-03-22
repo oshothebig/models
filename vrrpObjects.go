@@ -29,3 +29,17 @@ type VrrpIntfState struct {
 	MasterDownTimer         int32  `DESCRIPTION: "Time interval for Backup to declare Master down"`
 	VrrpState               string `DESCRIPTION: "Current vrrp state i.e. backup or master"`
 }
+
+type VrrpVridState struct {
+	BaseObj
+	IfIndex          int32  `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION:"Interface index for which VRRP state is requested"`
+	VRID             int32  `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION:"Virtual Router's Unique Identifier""`
+	AdverRx          int32  `DESCRIPTION:"Total number of advertisement packets received"`
+	AdverTx          int32  `DESCRIPTION:"Total number of advertisement packets send"`
+	LastAdverRx      string `DESCRIPTION:"Time when last advertisement packet was received"`
+	LastAdverTx      string `DESCRIPTION:"Time when last advertisement packet was send out"`
+	MasterIp         string `DESCRIPTION:"Ip Address of the Master VRRP"`
+	CurrentState     string `DESCRIPTION:"Current State of Local VRRP"`
+	PreviousState    string `DESCRIPTION:"Previous State of Local VRRP"`
+	TransitionReason string `DESCRIPTION:"Reason why we moved from previous state -> current state"`
+}
