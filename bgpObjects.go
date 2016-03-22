@@ -152,8 +152,8 @@ type BGPPolicyStmt struct {
 	BaseObj
 	Name            string   `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", DESCRIPTION: "Name of the BGP policy statement"`
 	MatchConditions string   `DESCRIPTION: "Match conditions all/any"`
-	Conditions      []string `FOREIGN: "BGPPolicyConditionConfig:Name", DESCRIPTION: "List of conditions"`
-	Actions         []string `FOREIGN: "BGPPolicyActionConfig:Name", DESCRIPTION: "List of actions"`
+	Conditions      []string `DESCRIPTION: "List of conditions"`
+	Actions         []string `DESCRIPTION: "List of actions"`
 }
 
 type BGPPolicyStmtState struct {
