@@ -28,18 +28,18 @@ const (
 )
 
 type BGPCounters struct {
-	Update       uint64 `ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Number of update messages"`
-	Notification uint64 `ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Number of notification messages"`
+	Update       uint64 `ACCESS:"", MULTIPLICITY:"*", DESCRIPTION: "Number of update messages"`
+	Notification uint64 `ACCESS:"", MULTIPLICITY:"*", DESCRIPTION: "Number of notification messages"`
 }
 
 type BGPMessages struct {
-	Sent     BGPCounters `ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Tx counters of the BGP neighbor"`
-	Received BGPCounters `ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Rx counters of the BGP neighbor"`
+	Sent     BGPCounters `ACCESS:"", MULTIPLICITY:"*", DESCRIPTION: "Tx counters of the BGP neighbor"`
+	Received BGPCounters `ACCESS:"", MULTIPLICITY:"*", DESCRIPTION: "Rx counters of the BGP neighbor"`
 }
 
 type BGPQueues struct {
-	Input  uint32 `ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Input queue length of the BGP neighbor"`
-	Output uint32 `ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Output queue length of the BGP neighbor"`
+	Input  uint32 `ACCESS:"", MULTIPLICITY:"*", DESCRIPTION: "Input queue length of the BGP neighbor"`
+	Output uint32 `ACCESS:"", MULTIPLICITY:"*", DESCRIPTION: "Output queue length of the BGP neighbor"`
 }
 
 type BGPNeighbor struct {
