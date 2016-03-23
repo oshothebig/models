@@ -29,7 +29,7 @@ type UserConfig struct {
 	UserName    string `SNAPROUTE: "KEY"`
 	Password    string
 	Description string
-	Previledge  string
+	Privilege  string
 }
 
 func (obj UserConfig) UnmarshalObject(body []byte) (ConfigObj, error) {
