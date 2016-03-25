@@ -1,8 +1,28 @@
 {
-"vrrpObjects.go" :	 {"owner": "vrrpd",
-						     "location" : "l3/vrrp/rpc"},
+"vrrpObjects.go" :{"owner": "vrrpd",
+						 "location" : "l3/vrrp/rpc",
+                                                 "svcName" : "nil"},
 "bfdObjects.go" :	 {"owner": "bfdd",
-						     "location" : "l3/bfd/rpc"},
+						  "location" : "l3/bfd/rpc",
+                                                  "svcName" : "nil"},
+"arpObjects.go" :	 {"owner": "arpd",
+						  "location" : "l3/arp/rpc",
+                                                  "svcName" : "arpdInt"},
+"bgpObjects.go" :	 {"owner": "bgpd",
+						  "location" : "l3/bgp/rpc",
+                                                  "svcName" : "bgpdInt"},
 "sysObjects.go" :	 {"owner": "sysd",
-						     "location" : "infra/sysd/rpc"}
+						  "location" : "infra/sysd/rpc",
+                                                  "svcName" : "nil"},
+"ribdObjects.go" :	 {"owner": "ribd",
+						  "location" : "l3/rib",
+                                                  "svcName" : "ribdInt"},
+"asicdObjects.go" :	 {"owner": "asicd",
+						     "location" : "asicd/rpc",
+                       "svcName" : "asicdInt",
+                       "finalSvcName" : "asicdServices"},
+"dhcprelayObjects.go" :	 {"owner": "dhcprelayd",
+						  "location" : "l3/dhcp_relay/server", 
+						  "svcName" : "nil"}
+																  
 }

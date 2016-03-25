@@ -3,7 +3,7 @@
  *
  *      smidump -f yang RSTP-MIB
  *
- * Do not edit. Edit the source file instead!
+ *  Modify to make easier for REST API
  */
 
 module RSTP-MIB {
@@ -46,7 +46,7 @@ module RSTP-MIB {
 
   /* XXX table comments here XXX */
 
- grouping dot1d-port-fsm-states {
+ grouping fsm-states {
 	description
 	   "This shall contain the previous and current state of the various state machines;
 	    PIM: Port Information State Machine
@@ -59,7 +59,7 @@ module RSTP-MIB {
 	    PTIM: Port Timers State Machine
 	    BDM: Bridge Detection State Machine";
 		
-	container fsm-states {
+	container states {
 		description 
 		   "Per port state machine states";
 		
@@ -170,12 +170,11 @@ module RSTP-MIB {
 			config false;			
 			description
 			  "BDM current fsm state";
-		}		
-		uses dot1d-port-timers;	
+		}
 	}
 }
 
- grouping dot1d-port-timers {
+ grouping port-timers {
 	description
 	   "802.1d 17.17 State Machine Timers
 		EdgeDelayWhile
@@ -187,7 +186,7 @@ module RSTP-MIB {
 	    RrWhile
 	    TcWhile";
 		
-	container port-timer {
+	container timers {
 		description 
 		   "Per Port Current Count of the various counters";
 		
@@ -259,7 +258,7 @@ module RSTP-MIB {
 	}
   }
 
-  grouping dot1d-port-statistics {
+  grouping port-statistics {
     description
       "BPDU packet statistics for the bridge interfaces";
 
@@ -305,6 +304,18 @@ module RSTP-MIB {
 	        description
 	          "Number of TC BPDUs transmitted";
 	      }
+		leaf tcAck-in-pkts {
+	        type yang:counter64;
+			config false;			
+	        description
+	          "Number of TC Ack BPDUs received";
+	      }
+		leaf tcAck-out-pkts {
+	        type yang:counter64;
+			config false;			
+	        description
+	          "Number of TC Ack BPDUs transmitted";
+	      }
 		leaf pvst-in-pkts {
 	        type yang:counter64;
 			config false;			
@@ -329,17 +340,16 @@ module RSTP-MIB {
 	        description
 	          "Number of BPDUs transmitted";
 	      }
-		
-		uses dot1d-port-fsm-states;
+
 	}
   }
 
-  augment "/bridge-mib:dot1dStpPortEntry/bridge-mib:Config" {
+  augment "/bridge-mib:Stp/bridge-mib:Port" {
     description     
      "A list of Rapid Spanning Tree information maintained by
       each port.";
 
-    leaf dot1dStpPortProtocolMigration {
+    leaf ProtocolMigration {
       type smiv2:TruthValue;
       config true;
       description   
@@ -350,7 +360,7 @@ module RSTP-MIB {
       reference     
        "IEEE 802.1w clause 14.8.2.4, 17.18.10, 17.26";
     }
-leaf dot1dStpPortAdminPointToPoint {
+    leaf AdminPointToPoint {
       type enumeration {
         enum forceTrue  { value 0; }
         enum forceFalse { value 1; }
@@ -381,7 +391,7 @@ leaf dot1dStpPortAdminPointToPoint {
        "IEEE 802.1w clause 6.4.3, 6.5, 14.8.2";
     }
 
-    leaf dot1dStpPortAdminEdgePort {
+    leaf AdminEdgePort {
       type smiv2:TruthValue;
       config true;
       description   
@@ -393,10 +403,10 @@ leaf dot1dStpPortAdminPointToPoint {
         
         
         Setting this object will also cause the corresponding
-        instance of dot1dStpPortOperEdgePort to change to the
+        instance of OperEdgePort to change to the
         same value.  Note that even when this object's value
         is true, the value of the corresponding instance of
-        dot1dStpPortOperEdgePort can be false if a BPDU has
+        OperEdgePort can be false if a BPDU has
         been received.
         
         The value of this object MUST be retained across
@@ -404,7 +414,7 @@ leaf dot1dStpPortAdminPointToPoint {
       reference     
        "IEEE 802.1t clause 14.8.2, 18.3.3";
     }
-	leaf dot1dStpPortAdminPathCost {
+	leaf AdminPathCost {
       type int32 {
         range "0..200000000";
       }
@@ -418,8 +428,8 @@ leaf dot1dStpPortAdminPointToPoint {
         default Path Cost value to the port.  If the default Path
         Cost is being used, this object returns '0' when read.
         
-        This complements the object dot1dStpPortPathCost or
-        dot1dStpPortPathCost32, which returns the operational value
+        This complements the object PathCost or
+        PathCost32, which returns the operational value
         of the path cost.
         
         
@@ -436,6 +446,17 @@ leaf dot1dStpPortAdminPointToPoint {
 		"A Port as OperEdge which receives BPDU with BpduGuard enabled
 		 will shut the port down.";
 	}
+	leaf BpduGuardInterval {
+	type int32;
+      config true;	
+      units "seconds";
+      description   
+       "The interval time to which a port will try to recover from BPDU Guard err-disable
+	   state.  If no BPDU frames are detected after this timeout plus 3 Times Hello
+	   Time then the port will transition back to Up state.  If condition is cleared
+	   manually then this operation is ignored.  If set to zero then timer is inactive
+	   and recovery is based on manual intervention.";
+	}
 	
 	leaf BridgeAssurance {
 		 type smiv2:TruthValue;
@@ -447,19 +468,68 @@ leaf dot1dStpPortAdminPointToPoint {
 		should transition port into the bridge.";
 	}
   }
-  augment "/bridge-mib:dot1dStpPortEntry/bridge-mib:State" {
+  augment "/bridge-mib:Stp/bridge-mib:PortState" {
     description     
      "A list of Rapid Spanning Tree information maintained by
       each port.";
 
-    leaf dot1dStpPortOperEdgePort {
+     leaf AdminEdgePort {
+      type smiv2:TruthValue;
+      config false;
+      description
+       "The administrative value of the Edge Port parameter.  A
+        value of true(1) indicates that this port should be
+        assumed as an edge-port, and a value of false(2) indicates
+        that this port should be assumed as a non-edge-port.
+
+
+
+        Setting this object will also cause the corresponding
+        instance of OperEdgePort to change to the
+        same value.  Note that even when this object's value
+        is true, the value of the corresponding instance of
+        OperEdgePort can be false if a BPDU has
+        been received.
+
+        The value of this object MUST be retained across
+        reinitializations of the management system.";
+      reference
+       "IEEE 802.1t clause 14.8.2, 18.3.3";
+    }
+	leaf AdminPathCost {
+      type int32 {
+        range "0..200000000";
+      }
+      config false;
+      description
+       "The administratively assigned value for the contribution
+        of this port to the path cost of paths toward the spanning
+        tree root.
+
+        Writing a value of '0' assigns the automatically calculated
+        default Path Cost value to the port.  If the default Path
+        Cost is being used, this object returns '0' when read.
+
+        This complements the object PathCost or
+        PathCost32, which returns the operational value
+        of the path cost.
+
+
+
+        The value of this object MUST be retained across
+        reinitializations of the management system.";
+      reference
+       "IEEE 802.1D-1998: Section 8.5.5.3";
+    }
+
+    leaf OperEdgePort {
       type smiv2:TruthValue;
       config false;
       description   
        "The operational value of the Edge Port parameter.  The
         object is initialized to the value of the corresponding
-        instance of dot1dStpPortAdminEdgePort.  When the
-        corresponding instance of dot1dStpPortAdminEdgePort is
+        instance of AdminEdgePort.  When the
+        corresponding instance of AdminEdgePort is
         set, this object will be changed as well.  This object
         will also be changed to false on reception of a BPDU.";
       reference     
@@ -467,7 +537,7 @@ leaf dot1dStpPortAdminPointToPoint {
     }
 
     
-    leaf dot1dStpPortOperPointToPoint {
+    leaf OperPointToPoint {
       type smiv2:TruthValue;
       config false;
       description   
@@ -486,7 +556,7 @@ leaf dot1dStpPortAdminPointToPoint {
        "IEEE 802.1w clause 6.4.3, 6.5, 14.8.2";
     }
 	
-	leaf dot1dStpBridgePortMaxAge {
+	leaf MaxAge {
       type int32;
 	  config false;	
       units "centi-seconds";
@@ -494,7 +564,7 @@ leaf dot1dStpPortAdminPointToPoint {
        "The value that all bridges use for MaxAge as advertised by
 	   the root bridge.  Note that 802.1D-1998
         specifies that the range for this parameter is related
-        to the value of dot1dStpBridgeHelloTime.  The
+        to the value of BridgeHelloTime.  The
         granularity of this timer is specified by 802.1D-1998 to
         be 1 second.  An agent may return a badValue error if a
         set is attempted to a value that is not a whole number
@@ -503,7 +573,7 @@ leaf dot1dStpPortAdminPointToPoint {
        "IEEE 802.1D-1998: clause 8.5.3.8";
     }
 
-    leaf dot1dStpBridgePortHelloTime {
+    leaf HelloTime {
       type int32;
       config false;	
       units "centi-seconds";
@@ -520,7 +590,7 @@ leaf dot1dStpPortAdminPointToPoint {
        "IEEE 802.1D-1998: clause 8.5.3.9";
     }
 
-    leaf dot1dStpBridgePortForwardDelay {
+    leaf ForwardDelay {
       type int32 ;
 	  config false;	
       units "centi-seconds";
@@ -566,9 +636,272 @@ leaf dot1dStpPortAdminPointToPoint {
 		 "Used in conjuction with AdminEdge to shutdown a port when a BPDU
 		is received.  Protects against loops in the network";
 	}
+	leaf BpduGuardInterval {
+	type int32;
+      config false;	
+      units "seconds";
+      description   
+       "The interval time to which a port will try to recover from BPDU Guard err-disable
+	   state.  If no BPDU frames are detected after this timeout plus 3 Times Hello
+	   Time then the port will transition back to Up state.  If condition is cleared
+	   manually then this operation is ignored.  If set to zero then timer is inactive
+	   and recovery is based on manual intervention.";
+	}
 	
-	uses dot1d-port-statistics;
+	leaf BpduGuardDetected {
+	  type smiv2:TruthValue;
+	  config false;	
+      description
+	   "Indicates whether a BPDU frame was received on this STP port if the port 
+	    is and Edge Port and BPDU Guard is enabled";
+	}
+	leaf stp-in-pkts {
+	        type yang:counter64;
+			config false;
+	        description
+	          "Number of STP PDUs received";
+	      }
 
+		leaf stp-out-pkts {
+	        type yang:counter64;
+			config false;
+	        description
+	          "Number of STP BPDUs transmitted";
+	      }
+
+		leaf rstp-in-pkts {
+	        type yang:counter64;
+			config false;
+	        description
+	          "Number of RSTP BPDUs received";
+	      }
+		leaf rstp-out-pkts {
+	        type yang:counter64;
+			config false;
+	        description
+	          "Number of STP BPDUs transmitted";
+	      }
+		leaf tc-in-pkts {
+	        type yang:counter64;
+			config false;
+	        description
+	          "Number of TC BPDUs received";
+	      }
+		leaf tc-out-pkts {
+	        type yang:counter64;
+			config false;
+	        description
+	          "Number of TC BPDUs transmitted";
+	      }
+		leaf tcAck-in-pkts {
+	        type yang:counter64;
+			config false;
+	        description
+	          "Number of TC Ack BPDUs received";
+	      }
+		leaf tcAck-out-pkts {
+	        type yang:counter64;
+			config false;
+	        description
+	          "Number of TC Ack BPDUs transmitted";
+	      }
+		leaf pvst-in-pkts {
+	        type yang:counter64;
+			config false;
+	        description
+	          "Number of PVST BPDUs received";
+	      }
+		leaf pvst-out-pkts {
+	        type yang:counter64;
+			config false;
+	        description
+	          "Number of PVST BPDUs transmitted";
+	      }
+		leaf bpdu-in-pkts {
+	        type yang:counter64;
+			config false;
+	        description
+	          "Number of BPDUs received";
+	      }
+		leaf bpdu-out-pkts {
+	        type yang:counter64;
+			config false;
+	        description
+	          "Number of BPDUs transmitted";
+	      }
+		leaf pim-prev-state {
+			type string;
+			config false;
+			description
+			  "PIM previous fsm state";
+		}
+		leaf pim-curr-state {
+			type string;
+			config false;
+			description
+			  "PIM current fsm state";
+		}
+		leaf prtm-prev-state {
+			type string;
+			config false;
+			description
+			  "PRTM previous fsm state";
+		}
+		leaf prtm-curr-state {
+			type string;
+			config false;
+			description
+			  "PRTM current fsm state";
+		}
+		leaf prxm-prev-state {
+			type string;
+			config false;
+			description
+			  "PRXM previous fsm state";
+		}
+		leaf prxm-curr-state {
+			type string;
+			config false;
+			description
+			  "PRXM current fsm state";
+		}
+		leaf pstm-prev-state {
+			type string;
+			config false;
+			description
+			  "PSTM previous fsm state";
+		}
+		leaf pstm-curr-state {
+			type string;
+			config false;
+			description
+			  "PSTM current fsm state";
+		}
+		leaf tcm-prev-state {
+			type string;
+			config false;
+			description
+			  "TCM previous fsm state";
+		}
+		leaf tcm-curr-state {
+			type string;
+			config false;
+			description
+			  "TCM current fsm state";
+		}
+		leaf ppm-prev-state {
+			type string;
+			config false;
+			description
+			  "PPM previous fsm state";
+		}
+		leaf ppm-curr-state {
+			type string;
+			config false;
+			description
+			  "PPM current fsm state";
+		}
+		leaf ptxm-prev-state {
+			type string;
+			config false;
+			description
+			  "PTXM previous fsm state";
+		}
+		leaf ptxm-curr-state {
+			type string;
+			config false;
+			description
+			  "PTXM current fsm state";
+		}
+		leaf ptim-prev-state {
+			type string;
+			config false;
+			description
+			  "PTIM previous fsm state";
+		}
+		leaf ptim-curr-state {
+			type string;
+			config false;
+			description
+			  "PTIM current fsm state";
+		}
+		leaf bdm-prev-state {
+			type string;
+			config false;
+			description
+			  "BDM previous fsm state";
+		}
+		leaf bdm-curr-state {
+			type string;
+			config false;
+			description
+			  "BDM current fsm state";
+		}
+		leaf edge-delay-while {
+			type int32;
+			config false;
+			description
+			  "The Edge Delay timer. The time remaining, in the absence of a
+			received BPDU, before this port is identified as an operEdgePort.";
+		}
+		leaf fd-while {
+			type int32;
+			config false;
+			description
+			  "The Forward Delay timer. Used to delay Port State transitions
+			   until other Bridges have received spanning tree information";
+		}
+		leaf hello-when {
+			type int32;
+			config false;
+			description
+			  "The Hello timer. Used to ensure that at least one BPDU is
+			   transmitted by a Designated Port in each HelloTime period.";
+		}
+		leaf mdelay-while {
+			type int32;
+			config false;
+			description
+			  "The Migration Delay timer. Used by the Port Protocol
+			   Migration state machine to allow time for another RSTP Bridge
+			   on the same LAN to synchronize its migration state with this
+			   Port before the receipt of a BPDU can cause this Port to change
+			   the BPDU types it transmits. Initialized to MigrateTime (17.13.9).";
+		}
+		leaf rb-while {
+			type int32;
+			config false;
+			description
+			  "The Recent Backup timer. Maintained at its initial value, twice
+			   HelloTime, while the Port is a Backup Port.";
+		}
+		leaf rcvd-info-while {
+			type int32;
+			config false;
+			description
+			  "The Received Info timer. The time remaining before the spanning
+			   tree information received by this Port [portPriority (17.19.21)
+			   and portTimes (17.19.22)] is aged out if not refreshed by the
+			   receipt of a further Configuration Message.";
+		}
+		leaf rr-while {
+			type int32;
+			config false;
+			description
+			  "The Recent Root timer.";
+		}
+		leaf tc-while {
+			type int32;
+			config false;
+			description
+			  "The Topology Change timer. TCN Messages are sent while this timer is running";
+		}
+		leaf ba-while {
+			type int32;
+			config false;
+			description
+			  "Bridge Assurance timer, 3 * Hello Timer";
+		}
   }
 
 } /* end of module RSTP-MIB */

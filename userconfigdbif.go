@@ -14,7 +14,7 @@ func (obj UserConfig) CreateDBTable(dbHdl *sql.DB) error {
 		"UserName TEXT, " +
 		"Password TEXT, " +
 		"Description TEXT, " +
-		"Previledge TEXT, " +
+		"Privilege TEXT, " +
 		"PRIMARY KEY(UserName) " +
 		")"
 
@@ -24,8 +24,8 @@ func (obj UserConfig) CreateDBTable(dbHdl *sql.DB) error {
 
 func (obj UserConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	var objectId int64
-	dbCmd := fmt.Sprintf("INSERT INTO UserConfig (UserName, Password, Description, Previledge) VALUES ('%v', '%v', '%v', '%v') ;",
-		obj.UserName, obj.Password, obj.Description, obj.Previledge)
+	dbCmd := fmt.Sprintf("INSERT INTO UserConfig (UserName, Password, Description, Privilege) VALUES ('%v', '%v', '%v', '%v') ;",
+		obj.UserName, obj.Password, obj.Description, obj.Privilege)
 	fmt.Println("**** Create Object called with ", obj)
 
 	result, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
@@ -58,23 +58,27 @@ func (obj UserConfig) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, 
 	var object UserConfig
 	sqlKey, err := obj.GetSqlKeyStr(objKey)
 	dbCmd := "select * from UserConfig where " + sqlKey
-	err = dbHdl.QueryRow(dbCmd).Scan(&object.UserName, &object.Password, &object.Description, &object.Previledge)
+	err = dbHdl.QueryRow(dbCmd).Scan(&object.UserName, &object.Password, &object.Description, &object.Privilege)
 	fmt.Println("### DB Get UserConfig\n", err)
 	return object, err
 }
 
 func (obj UserConfig) GetKey() (string, error) {
-	key := string(obj.UserName)
+	keyName := "UserConfig"
+	keyName = strings.TrimSuffix(keyName, "Config")
+	keyName = strings.TrimSuffix(keyName, "State")
+	key := keyName + "#" + string(obj.UserName)
 	return key, nil
 }
 
 func (obj UserConfig) GetSqlKeyStr(objKey string) (string, error) {
 	keys := strings.Split(objKey, "#")
-	sqlKey := "UserName = " + "\"" + keys[0] + "\""
+	sqlKey := "UserName = " + "\"" + keys[1] + "\""
 	return sqlKey, nil
 }
 
-func (obj *UserConfig) GetAllObjFromDb(dbHdl *sql.DB) (objList []*UserConfig, e error) {
+func (obj UserConfig) GetAllObjFromDb(dbHdl *sql.DB) (objList []ConfigObj, err error) {
+	var object UserConfig
 	dbCmd := "select * from UserConfig"
 	rows, err := dbHdl.Query(dbCmd)
 	if err != nil {
@@ -86,8 +90,7 @@ func (obj *UserConfig) GetAllObjFromDb(dbHdl *sql.DB) (objList []*UserConfig, e 
 
 	for rows.Next() {
 
-		object := new(UserConfig)
-		if err = rows.Scan(&object.UserName, &object.Password, &object.Description, &object.Previledge); err != nil {
+		if err = rows.Scan(&object.UserName, &object.Password, &object.Description, &object.Privilege); err != nil {
 
 			fmt.Println("Db method Scan failed when interating over UserConfig")
 		}
@@ -95,6 +98,7 @@ func (obj *UserConfig) GetAllObjFromDb(dbHdl *sql.DB) (objList []*UserConfig, e 
 	}
 	return objList, nil
 }
+
 func (obj UserConfig) CompareObjectsAndDiff(updateKeys map[string]bool, dbObj ConfigObj) ([]bool, error) {
 	dbV4Route := dbObj.(UserConfig)
 	objTyp := reflect.TypeOf(obj)
@@ -256,7 +260,7 @@ func (obj UserConfig) UpdateObjectInDb(dbObj ConfigObj, attrSet []bool, dbHdl *s
 				fieldVal.Kind() == reflect.Uint32 ||
 				fieldVal.Kind() == reflect.Uint64 {
 				fieldSqlStr = fmt.Sprintf(" %s = '%d' ", fieldTyp.Name, int(fieldVal.Uint()))
-			} else if objVal.Kind() == reflect.Bool {
+			} else if fieldVal.Kind() == reflect.Bool {
 				fieldSqlStr = fmt.Sprintf(" %s = '%d' ", fieldTyp.Name, dbutils.ConvertBoolToInt(bool(fieldVal.Bool())))
 			} else {
 				fieldSqlStr = fmt.Sprintf(" %s = '%s' ", fieldTyp.Name, fieldVal.String())
