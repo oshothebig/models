@@ -28,18 +28,18 @@ const (
 )
 
 type BGPCounters struct {
-	Update       uint64 `ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Number of update messages"`
-	Notification uint64 `ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Number of notification messages"`
+	Update       uint64 `ACCESS:"", MULTIPLICITY:"*", DESCRIPTION: "Number of update messages"`
+	Notification uint64 `ACCESS:"", MULTIPLICITY:"*", DESCRIPTION: "Number of notification messages"`
 }
 
 type BGPMessages struct {
-	Sent     BGPCounters `ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Tx counters of the BGP neighbor"`
-	Received BGPCounters `ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Rx counters of the BGP neighbor"`
+	Sent     BGPCounters `ACCESS:"", MULTIPLICITY:"*", DESCRIPTION: "Tx counters of the BGP neighbor"`
+	Received BGPCounters `ACCESS:"", MULTIPLICITY:"*", DESCRIPTION: "Rx counters of the BGP neighbor"`
 }
 
 type BGPQueues struct {
-	Input  uint32 `ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Input queue length of the BGP neighbor"`
-	Output uint32 `ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Output queue length of the BGP neighbor"`
+	Input  uint32 `ACCESS:"", MULTIPLICITY:"*", DESCRIPTION: "Input queue length of the BGP neighbor"`
+	Output uint32 `ACCESS:"", MULTIPLICITY:"*", DESCRIPTION: "Output queue length of the BGP neighbor"`
 }
 
 type BGPNeighbor struct {
@@ -48,7 +48,8 @@ type BGPNeighbor struct {
 	LocalAS                 uint32 `DESCRIPTION: "Local AS of the BGP neighbor", DEFAULT: "0"`
 	AuthPassword            string `DESCRIPTION: "Password to connect to the BGP neighbor", DEFAULT: ""`
 	Description             string `DESCRIPTION: "Description of the BGP neighbor", DEFAULT: ""`
-	NeighborAddress         string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", DESCRIPTION: "Address/interface of the BGP neighbor"`
+	NeighborAddress         string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", DESCRIPTION: "Address of the BGP neighbor"`
+	IfIndex                 int32  `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", DESCRIPTION: "Interface of the BGP neighbor"`
 	RouteReflectorClusterId uint32 `DESCRIPTION: "Cluster Id of the internal BGP neighbor route reflector client", DEFAULT: "0"`
 	RouteReflectorClient    bool   `DESCRIPTION: "Set/Clear BGP neighbor as a route reflector client", DEFAULT: "false"`
 	MultiHopEnable          bool   `DESCRIPTION: "Enable/Disable multi hop for BGP neighbor", DEFAULT: "false"`
@@ -69,7 +70,8 @@ type BGPNeighborState struct {
 	PeerType                int8        `DESCRIPTION: "Type of the peer (internal/external)"`
 	AuthPassword            string      `DESCRIPTION: "Password to connect to the BGP neighbor"`
 	Description             string      `DESCRIPTION: "Description of the BGP neighbor"`
-	NeighborAddress         string      `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Address/interface of the BGP neighbor"`
+	NeighborAddress         string      `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Address of the BGP neighbor"`
+	IfIndex                 int32       `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Interface of the BGP neighbor"`
 	SessionState            uint32      `DESCRIPTION: "Session state of the BGP neighbor"`
 	Messages                BGPMessages `DESCRIPTION: "Rx/Tx counter for BGP update and notification packets"`
 	Queues                  BGPQueues   `DESCRIPTION: "Input/Output size of BGP packet queues"`
@@ -150,8 +152,8 @@ type BGPPolicyStmt struct {
 	BaseObj
 	Name            string   `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", DESCRIPTION: "Name of the BGP policy statement"`
 	MatchConditions string   `DESCRIPTION: "Match conditions all/any"`
-	Conditions      []string `FOREIGN: "BGPPolicyConditionConfig:Name", DESCRIPTION: "List of conditions"`
-	Actions         []string `FOREIGN: "BGPPolicyActionConfig:Name", DESCRIPTION: "List of actions"`
+	Conditions      []string `DESCRIPTION: "List of conditions"`
+	Actions         []string `DESCRIPTION: "List of actions"`
 }
 
 type BGPPolicyStmtState struct {
