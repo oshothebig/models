@@ -35,11 +35,9 @@ module ldp {
     }
 
 
-    container mplsLdp {
+      container ldpGlobal {
 
-      container ldpGlobalPara {
-
-        list ldp-instance {
+        list inst {
            key ldp-id ;
 		  config true;
            leaf ldp-id {
@@ -109,9 +107,9 @@ module ldp {
         }
     }
 
-        container ldpInstances {
+    container ldp {
 
-            list ldpInstance {
+            list Inst {
 
                 key "vrfName";
                 max-elements "unbounded";
@@ -144,9 +142,9 @@ module ldp {
                         range "0..65535";
                     }
                 }
-                container ldpInterfaces {
+                container Intf {
 
-                    list ldpInterface {
+                    list  local {
 
                         key "ifName";
                         max-elements "unbounded";
@@ -213,9 +211,9 @@ module ldp {
 
                 }
 
-                container ldpRemotePeers {
+                container Remote {
 
-                    list ldpRemotePeer {
+                    list Peer {
 
                         key "remotePeerName";
                         max-elements "unbounded";
@@ -284,9 +282,9 @@ module ldp {
 
                 }
 
-                container ldpPeers {
+                container local {
 
-                    list ldpPeer {
+                    list Peer {
 
                         key "peerid";
                         max-elements "unbounded";
@@ -310,9 +308,9 @@ module ldp {
 
                 }
 
-                container ldpGtsms {
+                container Gtsm {
 
-                    list ldpGtsm {
+                    list data {
 
                         key "peerTransportAddr";
                         max-elements "unbounded";
@@ -336,9 +334,9 @@ module ldp {
 
                 }
 
-                container mldpP2mpTunnels {
+                container mldpP2mpTunnel {
 
-                    list mldpP2mpTunnel {
+                    list data {
 
                         key "tunnelName";
                         max-elements "unbounded";
@@ -370,7 +368,7 @@ module ldp {
 
                 container mldpP2mpLeafLsps {
 
-                    list mldpP2mpLeafLsp {
+                    list data {
 
                         key "p2mpLspName";
                         max-elements "unbounded";
@@ -403,7 +401,5 @@ module ldp {
             }
 
         }
-
-    }
 
 }
