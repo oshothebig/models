@@ -3,11 +3,16 @@ package models
 type Vlan struct {
 	BaseObj
 	VlanId           int32  `SNAPROUTE: "KEY", ACCESS:"rw", MULTIPLICITY: "*", DESCRIPTION: "802.1Q tag/Vlan ID for vlan being provisioned"`
-	VlanName         string `DESCRIPTION: "System assigned vlan name"`
-	OperState        string `DESCRIPTION: "Operational state of vlan interface"`
-	IfIndex          int32  `DESCRIPTION: "System assigned interface id for this vlan interface"`
 	IfIndexList      string `DESCRIPTION: "List of system assigned interface id's for tagged ports on this vlan"`
 	UntagIfIndexList string `DESCRIPTION: "List of system assigned interface id's for untagged ports on this vlan"`
+}
+
+type VlanState struct {
+	BaseObj
+	VlanId    int32  `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY: "*", DESCRIPTION: "802.1Q tag/Vlan ID for vlan being provisioned"`
+	VlanName  string `DESCRIPTION: "System assigned vlan name"`
+	OperState string `DESCRIPTION: "Operational state of vlan interface"`
+	IfIndex   int32  `DESCRIPTION: "System assigned interface id for this vlan interface"`
 }
 
 type IPv4Intf struct {
