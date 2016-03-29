@@ -254,6 +254,12 @@ module openconfig-if-aggregate {
 		enum MUX_COLLECTING_DISTRIBUTING {
 			description "LACP MUX Machine Collecting Distributing State";
 		}
+		enum MUX_DISTRIBUTING_DEFAULTED {
+		    description "LACP MUX Machine Distributing State and Defaulted";
+		}
+		enum MUX_COLLECTING_DISTRIBUTING_DEFAULTED {
+			description "LACP MUX Machine Collecting Distributing State and Defaulted";
+		}
 	}
   }
 
@@ -496,6 +502,14 @@ grouping aggregation-lacp-state {
       description
         "When true, the participant is distributing outgoing
         frames; when false, distribution is disabled";
+    }
+
+    leaf defaulted {
+      type boolean;
+      config false;
+      description
+         "When no partner information is exchanged port will come up in a
+          defaulted state";
     }
 
     leaf system-id {
