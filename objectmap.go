@@ -10,10 +10,6 @@ var ConfigObjectMap = map[string]ConfigObj{
 	//"LogicalIntfState":  &LogicalIntfState{},
 	//"ArpConfig":                                        &ArpConfig{},         // created before auto YANG
 	//"ArpEntry":                                         &ArpEntry{},          // created before auto YANG
-	"AggregationLacpConfig":              &AggregationLacpConfig{},
-	"EthernetConfig":                     &EthernetConfig{},
-	"AggregationLacpMemberStateCounters": &AggregationLacpMemberStateCounters{},
-	"AggregationLacpState":               &AggregationLacpState{},
 	//"BfdSession":                                       &BfdSession{},
 	//"BfdSessionState":                                  &BfdSessionState{},
 	//"BfdGlobal":                                        &BfdGlobal{},
