@@ -968,14 +968,20 @@ grouping aggregation-lacp-members-statistics {
       }
     }
 
-    container port-channel {
+
+  }
+
+    container la-port-channel {
        config false;
        description
           "Port Channel Member States container";
 
+        leaf lagId {
+          type int32;
+          description "Id of the lag group to which this port is associated with";
+        }
        uses aggregation-lacp-members-top;
     }
-  }
 
 
   // data definition statements
