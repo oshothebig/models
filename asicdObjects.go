@@ -53,6 +53,13 @@ type PortState struct {
 	ErrDisableReason  string `DESCRIPTION: "Reason explaining why port has been disabled by protocol code"`
 }
 
+type MacTableEntry struct {
+	BaseObj
+	MacAddr string `SNAPROUTE: "KEY", ACCESS:"r", DESCRIPTION: "MAC Address"`
+	VlanId  int32  `DESCRIPTION: "Vlan id corresponding to which mac was learned"`
+	Port    int32  `DESCRIPTION: "Port number on which mac was learned"`
+}
+
 type LogicalIntf struct {
 	BaseObj
 	Name string `SNAPROUTE: "KEY", ACCESS:"w", DESCRIPTION: "Name of logical interface"`
