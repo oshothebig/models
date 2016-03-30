@@ -76,9 +76,9 @@ type BfdSession struct {
  */
 type BfdSessionState struct {
 	BaseObj
-	SessionId             int32  `SNAPROUTE: "KEY", ACCESS:"r",  MULTIPLICITY:"*", DESCRIPTION: "Session index"`
+	IpAddr                string `SNAPROUTE: "KEY", ACCESS:"r",  MULTIPLICITY:"*",DESCRIPTION: "Neighbor IP address"`
+	SessionId             int32  `DESCRIPTION: "Session index"`
 	LocalIpAddr           string `DESCRIPTION: "My IP address"`
-	RemoteIpAddr          string `DESCRIPTION: "Neighbor IP address"`
 	IfIndex               int32  `DESCRIPTION: "Interface index"`
 	PerLinkSession        bool   `DESCRIPTION: "This is a perlink session on LAG"`
 	LocalMacAddr          string `DESCRIPTION: "My MAC address"`
