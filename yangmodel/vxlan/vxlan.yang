@@ -2,13 +2,9 @@ module vxlan {
     namespace "urn:ietf:params:xml:ns:yang:ietf-vxlan";
     prefix "vxlan";
 
-    import ietf-interfaces {
-      prefix "if";
-     }
-
     import ietf-inet-types {
        prefix "inet";
-     }
+    }
 
     import ietf-yang-types {
        prefix yang;
@@ -19,25 +15,7 @@ module vxlan {
 
       contact
        "
-         WG List:  <mailto:nvo3@ietf.org>
-
-         WG Chair: Matthew Bocci
-                  <mailto:matthew.bocci@alcatel-lucent.com>
-
-         WG Chair: Benson Schliesser
-                  <mailto:bensons@queuefull.net>
-
-         Editor:   Fangwei Hu
-                   <mailto:hu.fangwei@zte.com.cn>
-
-         Editor:   Ran Chen
-                   <mailto:chen.ran@zte.com.cn>
-
-         Editor:   Mallik Mahalingam
-                   <mailto:mallik_mahalingam@yahoo.com>
-
-         Editor:   Zu Qiang
-                   <mailto:Zu.Qiang@Ericsson.com>
+         editor:  <mailto:ccordes@snaproute.com>
         ";
 
     description
@@ -151,120 +129,46 @@ module vxlan {
 
     /* Configuration Data */
 
-      container vxlan{
-        list vxlan-instance {
+    container vxlan{
+        list instance {
            key vxlan-id ;
-		  config true;
+		   config true;
+
            leaf vxlan-id {
              type vxlan-id;
              description
-              "VxLAN ID.";
+              "VxLAN ID or VNI";
+           }
+           leaf mc-dest-ip {
+              type string;
+              config true;
+              mandatory true ;
+              description
+                 "VxLAN multicast IP address used when destination is uknown";
            }
 
-			container access-type-vlan{
-           
-                	list vlan-list {
-                	  	key vlan-id ;
-					config true;
+           leaf vlan-id {
+            type vlan;
+            config true;
+            description
+                "Vlan associated with the Access targets.  Used in conjunction with a given VTEP
+                 inner-vlan-handling-mode";
+           }
 
-                  	leaf vlan-id {
-                  		type vlan;
-                    		description
-                    		  "VLAN ID.";
-                 	 	}
-                  description
-                    "VLAN ID list." ;
-				}
-			}
-           
-			container access-type-mac{
-
-                	leaf mac {
-                 		type yang:mac-address ;
-                    	mandatory true ;
-                    	description
-                      	"MAC Address.";
-                  }
-           
-                	leaf l2interface {
-                  	type empty ;
-                  	description
-                    		"VXLAN map layer two interface.";
-                	}
-
-                	leaf vlan-id {
-                    	type vlan;
-                    	mandatory true ;
-                    	description
-                    	  "VLAN ID.";
-                 	}
-
-                	leaf interface-name {
-                    	type if:interface-ref;
-                    	mandatory true ;
-                    	description
-                    	  "Layer two interface name.";
-                	}	
-			}
-           
-             container access-type-l3interface {
-
-                	list l3interface {
-                  	key interface-name ;
-                  	
-					leaf interface-name {
-                    		type if:interface-ref;
-                    		description
-                    		  "Layer three interface name.";
-                  	}
-                  	description
-                  	   "Layer three interface list.";
-                	}
-			}
-           
-            container vxlan-evpn {
-              leaf route-distinguisher {
-			   config true;
-                type string;
-                description "VxLAN EVPN BGP RD";
-              }
-
-              list vpn-targets {
-                key rt-value;
-                description "VxLAN EVPN Route Targets";
-                leaf rt-value {
-                  type string;
-				config true;
-                  description "Route-Target value";
-                }
-
-                leaf rt-type {
-                  type bgp-rt-type;
-				config true;
-                  mandatory true;
-                  description "Type of RT";
-                }
-              }
-              description
-                 "EVPN VxLAN parameters.";
-            }
-          description
-             "VxLAN instance.";
+           leaf mtu {
+            type uint32;
+            config true;
+            default 1500;
+            description
+                "Set the MTU to be applied to all VTEP within this VxLAN";
+           }
         }
+        description
+          "VxLAN instance.";
 
-      container interfaces {
-        list interface{
-            key name;
-            leaf name {
-
-               type if:interface-ref;
-			config true;
-               description
-                  "VTEP interface name.";
-             }
-
-            list vtep-instances {
-               key vtep-id ;
+    container vtep {
+            list instances {
+               key "vtep-id vxlan-id";
                leaf vtep-id {
                   type uint32;
 				config true;
@@ -274,24 +178,37 @@ module vxlan {
 
                leaf vtep-name{
                   type string;
-				config true;
+				  config true;
                   description
                      "VTEP instance name.";
                 }
 
-               leaf source-interface {
-                  type if:interface-ref;
-				config true;
+               leaf src-ifIndex {
+                  type int32;
+				  config true;
                   description
-                     "Source interface name.";
+                     "Source physical interface ifIndex.";
+                }
+                leaf UDP {
+                   type uint16;
+                   config true;
+                   default 4789;
+                   description
+                       "vxlan udp port.  Deafult is the iana default udp port";
                 }
 
-                leaf multicast-ip {
-                  type inet:ip-address;
-				config true;
-                  mandatory true ;
-                  description
-                     "VxLAN multicast IP address.";
+                leaf TTL {
+                    type uint16;
+                    config true;
+                    description
+                        "TTL of the Vxlan tunnel";
+                }
+
+                leaf TOS {
+                    type uint16;
+                    config true;
+                    description
+                        "Type of Service";
                 }
 
                leaf inner-vlan-handling-mode {
@@ -301,314 +218,70 @@ module vxlan {
                      "The inner vlan tag handling mode.";
                 }
 
-               list bind-vxlan-id {
-                  key vxlan-id;
-                  leaf vxlan-id {
-                    type vxlan-id;
-					config true;
-                    description
-                       "VxLAN ID.";
-                  }
-                 description
-                    "VxLAN ID list for the VTEP.";
-               }
+                leaf learning {
+                   type int32;
+                   config true;
+                   description
+                    "specifies if unknown source link layer
+                      addresses and IP addresses are entered into the VXLAN
+                      device forwarding database.";
+                }
 
+                leaf rsc {
+                    type int32;
+                    config true;
+                    description
+                     "specifies if route short circuit is turned on.";
+                }
+
+                leaf l2miss {
+                    type int32;
+                    config true;
+                    description
+                        "specifies if netlink LLADDR miss notifications are generated.";
+                }
+
+                leaf l3miss {
+                    type int32;
+                    config true;
+                    description
+                        "specifies if netlink IP ADDR miss
+                      notifications are generated.";
+                }
+
+              leaf vxlan-id {
+                type vxlan-id;
+                config true;
+                description
+                   "VxLAN ID.";
+              }
+
+              leaf dst-ip {
+                    type inet:ipv4-address;
+                    config true;
+                    description
+                     "Destination IP address for the static VxLAN tunnel";
+              }
+
+              leaf dst-mac {
+                    type yang:mac-address;
+                    config true;
+                    description
+                     "Destination MAC address for the static VxLAN tunnel";
+              }
+
+              leaf vlan-id {
+                type uint16;
+                config true;
+                description
+                    "Vlan Id to encapsulate with the vtep tunnel ethernet header";
+              }
+
+            }
              description
                 "VTEP instance.";
             }
-
-            list static-vxlan-tunnel{
-               key vxlan-tunnel-id;
-               leaf vxlan-tunnel-id {
-                  type uint32;
-				config true;
-                  description
-                     "Static VxLAN tunnel ID.";
-               }
-
-               leaf vxlan-tunnel-name {
-                  type string;
-				config true;
-                  description
-                    "Name of the static VxLAN tunnel.";
-               }
-
-               list address-family {
-                 key "af";
-                 leaf af {
-                    type address-family-type;
-					config true;
-                    description
-                     "Address family type value.";
-                 }
-
-                 leaf tunnel-source-ip {
-                    type address-family-type;
-					config true;
-                    description
-                     "Source IP address for the static VxLAN tunnel";
-                 }
-
-                 leaf tunnel-destination-ip {
-                    type address-family-type;
-					config true;
-                    description
-                       "Destination IP address for the static VxLAN tunnel";
-                 }
-
-                 list bind-vxlan-id {
-                    key vxlan-id;
-                    leaf vxlan-id {
-                      type vxlan-id;
-					config true;
-                      description
-                        "VxLAN ID.";
-                    }
-                    description
-                       "VxLAN ID list for the VTEP.";
-                 }
-
-                description
-                   "Per-af params.";
-               }
-            description
-              "Configure the static VxLAN tunnel";
-           }
-
-          description
-            "VTEP interface.";
-        }
-        description
-          "VTEP interfaces configuration.";
-      }
-      description
-       "VxLAN configure model.";
      }
 
-      /* Operational  data */
-     container vxlan-state{
-      container vxlan-instance {
-          leaf vxlan-id {
-            type  vxlan-id;
-			config false;
-            description
-               "Show VxLAN ID.";
-            }
-
-                leaf access-type-vlan {
-                  type access-type-vlan;
-				config false;
-                  description
-                    "Access type is VLAN.";
-                }
-
-                list access-vlan {
-                  key vlan-id;
-                  leaf vlan-id {
-                    type vlan;
-					config false;
-                    description
-                      "VLAN ID.";
-                  }
-                  description
-                    "VLAN ID list.";
-                }
-
-                leaf access-type-mac {
-                  type empty ;
-				config false;
-                  description
-                    "Access type is MAC.";
-                }
-
-                leaf mac {
-                    type yang:mac-address ;
-					config false;
-                    description
-                      "MAC Address.";
-                  }
-
-                leaf access-type-l2interface {
-                  type empty ;
-				config false;
-                  description
-                    "VxLAN access is layer two interface.";
-                }
-                leaf vlan-id {
-                    type vlan;
-					config false;
-                    description
-                      "VLAN ID.";
-                 }
-
-                leaf interface-name {
-                    type if:interface-ref;
-					config false;
-                   description
-                     "Layer two interface name.";
-                }
-
-                leaf access-type-l3interface {
-                  type empty ;
-				config false;
-                  description
-                    "VxLAN access type is layer three interface.";
-                }
-
-                list map-l3interface {
-                  key interface-name ;
-
-                  leaf interface-name {
-                    type if:interface-ref;
-					config false;
-                    description
-                      "Layer three interface name.";
-                  }
-                  description
-                    "VxLAN access layer three interfaces.";
-                }
-
-            container vxlan-evpn {
-              leaf route-distinguisher {
-                type string;
-				config false;
-                description "VxLAN EVPN BGP RD";
-              }
-
-              list vpn-targets {
-                key rt-value;
-                description "VxLAN EVPN Route Targets";
-                leaf rt-value {
-                  type string;
-				config false;
-                  description "Route-Target value";
-                }
-
-                leaf rt-type {
-                  type bgp-rt-type;
-				config false;
-                  mandatory true;
-                  description "Type of RT";
-                }
-              }
-              description "Show EVPN VxLAN parameters.";
-            }
-          description
-            "Show VxLAN instance information.";
-        }
-
-        container vtep-instance {
-          leaf vtep-id {
-            type  uint32;
-			config false;
-            description
-              "Show VTEP ID.";
-            }
-
-          leaf vtep-name {
-            type  string;
-			config false;
-            description
-              "Show VTEP name.";
-            }
-
-          leaf source-interface{
-            type if:interface-ref;
-			config false;
-            description
-              "Show source interface.";
-            }
-
-          leaf multicast-ip {
-             type inet:ip-address;
-			config false;
-             description
-               "Show VxLAN multicast IP address.";
-             }
-
-          leaf inner-vlan-handling-mode {
-            type inner-vlan-handling-mode;
-			config false;
-            default discard-inner-vlan ;
-            description
-              "Show inner vlan tag handling mode." ;
-          }
-
-          list bind-vxlan-id {
-             key vxlan-id;
-             leaf vxlan-id {
-               type vxlan-id;
-			config false;
-               description
-                 "Show VxLAN ID." ;
-             }
-             description
-               "Show VxLAN ID list for the VTEP.";
-            }
-           description
-             "Show VTEP information.";
-        }
-
-        list static-vxlan-tunnel{
-           key vxlan-tunnel-id;
-           leaf vxlan-tunnel-id {
-             type uint32;
-			config false;
-             description
-             "Show static VxLAN tunnel ID.";
-            }
-
-            leaf vxlan-tunnel-name {
-
-              type string;
-			config false;
-              description
-                 "Name of the static VxLAN tunnel.";
-            }
-
-            list address-family {
-              key "af";
-              leaf af {
-                type address-family-type;
-				config false;
-                description
-                  "Address family type value.";
-              }
-
-              leaf tunnel-source-ip {
-                 type address-family-type;
-				config false;
-                 description
-                   "Show source IP address of the static VxLAN tunnel";
-              }
-
-              leaf tunnel-destination-ip {
-                 type address-family-type;
-				config false;
-                 description
-                   "Show destination IP address of the static VxLAN tunnel";
-                 }
-
-              list bind-vxlan-id {
-                 key vxlan-id;
-                 leaf vxlan-id {
-                   type vxlan-id;
-				config false;
-                   description
-                     "VxLAN ID.";
-                   }
-                 description
-                   "Show VxLAN ID list for the VTEP.";
-              }
-
-            description
-               "Per-af params.";
-               }
-          description
-            "Configure the static VxLAN tunnel";
-        }
-        config "false";
-        description
-           "Show VxLAN operational state information.";
-       }
-     }
+     // TODO add static binding for FDB entries
+}
