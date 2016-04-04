@@ -127,7 +127,6 @@ module openconfig-if-aggregate {
         description "Statically configured bundle / LAG";
       }
     }
-    default LACP;
     description
       "Type to define the lag-type, i.e., how the LAG is
       defined and managed";
@@ -334,8 +333,7 @@ module openconfig-if-aggregate {
        config true;
        description
           "Convenient way to disable/enable a lag group.  The behaviour should be such
-           that all traffic should stop.  LACP frames should continue to be processed
-           , SELECTION: UP/DOWN";
+           that all traffic should stop.  LACP frames should continue to be processed";
     }
   }
 
@@ -396,8 +394,7 @@ grouping aggregation-lacp-state {
        config false;
        description
           "Convenient way to disable/enable a lag group.  The behaviour should be such
-           that all traffic should stop.  LACP frames should continue to be processed
-           , SELECTION: UP/DOWN";
+           that all traffic should stop.  LACP frames should continue to be processed";
     }
 
     leaf oper-state {
@@ -406,7 +403,7 @@ grouping aggregation-lacp-state {
        description
           "Operational status of the lag group.  If all ports are DOWN this will display
            DOWN.  If the group was admin disabled then will display DOWN.  No ports
-           configured in group will display DOWN, SELECTION: UP/DOWN";
+           configured in group will display DOWN";
     }
   }
 
@@ -793,7 +790,7 @@ grouping aggregation-lacp-members-statistics {
 	      leaf oper-state {
              type string;
 	         description
-               "The operation state, typically UP, or DOWN, SELECTION: UP/DOWN";
+               "The operation state, typically UP IN BUNDLE, or DOWN";
           }
           uses aggregation-lacp-members-state;
           uses aggregation-lacp-members-statistics;
@@ -811,7 +808,6 @@ grouping aggregation-lacp-members-statistics {
     leaf lag-type {
       type aggregation-type;
       config true;
-      default LACP;
       description
         "Sets the type of LAG, i.e., how it is
         configured / maintained";
