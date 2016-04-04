@@ -462,7 +462,7 @@ module RSTP-MIB {
 		 type smiv2:TruthValue;
 		config true;
 		description
-		"When enabled BPDUs will be transmitted out of all stp ports regardless
+		"When enabled BPDU's will be transmitted out of all stp ports regardless
 		of state.  When an stp port fails to receive a BPDU the port should 
 		transition to a Blocked state.  Upon reception of BDPU after shutdown 
 		should transition port into the bridge.";
@@ -612,7 +612,7 @@ module RSTP-MIB {
 		config false;
 		description
 		 "Used to make sure that a neighboring switch does not malfunction 
-		and begin forwarding frames when it should not.  It does this by
+		and begin forwarding frames when it shouldn’t.  It does this by 
 		monitoring receipt of BPDUs on point-to-point links.  When the 
 		BPDUs stop being received, the port is put into blocking state 
 		(actually a port inconsistent state, which stops forwarding).  
