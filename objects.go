@@ -29,7 +29,7 @@ type UserConfig struct {
 	UserName    string `SNAPROUTE: "KEY"`
 	Password    string
 	Description string
-	Privilege  string
+	Privilege   string
 }
 
 func (obj UserConfig) UnmarshalObject(body []byte) (ConfigObj, error) {
@@ -98,4 +98,27 @@ func (obj Logout) UnmarshalObject(body []byte) (ConfigObj, error) {
 	}
 
 	return logoutObj, err
+}
+
+type SystemStatus struct {
+	BaseObj
+	Name           string `SNAPROUTE: "KEY"`
+	Ready          bool
+	Reason         string
+	UpTime         string
+	NumConfigCalls string
+	NumGetCalls    string
+	NumActionCalls string
+}
+
+func (obj SystemStatus) UnmarshalObject(body []byte) (ConfigObj, error) {
+	var systemStatus SystemStatus
+	var err error
+	if len(body) > 0 {
+		if err = json.Unmarshal(body, &systemStatus); err != nil {
+			fmt.Println("### Trouble in unmarshaling SystemStatus from Json", body)
+		}
+	}
+
+	return systemStatus, err
 }
