@@ -106,7 +106,9 @@ type SystemStatus struct {
 	Ready          bool
 	Reason         string
 	UpTime         string
-	NumConfigCalls string
+	NumCreateCalls string
+	NumDeleteCalls string
+	NumUpdateCalls string
 	NumGetCalls    string
 	NumActionCalls string
 }

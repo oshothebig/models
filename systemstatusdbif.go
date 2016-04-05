@@ -15,7 +15,9 @@ func (obj SystemStatus) CreateDBTable(dbHdl *sql.DB) error {
 		"Ready INTEGER, " +
 		"Reason TEXT, " +
 		"UpTime TEXT, " +
-		"NumConfigCalls TEXT, " +
+		"NumCreateCalls TEXT, " +
+		"NumDeleteCalls TEXT, " +
+		"NumUpdateCalls TEXT, " +
 		"NumGetCalls TEXT, " +
 		"NumActionCalls TEXT, " +
 		"PRIMARY KEY(Name) " +
@@ -27,8 +29,8 @@ func (obj SystemStatus) CreateDBTable(dbHdl *sql.DB) error {
 
 func (obj SystemStatus) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	var objectId int64
-	dbCmd := fmt.Sprintf("INSERT INTO SystemStatus (Name, Ready, Reason, UpTime, NumConfigCalls, NumGetCalls, NumActionCalls) VALUES ('%v', '%v', '%v', '%v', '%v', '%v', '%v') ;",
-		obj.Name, dbutils.ConvertBoolToInt(obj.Ready), obj.Reason, obj.UpTime, obj.NumConfigCalls, obj.NumGetCalls, obj.NumActionCalls)
+	dbCmd := fmt.Sprintf("INSERT INTO SystemStatus (Name, Ready, Reason, UpTime, NumCreateCalls, NumDeleteCalls, NumUpdateCalls, NumGetCalls, NumActionCalls) VALUES ('%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v') ;",
+		obj.Name, dbutils.ConvertBoolToInt(obj.Ready), obj.Reason, obj.UpTime, obj.NumCreateCalls, obj.NumDeleteCalls, obj.NumUpdateCalls, obj.NumGetCalls, obj.NumActionCalls)
 	fmt.Println("**** Create Object called with ", obj)
 
 	result, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
@@ -62,7 +64,7 @@ func (obj SystemStatus) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj
 	sqlKey, err := obj.GetSqlKeyStr(objKey)
 	dbCmd := "select * from SystemStatus where " + sqlKey
 	var tmp1 string
-	err = dbHdl.QueryRow(dbCmd).Scan(&object.Name, &tmp1, &object.Reason, &object.UpTime, &object.NumConfigCalls, &object.NumGetCalls, &object.NumActionCalls)
+	err = dbHdl.QueryRow(dbCmd).Scan(&object.Name, &tmp1, &object.Reason, &object.UpTime, &object.NumCreateCalls, &object.NumDeleteCalls, &object.NumUpdateCalls, &object.NumGetCalls, &object.NumActionCalls)
 	fmt.Println("### DB Get SystemStatus\n", err)
 	object.Ready = dbutils.ConvertStrBoolIntToBool(tmp1)
 	return object, err
@@ -96,7 +98,7 @@ func (obj SystemStatus) GetAllObjFromDb(dbHdl *sql.DB) (objList []ConfigObj, err
 	var tmp1 string
 	for rows.Next() {
 
-		if err = rows.Scan(&object.Name, &tmp1, &object.Reason, &object.UpTime, &object.NumConfigCalls, &object.NumGetCalls, &object.NumActionCalls); err != nil {
+		if err = rows.Scan(&object.Name, &tmp1, &object.Reason, &object.UpTime, &object.NumCreateCalls, &object.NumDeleteCalls, &object.NumUpdateCalls, &object.NumGetCalls, &object.NumActionCalls); err != nil {
 
 			fmt.Println("Db method Scan failed when interating over SystemStatus")
 		}
