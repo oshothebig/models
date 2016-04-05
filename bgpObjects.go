@@ -108,14 +108,15 @@ type BGPPeerGroup struct {
 
 type BGPRoute struct {
 	BaseObj
-	Network   string   `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Network address of the destination"`
-	CIDRLen   uint16   `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "CIDR length of the destination"`
-	NextHop   string   `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Next hop address for the destination"`
-	Metric    uint32   `DESCRIPTION: "MED of the path to the destination"`
-	LocalPref uint32   `DESCRIPTION: "Local preference of the path to the destination"`
-	Path      []string `DESCRIPTION: "AS path to the destination"`
-	Updated   string   `DESCRIPTION: "Last time the destination was updated"`
-	PathId    uint32   `DESCRIPTION: "Path id of the path"`
+	Network         string   `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Network address of the destination"`
+	CIDRLen         uint16   `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "CIDR length of the destination"`
+	NextHop         string   `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Next hop address for the destination"`
+	Metric          uint32   `DESCRIPTION: "MED of the path to the destination"`
+	LocalPref       uint32   `DESCRIPTION: "Local preference of the path to the destination"`
+	Path            []string `DESCRIPTION: "AS path to the destination"`
+	UpdatedTime     string   `DESCRIPTION: "Last time the destination was updated"`
+	UpdatedDuration string   `DESCRIPTION: "Time since the destination was last updated"`
+	PathId          uint32   `DESCRIPTION: "Path id of the path"`
 }
 
 type BGPPolicyCondition struct {
