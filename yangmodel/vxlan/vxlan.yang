@@ -68,7 +68,9 @@ module vxlan {
     }
 
     typedef vxlan-id {
-      type uint32;
+      type uint32 {
+         range 1..16777215;
+      }
       description
         "Typedef for VxLAN ID.";
     }
@@ -158,7 +160,7 @@ module vxlan {
            leaf mtu {
             type uint32;
             config true;
-            default 1500;
+            default 1550;
             description
                 "Set the MTU to be applied to all VTEP within this VxLAN";
            }
@@ -180,7 +182,7 @@ module vxlan {
                   type string;
 				  config true;
                   description
-                     "VTEP instance name.";
+                     "VTEP instance name. If not defined then one will be configured to be vtep<vtep-id>";
                 }
 
                leaf src-ifIndex {
@@ -189,6 +191,7 @@ module vxlan {
                   description
                      "Source physical interface ifIndex.";
                 }
+
                 leaf UDP {
                    type uint16;
                    config true;
@@ -200,6 +203,7 @@ module vxlan {
                 leaf TTL {
                     type uint16;
                     config true;
+                    default 255;
                     description
                         "TTL of the Vxlan tunnel";
                 }
@@ -207,20 +211,22 @@ module vxlan {
                 leaf TOS {
                     type uint16;
                     config true;
+                    default 0;
                     description
                         "Type of Service";
                 }
 
                leaf inner-vlan-handling-mode {
                   type inner-vlan-handling-mode;
-				config true;
+				  config true;
                   description
                      "The inner vlan tag handling mode.";
                 }
 
                 leaf learning {
-                   type int32;
+                   type boolean;
                    config true;
+                   default true;
                    description
                     "specifies if unknown source link layer
                       addresses and IP addresses are entered into the VXLAN
@@ -228,21 +234,22 @@ module vxlan {
                 }
 
                 leaf rsc {
-                    type int32;
+                    type boolean;
                     config true;
+                    default false;
                     description
                      "specifies if route short circuit is turned on.";
                 }
 
                 leaf l2miss {
-                    type int32;
+                    type boolean;
                     config true;
                     description
                         "specifies if netlink LLADDR miss notifications are generated.";
                 }
 
                 leaf l3miss {
-                    type int32;
+                    type boolean;
                     config true;
                     description
                         "specifies if netlink IP ADDR miss
@@ -261,6 +268,20 @@ module vxlan {
                     config true;
                     description
                      "Destination IP address for the static VxLAN tunnel";
+              }
+
+              leaf src-ip {
+                    type inet:ipv4-address;
+                    config true;
+                    description
+                     "Source IP address for the static VxLAN tunnel, if not supplied switch default should be used.";
+              }
+
+              leaf src-mac {
+                    type yang:mac-address;
+                    config true;
+                    description
+                     "Source MAC for the static VxLAN tunnel, if not supplied switch default should be used.";
               }
 
               leaf dst-mac {
