@@ -9,7 +9,6 @@ type IPv4Route struct {
 	OutgoingIntfType  string `DESCRIPTION :"Interface type of the next hop interface"`
 	OutgoingInterface string `DESCRIPTION :"Interface ID of the next hop interface"`
 	Protocol          string `DESCRIPTION :"Protocol type of the route"`
-	CreateTime        string
 }
 type IPv4RouteState struct {
 	BaseObj
