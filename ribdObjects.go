@@ -20,7 +20,6 @@ type IPv4RouteState struct {
 	Protocol          string `DESCRIPTION :"Protocol type of the route"`
 	PolicyList       []string `DESCRIPTION :"List of policies applied on this route"`
 	IsNetworkReachable bool   `DESCRIPTION :"Indicates whether this network is reachable"`
-	RouteCreateReceivedTime string
 	RouteCreatedTime string   `DESCRIPTION :"Time when the route was added"`
 	RouteUpdatedTime string   `DESCRIPTION :"Time when the route was last updated"`
 }
