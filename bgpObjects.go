@@ -108,20 +108,21 @@ type BGPPeerGroup struct {
 
 type BGPRoute struct {
 	BaseObj
-	Network   string   `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Network address of the destination"`
-	CIDRLen   uint16   `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "CIDR length of the destination"`
-	NextHop   string   `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Next hop address for the destination"`
-	Metric    uint32   `DESCRIPTION: "MED of the path to the destination"`
-	LocalPref uint32   `DESCRIPTION: "Local preference of the path to the destination"`
-	Path      []string `DESCRIPTION: "AS path to the destination"`
-	Updated   string   `DESCRIPTION: "Last time the destination was updated"`
-	PathId    uint32   `DESCRIPTION: "Path id of the path"`
+	Network         string   `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Network address of the destination"`
+	CIDRLen         uint16   `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "CIDR length of the destination"`
+	NextHop         string   `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Next hop address for the destination"`
+	Metric          uint32   `DESCRIPTION: "MED of the path to the destination"`
+	LocalPref       uint32   `DESCRIPTION: "Local preference of the path to the destination"`
+	Path            []string `DESCRIPTION: "AS path to the destination"`
+	UpdatedTime     string   `DESCRIPTION: "Last time the destination was updated"`
+	UpdatedDuration string   `DESCRIPTION: "Time since the destination was last updated"`
+	PathId          uint32   `DESCRIPTION: "Path id of the path"`
 }
 
 type BGPPolicyCondition struct {
 	BaseObj
 	Name            string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", DESCRIPTION: "Name of the BGP policy condition"`
-	ConditionType   string `DESCRIPTION: "Type of the BGP policy condition"`
+	ConditionType   string `DESCRIPTION: "Type of the BGP policy condition. "`
 	IpPrefix        string `DESCRIPTION: "IP adddress to match in CIDR format"`
 	MaskLengthRange string `DESCRIPTION: "IP address mask lenght range to match"`
 }
@@ -159,7 +160,7 @@ type BGPPolicyStmt struct {
 type BGPPolicyStmtState struct {
 	BaseObj
 	Name            string   `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Name of the BGP policy statement"`
-	MatchConditions string   `DESCRIPTION: "Match conditions all/any"`
+	MatchConditions string   `DESCRIPTION: "Match conditions ,SELECTION: All/Any"`
 	Conditions      []string `DESCRIPTION: "List of conditions"`
 	Actions         []string `DESCRIPTION: "List of actions"`
 }
@@ -173,7 +174,7 @@ type BGPPolicyDefinition struct {
 	BaseObj
 	Name          string                              `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", DESCRIPTION: "Name of the BGP policy definition"`
 	Precedence    int32                               `DESCRIPTION: "Precedence of the policy definition"`
-	MatchType     string                              `DESCRIPTION: "Match type for policy definition all/any"`
+	MatchType     string                              `DESCRIPTION: "Match type for policy definition  ,SELECTION: All/Any"`
 	StatementList []BGPPolicyDefinitionStmtPrecedence `DESCRIPTION: "Precedence of statements in the policy"`
 }
 

@@ -1,28 +1,4 @@
 {
-    "AggregationLacpConfig": {
-		"access": "w",
-		"Owner": "lacpd",
-		"multiplicity":"*",
-		"srcfile": "objects.go"
-    },
-	"AggregationLacpState": {
-	   "access": "r",
-		"Owner": "lacpd",
-		"multiplicity":"*",
-		"srcfile": "objects.go"
-	},
-	"AggregationLacpMemberStateCounters": {
-		"access": "r",
-		"Owner": "lacpd",
-		"multiplicity":"*",
-		"srcfile": "objects.go"
-	},
-	"EthernetConfig": {
-		"access": "w",
-		"Owner": "lacpd",
-		"multiplicity":"*",
-		"srcfile": "objects.go"
-    },
 	"UserConfig" : {
 		"access": "w",
 		"Owner": "local",
@@ -39,6 +15,12 @@
 		"access": "w",
 		"Owner": "local",
 		"multiplicity":"*",
+		"srcfile": "objects.go"
+	},
+	"SystemStatus" : {
+		"access": "r",
+		"Owner": "local",
+		"multiplicity":"1",
 		"srcfile": "objects.go"
 	}
 }

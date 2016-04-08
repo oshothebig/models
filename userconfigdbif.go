@@ -8,8 +8,8 @@ import (
 	"utils/dbutils"
 )
 
-func (obj UserConfig) CreateDBTable(dbHdl *sql.DB) error {
-	dbCmd := "CREATE TABLE IF NOT EXISTS UserConfig " +
+func (obj User) CreateDBTable(dbHdl *sql.DB) error {
+	dbCmd := "CREATE TABLE IF NOT EXISTS User " +
 		"( " +
 		"UserName TEXT, " +
 		"Password TEXT, " +
@@ -22,9 +22,9 @@ func (obj UserConfig) CreateDBTable(dbHdl *sql.DB) error {
 	return err
 }
 
-func (obj UserConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
+func (obj User) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	var objectId int64
-	dbCmd := fmt.Sprintf("INSERT INTO UserConfig (UserName, Password, Description, Privilege) VALUES ('%v', '%v', '%v', '%v') ;",
+	dbCmd := fmt.Sprintf("INSERT INTO User (UserName, Password, Description, Privilege) VALUES ('%v', '%v', '%v', '%v') ;",
 		obj.UserName, obj.Password, obj.Description, obj.Privilege)
 	fmt.Println("**** Create Object called with ", obj)
 
@@ -41,48 +41,48 @@ func (obj UserConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	return objectId, err
 }
 
-func (obj UserConfig) DeleteObjectFromDb(objKey string, dbHdl *sql.DB) error {
+func (obj User) DeleteObjectFromDb(objKey string, dbHdl *sql.DB) error {
 	sqlKey, err := obj.GetSqlKeyStr(objKey)
 	if err != nil {
-		fmt.Println("GetSqlKeyStr for UserConfig with key", objKey, "failed with error", err)
+		fmt.Println("GetSqlKeyStr for User with key", objKey, "failed with error", err)
 		return err
 	}
 
-	dbCmd := "delete from UserConfig where " + sqlKey
-	fmt.Println("### DB Deleting UserConfig\n")
+	dbCmd := "delete from User where " + sqlKey
+	fmt.Println("### DB Deleting User\n")
 	_, err = dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
 
-func (obj UserConfig) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, error) {
-	var object UserConfig
+func (obj User) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, error) {
+	var object User
 	sqlKey, err := obj.GetSqlKeyStr(objKey)
-	dbCmd := "select * from UserConfig where " + sqlKey
+	dbCmd := "select * from User where " + sqlKey
 	err = dbHdl.QueryRow(dbCmd).Scan(&object.UserName, &object.Password, &object.Description, &object.Privilege)
-	fmt.Println("### DB Get UserConfig\n", err)
+	fmt.Println("### DB Get User\n", err)
 	return object, err
 }
 
-func (obj UserConfig) GetKey() (string, error) {
-	keyName := "UserConfig"
+func (obj User) GetKey() (string, error) {
+	keyName := "User"
 	keyName = strings.TrimSuffix(keyName, "Config")
 	keyName = strings.TrimSuffix(keyName, "State")
 	key := keyName + "#" + string(obj.UserName)
 	return key, nil
 }
 
-func (obj UserConfig) GetSqlKeyStr(objKey string) (string, error) {
+func (obj User) GetSqlKeyStr(objKey string) (string, error) {
 	keys := strings.Split(objKey, "#")
 	sqlKey := "UserName = " + "\"" + keys[1] + "\""
 	return sqlKey, nil
 }
 
-func (obj UserConfig) GetAllObjFromDb(dbHdl *sql.DB) (objList []ConfigObj, err error) {
-	var object UserConfig
-	dbCmd := "select * from UserConfig"
+func (obj User) GetAllObjFromDb(dbHdl *sql.DB) (objList []ConfigObj, err error) {
+	var object User
+	dbCmd := "select * from User"
 	rows, err := dbHdl.Query(dbCmd)
 	if err != nil {
-		fmt.Println(fmt.Sprintf("DB method Query failed for 'UserConfig' with error UserConfig", dbCmd, err))
+		fmt.Println(fmt.Sprintf("DB method Query failed for 'User' with error User", dbCmd, err))
 		return objList, err
 	}
 
@@ -92,15 +92,15 @@ func (obj UserConfig) GetAllObjFromDb(dbHdl *sql.DB) (objList []ConfigObj, err e
 
 		if err = rows.Scan(&object.UserName, &object.Password, &object.Description, &object.Privilege); err != nil {
 
-			fmt.Println("Db method Scan failed when interating over UserConfig")
+			fmt.Println("Db method Scan failed when interating over User")
 		}
 		objList = append(objList, object)
 	}
 	return objList, nil
 }
 
-func (obj UserConfig) CompareObjectsAndDiff(updateKeys map[string]bool, dbObj ConfigObj) ([]bool, error) {
-	dbV4Route := dbObj.(UserConfig)
+func (obj User) CompareObjectsAndDiff(updateKeys map[string]bool, dbObj ConfigObj) ([]bool, error) {
+	dbV4Route := dbObj.(User)
 	objTyp := reflect.TypeOf(obj)
 	objVal := reflect.ValueOf(obj)
 	dbObjVal := reflect.ValueOf(dbV4Route)
@@ -174,12 +174,12 @@ func (obj UserConfig) CompareObjectsAndDiff(updateKeys map[string]bool, dbObj Co
 	return attrIds[:idx], nil
 }
 
-func (obj UserConfig) MergeDbAndConfigObj(dbObj ConfigObj, attrSet []bool) (ConfigObj, error) {
-	var mergedUserConfig UserConfig
+func (obj User) MergeDbAndConfigObj(dbObj ConfigObj, attrSet []bool) (ConfigObj, error) {
+	var mergedUser User
 	objTyp := reflect.TypeOf(obj)
 	objVal := reflect.ValueOf(obj)
 	dbObjVal := reflect.ValueOf(dbObj)
-	mergedObjVal := reflect.ValueOf(&mergedUserConfig)
+	mergedObjVal := reflect.ValueOf(&mergedUser)
 	idx := 0
 	for i := 0; i < objTyp.NumField(); i++ {
 		if fieldTyp := objTyp.Field(i); fieldTyp.Anonymous {
@@ -228,15 +228,15 @@ func (obj UserConfig) MergeDbAndConfigObj(dbObj ConfigObj, attrSet []bool) (Conf
 		idx++
 
 	}
-	return mergedUserConfig, nil
+	return mergedUser, nil
 }
 
-func (obj UserConfig) UpdateObjectInDb(dbObj ConfigObj, attrSet []bool, dbHdl *sql.DB) error {
+func (obj User) UpdateObjectInDb(dbObj ConfigObj, attrSet []bool, dbHdl *sql.DB) error {
 	var fieldSqlStr string
-	dbUserConfig := dbObj.(UserConfig)
-	objKey, err := dbUserConfig.GetKey()
-	objSqlKey, err := dbUserConfig.GetSqlKeyStr(objKey)
-	dbCmd := "update " + "UserConfig" + " set"
+	dbUser := dbObj.(User)
+	objKey, err := dbUser.GetKey()
+	objSqlKey, err := dbUser.GetSqlKeyStr(objKey)
+	dbCmd := "update " + "User" + " set"
 	objTyp := reflect.TypeOf(obj)
 	objVal := reflect.ValueOf(obj)
 	idx := 0

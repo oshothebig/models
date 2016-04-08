@@ -1,22 +1,4 @@
 {
-"AggregationLacpConfig" : {
-  "access": "w",
-  "owner": "lacpd",
-  "srcfile": "aggregationlacpconfigdbif.go",
-  "multiplicity": "*"
- },
-"AggregationLacpMemberStateCounters" : {
-  "access": "r",
-  "owner": "lacpd",
-  "srcfile": "genInterface.go",
-  "multiplicity": "*"
- },
-"AggregationLacpState" : {
-  "access": "r",
-  "owner": "lacpd",
-  "srcfile": "genInterface.go",
-  "multiplicity": "*"
- },
 "UserConfig" : {
   "access": "w",
   "owner": "confd",
