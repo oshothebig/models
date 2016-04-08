@@ -8,24 +8,29 @@ import (
 	"utils/dbutils"
 )
 
-func (obj User) CreateDBTable(dbHdl *sql.DB) error {
-	dbCmd := "CREATE TABLE IF NOT EXISTS User " +
+func (obj SystemStatus) CreateDBTable(dbHdl *sql.DB) error {
+	dbCmd := "CREATE TABLE IF NOT EXISTS SystemStatus " +
 		"( " +
-		"UserName TEXT, " +
-		"Password TEXT, " +
-		"Description TEXT, " +
-		"Privilege TEXT, " +
-		"PRIMARY KEY(UserName) " +
+		"Name TEXT, " +
+		"Ready INTEGER, " +
+		"Reason TEXT, " +
+		"UpTime TEXT, " +
+		"NumCreateCalls TEXT, " +
+		"NumDeleteCalls TEXT, " +
+		"NumUpdateCalls TEXT, " +
+		"NumGetCalls TEXT, " +
+		"NumActionCalls TEXT, " +
+		"PRIMARY KEY(Name) " +
 		")"
 
 	_, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
 
-func (obj User) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
+func (obj SystemStatus) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	var objectId int64
-	dbCmd := fmt.Sprintf("INSERT INTO User (UserName, Password, Description, Privilege) VALUES ('%v', '%v', '%v', '%v') ;",
-		obj.UserName, obj.Password, obj.Description, obj.Privilege)
+	dbCmd := fmt.Sprintf("INSERT INTO SystemStatus (Name, Ready, Reason, UpTime, NumCreateCalls, NumDeleteCalls, NumUpdateCalls, NumGetCalls, NumActionCalls) VALUES ('%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v') ;",
+		obj.Name, dbutils.ConvertBoolToInt(obj.Ready), obj.Reason, obj.UpTime, obj.NumCreateCalls, obj.NumDeleteCalls, obj.NumUpdateCalls, obj.NumGetCalls, obj.NumActionCalls)
 	fmt.Println("**** Create Object called with ", obj)
 
 	result, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
@@ -41,66 +46,70 @@ func (obj User) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	return objectId, err
 }
 
-func (obj User) DeleteObjectFromDb(objKey string, dbHdl *sql.DB) error {
+func (obj SystemStatus) DeleteObjectFromDb(objKey string, dbHdl *sql.DB) error {
 	sqlKey, err := obj.GetSqlKeyStr(objKey)
 	if err != nil {
-		fmt.Println("GetSqlKeyStr for User with key", objKey, "failed with error", err)
+		fmt.Println("GetSqlKeyStr for SystemStatus with key", objKey, "failed with error", err)
 		return err
 	}
 
-	dbCmd := "delete from User where " + sqlKey
-	fmt.Println("### DB Deleting User\n")
+	dbCmd := "delete from SystemStatus where " + sqlKey
+	fmt.Println("### DB Deleting SystemStatus\n")
 	_, err = dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
 
-func (obj User) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, error) {
-	var object User
+func (obj SystemStatus) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, error) {
+	var object SystemStatus
 	sqlKey, err := obj.GetSqlKeyStr(objKey)
-	dbCmd := "select * from User where " + sqlKey
-	err = dbHdl.QueryRow(dbCmd).Scan(&object.UserName, &object.Password, &object.Description, &object.Privilege)
-	fmt.Println("### DB Get User\n", err)
+	dbCmd := "select * from SystemStatus where " + sqlKey
+	var tmp1 string
+	err = dbHdl.QueryRow(dbCmd).Scan(&object.Name, &tmp1, &object.Reason, &object.UpTime, &object.NumCreateCalls, &object.NumDeleteCalls, &object.NumUpdateCalls, &object.NumGetCalls, &object.NumActionCalls)
+	fmt.Println("### DB Get SystemStatus\n", err)
+	object.Ready = dbutils.ConvertStrBoolIntToBool(tmp1)
 	return object, err
 }
 
-func (obj User) GetKey() (string, error) {
-	keyName := "User"
+func (obj SystemStatus) GetKey() (string, error) {
+	keyName := "SystemStatus"
 	keyName = strings.TrimSuffix(keyName, "Config")
 	keyName = strings.TrimSuffix(keyName, "State")
-	key := keyName + "#" + string(obj.UserName)
+	key := keyName + "#" + string(obj.Name)
 	return key, nil
 }
 
-func (obj User) GetSqlKeyStr(objKey string) (string, error) {
+func (obj SystemStatus) GetSqlKeyStr(objKey string) (string, error) {
 	keys := strings.Split(objKey, "#")
-	sqlKey := "UserName = " + "\"" + keys[1] + "\""
+	sqlKey := "Name = " + "\"" + keys[1] + "\""
 	return sqlKey, nil
 }
 
-func (obj User) GetAllObjFromDb(dbHdl *sql.DB) (objList []ConfigObj, err error) {
-	var object User
-	dbCmd := "select * from User"
+func (obj SystemStatus) GetAllObjFromDb(dbHdl *sql.DB) (objList []ConfigObj, err error) {
+	var object SystemStatus
+	dbCmd := "select * from SystemStatus"
 	rows, err := dbHdl.Query(dbCmd)
 	if err != nil {
-		fmt.Println(fmt.Sprintf("DB method Query failed for 'User' with error User", dbCmd, err))
+		fmt.Println(fmt.Sprintf("DB method Query failed for 'SystemStatus' with error SystemStatus", dbCmd, err))
 		return objList, err
 	}
 
 	defer rows.Close()
 
+	var tmp1 string
 	for rows.Next() {
 
-		if err = rows.Scan(&object.UserName, &object.Password, &object.Description, &object.Privilege); err != nil {
+		if err = rows.Scan(&object.Name, &tmp1, &object.Reason, &object.UpTime, &object.NumCreateCalls, &object.NumDeleteCalls, &object.NumUpdateCalls, &object.NumGetCalls, &object.NumActionCalls); err != nil {
 
-			fmt.Println("Db method Scan failed when interating over User")
+			fmt.Println("Db method Scan failed when interating over SystemStatus")
 		}
+		object.Ready = dbutils.ConvertStrBoolIntToBool(tmp1)
 		objList = append(objList, object)
 	}
 	return objList, nil
 }
 
-func (obj User) CompareObjectsAndDiff(updateKeys map[string]bool, dbObj ConfigObj) ([]bool, error) {
-	dbV4Route := dbObj.(User)
+func (obj SystemStatus) CompareObjectsAndDiff(updateKeys map[string]bool, dbObj ConfigObj) ([]bool, error) {
+	dbV4Route := dbObj.(SystemStatus)
 	objTyp := reflect.TypeOf(obj)
 	objVal := reflect.ValueOf(obj)
 	dbObjVal := reflect.ValueOf(dbV4Route)
@@ -174,12 +183,12 @@ func (obj User) CompareObjectsAndDiff(updateKeys map[string]bool, dbObj ConfigOb
 	return attrIds[:idx], nil
 }
 
-func (obj User) MergeDbAndConfigObj(dbObj ConfigObj, attrSet []bool) (ConfigObj, error) {
-	var mergedUser User
+func (obj SystemStatus) MergeDbAndConfigObj(dbObj ConfigObj, attrSet []bool) (ConfigObj, error) {
+	var mergedSystemStatus SystemStatus
 	objTyp := reflect.TypeOf(obj)
 	objVal := reflect.ValueOf(obj)
 	dbObjVal := reflect.ValueOf(dbObj)
-	mergedObjVal := reflect.ValueOf(&mergedUser)
+	mergedObjVal := reflect.ValueOf(&mergedSystemStatus)
 	idx := 0
 	for i := 0; i < objTyp.NumField(); i++ {
 		if fieldTyp := objTyp.Field(i); fieldTyp.Anonymous {
@@ -228,15 +237,15 @@ func (obj User) MergeDbAndConfigObj(dbObj ConfigObj, attrSet []bool) (ConfigObj,
 		idx++
 
 	}
-	return mergedUser, nil
+	return mergedSystemStatus, nil
 }
 
-func (obj User) UpdateObjectInDb(dbObj ConfigObj, attrSet []bool, dbHdl *sql.DB) error {
+func (obj SystemStatus) UpdateObjectInDb(dbObj ConfigObj, attrSet []bool, dbHdl *sql.DB) error {
 	var fieldSqlStr string
-	dbUser := dbObj.(User)
-	objKey, err := dbUser.GetKey()
-	objSqlKey, err := dbUser.GetSqlKeyStr(objKey)
-	dbCmd := "update " + "User" + " set"
+	dbSystemStatus := dbObj.(SystemStatus)
+	objKey, err := dbSystemStatus.GetKey()
+	objSqlKey, err := dbSystemStatus.GetSqlKeyStr(objKey)
+	dbCmd := "update " + "SystemStatus" + " set"
 	objTyp := reflect.TypeOf(obj)
 	objVal := reflect.ValueOf(obj)
 	idx := 0

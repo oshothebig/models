@@ -17,8 +17,21 @@ type VlanState struct {
 
 type IPv4Intf struct {
 	BaseObj
-	IpAddr  string `SNAPROUTE: "KEY", ACCESS:"rw", DESCRIPTION: "Interface IP/Net mask to provision on switch interface"`
+	IpAddr  string `SNAPROUTE: "KEY", ACCESS:"w", DESCRIPTION: "Interface IP/Net mask in CIDR format to provision on switch interface"`
 	IfIndex int32  `DESCRIPTION: "System assigned interface id of L2 interface (port/lag/vlan) to which this IPv4 object is linked"`
+}
+
+type IPv4IntfState struct {
+	BaseObj
+	IpAddr            string `SNAPROUTE: "KEY", ACCESS:"r", DESCRIPTION: "Interface IP/Net mask in CIDR format to provision on switch interface"`
+	IfIndex           int32  `DESCRIPTION: "System assigned interface id of L2 interface (port/lag/vlan) to which this IPv4 object is linked"`
+	OperState         string `DESCRIPTION: "Operational state of this IP interface"`
+	NumUpEvents       int32  `DESCRIPTION: "Number of times the operational state transitioned from DOWN to UP"`
+	LastUpEventTime   string `DESCRIPTION: "Timestamp corresponding to the last DOWN to UP operational state change event"`
+	NumDownEvents     int32  `DESCRIPTION: "Number of times the operational state transitioned from UP to DOWN"`
+	LastDownEventTime string `DESCRIPTION: "Timestamp corresponding to the last UP to DOWN operational state change event"`
+	L2IntfType        string `DESCRIPTION: "Type of L2 interface on which IP has been configured (Port/Lag/Vlan)"`
+	L2IntfId          int32  `DESCRIPTION: "Id of the L2 interface. Port number/lag id/vlan id."`
 }
 
 type Port struct {
@@ -41,6 +54,10 @@ type PortState struct {
 	IfIndex           int32  `DESCRIPTION: "System assigned interface id for this port"`
 	Name              string `DESCRIPTION: "System assigned vlan name"`
 	OperState         string `DESCRIPTION: "Operational state of front panel port"`
+	NumUpEvents       int32  `DESCRIPTION: "Number of times the operational state transitioned from DOWN to UP"`
+	LastUpEventTime   string `DESCRIPTION: "Timestamp corresponding to the last DOWN to UP operational state change event"`
+	NumDownEvents     int32  `DESCRIPTION: "Number of times the operational state transitioned from UP to DOWN"`
+	LastDownEventTime string `DESCRIPTION: "Timestamp corresponding to the last UP to DOWN operational state change event"`
 	IfInOctets        int64  `DESCRIPTION: "RFC2233 Total number of octets received on this port"`
 	IfInUcastPkts     int64  `DESCRIPTION: "RFC2233 Total number of unicast packets received on this port"`
 	IfInDiscards      int64  `DESCRIPTION: "RFC2233 Total number of inbound packets that were discarded"`
