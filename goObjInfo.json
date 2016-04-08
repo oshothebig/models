@@ -23,6 +23,8 @@
                        "finalSvcName" : "asicdServices"},
 "dhcprelayObjects.go" :	 {"owner": "dhcprelayd",
 						  "location" : "l3/dhcp_relay/server", 
+						  "svcName" : "nil"},
+"lldpObjects.go" :	 {"owner": "lldpd",
+						  "location" : "l2/lldp/rpc", 
 						  "svcName" : "nil"}
-																  
 }

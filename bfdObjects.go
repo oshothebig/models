@@ -37,7 +37,7 @@ type BfdInterface struct {
 	RequiredMinEchoRxInterval uint32 `DESCRIPTION: "Required minimum echo rx interval in ms", DEFAULT: "0"`
 	DemandEnabled             bool   `DESCRIPTION: "Enable or disable demand mode", DEFAULT: "false"`
 	AuthenticationEnabled     bool   `DESCRIPTION: "Enable or disable authentication", DEFAULT: "false"`
-	AuthType                  string `DESCRIPTION: "Authentication type", DEFAULT: "simple"`
+	AuthType                  string `DESCRIPTION: "Authentication type, SELECTION: metmd5/keyedmd5/metsha1/keyedsha1/simple", DEFAULT: "simple"`
 	AuthKeyId                 uint32 `DESCRIPTION: "Authentication key id", DEFAULT: "1"`
 	AuthData                  string `DESCRIPTION: "Authentication password", DEFAULT: "snaproute"`
 }
@@ -76,9 +76,9 @@ type BfdSession struct {
  */
 type BfdSessionState struct {
 	BaseObj
-	SessionId             int32  `SNAPROUTE: "KEY", ACCESS:"r",  MULTIPLICITY:"*", DESCRIPTION: "Session index"`
+	IpAddr                string `SNAPROUTE: "KEY", ACCESS:"r",  MULTIPLICITY:"*",DESCRIPTION: "Neighbor IP address"`
+	SessionId             int32  `DESCRIPTION: "Session index"`
 	LocalIpAddr           string `DESCRIPTION: "My IP address"`
-	RemoteIpAddr          string `DESCRIPTION: "Neighbor IP address"`
 	IfIndex               int32  `DESCRIPTION: "Interface index"`
 	PerLinkSession        bool   `DESCRIPTION: "This is a perlink session on LAG"`
 	LocalMacAddr          string `DESCRIPTION: "My MAC address"`

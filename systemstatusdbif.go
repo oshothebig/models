@@ -8,32 +8,29 @@ import (
 	"utils/dbutils"
 )
 
-func (obj AggregationLacpConfig) CreateDBTable(dbHdl *sql.DB) error {
-	dbCmd := "CREATE TABLE IF NOT EXISTS AggregationLacpConfig " +
+func (obj SystemStatus) CreateDBTable(dbHdl *sql.DB) error {
+	dbCmd := "CREATE TABLE IF NOT EXISTS SystemStatus " +
 		"( " +
-		"LagType INTEGER, " +
-		"Enabled INTEGER, " +
-		"Description TEXT, " +
-		"Mtu INTEGER, " +
-		"Type TEXT, " +
-		"MinLinks INTEGER, " +
-		"NameKey TEXT, " +
-		"Interval INTEGER, " +
-		"LacpMode INTEGER, " +
-		"SystemIdMac TEXT, " +
-		"SystemPriority INTEGER, " +
-		"LagHash INTEGER, " +
-		"PRIMARY KEY(NameKey) " +
+		"Name TEXT, " +
+		"Ready INTEGER, " +
+		"Reason TEXT, " +
+		"UpTime TEXT, " +
+		"NumCreateCalls TEXT, " +
+		"NumDeleteCalls TEXT, " +
+		"NumUpdateCalls TEXT, " +
+		"NumGetCalls TEXT, " +
+		"NumActionCalls TEXT, " +
+		"PRIMARY KEY(Name) " +
 		")"
 
 	_, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
 
-func (obj AggregationLacpConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
+func (obj SystemStatus) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	var objectId int64
-	dbCmd := fmt.Sprintf("INSERT INTO AggregationLacpConfig (LagType, Enabled, Description, Mtu, Type, MinLinks, NameKey, Interval, LacpMode, SystemIdMac, SystemPriority, LagHash) VALUES ('%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v') ;",
-		obj.LagType, dbutils.ConvertBoolToInt(obj.Enabled), obj.Description, obj.Mtu, obj.Type, obj.MinLinks, obj.NameKey, obj.Interval, obj.LacpMode, obj.SystemIdMac, obj.SystemPriority, obj.LagHash)
+	dbCmd := fmt.Sprintf("INSERT INTO SystemStatus (Name, Ready, Reason, UpTime, NumCreateCalls, NumDeleteCalls, NumUpdateCalls, NumGetCalls, NumActionCalls) VALUES ('%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v', '%v') ;",
+		obj.Name, dbutils.ConvertBoolToInt(obj.Ready), obj.Reason, obj.UpTime, obj.NumCreateCalls, obj.NumDeleteCalls, obj.NumUpdateCalls, obj.NumGetCalls, obj.NumActionCalls)
 	fmt.Println("**** Create Object called with ", obj)
 
 	result, err := dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
@@ -49,50 +46,50 @@ func (obj AggregationLacpConfig) StoreObjectInDb(dbHdl *sql.DB) (int64, error) {
 	return objectId, err
 }
 
-func (obj AggregationLacpConfig) DeleteObjectFromDb(objKey string, dbHdl *sql.DB) error {
+func (obj SystemStatus) DeleteObjectFromDb(objKey string, dbHdl *sql.DB) error {
 	sqlKey, err := obj.GetSqlKeyStr(objKey)
 	if err != nil {
-		fmt.Println("GetSqlKeyStr for AggregationLacpConfig with key", objKey, "failed with error", err)
+		fmt.Println("GetSqlKeyStr for SystemStatus with key", objKey, "failed with error", err)
 		return err
 	}
 
-	dbCmd := "delete from AggregationLacpConfig where " + sqlKey
-	fmt.Println("### DB Deleting AggregationLacpConfig\n")
+	dbCmd := "delete from SystemStatus where " + sqlKey
+	fmt.Println("### DB Deleting SystemStatus\n")
 	_, err = dbutils.ExecuteSQLStmt(dbCmd, dbHdl)
 	return err
 }
 
-func (obj AggregationLacpConfig) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, error) {
-	var object AggregationLacpConfig
+func (obj SystemStatus) GetObjectFromDb(objKey string, dbHdl *sql.DB) (ConfigObj, error) {
+	var object SystemStatus
 	sqlKey, err := obj.GetSqlKeyStr(objKey)
-	dbCmd := "select * from AggregationLacpConfig where " + sqlKey
+	dbCmd := "select * from SystemStatus where " + sqlKey
 	var tmp1 string
-	err = dbHdl.QueryRow(dbCmd).Scan(&object.LagType, &tmp1, &object.Description, &object.Mtu, &object.Type, &object.MinLinks, &object.NameKey, &object.Interval, &object.LacpMode, &object.SystemIdMac, &object.SystemPriority, &object.LagHash)
-	fmt.Println("### DB Get AggregationLacpConfig\n", err)
-	object.Enabled = dbutils.ConvertStrBoolIntToBool(tmp1)
+	err = dbHdl.QueryRow(dbCmd).Scan(&object.Name, &tmp1, &object.Reason, &object.UpTime, &object.NumCreateCalls, &object.NumDeleteCalls, &object.NumUpdateCalls, &object.NumGetCalls, &object.NumActionCalls)
+	fmt.Println("### DB Get SystemStatus\n", err)
+	object.Ready = dbutils.ConvertStrBoolIntToBool(tmp1)
 	return object, err
 }
 
-func (obj AggregationLacpConfig) GetKey() (string, error) {
-	keyName := "AggregationLacpConfig"
+func (obj SystemStatus) GetKey() (string, error) {
+	keyName := "SystemStatus"
 	keyName = strings.TrimSuffix(keyName, "Config")
 	keyName = strings.TrimSuffix(keyName, "State")
-	key := keyName + "#" + string(obj.NameKey)
+	key := keyName + "#" + string(obj.Name)
 	return key, nil
 }
 
-func (obj AggregationLacpConfig) GetSqlKeyStr(objKey string) (string, error) {
+func (obj SystemStatus) GetSqlKeyStr(objKey string) (string, error) {
 	keys := strings.Split(objKey, "#")
-	sqlKey := "NameKey = " + "\"" + keys[1] + "\""
+	sqlKey := "Name = " + "\"" + keys[1] + "\""
 	return sqlKey, nil
 }
 
-func (obj AggregationLacpConfig) GetAllObjFromDb(dbHdl *sql.DB) (objList []ConfigObj, err error) {
-	var object AggregationLacpConfig
-	dbCmd := "select * from AggregationLacpConfig"
+func (obj SystemStatus) GetAllObjFromDb(dbHdl *sql.DB) (objList []ConfigObj, err error) {
+	var object SystemStatus
+	dbCmd := "select * from SystemStatus"
 	rows, err := dbHdl.Query(dbCmd)
 	if err != nil {
-		fmt.Println(fmt.Sprintf("DB method Query failed for 'AggregationLacpConfig' with error AggregationLacpConfig", dbCmd, err))
+		fmt.Println(fmt.Sprintf("DB method Query failed for 'SystemStatus' with error SystemStatus", dbCmd, err))
 		return objList, err
 	}
 
@@ -101,18 +98,18 @@ func (obj AggregationLacpConfig) GetAllObjFromDb(dbHdl *sql.DB) (objList []Confi
 	var tmp1 string
 	for rows.Next() {
 
-		if err = rows.Scan(&object.LagType, &tmp1, &object.Description, &object.Mtu, &object.Type, &object.MinLinks, &object.NameKey, &object.Interval, &object.LacpMode, &object.SystemIdMac, &object.SystemPriority, &object.LagHash); err != nil {
+		if err = rows.Scan(&object.Name, &tmp1, &object.Reason, &object.UpTime, &object.NumCreateCalls, &object.NumDeleteCalls, &object.NumUpdateCalls, &object.NumGetCalls, &object.NumActionCalls); err != nil {
 
-			fmt.Println("Db method Scan failed when interating over AggregationLacpConfig")
+			fmt.Println("Db method Scan failed when interating over SystemStatus")
 		}
-		object.Enabled = dbutils.ConvertStrBoolIntToBool(tmp1)
+		object.Ready = dbutils.ConvertStrBoolIntToBool(tmp1)
 		objList = append(objList, object)
 	}
 	return objList, nil
 }
 
-func (obj AggregationLacpConfig) CompareObjectsAndDiff(updateKeys map[string]bool, dbObj ConfigObj) ([]bool, error) {
-	dbV4Route := dbObj.(AggregationLacpConfig)
+func (obj SystemStatus) CompareObjectsAndDiff(updateKeys map[string]bool, dbObj ConfigObj) ([]bool, error) {
+	dbV4Route := dbObj.(SystemStatus)
 	objTyp := reflect.TypeOf(obj)
 	objVal := reflect.ValueOf(obj)
 	dbObjVal := reflect.ValueOf(dbV4Route)
@@ -186,12 +183,12 @@ func (obj AggregationLacpConfig) CompareObjectsAndDiff(updateKeys map[string]boo
 	return attrIds[:idx], nil
 }
 
-func (obj AggregationLacpConfig) MergeDbAndConfigObj(dbObj ConfigObj, attrSet []bool) (ConfigObj, error) {
-	var mergedAggregationLacpConfig AggregationLacpConfig
+func (obj SystemStatus) MergeDbAndConfigObj(dbObj ConfigObj, attrSet []bool) (ConfigObj, error) {
+	var mergedSystemStatus SystemStatus
 	objTyp := reflect.TypeOf(obj)
 	objVal := reflect.ValueOf(obj)
 	dbObjVal := reflect.ValueOf(dbObj)
-	mergedObjVal := reflect.ValueOf(&mergedAggregationLacpConfig)
+	mergedObjVal := reflect.ValueOf(&mergedSystemStatus)
 	idx := 0
 	for i := 0; i < objTyp.NumField(); i++ {
 		if fieldTyp := objTyp.Field(i); fieldTyp.Anonymous {
@@ -240,15 +237,15 @@ func (obj AggregationLacpConfig) MergeDbAndConfigObj(dbObj ConfigObj, attrSet []
 		idx++
 
 	}
-	return mergedAggregationLacpConfig, nil
+	return mergedSystemStatus, nil
 }
 
-func (obj AggregationLacpConfig) UpdateObjectInDb(dbObj ConfigObj, attrSet []bool, dbHdl *sql.DB) error {
+func (obj SystemStatus) UpdateObjectInDb(dbObj ConfigObj, attrSet []bool, dbHdl *sql.DB) error {
 	var fieldSqlStr string
-	dbAggregationLacpConfig := dbObj.(AggregationLacpConfig)
-	objKey, err := dbAggregationLacpConfig.GetKey()
-	objSqlKey, err := dbAggregationLacpConfig.GetSqlKeyStr(objKey)
-	dbCmd := "update " + "AggregationLacpConfig" + " set"
+	dbSystemStatus := dbObj.(SystemStatus)
+	objKey, err := dbSystemStatus.GetKey()
+	objSqlKey, err := dbSystemStatus.GetSqlKeyStr(objKey)
+	dbCmd := "update " + "SystemStatus" + " set"
 	objTyp := reflect.TypeOf(obj)
 	objVal := reflect.ValueOf(obj)
 	idx := 0
