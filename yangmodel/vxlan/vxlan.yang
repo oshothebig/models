@@ -170,7 +170,7 @@ module vxlan {
 
     container vtep {
             list instances {
-               key "vtep-id vxlan-id";
+               key "vtep-id";
                leaf vtep-id {
                   type uint32;
 				config true;
