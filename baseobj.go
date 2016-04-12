@@ -47,3 +47,7 @@ func (b BaseObj) UpdateObjectInDb(dbV4Route ConfigObj, attrSet []bool, dbHdl *sq
 func (b BaseObj) GetAllObjFromDb(dbHdl *sql.DB) (objList []ConfigObj, err error) {
 	return objList, nil
 }
+
+func (b BaseObj) GetBulkObjFromDb(startIndex int64, count int64, dbHdl *sql.DB) (error, int64, int64, bool, []ConfigObj) {
+	return nil, 0, 0, false, nil
+}

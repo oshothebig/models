@@ -19,6 +19,7 @@ type ConfigObj interface {
 	MergeDbAndConfigObj(dbObj ConfigObj, attrSet []bool) (ConfigObj, error)
 	UpdateObjectInDb(dbV4Route ConfigObj, attrSet []bool, dbHdl *sql.DB) error
 	GetAllObjFromDb(dbHdl *sql.DB) ([]ConfigObj, error)
+	GetBulkObjFromDb(startIndex int64, count int64, dbHdl *sql.DB) (error, int64, int64, bool, []ConfigObj)
 }
 
 //
