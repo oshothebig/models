@@ -18,3 +18,13 @@ type ArpEntryState struct {
 	Intf           string `DESCRIPTION: "Router Interface to which neighbor is attached to"`
 	ExpiryTimeLeft string `DESCRIPTION: "Time left before entry expires in case neighbor departs"`
 }
+
+type ArpDeleteByIPv4Addr struct {
+	BaseObj
+	IpAddr string `SNAPROUTE: "KEY", ACCESS:"x", MULTIPLICITY:"1", DESCRIPTION: "Neighbor's IP Address for which corresponding Arp entry needed to be re-learned"`
+}
+
+type ArpDeleteByIfName struct {
+	BaseObj
+	IfName string `SNAPROUTE: "KEY", ACCESS:"x", MULTIPLICITY:"1", DESCRIPTION: "All the Arp learned on given IfName will be deleted and re-learned"`
+}
