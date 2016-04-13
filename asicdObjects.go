@@ -70,11 +70,27 @@ type PortState struct {
 	ErrDisableReason  string `DESCRIPTION: "Reason explaining why port has been disabled by protocol code"`
 }
 
-type MacTableEntry struct {
+type MacTableEntryState struct {
 	BaseObj
 	MacAddr string `SNAPROUTE: "KEY", ACCESS:"r", DESCRIPTION: "MAC Address"`
-	VlanId  int32  `DESCRIPTION: "Vlan id corresponding to which mac was learned"`
-	Port    int32  `DESCRIPTION: "Port number on which mac was learned"`
+	VlanId  int32  `DESCRIPTION: "Vlan id corresponding to which mac was learned", DEFAULT:0`
+	Port    int32  `DESCRIPTION: "Port number on which mac was learned", DEFAULT:0`
+}
+
+type IPv4RouteHwState struct {
+	BaseObj
+	DestinationNw    string `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "IP address of the route in CIDR format"`
+	NextHopIps       string `DESCRIPTION: "next hop ip list for the route"`
+	RouteCreatedTime string `DESCRIPTION :"Time when the route was added"`
+	RouteUpdatedTime string `DESCRIPTION :"Time when the route was last updated"`
+}
+
+type ArpEntryHwState struct {
+	BaseObj
+	IpAddr  string `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", QPARAM: "optional" ,DESCRIPTION: "Neighbor's IP Address"`
+	MacAddr string `DESCRIPTION: "MAC address of the neighbor machine with corresponding IP Address", QPARAM: "optional" `
+	Vlan    string `DESCRIPTION: "Vlan ID of the Router Interface to which neighbor is attached to", QPARAM: "optional" `
+	Port    string `DESCRIPTION: "Router Interface to which neighbor is attached to", QPARAM: "optional" `
 }
 
 type LogicalIntf struct {
