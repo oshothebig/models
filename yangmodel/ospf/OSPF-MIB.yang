@@ -113,6 +113,7 @@ import ietf-inet-types { prefix inet; }
 
   typedef AreaID {
     type inet:ipv4-address;
+    default "0.0.0.0";
     description     
      "An OSPF Area Identifier.
       Note that the Area ID, in OSPF, has the same format
@@ -122,6 +123,7 @@ import ietf-inet-types { prefix inet; }
 
   typedef RouterID {
     type inet:ipv4-address;
+    default "0.0.0.0";
     description     
      "A OSPF Router Identifier.
       Note that the Router ID, in OSPF, has the same format
@@ -243,7 +245,7 @@ import ietf-inet-types { prefix inet; }
 
     /* XXX table comments here XXX */
 
-    list AreaEntryConfig {
+    list AreaEntry {
 
       key "AreaId";
       description   
@@ -331,6 +333,7 @@ import ietf-inet-types { prefix inet; }
         type ospf-mib:PositiveInteger;
         units "seconds";
         config true;
+		default "40";
         description 
          "The number of seconds after an elected translator
           determines its services are no longer required, that
@@ -449,7 +452,7 @@ list AreaEntryState {
 	}
     /* XXX table comments here XXX */
 
-    list StubAreaEntryConfig {
+    list StubAreaEntry {
 
       key "StubAreaId StubTOS";
       description   
@@ -636,7 +639,7 @@ list AreaEntryState {
 
     /* XXX table comments here XXX */
 
-    list AreaRangeEntryConfig {
+    list AreaRangeEntry {
 
       key "AreaRangeAreaId AreaRangeNet";
       status obsolete;
@@ -702,7 +705,7 @@ list AreaEntryState {
 
     /* XXX table comments here XXX */
 
-    list HostEntryConfig {
+    list HostEntry {
 
       key "HostIpAddress HostTOS";
       description   
@@ -794,7 +797,7 @@ list HostEntryState {
 
     /* XXX table comments here XXX */
 
-    list IfEntryConfig {
+    list IfEntry {
 
       key "IfIpAddress AddressLessIf";
       description   
@@ -827,6 +830,7 @@ list HostEntryState {
       leaf IfAreaId {
         type ospf-mib:AreaID;
         config true;
+		default "0.0.0.0";
         description 
          "A 32-bit integer uniquely identifying the area
           to which the interface connects.  Area ID
@@ -866,6 +870,7 @@ list HostEntryState {
       leaf IfRtrPriority {
         type ospf-mib:DesignatedRouterPriority;
         config true;
+		default "1";
         description 
          "The priority of this interface.  Used in
           multi-access networks, this field is used in
@@ -880,6 +885,7 @@ list HostEntryState {
         type ospf-mib:UpToMaxAge;
         units "seconds";
         config true;
+		default "1";
         description 
          "The estimated number of seconds it takes to
           transmit a link state update packet over this
@@ -891,6 +897,7 @@ list HostEntryState {
         type ospf-mib:UpToMaxAge;
         units "seconds";
         config true;
+		default "5";
         description 
          "The number of seconds between link state advertisement
           retransmissions, for adjacencies belonging to this
@@ -904,6 +911,7 @@ list HostEntryState {
         type ospf-mib:HelloRange;
         units "seconds";
         config true;
+		default "10";
         description 
          "The length of time, in seconds, between the Hello packets
           that the router sends on the interface.  This value must be
@@ -914,6 +922,7 @@ list HostEntryState {
         type ospf-mib:PositiveInteger;
         units "seconds";
         config true;
+		default "40";
         description 
          "The number of seconds that a router's Hello packets have
           not been seen before its neighbors declare the router down.
@@ -926,6 +935,7 @@ list HostEntryState {
         type ospf-mib:PositiveInteger;
         units "seconds";
         config true;
+		default "120";
         description 
          "The larger time interval, in seconds, between the Hello
           packets sent to an inactive non-broadcast multi-access
@@ -988,6 +998,7 @@ list HostEntryState {
       leaf IfDemand {
         type boolean;
         config true;
+        default "false";
         description 
          "Indicates whether Demand OSPF procedures (hello
           suppression to FULL neighbors and setting the
@@ -1055,6 +1066,7 @@ list HostEntryState {
       leaf IfDesignatedRouter {
         type inet:ipv4-address;
         config false;
+        default "0.0.0.0";
         description 
          "The IP address of the designated router.";
       }
@@ -1116,7 +1128,7 @@ list HostEntryState {
 
     /* XXX table comments here XXX */
 
-    list IfMetricEntryConfig {
+    list IfMetricEntry {
 
       key "IfMetricIpAddress IfMetricAddressLessIf 
            IfMetricTOS";
@@ -1176,7 +1188,7 @@ list HostEntryState {
 
     /* XXX table comments here XXX */
 
-    list VirtIfEntryConfig {
+    list VirtIfEntry {
 
       key "VirtIfAreaId VirtIfNeighbor";
       description   
@@ -1206,6 +1218,7 @@ list HostEntryState {
         type ospf-mib:UpToMaxAge;
         units "seconds";
         config true;
+		default "1";
         description 
          "The estimated number of seconds it takes to
           transmit a Link State update packet over this
@@ -1217,6 +1230,7 @@ list HostEntryState {
         type ospf-mib:UpToMaxAge;
         units "seconds";
         config true;
+		default "5";
         description 
          "The number of seconds between link state
           avertisement retransmissions, for adjacencies
@@ -1232,6 +1246,7 @@ list HostEntryState {
         type ospf-mib:HelloRange;
         units "seconds";
         config true;
+		default "10";
         description 
          "The length of time, in seconds, between the
           Hello packets that the router sends on the
@@ -1243,6 +1258,7 @@ list HostEntryState {
         type ospf-mib:PositiveInteger;
         units "seconds";
         config true;
+		default "60";
         description 
          "The number of seconds that a router's Hello
           packets have not been seen before its
@@ -1303,7 +1319,7 @@ list HostEntryState {
  
     /* XXX table comments here XXX */
 
-    list NbrEntryConfig {
+    list NbrEntry {
 
       key "NbrIpAddr NbrAddressLessIndex";
       description   
@@ -1344,6 +1360,7 @@ list HostEntryState {
       leaf NbrPriority {
         type ospf-mib:DesignatedRouterPriority;
         config true;
+	default "1";
         description 
          "The priority of this neighbor in the designated
           router election algorithm.  The value 0 signifies
@@ -1391,6 +1408,7 @@ list NbrEntryState {
 	    leaf NbrRtrId {
         type ospf-mib:RouterID;
         config false;
+	default "0.0.0.0";
         description 
          "A 32-bit integer (represented as a type
           IpAddress) uniquely identifying the neighboring
@@ -1400,6 +1418,7 @@ list NbrEntryState {
       leaf NbrOptions {
         type int32;
         config false;
+		default "0";
         description 
          "A bit mask corresponding to the neighbor's
           options field.
@@ -1553,6 +1572,7 @@ list NbrEntryState {
       leaf VirtNbrOptions {
         type int32;
         config false;
+		default "0";
         description 
          "A bit mask corresponding to the neighbor's
           options field.
@@ -1759,7 +1779,7 @@ list NbrEntryState {
 
     /* XXX table comments here XXX */
 
-    list AreaAggregateEntryConfig {
+    list AreaAggregateEntry {
 
       key "AreaAggregateAreaID AreaAggregateLsdbType 
            AreaAggregateNet AreaAggregateMask";
@@ -1834,6 +1854,7 @@ list NbrEntryState {
       leaf AreaAggregateExtRouteTag {
         type uint32;
         config true;
+		default "0";
         description 
          "External route tag to be included in NSSA (type-7)
           LSAs.";
@@ -2241,7 +2262,7 @@ list NbrEntryState {
       }
 	}
 	
-list GlobalConfig {
+list Global {
       key RouterId;
     leaf RouterId {
       type ospf-mib:RouterID;

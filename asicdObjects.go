@@ -73,8 +73,8 @@ type PortState struct {
 type MacTableEntryState struct {
 	BaseObj
 	MacAddr string `SNAPROUTE: "KEY", ACCESS:"r", DESCRIPTION: "MAC Address"`
-	VlanId  int32  `DESCRIPTION: "Vlan id corresponding to which mac was learned"`
-	Port    int32  `DESCRIPTION: "Port number on which mac was learned"`
+	VlanId  int32  `DESCRIPTION: "Vlan id corresponding to which mac was learned", DEFAULT:0`
+	Port    int32  `DESCRIPTION: "Port number on which mac was learned", DEFAULT:0`
 }
 
 type IPv4RouteHwState struct {
@@ -87,10 +87,10 @@ type IPv4RouteHwState struct {
 
 type ArpEntryHwState struct {
 	BaseObj
-	IpAddr  string `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Neighbor's IP Address"`
-	MacAddr string `DESCRIPTION: "MAC address of the neighbor machine with corresponding IP Address"`
-	Vlan    string `DESCRIPTION: "Vlan ID of the Router Interface to which neighbor is attached to"`
-	Port    string `DESCRIPTION: "Router Interface to which neighbor is attached to"`
+	IpAddr  string `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", QPARAM: "optional" ,DESCRIPTION: "Neighbor's IP Address"`
+	MacAddr string `DESCRIPTION: "MAC address of the neighbor machine with corresponding IP Address", QPARAM: "optional" `
+	Vlan    string `DESCRIPTION: "Vlan ID of the Router Interface to which neighbor is attached to", QPARAM: "optional" `
+	Port    string `DESCRIPTION: "Router Interface to which neighbor is attached to", QPARAM: "optional" `
 }
 
 type LogicalIntf struct {
