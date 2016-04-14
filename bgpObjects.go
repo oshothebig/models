@@ -62,9 +62,9 @@ type BGPNeighbor struct {
 	PeerGroup               string `DESCRIPTION: "Peer group of the BGP neighbor", DEFAULT: ""`
 	BfdEnable               bool   `DESCRIPTION: "Enable/Disable BFD for the BGP neighbor", DEFAULT: "false"`
 	MaxPrefixes             uint32 `DESCRIPTION: "Maximum number of prefixes that can be received from the BGP neighbor", DEFAULT: "0"`
-	MaxPrefixesThresholdPct uint8  `DESCRIPTION: "The percentage of maximum prefixes before we start logging", DEFAULT: "false"`
+	MaxPrefixesThresholdPct uint8  `DESCRIPTION: "The percentage of maximum prefixes before we start logging", DEFAULT: "80"`
 	MaxPrefixesDisconnect   bool   `DESCRIPTION: "Disconnect the BGP peer session when we receive the max prefixes from the neighbor", DEFAULT: "false"`
-	MaxPrefixesRestartTimer uint8  `DESCRIPTION: "Time to wait before we start BGP peer session when we receive max prefixes", DEFAULT: "0"`
+	MaxPrefixesRestartTimer uint8  `DESCRIPTION: "Time in seconds to wait before we start BGP peer session when we receive max prefixes", DEFAULT: "0"`
 }
 
 type BGPNeighborState struct {
