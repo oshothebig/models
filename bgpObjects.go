@@ -61,6 +61,10 @@ type BGPNeighbor struct {
 	AddPathsMaxTx           uint8  `DESCRIPTION: "Max number of additional paths that can be transmitted to BGP neighbor", DEFAULT: "0"`
 	PeerGroup               string `DESCRIPTION: "Peer group of the BGP neighbor", DEFAULT: ""`
 	BfdEnable               bool   `DESCRIPTION: "Enable/Disable BFD for the BGP neighbor", DEFAULT: "false"`
+	MaxPrefixes             uint32 `DESCRIPTION: "Maximum number of prefixes that can be received from the BGP neighbor", DEFAULT: "0"`
+	MaxPrefixesThresholdPct uint8  `DESCRIPTION: "The percentage of maximum prefixes before we start logging", DEFAULT: "80"`
+	MaxPrefixesDisconnect   bool   `DESCRIPTION: "Disconnect the BGP peer session when we receive the max prefixes from the neighbor", DEFAULT: "false"`
+	MaxPrefixesRestartTimer uint8  `DESCRIPTION: "Time in seconds to wait before we start BGP peer session when we receive max prefixes", DEFAULT: "0"`
 }
 
 type BGPNeighborState struct {
@@ -86,6 +90,11 @@ type BGPNeighborState struct {
 	BfdNeighborState        string      `DESCRIPTION: "BFD state of the BGP neighbor"`
 	AddPathsRx              bool        `DESCRIPTION: "Receive additional paths from BGP neighbor"`
 	AddPathsMaxTx           uint8       `DESCRIPTION: "Max number of additional paths that can be transmitted to BGP neighbor"`
+	MaxPrefixes             uint32      `DESCRIPTION: "Maximum number of prefixes that can be received from the BGP neighbor"`
+	MaxPrefixesThresholdPct uint8       `DESCRIPTION: "The percentage of maximum prefixes before we start logging"`
+	MaxPrefixesDisconnect   bool        `DESCRIPTION: "Disconnect the BGP peer session when we receive the max prefixes from the neighbor"`
+	MaxPrefixesRestartTimer uint8       `DESCRIPTION: "Time to wait before we start BGP peer session when we receive max prefixes"`
+	TotalPrefixes           uint32      `DESCRIPTION: "Total number of prefixes received from the BGP neighbor"`
 }
 
 type BGPPeerGroup struct {
@@ -104,6 +113,10 @@ type BGPPeerGroup struct {
 	KeepaliveTime           uint32 `DESCRIPTION: "Keep alive time for the BGP neighbor", DEFAULT: "60"`
 	AddPathsRx              bool   `DESCRIPTION: "Receive additional paths from BGP neighbor", DEFAULT: "false"`
 	AddPathsMaxTx           uint8  `DESCRIPTION: "Max number of additional paths that can be transmitted to BGP neighbor", DEFAULT: "0"`
+	MaxPrefixes             uint32 `DESCRIPTION: "Maximum number of prefixes that can be received from the BGP neighbor", DEFAULT: "0"`
+	MaxPrefixesThresholdPct uint8  `DESCRIPTION: "The percentage of maximum prefixes before we start logging", DEFAULT: "false"`
+	MaxPrefixesDisconnect   bool   `DESCRIPTION: "Disconnect the BGP peer session when we receive the max prefixes from the neighbor", DEFAULT: "false"`
+	MaxPrefixesRestartTimer uint8  `DESCRIPTION: "Time to wait before we start BGP peer session when we receive max prefixes", DEFAULT: "0"`
 }
 
 type BGPRouteState struct {
