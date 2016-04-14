@@ -101,7 +101,7 @@ func (obj Logout) UnmarshalObject(body []byte) (ConfigObj, error) {
 	return logoutObj, err
 }
 
-type SystemStatus struct {
+type SystemStatusState struct {
 	BaseObj
 	Name           string `SNAPROUTE: "KEY"`
 	Ready          bool
@@ -114,8 +114,8 @@ type SystemStatus struct {
 	NumActionCalls string
 }
 
-func (obj SystemStatus) UnmarshalObject(body []byte) (ConfigObj, error) {
-	var systemStatus SystemStatus
+func (obj SystemStatusState) UnmarshalObject(body []byte) (ConfigObj, error) {
+	var systemStatus SystemStatusState
 	var err error
 	if len(body) > 0 {
 		if err = json.Unmarshal(body, &systemStatus); err != nil {
