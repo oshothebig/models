@@ -30,8 +30,8 @@ var ConfigObjectMap = map[string]ConfigObj{
 	//"PolicyActionConfig":                               &PolicyActionConfig{},
 	//"PolicyActionState":                                &PolicyActionState{},
 	//"RouteDistanceState":                               &RouteDistanceState{},
-	"User":             &User{},
-	"UserState":        &UserState{},
-	"IPV4AddressBlock": &IPV4AddressBlock{},
-	"SystemStatus":     &SystemStatus{},
+	"User":              &User{},
+	"UserState":         &UserState{},
+	"IPV4AddressBlock":  &IPV4AddressBlock{},
+	"SystemStatusState": &SystemStatusState{},
 }

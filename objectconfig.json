@@ -17,7 +17,7 @@
 		"multiplicity":"*",
 		"srcfile": "objects.go"
 	},
-	"SystemStatus" : {
+	"SystemStatusState" : {
 		"access": "r",
 		"Owner": "local",
 		"multiplicity":"1",
