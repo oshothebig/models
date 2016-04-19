@@ -33,8 +33,8 @@ type IPv4EventState struct {
 type PolicyCondition struct {
 	BaseObj
 	Name            string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", DESCRIPTION: "PolicyConditionName"`
-	ConditionType   string `DESCRIPTION: "Specifies the match criterion this condition defines", SELECTION: "MatchProtocol"/"MatchDstIpPrefix"/"MatchSrcIpPrefix"`
-	MatchProtocol   string `DESCRIPTION: "Protocol to match on if the ConditionType is set to MatchProtocol",SELECTION:"CONNECTED"/"STATIC"/"OSPF"/"BGP"`
+	ConditionType   string `DESCRIPTION: "Specifies the match criterion this condition defines - eg: MatchProtocol/MatchDstIpPrefix"`
+	MatchProtocol   string `DESCRIPTION: "Protocol to match on if the ConditionType is set to MatchProtocol"`
 	IpPrefix        string `DESCRIPTION: "Used in conjunction with MaskLengthRange to specify the IP Prefix to match on when the ConditionType is MatchDstIpPrefix/MatchSrcIpPrefix."`
 	MaskLengthRange string `DESCRIPTION: "Used in conjuction with IpPrefix to specify specify the IP Prefix to match on when the ConditionType is MatchDstIpPrefix/MatchSrcIpPrefix."`
 }
@@ -45,7 +45,7 @@ type PolicyConditionState struct {
 	PolicyStmtList []string `DESCRIPTION: "List of policy statements using this condition"`
 }
 
-/*type PolicyAction struct {
+type PolicyAction struct {
 	BaseObj
 	Name                           string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", DESCRIPTION: "PolicyActionName"`
 	ActionType                     string `DESCRIPTION: "Specifies the type of the action  - eg: RouteDisposition/NetworkStatementAdvertise/Redistribution/SetAdminDistance"`
@@ -63,20 +63,19 @@ type PolicyActionState struct {
 	ActionInfo     string
 	PolicyStmtList []string `DESCRIPTION: "List of policy statements using this condition"`
 }
-*/
 type PolicyStmt struct {
 	BaseObj
 	Name            string   `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", DESCRIPTION: "Policy Statement Name"`
-	MatchConditions string   `DESCRIPTION :"Specifies whether to match all/any of the conditions of this policy statement",SELECTION:"any"/"all",DEFAULT:"all"`
+	MatchConditions string   `DESCRIPTION :"Specifies whether to match all/any of the conditions of this policy statement"`
 	Conditions      []string `DESCRIPTION :"List of conditions added to this policy statement"`
-	Actions         string   `DESCRIPTION :"Action for this policy statement", SELECTION:"permit"/"deny",DEFAULT: "deny"`
+	Actions         []string `DESCRIPTION :"List of actions added to this policy statement"`
 }
 type PolicyStmtState struct {
 	BaseObj
 	Name            string   `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "PolicyStmtState"`
 	MatchConditions string   `DESCRIPTION :"Specifies whether to match all/any of the conditions of this policy statement"`
 	Conditions      []string `DESCRIPTION :"List of conditions added to this policy statement"`
-	Actions         string   `DESCRIPTION :"Action corresponding to this policy statement"`
+	Actions         []string `DESCRIPTION :"List of actions added to this policy statement"`
 	PolicyList      []string `DESCRIPTION :"List of policies using this policy statement"`
 }
 type PolicyDefinitionStmtPrecedence struct {
