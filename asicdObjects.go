@@ -2,9 +2,9 @@ package models
 
 type Vlan struct {
 	BaseObj
-	VlanId           int32  `SNAPROUTE: "KEY", ACCESS:"rw", MULTIPLICITY: "*", DESCRIPTION: "802.1Q tag/Vlan ID for vlan being provisioned"`
-	IfIndexList      string `DESCRIPTION: "List of system assigned interface id's for tagged ports on this vlan"`
-	UntagIfIndexList string `DESCRIPTION: "List of system assigned interface id's for untagged ports on this vlan"`
+	VlanId        int32  `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY: "*", DESCRIPTION: "802.1Q tag/Vlan ID for vlan being provisioned"`
+	IntfList      string `DESCRIPTION: "List of interface names or ifindex values to  be added as tagged members of the vlan"`
+	UntagIntfList string `DESCRIPTION: "List of interface names or ifindex values to  be added as untagged members of the vlan"`
 }
 
 type VlanState struct {
@@ -18,7 +18,7 @@ type VlanState struct {
 type IPv4Intf struct {
 	BaseObj
 	IpAddr  string `SNAPROUTE: "KEY", ACCESS:"w", DESCRIPTION: "Interface IP/Net mask in CIDR format to provision on switch interface"`
-	IfIndex int32  `DESCRIPTION: "System assigned interface id of L2 interface (port/lag/vlan) to which this IPv4 object is linked"`
+	IntfRef string `DESCRIPTION: "Interface name or ifindex of port/lag or vlan on which this IPv4 object is configured"`
 }
 
 type IPv4IntfState struct {
@@ -119,7 +119,7 @@ type LogicalIntfState struct {
 type SubIPv4Intf struct {
 	BaseObj
 	IpAddr  string `SNAPROUTE: "KEY", ACCESS:"w", DESCRIPTION:"Ip Address for the interface"`
-	IfIndex int32  `SNAPROUTE: "KEY", ACCESS:"w", DESCRIPTION:"System generated id for the ipv4Intf where sub interface is to be configured"`
+	IntfRef string `SNAPROUTE: "KEY", ACCESS:"w", DESCRIPTION:"Intf name of system generated id (ifindex) of the ipv4Intf where sub interface is to be configured"`
 	Type    string `DESCRIPTION:"Type of interface, e.g. Secondary or Virtual"`
 	MacAddr string `DESCRIPTION:"Mac address to be used for the sub interface. If none specified IPv4Intf mac address will be used`
 	Enable  bool   `DESCRIPTION:"Enable or disable this interface", DEFAULT:false`
