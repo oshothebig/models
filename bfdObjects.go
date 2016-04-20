@@ -67,10 +67,10 @@ type BfdInterfaceState struct {
 type BfdSession struct {
 	BaseObj
 	IpAddr    string `SNAPROUTE: "KEY", ACCESS:"w",  MULTIPLICITY:"*", DESCRIPTION: "BFD neighbor IP address"`
+	ParamName string `DESCRIPTION: "Name of the session parameters object to be applied on this session", DEFAULT: "None"`
+	Interface string `DESCRIPTION: "Name of the interface this session has to be established on", DEFAULT: "None"`
 	PerLink   bool   `DESCRIPTION: "Run BFD sessions on individual link of a LAG if the neighbor is reachable through LAG", DEFAULT: "false"`
 	Owner     string `DESCRIPTION: "Module requesting BFD session configuration", DEFAULT: "user"`
-	ParamName string `DESCRIPTION: "Name of the session parameters objects to be applied on this session", DEFAULT: "None"`
-	Interface string `DESCRIPTION: "Name of the interface this session has to be established on", DEFAULT: "None"`
 }
 
 /*
@@ -112,7 +112,7 @@ type BfdSessionState struct {
  */
 type BfdSessionParam struct {
 	BaseObj
-	ParamName                 string `SNAPROUTE: "KEY", ACCESS:"w",  MULTIPLICITY:"*", DESCRIPTION: "Session parameters"`
+	Name                      string `SNAPROUTE: "KEY", ACCESS:"w",  MULTIPLICITY:"*", DESCRIPTION: "Session parameters"`
 	LocalMultiplier           uint32 `DESCRIPTION: "Detection multiplier", DEFAULT: "3"`
 	DesiredMinTxInterval      uint32 `DESCRIPTION: "Desired minimum tx interval in ms", DEFAULT: "1000"`
 	RequiredMinRxInterval     uint32 `DESCRIPTION: "Required minimum rx interval in ms", DEFAULT: "1000"`
@@ -129,7 +129,7 @@ type BfdSessionParam struct {
  */
 type BfdSessionParamState struct {
 	BaseObj
-	ParamName                 string `SNAPROUTE: "KEY", ACCESS:"r",  MULTIPLICITY:"*", DESCRIPTION: "Session parameters"`
+	Name                      string `SNAPROUTE: "KEY", ACCESS:"r",  MULTIPLICITY:"*", DESCRIPTION: "Session parameters"`
 	NumSessions               int32  `DESCRIPTION: "Number of sessions using these params"`
 	LocalMultiplier           int32  `DESCRIPTION: "Detection multiplier"`
 	DesiredMinTxInterval      string `DESCRIPTION: "Desired minimum tx interval"`
