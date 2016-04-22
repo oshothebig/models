@@ -1,5 +1,9 @@
 package models
 
+type SourcePolicyList struct {
+	Sources            string `DESCRIPTION: "Source Protocol(s) which BGP is interested in. Multiple sources can be specified as comma separated strings when the same policy needs to be applied"`
+	Policy             string `DESCRIPTION: "Policy that needs to be applied for redistribution of the specified sources into BGP"`
+}
 type BGPGlobal struct {
 	BaseObj
 	ASNum               uint32 `DESCRIPTION: "Local AS for BGP global config"`
@@ -8,6 +12,7 @@ type BGPGlobal struct {
 	EBGPMaxPaths        uint32 `DESCRIPTION: "Max ECMP paths from External BGP neighbors", DEFAULT: "0"`
 	EBGPAllowMultipleAS bool   `DESCRIPTION: "Enable/diable ECMP paths from multiple ASes", DEFAULT: "false"`
 	IBGPMaxPaths        uint32 `DESCRIPTION: "Max ECMP paths from Internal BGP neighbors", DEFAULT: "0"`
+	Redistribution      []SourcePolicyList `DESCRIPTION: "Provide redistribution policies for BGP from different sources"`
 }
 
 type BGPGlobalState struct {
