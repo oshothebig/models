@@ -284,13 +284,6 @@ module vxlan {
                      "Source MAC for the static VxLAN tunnel, if not supplied switch default should be used.";
               }
 
-              leaf dst-mac {
-                    type yang:mac-address;
-                    config true;
-                    description
-                     "Destination MAC address for the static VxLAN tunnel";
-              }
-
               leaf vlan-id {
                 type uint16;
                 config true;
