@@ -12,7 +12,7 @@ import (
 }
 */
 type BGPPolicyPrefixSet struct {
-	BaseObj
+	ConfigObj
 	PrefixSetName string `SNAPROUTE: "KEY"`
 	IpPrefixList  []PolicyPrefix
 }
