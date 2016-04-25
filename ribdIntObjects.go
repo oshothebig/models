@@ -22,7 +22,7 @@ type PolicyPrefix struct {
 }
 
 type PolicyPrefixSet struct {
-	BaseObj
+	ConfigObj
 	PrefixSetName string `SNAPROUTE: "KEY"`
 	/*
 	   List of prefix expressions that are part of the set
