@@ -1,14 +1,14 @@
 package models
 
 type Vlan struct {
-	BaseObj
+	ConfigObj
 	VlanId        int32  `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY: "*", DESCRIPTION: "802.1Q tag/Vlan ID for vlan being provisioned"`
 	IntfList      string `DESCRIPTION: "List of interface names or ifindex values to  be added as tagged members of the vlan"`
 	UntagIntfList string `DESCRIPTION: "List of interface names or ifindex values to  be added as untagged members of the vlan"`
 }
 
 type VlanState struct {
-	BaseObj
+	ConfigObj
 	VlanId    int32  `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY: "*", DESCRIPTION: "802.1Q tag/Vlan ID for vlan being provisioned"`
 	VlanName  string `DESCRIPTION: "System assigned vlan name"`
 	OperState string `DESCRIPTION: "Operational state of vlan interface"`
@@ -16,13 +16,13 @@ type VlanState struct {
 }
 
 type IPv4Intf struct {
-	BaseObj
+	ConfigObj
 	IpAddr  string `SNAPROUTE: "KEY", ACCESS:"w", DESCRIPTION: "Interface IP/Net mask in CIDR format to provision on switch interface"`
 	IntfRef string `DESCRIPTION: "Interface name or ifindex of port/lag or vlan on which this IPv4 object is configured"`
 }
 
 type IPv4IntfState struct {
-	BaseObj
+	ConfigObj
 	IpAddr            string `SNAPROUTE: "KEY", ACCESS:"r", DESCRIPTION: "Interface IP/Net mask in CIDR format to provision on switch interface"`
 	IfIndex           int32  `DESCRIPTION: "System assigned interface id of L2 interface (port/lag/vlan) to which this IPv4 object is linked"`
 	OperState         string `DESCRIPTION: "Operational state of this IP interface"`
@@ -35,7 +35,7 @@ type IPv4IntfState struct {
 }
 
 type Port struct {
-	BaseObj
+	ConfigObj
 	PortNum     int32  `SNAPROUTE: "KEY", ACCESS:"rw", DESCRIPTION: "Front panel port number"`
 	Description string `DESCRIPTION: "User provided string description", DEFAULT: "FP Port"`
 	PhyIntfType string `DESCRIPTION: "Type of internal phy interface"`
@@ -49,7 +49,7 @@ type Port struct {
 }
 
 type PortState struct {
-	BaseObj
+	ConfigObj
 	PortNum           int32  `SNAPROUTE: "KEY", ACCESS:"r", DESCRIPTION: "Front panel port number"`
 	IfIndex           int32  `DESCRIPTION: "System assigned interface id for this port"`
 	Name              string `DESCRIPTION: "System assigned vlan name"`
@@ -71,14 +71,14 @@ type PortState struct {
 }
 
 type MacTableEntryState struct {
-	BaseObj
-	MacAddr string `SNAPROUTE: "KEY", ACCESS:"r", DESCRIPTION: "MAC Address"`
+	ConfigObj
+	MacAddr string `SNAPROUTE: "KEY", ACCESS:"r", DESCRIPTION: "MAC Address", USESTATEDB:"true"`
 	VlanId  int32  `DESCRIPTION: "Vlan id corresponding to which mac was learned", DEFAULT:0`
 	Port    int32  `DESCRIPTION: "Port number on which mac was learned", DEFAULT:0`
 }
 
 type IPv4RouteHwState struct {
-	BaseObj
+	ConfigObj
 	DestinationNw    string `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "IP address of the route in CIDR format"`
 	NextHopIps       string `DESCRIPTION: "next hop ip list for the route"`
 	RouteCreatedTime string `DESCRIPTION :"Time when the route was added"`
@@ -86,7 +86,7 @@ type IPv4RouteHwState struct {
 }
 
 type ArpEntryHwState struct {
-	BaseObj
+	ConfigObj
 	IpAddr  string `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", QPARAM: "optional" ,DESCRIPTION: "Neighbor's IP Address"`
 	MacAddr string `DESCRIPTION: "MAC address of the neighbor machine with corresponding IP Address", QPARAM: "optional" `
 	Vlan    string `DESCRIPTION: "Vlan ID of the Router Interface to which neighbor is attached to", QPARAM: "optional" `
@@ -94,13 +94,13 @@ type ArpEntryHwState struct {
 }
 
 type LogicalIntf struct {
-	BaseObj
+	ConfigObj
 	Name string `SNAPROUTE: "KEY", ACCESS:"w", DESCRIPTION: "Name of logical interface"`
 	Type string `DESCRIPTION: "Type of logical interface (e.x. loopback)"`
 }
 
 type LogicalIntfState struct {
-	BaseObj
+	ConfigObj
 	Name              string `SNAPROUTE: "KEY", ACCESS:"r", DESCRIPTION: "Name of logical interface"`
 	IfIndex           int32  `DESCRIPTION: "System assigned interface id for this logical interface"`
 	SrcMac            string `DESCRIPTION: "Source Mac assigned to the interface"`
@@ -117,7 +117,7 @@ type LogicalIntfState struct {
 }
 
 type SubIPv4Intf struct {
-	BaseObj
+	ConfigObj
 	IpAddr  string `SNAPROUTE: "KEY", ACCESS:"w", DESCRIPTION:"Ip Address for the interface"`
 	IntfRef string `SNAPROUTE: "KEY", ACCESS:"w", DESCRIPTION:"Intf name of system generated id (ifindex) of the ipv4Intf where sub interface is to be configured"`
 	Type    string `DESCRIPTION:"Type of interface, e.g. Secondary or Virtual"`
