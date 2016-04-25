@@ -2,9 +2,9 @@ package models
 
 type Vlan struct {
 	BaseObj
-	VlanId           int32  `SNAPROUTE: "KEY", ACCESS:"rw", MULTIPLICITY: "*", DESCRIPTION: "802.1Q tag/Vlan ID for vlan being provisioned"`
-	IfIndexList      string `DESCRIPTION: "List of system assigned interface id's for tagged ports on this vlan"`
-	UntagIfIndexList string `DESCRIPTION: "List of system assigned interface id's for untagged ports on this vlan"`
+	VlanId        int32  `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY: "*", DESCRIPTION: "802.1Q tag/Vlan ID for vlan being provisioned"`
+	IntfList      string `DESCRIPTION: "List of interface names or ifindex values to  be added as tagged members of the vlan"`
+	UntagIntfList string `DESCRIPTION: "List of interface names or ifindex values to  be added as untagged members of the vlan"`
 }
 
 type VlanState struct {
@@ -17,8 +17,21 @@ type VlanState struct {
 
 type IPv4Intf struct {
 	BaseObj
-	IpAddr  string `SNAPROUTE: "KEY", ACCESS:"rw", DESCRIPTION: "Interface IP/Net mask to provision on switch interface"`
-	IfIndex int32  `DESCRIPTION: "System assigned interface id of L2 interface (port/lag/vlan) to which this IPv4 object is linked"`
+	IpAddr  string `SNAPROUTE: "KEY", ACCESS:"w", DESCRIPTION: "Interface IP/Net mask in CIDR format to provision on switch interface"`
+	IntfRef string `DESCRIPTION: "Interface name or ifindex of port/lag or vlan on which this IPv4 object is configured"`
+}
+
+type IPv4IntfState struct {
+	BaseObj
+	IpAddr            string `SNAPROUTE: "KEY", ACCESS:"r", DESCRIPTION: "Interface IP/Net mask in CIDR format to provision on switch interface"`
+	IfIndex           int32  `DESCRIPTION: "System assigned interface id of L2 interface (port/lag/vlan) to which this IPv4 object is linked"`
+	OperState         string `DESCRIPTION: "Operational state of this IP interface"`
+	NumUpEvents       int32  `DESCRIPTION: "Number of times the operational state transitioned from DOWN to UP"`
+	LastUpEventTime   string `DESCRIPTION: "Timestamp corresponding to the last DOWN to UP operational state change event"`
+	NumDownEvents     int32  `DESCRIPTION: "Number of times the operational state transitioned from UP to DOWN"`
+	LastDownEventTime string `DESCRIPTION: "Timestamp corresponding to the last UP to DOWN operational state change event"`
+	L2IntfType        string `DESCRIPTION: "Type of L2 interface on which IP has been configured (Port/Lag/Vlan)"`
+	L2IntfId          int32  `DESCRIPTION: "Id of the L2 interface. Port number/lag id/vlan id."`
 }
 
 type Port struct {
@@ -41,6 +54,10 @@ type PortState struct {
 	IfIndex           int32  `DESCRIPTION: "System assigned interface id for this port"`
 	Name              string `DESCRIPTION: "System assigned vlan name"`
 	OperState         string `DESCRIPTION: "Operational state of front panel port"`
+	NumUpEvents       int32  `DESCRIPTION: "Number of times the operational state transitioned from DOWN to UP"`
+	LastUpEventTime   string `DESCRIPTION: "Timestamp corresponding to the last DOWN to UP operational state change event"`
+	NumDownEvents     int32  `DESCRIPTION: "Number of times the operational state transitioned from UP to DOWN"`
+	LastDownEventTime string `DESCRIPTION: "Timestamp corresponding to the last UP to DOWN operational state change event"`
 	IfInOctets        int64  `DESCRIPTION: "RFC2233 Total number of octets received on this port"`
 	IfInUcastPkts     int64  `DESCRIPTION: "RFC2233 Total number of unicast packets received on this port"`
 	IfInDiscards      int64  `DESCRIPTION: "RFC2233 Total number of inbound packets that were discarded"`
@@ -53,11 +70,27 @@ type PortState struct {
 	ErrDisableReason  string `DESCRIPTION: "Reason explaining why port has been disabled by protocol code"`
 }
 
-type MacTableEntry struct {
+type MacTableEntryState struct {
 	BaseObj
 	MacAddr string `SNAPROUTE: "KEY", ACCESS:"r", DESCRIPTION: "MAC Address"`
-	VlanId  int32  `DESCRIPTION: "Vlan id corresponding to which mac was learned"`
-	Port    int32  `DESCRIPTION: "Port number on which mac was learned"`
+	VlanId  int32  `DESCRIPTION: "Vlan id corresponding to which mac was learned", DEFAULT:0`
+	Port    int32  `DESCRIPTION: "Port number on which mac was learned", DEFAULT:0`
+}
+
+type IPv4RouteHwState struct {
+	BaseObj
+	DestinationNw    string `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "IP address of the route in CIDR format"`
+	NextHopIps       string `DESCRIPTION: "next hop ip list for the route"`
+	RouteCreatedTime string `DESCRIPTION :"Time when the route was added"`
+	RouteUpdatedTime string `DESCRIPTION :"Time when the route was last updated"`
+}
+
+type ArpEntryHwState struct {
+	BaseObj
+	IpAddr  string `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", QPARAM: "optional" ,DESCRIPTION: "Neighbor's IP Address"`
+	MacAddr string `DESCRIPTION: "MAC address of the neighbor machine with corresponding IP Address", QPARAM: "optional" `
+	Vlan    string `DESCRIPTION: "Vlan ID of the Router Interface to which neighbor is attached to", QPARAM: "optional" `
+	Port    string `DESCRIPTION: "Router Interface to which neighbor is attached to", QPARAM: "optional" `
 }
 
 type LogicalIntf struct {
@@ -86,7 +119,7 @@ type LogicalIntfState struct {
 type SubIPv4Intf struct {
 	BaseObj
 	IpAddr  string `SNAPROUTE: "KEY", ACCESS:"w", DESCRIPTION:"Ip Address for the interface"`
-	IfIndex int32  `SNAPROUTE: "KEY", ACCESS:"w", DESCRIPTION:"System generated id for the ipv4Intf where sub interface is to be configured"`
+	IntfRef string `SNAPROUTE: "KEY", ACCESS:"w", DESCRIPTION:"Intf name of system generated id (ifindex) of the ipv4Intf where sub interface is to be configured"`
 	Type    string `DESCRIPTION:"Type of interface, e.g. Secondary or Virtual"`
 	MacAddr string `DESCRIPTION:"Mac address to be used for the sub interface. If none specified IPv4Intf mac address will be used`
 	Enable  bool   `DESCRIPTION:"Enable or disable this interface", DEFAULT:false`

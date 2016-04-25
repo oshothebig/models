@@ -16,5 +16,11 @@
 		"Owner": "local",
 		"multiplicity":"*",
 		"srcfile": "objects.go"
+	},
+	"SystemStatusState" : {
+		"access": "r",
+		"Owner": "local",
+		"multiplicity":"1",
+		"srcfile": "objects.go"
 	}
 }
