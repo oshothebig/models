@@ -169,7 +169,7 @@ module vxlan {
           "VxLAN instance.";
 
     container vtep {
-            list instances {
+            list instance {
                key "vtep-id";
                leaf vtep-id {
                   type uint32;
