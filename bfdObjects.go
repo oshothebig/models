@@ -18,47 +18,10 @@ type BfdGlobalState struct {
 	BaseObj
 	Bfd                  string `SNAPROUTE: "KEY", ACCESS:"r",  MULTIPLICITY:"1", DESCRIPTION: "VRF id for which global BFD state is requested"`
 	Enable               bool   `DESCRIPTION: "Global BFD state in this VRF"`
-	NumInterfaces        uint32 `DESCRIPTION: "Number of interfaces on which BFD is enabled"`
 	NumTotalSessions     uint32 `DESCRIPTION: "Total number of BFD sessions"`
 	NumUpSessions        uint32 `DESCRIPTION: "Number of BFD sessions in up state"`
 	NumDownSessions      uint32 `DESCRIPTION: "Number of BFD sessions in down state"`
 	NumAdminDownSessions uint32 `DESCRIPTION: "Number of BFD sessions in admin down state"`
-}
-
-/*
- * BFD Interface config
- */
-type BfdInterface struct {
-	BaseObj
-	IfIndex                   int32  `SNAPROUTE: "KEY", ACCESS:"w",  MULTIPLICITY:"*", DESCRIPTION: "Interface index on which BFD configuration will be applied"`
-	LocalMultiplier           uint32 `DESCRIPTION: "Detection multiplier", DEFAULT: "3"`
-	DesiredMinTxInterval      uint32 `DESCRIPTION: "Desired minimum tx interval in ms", DEFAULT: "1000"`
-	RequiredMinRxInterval     uint32 `DESCRIPTION: "Required minimum rx interval in ms", DEFAULT: "1000"`
-	RequiredMinEchoRxInterval uint32 `DESCRIPTION: "Required minimum echo rx interval in ms", DEFAULT: "0"`
-	DemandEnabled             bool   `DESCRIPTION: "Enable or disable demand mode", DEFAULT: "false"`
-	AuthenticationEnabled     bool   `DESCRIPTION: "Enable or disable authentication", DEFAULT: "false"`
-	AuthType                  string `DESCRIPTION: "Authentication type, SELECTION: metmd5/keyedmd5/metsha1/keyedsha1/simple", DEFAULT: "simple"`
-	AuthKeyId                 uint32 `DESCRIPTION: "Authentication key id", DEFAULT: "1"`
-	AuthData                  string `DESCRIPTION: "Authentication password", DEFAULT: "snaproute"`
-}
-
-/*
- * BFD Interface state
- */
-type BfdInterfaceState struct {
-	BaseObj
-	IfIndex                   int32  `SNAPROUTE: "KEY", ACCESS:"r",  MULTIPLICITY:"*", DESCRIPTION: "Interface index for which BFD state is requested"`
-	Enabled                   bool   `DESCRIPTION: "BFD state on this interface"`
-	NumSessions               int32  `DESCRIPTION: "Number of sessions enabled"`
-	LocalMultiplier           int32  `DESCRIPTION: "Detection multiplier"`
-	DesiredMinTxInterval      string `DESCRIPTION: "Desired minimum tx interval"`
-	RequiredMinRxInterval     string `DESCRIPTION: "Required minimum rx interval"`
-	RequiredMinEchoRxInterval string `DESCRIPTION: "Required minimum echo rx interval"`
-	DemandEnabled             bool   `DESCRIPTION: "Demand mode enabled"`
-	AuthenticationEnabled     bool   `DESCRIPTION: "Authentication enabled"`
-	AuthenticationType        string `DESCRIPTION: "Authentication type"`
-	AuthenticationKeyId       int32  `DESCRIPTION: "Authentication key id"`
-	AuthenticationData        string `DESCRIPTION: "Authentication password"`
 }
 
 /*
@@ -67,7 +30,7 @@ type BfdInterfaceState struct {
 type BfdSession struct {
 	BaseObj
 	IpAddr    string `SNAPROUTE: "KEY", ACCESS:"w",  MULTIPLICITY:"*", DESCRIPTION: "BFD neighbor IP address"`
-	ParamName string `DESCRIPTION: "Name of the session parameters object to be applied on this session", DEFAULT: "None"`
+	ParamName string `DESCRIPTION: "Name of the session parameters object to be applied on this session", DEFAULT: "default"`
 	Interface string `DESCRIPTION: "Name of the interface this session has to be established on", DEFAULT: "None"`
 	PerLink   bool   `DESCRIPTION: "Run BFD sessions on individual link of a LAG if the neighbor is reachable through LAG", DEFAULT: "false"`
 	Owner     string `DESCRIPTION: "Module requesting BFD session configuration", DEFAULT: "user"`
@@ -80,7 +43,7 @@ type BfdSessionState struct {
 	BaseObj
 	IpAddr                string `SNAPROUTE: "KEY", ACCESS:"r",  MULTIPLICITY:"*",DESCRIPTION: "Neighbor IP address"`
 	SessionId             int32  `DESCRIPTION: "Session index"`
-	LocalIpAddr           string `DESCRIPTION: "My IP address"`
+	ParamName             string `DESCRIPTION: "Session parameters config"`
 	IfIndex               int32  `DESCRIPTION: "Interface index"`
 	InterfaceSpecific     bool   `DESCRIPTION: "This session is tied to an interface"`
 	IfName                string `DESCRIPTION: "Interface to which this session is established on"`
