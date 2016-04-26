@@ -69,6 +69,7 @@ type PolicyDefinition struct {
 	Name          string                           `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", DESCRIPTION: "Policy Name"`
 	Priority      int32                            `DESCRIPTION :"Priority of the policy w.r.t other policies configured",RANGE:0-255`
 	MatchType     string                           `DESCRIPTION :"Specifies whether to match all/any of the statements within this policy",SELECTION:"all"/"any",DEFAULT:"all"`
+	PolicyType    string                           `DESCRIPTION : Specifies the intended protocol application for the policy", SELECTION: "BGP"/"OSPF"/"ALL", DEFAULT:"ALL"`
 	StatementList []PolicyDefinitionStmtPriority   `DESCRIPTION :"Specifies list of statements along with their precedence order."`
 }
 type PolicyDefinitionState struct {
