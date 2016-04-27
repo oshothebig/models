@@ -31,11 +31,11 @@ type NextHopInfo struct {
 type IPv4RouteState struct {
 	ConfigObj
 	DestinationNw      string   `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "IP address of the route", USESTATEDB:"true"`
-	NextHopList        []NextHopInfo `DESCRIPTION: "List of next hops to reach this network"`
-	PolicyList         []string `DESCRIPTION :"List of policies applied on this route"`
 	IsNetworkReachable bool     `DESCRIPTION :"Indicates whether this network is reachable"`
 	RouteCreatedTime   string   `DESCRIPTION :"Time when the route was added"`
 	RouteUpdatedTime   string   `DESCRIPTION :"Time when the route was last updated"`
+	NextHopList        []NextHopInfo `DESCRIPTION: "List of next hops to reach this network"`
+	PolicyList         []string `DESCRIPTION :"List of policies applied on this route"`
 }
 type IPv4EventState struct {
 	ConfigObj
