@@ -17,14 +17,15 @@ type VlanState struct {
 
 type IPv4Intf struct {
 	ConfigObj
-	IpAddr  string `SNAPROUTE: "KEY", ACCESS:"w", DESCRIPTION: "Interface IP/Net mask in CIDR format to provision on switch interface"`
-	IntfRef string `DESCRIPTION: "Interface name or ifindex of port/lag or vlan on which this IPv4 object is configured"`
+	IntfRef string `SNAPROUTE: "KEY", ACCESS:"w", DESCRIPTION: "Interface name or ifindex of port/lag or vlan on which this IPv4 object is configured"`
+	IpAddr  string `DESCRIPTION: "Interface IP/Net mask in CIDR format to provision on switch interface"`
 }
 
 type IPv4IntfState struct {
 	ConfigObj
-	IpAddr            string `SNAPROUTE: "KEY", ACCESS:"r", DESCRIPTION: "Interface IP/Net mask in CIDR format to provision on switch interface"`
-	IfIndex           int32  `DESCRIPTION: "System assigned interface id of L2 interface (port/lag/vlan) to which this IPv4 object is linked"`
+	IntfRef           string `SNAPROUTE: "KEY", ACCESS:"r", DESCRIPTION: "System assigned interface id of L2 interface (port/lag/vlan) to which this IPv4 object is linked"`
+	IfIndex           int32  `DESCRIPTION: "System assigned interface id for this IPv4 interface"`
+	IpAddr            string `DESCRIPTION: "Interface IP/Net mask in CIDR format to provision on switch interface"`
 	OperState         string `DESCRIPTION: "Operational state of this IP interface"`
 	NumUpEvents       int32  `DESCRIPTION: "Number of times the operational state transitioned from DOWN to UP"`
 	LastUpEventTime   string `DESCRIPTION: "Timestamp corresponding to the last DOWN to UP operational state change event"`
