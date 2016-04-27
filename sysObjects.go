@@ -38,7 +38,7 @@ type IpTableAclState struct {
 
 type Daemon struct {
 	ConfigObj
-	Name  string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", DESCRIPTION: "Daemon name"`
+	Name  string `SNAPROUTE: "KEY", ACCESS:"x", MULTIPLICITY:"*", DESCRIPTION: "Daemon name"`
 	State string `DESCRIPTION: "State of the daemon, SELECTION: start/stop", DEFAULT: "start"`
 }
 
