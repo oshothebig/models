@@ -4,8 +4,8 @@ import ()
 
 type SystemLogging struct {
 	ConfigObj
-	SRLogger      string `SNAPROUTE: "KEY", ACCESS:"w",  MULTIPLICITY:"1", DESCRIPTION: "Global logging"`
-	SystemLogging string `DESCRIPTION: "Global logging", DEFAULT: "on"`
+	SRLogger string `SNAPROUTE: "KEY", ACCESS:"w",  MULTIPLICITY:"1", DESCRIPTION: "Global logging"`
+	Logging  string `DESCRIPTION: "Global logging", DEFAULT: "on"`
 }
 
 type ComponentLogging struct {
@@ -35,3 +35,20 @@ type IpTableAclState struct {
 	Port         string `DESCRITION: "port for protocol, e.g for dhcprelay port is 68", DEFAULT: "all"`
 }
 */
+
+type Daemon struct {
+	ConfigObj
+	Name  string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", DESCRIPTION: "Daemon name"`
+	State string `DESCRIPTION: "State of the daemon, SELECTION: start/stop", DEFAULT: "start"`
+}
+
+type DaemonState struct {
+	ConfigObj
+	Name          string `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Daemon name"`
+	State         string `DESCRIPTION: "State of the daemon, running or stopped"`
+	Reason        string `DESCRIPTION: "Reason for current state of the daemon"`
+	KeepAlive     string `DESCRIPTION: "KeepAlive state of the daemon"`
+	RestartCount  int32  `DESCRIPTION: "Number of times this daemon has been restarted"`
+	RestartTime   string `DESCRIPTION: "Last restart time"`
+	RestartReason string `DESCRIPTION: "Last restart reason"`
+}
