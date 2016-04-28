@@ -34,4 +34,5 @@ var ConfigObjectMap = map[string]ConfigObj{
 	"UserState":         &UserState{},
 	"IPV4AddressBlock":  &IPV4AddressBlock{},
 	"SystemStatusState": &SystemStatusState{},
+	"Daemon":            &Daemon{},
 }
