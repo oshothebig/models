@@ -9,10 +9,10 @@ type IPv4Route struct {
 	OutgoingIntfType  string `DESCRIPTION :"Interface type of the next hop interface"`
 	OutgoingInterface string `DESCRIPTION :"Interface ID of the next hop interface"`
 	Protocol          string `DESCRIPTION :"Protocol type of the route"`
-}
+}/*
 type IPv4RouteState struct {
 	ConfigObj
-	DestinationNw      string   `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "IP address of the route"`
+	DestinationNw      string   `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "IP address of the route", USESTATEDB:"true"`
 	NextHopIp          string   `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "next hop ip of the route"`
 	OutgoingIntfType   string   `DESCRIPTION :"Interface type of the next hop interface"`
 	OutgoingInterface  string   `DESCRIPTION :"Interface ID of the next hop interface"`
@@ -21,8 +21,22 @@ type IPv4RouteState struct {
 	IsNetworkReachable bool     `DESCRIPTION :"Indicates whether this network is reachable"`
 	RouteCreatedTime   string   `DESCRIPTION :"Time when the route was added"`
 	RouteUpdatedTime   string   `DESCRIPTION :"Time when the route was last updated"`
+}*/
+type NextHopInfo struct {
+	NextHopIp          string   `DESCRIPTION: "next hop ip of the route"`
+	OutgoingIntfType   string   `DESCRIPTION :"Interface type of the next hop interface"`
+	OutgoingInterface  string   `DESCRIPTION :"Interface ID of the next hop interface"`
+	Protocol           string   `DESCRIPTION :"Protocol type of the route"`
 }
-
+type IPv4RouteState struct {
+	ConfigObj
+	DestinationNw      string   `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "IP address of the route", USESTATEDB:"true"`
+	IsNetworkReachable bool     `DESCRIPTION :"Indicates whether this network is reachable"`
+	RouteCreatedTime   string   `DESCRIPTION :"Time when the route was added"`
+	RouteUpdatedTime   string   `DESCRIPTION :"Time when the route was last updated"`
+	NextHopList        []NextHopInfo `DESCRIPTION: "List of next hops to reach this network"`
+	PolicyList         []string `DESCRIPTION :"List of policies applied on this route"`
+}
 type IPv4EventState struct {
 	ConfigObj
 	Index     uint32 `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Event ID"`
