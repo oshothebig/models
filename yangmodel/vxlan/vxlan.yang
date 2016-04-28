@@ -6,9 +6,9 @@ module vxlan {
        prefix "inet";
     }
 
-    import ietf-yang-types {
+    /*import ietf-yang-types {
        prefix yang;
-     }
+     }*/
 
     organization
       "IETF NVO3(Network Virtualization Overlays) Working Group";
@@ -133,20 +133,13 @@ module vxlan {
 
     container vxlan{
         list instance {
-           key vxlan-id ;
+           key vni ;
 		   config true;
 
-           leaf vxlan-id {
+           leaf vni {
              type vxlan-id;
              description
-              "VxLAN ID or VNI";
-           }
-           leaf mc-dest-ip {
-              type string;
-              config true;
-              mandatory true ;
-              description
-                 "VxLAN multicast IP address used when destination is uknown";
+              "VNI domain";
            }
 
            leaf vlan-id {
@@ -156,51 +149,39 @@ module vxlan {
                 "Vlan associated with the Access targets.  Used in conjunction with a given VTEP
                  inner-vlan-handling-mode";
            }
-
-           leaf mtu {
-            type uint32;
-            config true;
-            default 1550;
-            description
-                "Set the MTU to be applied to all VTEP within this VxLAN";
-           }
         }
         description
           "VxLAN instance.";
 
     container vtep {
             list instance {
-               key "vtep-id";
-               leaf vtep-id {
-                  type uint32;
-				config true;
-                  description
-                     "VTEP ID.";
-                }
+			  key intf;
+			  config true;
 
-               leaf vtep-name{
+               leaf intf {
                   type string;
 				  config true;
                   description
-                     "VTEP instance name. If not defined then one will be configured to be vtep<vtep-id>";
+                     "VTEP instance identifier name. should be defined as either vtep<id#> or <id#> if the later then 'vtep' will be prepended to the <id#> example: vtep100 or 100";
                 }
 
-               leaf src-ifIndex {
-                  type int32;
+               leaf intf-ref {
+                  type string;
 				  config true;
                   description
-                     "Source physical interface ifIndex.";
+                     "Source interface where the source ip will be derived from.  If an interface is not supplied the src-ip will be used.
+					This attribute takes presedence over src-ip attribute.";
                 }
 
-                leaf UDP {
+                leaf dst-UDP {
                    type uint16;
                    config true;
                    default 4789;
                    description
                        "vxlan udp port.  Deafult is the iana default udp port";
                 }
-
-                leaf TTL {
+				
+			   leaf TTL {
                     type uint16;
                     config true;
                     default 255;
@@ -223,44 +204,11 @@ module vxlan {
                      "The inner vlan tag handling mode.";
                 }
 
-                leaf learning {
-                   type boolean;
-                   config true;
-                   default true;
-                   description
-                    "specifies if unknown source link layer
-                      addresses and IP addresses are entered into the VXLAN
-                      device forwarding database.";
-                }
-
-                leaf rsc {
-                    type boolean;
-                    config true;
-                    default false;
-                    description
-                     "specifies if route short circuit is turned on.";
-                }
-
-                leaf l2miss {
-                    type boolean;
-                    config true;
-                    description
-                        "specifies if netlink LLADDR miss notifications are generated.";
-                }
-
-                leaf l3miss {
-                    type boolean;
-                    config true;
-                    description
-                        "specifies if netlink IP ADDR miss
-                      notifications are generated.";
-                }
-
-              leaf vxlan-id {
+              leaf vni {
                 type vxlan-id;
                 config true;
                 description
-                   "VxLAN ID.";
+                   "Reference to the vxlan domain that this vtep is attached to";
               }
 
               leaf dst-ip {
@@ -273,15 +221,10 @@ module vxlan {
               leaf src-ip {
                     type inet:ipv4-address;
                     config true;
+				   default "0.0.0.0";
                     description
-                     "Source IP address for the static VxLAN tunnel, if not supplied switch default should be used.";
-              }
-
-              leaf src-mac {
-                    type yang:mac-address;
-                    config true;
-                    description
-                     "Source MAC for the static VxLAN tunnel, if not supplied switch default should be used.";
+                     "Source IP address for the VxLAN tunnel, if this is supplied it is assumed that the intf-ref is this vtep.  This 
+					attribute will be ignored if intf-ref is set";
               }
 
               leaf vlan-id {
@@ -290,6 +233,13 @@ module vxlan {
                 description
                     "Vlan Id to encapsulate with the vtep tunnel ethernet header";
               }
+              leaf mtu {
+	            type uint32;
+	            config true;
+	            default 1550;
+	            description
+	                "Set the MTU to be applied to all VTEP within this VxLAN";
+	          }
 
             }
              description
