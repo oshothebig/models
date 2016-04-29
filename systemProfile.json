@@ -1,0 +1,33 @@
+{
+"Daemons" : [
+            {"Name": "bgpd",
+            "Enable": false},
+
+            {"Name":"lacpd",
+            "Enable": true},
+
+            {"Name":"ospfd",
+            "Enable": true},
+            
+            {"Name":"stpd",
+            "Enable": true},
+
+            {"Name":"dhcprelayd",
+            "Enable": true},
+
+            {"Name":"bfdd",
+            "Enable": true},
+
+            {"Name":"vrrpd",
+            "Enable": false},
+
+            {"Name":"lldpd",
+            "Enable": true},
+            
+            {"Name":"vxland",
+            "Enable": true}
+            ]
+"TCPPortBase" : 10000,
+"API_Port"    : 8080 
+}
+
