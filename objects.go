@@ -102,15 +102,17 @@ func (obj Logout) UnmarshalObject(body []byte) (ConfigObj, error) {
 
 type SystemStatusState struct {
 	ConfigObj
-	Name           string `SNAPROUTE: "KEY"`
-	Ready          bool
-	Reason         string
-	UpTime         string
-	NumCreateCalls string
-	NumDeleteCalls string
-	NumUpdateCalls string
-	NumGetCalls    string
-	NumActionCalls string
+	Name           string        `SNAPROUTE: "KEY", ACCESS:"r",  MULTIPLICITY:"1", DESCRIPTION: "Name of the system"`
+	SwVersion      string        `DESCRIPTION: "Flexswitch version sunning on this system"`
+	Ready          bool          `DESCRIPTION: "System is ready to accept api calls"`
+	Reason         string        `DESCRIPTION: "Reaso if system not ready"`
+	UpTime         string        `DESCRIPTION: "Uptime of this system"`
+	NumCreateCalls string        `DESCRIPTION: "Number of create api calls made"`
+	NumDeleteCalls string        `DESCRIPTION: "Number of delete api calls made"`
+	NumUpdateCalls string        `DESCRIPTION: "Number of update api calls made"`
+	NumGetCalls    string        `DESCRIPTION: "Number of get api calls made"`
+	NumActionCalls string        `DESCRIPTION: "Number of action api calls made"`
+	FlexDaemons    []DaemonState `DESCRIPTION: "Daemon states"`
 }
 
 func (obj SystemStatusState) UnmarshalObject(body []byte) (ConfigObj, error) {
@@ -123,4 +125,8 @@ func (obj SystemStatusState) UnmarshalObject(body []byte) (ConfigObj, error) {
 	}
 
 	return systemStatus, err
+}
+
+func (obj SystemStatusState) GetKey() string {
+	return ""
 }
