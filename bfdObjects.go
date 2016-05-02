@@ -6,7 +6,7 @@ import ()
  * Global Config for BFD
  */
 type BfdGlobal struct {
-	BaseObj
+	ConfigObj
 	Bfd    string `SNAPROUTE: "KEY", ACCESS:"w",  MULTIPLICITY:"1", DESCRIPTION: "VRF id where BFD is globally enabled or disabled"`
 	Enable bool   `DESCRIPTION: "Global BFD state in this VRF", DEFAULT: "true"`
 }
@@ -15,10 +15,9 @@ type BfdGlobal struct {
  * Global State
  */
 type BfdGlobalState struct {
-	BaseObj
+	ConfigObj
 	Bfd                  string `SNAPROUTE: "KEY", ACCESS:"r",  MULTIPLICITY:"1", DESCRIPTION: "VRF id for which global BFD state is requested"`
 	Enable               bool   `DESCRIPTION: "Global BFD state in this VRF"`
-	NumInterfaces        uint32 `DESCRIPTION: "Number of interfaces on which BFD is enabled"`
 	NumTotalSessions     uint32 `DESCRIPTION: "Total number of BFD sessions"`
 	NumUpSessions        uint32 `DESCRIPTION: "Number of BFD sessions in up state"`
 	NumDownSessions      uint32 `DESCRIPTION: "Number of BFD sessions in down state"`
@@ -26,60 +25,28 @@ type BfdGlobalState struct {
 }
 
 /*
- * BFD Interface config
- */
-type BfdInterface struct {
-	BaseObj
-	IfIndex                   int32  `SNAPROUTE: "KEY", ACCESS:"w",  MULTIPLICITY:"*", DESCRIPTION: "Interface index on which BFD configuration will be applied"`
-	LocalMultiplier           uint32 `DESCRIPTION: "Detection multiplier", DEFAULT: "3"`
-	DesiredMinTxInterval      uint32 `DESCRIPTION: "Desired minimum tx interval in ms", DEFAULT: "1000"`
-	RequiredMinRxInterval     uint32 `DESCRIPTION: "Required minimum rx interval in ms", DEFAULT: "1000"`
-	RequiredMinEchoRxInterval uint32 `DESCRIPTION: "Required minimum echo rx interval in ms", DEFAULT: "0"`
-	DemandEnabled             bool   `DESCRIPTION: "Enable or disable demand mode", DEFAULT: "false"`
-	AuthenticationEnabled     bool   `DESCRIPTION: "Enable or disable authentication", DEFAULT: "false"`
-	AuthType                  string `DESCRIPTION: "Authentication type, SELECTION: metmd5/keyedmd5/metsha1/keyedsha1/simple", DEFAULT: "simple"`
-	AuthKeyId                 uint32 `DESCRIPTION: "Authentication key id", DEFAULT: "1"`
-	AuthData                  string `DESCRIPTION: "Authentication password", DEFAULT: "snaproute"`
-}
-
-/*
- * BFD Interface state
- */
-type BfdInterfaceState struct {
-	BaseObj
-	IfIndex                   int32  `SNAPROUTE: "KEY", ACCESS:"r",  MULTIPLICITY:"*", DESCRIPTION: "Interface index for which BFD state is requested"`
-	Enabled                   bool   `DESCRIPTION: "BFD state on this interface"`
-	NumSessions               int32  `DESCRIPTION: "Number of sessions enabled"`
-	LocalMultiplier           int32  `DESCRIPTION: "Detection multiplier"`
-	DesiredMinTxInterval      string `DESCRIPTION: "Desired minimum tx interval"`
-	RequiredMinRxInterval     string `DESCRIPTION: "Required minimum rx interval"`
-	RequiredMinEchoRxInterval string `DESCRIPTION: "Required minimum echo rx interval"`
-	DemandEnabled             bool   `DESCRIPTION: "Demand mode enabled"`
-	AuthenticationEnabled     bool   `DESCRIPTION: "Authentication enabled"`
-	AuthenticationType        string `DESCRIPTION: "Authentication type"`
-	AuthenticationKeyId       int32  `DESCRIPTION: "Authentication key id"`
-	AuthenticationData        string `DESCRIPTION: "Authentication password"`
-}
-
-/*
  * BFD Session config
  */
 type BfdSession struct {
-	BaseObj
-	IpAddr  string `SNAPROUTE: "KEY", ACCESS:"w",  MULTIPLICITY:"*", DESCRIPTION: "BFD neighbor IP address"`
-	PerLink bool   `DESCRIPTION: "Run BFD sessions on individual link of a LAG if the neighbor is reachable through LAG", DEFAULT: "false"`
-	Owner   string `DESCRIPTION: "Module requesting BFD session configuration", DEFAULT: "user"`
+	ConfigObj
+	IpAddr    string `SNAPROUTE: "KEY", ACCESS:"w",  MULTIPLICITY:"*", DESCRIPTION: "BFD neighbor IP address"`
+	ParamName string `DESCRIPTION: "Name of the session parameters object to be applied on this session", DEFAULT: "default"`
+	Interface string `DESCRIPTION: "Name of the interface this session has to be established on", DEFAULT: "None"`
+	PerLink   bool   `DESCRIPTION: "Run BFD sessions on individual link of a LAG if the neighbor is reachable through LAG", DEFAULT: "false"`
+	Owner     string `DESCRIPTION: "Module requesting BFD session configuration", DEFAULT: "user"`
 }
 
 /*
  * BFD Session state
  */
 type BfdSessionState struct {
-	BaseObj
+	ConfigObj
 	IpAddr                string `SNAPROUTE: "KEY", ACCESS:"r",  MULTIPLICITY:"*",DESCRIPTION: "Neighbor IP address"`
 	SessionId             int32  `DESCRIPTION: "Session index"`
-	LocalIpAddr           string `DESCRIPTION: "My IP address"`
+	ParamName             string `DESCRIPTION: "Session parameters config"`
 	IfIndex               int32  `DESCRIPTION: "Interface index"`
+	InterfaceSpecific     bool   `DESCRIPTION: "This session is tied to an interface"`
+	IfName                string `DESCRIPTION: "Interface to which this session is established on"`
 	PerLinkSession        bool   `DESCRIPTION: "This is a perlink session on LAG"`
 	LocalMacAddr          string `DESCRIPTION: "My MAC address"`
 	RemoteMacAddr         string `DESCRIPTION: "Neighbor MAC address"`
@@ -101,4 +68,39 @@ type BfdSessionState struct {
 	SentAuthSeq           uint32 `DESCRIPTION: "Sent authentication sequence number"`
 	NumTxPackets          uint32 `DESCRIPTION: "Number of control packets sent"`
 	NumRxPackets          uint32 `DESCRIPTION: "Number of control packets received"`
+}
+
+/*
+ * BFD Session param config
+ */
+type BfdSessionParam struct {
+	ConfigObj
+	Name                      string `SNAPROUTE: "KEY", ACCESS:"w",  MULTIPLICITY:"*", DESCRIPTION: "Session parameters"`
+	LocalMultiplier           uint32 `DESCRIPTION: "Detection multiplier", DEFAULT: "3"`
+	DesiredMinTxInterval      uint32 `DESCRIPTION: "Desired minimum tx interval in ms", DEFAULT: "1000"`
+	RequiredMinRxInterval     uint32 `DESCRIPTION: "Required minimum rx interval in ms", DEFAULT: "1000"`
+	RequiredMinEchoRxInterval uint32 `DESCRIPTION: "Required minimum echo rx interval in ms", DEFAULT: "0"`
+	DemandEnabled             bool   `DESCRIPTION: "Enable or disable demand mode", DEFAULT: "false"`
+	AuthenticationEnabled     bool   `DESCRIPTION: "Enable or disable authentication", DEFAULT: "false"`
+	AuthType                  string `DESCRIPTION: "Authentication type, SELECTION: metmd5/keyedmd5/metsha1/keyedsha1/simple", DEFAULT: "simple"`
+	AuthKeyId                 uint32 `DESCRIPTION: "Authentication key id", DEFAULT: "1"`
+	AuthData                  string `DESCRIPTION: "Authentication password", DEFAULT: "snaproute"`
+}
+
+/*
+ * BFD Session param state
+ */
+type BfdSessionParamState struct {
+	ConfigObj
+	Name                      string `SNAPROUTE: "KEY", ACCESS:"r",  MULTIPLICITY:"*", DESCRIPTION: "Session parameters"`
+	NumSessions               int32  `DESCRIPTION: "Number of sessions using these params"`
+	LocalMultiplier           int32  `DESCRIPTION: "Detection multiplier"`
+	DesiredMinTxInterval      string `DESCRIPTION: "Desired minimum tx interval"`
+	RequiredMinRxInterval     string `DESCRIPTION: "Required minimum rx interval"`
+	RequiredMinEchoRxInterval string `DESCRIPTION: "Required minimum echo rx interval"`
+	DemandEnabled             bool   `DESCRIPTION: "Demand mode enabled"`
+	AuthenticationEnabled     bool   `DESCRIPTION: "Authentication enabled"`
+	AuthenticationType        string `DESCRIPTION: "Authentication type"`
+	AuthenticationKeyId       int32  `DESCRIPTION: "Authentication key id"`
+	AuthenticationData        string `DESCRIPTION: "Authentication password"`
 }
