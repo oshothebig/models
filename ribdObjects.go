@@ -34,7 +34,7 @@ type IPv4Route struct {
 	DestinationNw     string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", ACCELERATED: "true", DESCRIPTION: "IP address of the route"`
 	NetworkMask       string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", ACCELERATED: "true", DESCRIPTION: "mask of the route"`
 	Protocol           string   `DESCRIPTION :"Protocol type of the route"`
-	NextHop           NextHopInfo
+	NextHop           []NextHopInfo
 }
 type IPv4RouteState struct {
 	ConfigObj
