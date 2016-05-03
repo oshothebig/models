@@ -7,7 +7,7 @@ type NextHopInfo struct {
 	OutgoingInterface  string   `DESCRIPTION :"Interface ID of the next hop interface"`
 	Weight             uint32   `DESCRIPTION :"Priority/weight of this nexthop"`
 }
-/*type IPv4Route struct {
+type IPv4Route struct {
 	ConfigObj
 	DestinationNw     string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", ACCELERATED: "true", DESCRIPTION: "IP address of the route"`
 	NetworkMask       string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", ACCELERATED: "true", DESCRIPTION: "mask of the route"`
@@ -17,7 +17,7 @@ type NextHopInfo struct {
 	OutgoingInterface string `DESCRIPTION :"Interface ID of the next hop interface"`
 	Protocol          string `DESCRIPTION :"Protocol type of the route"`
 }
-type IPv4RouteState struct {
+/*type IPv4RouteState struct {
 	ConfigObj
 	DestinationNw      string   `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "IP address of the route", USESTATEDB:"true"`
 	NextHopIp          string   `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "next hop ip of the route"`
@@ -29,13 +29,13 @@ type IPv4RouteState struct {
 	RouteCreatedTime   string   `DESCRIPTION :"Time when the route was added"`
 	RouteUpdatedTime   string   `DESCRIPTION :"Time when the route was last updated"`
 }*/
-type IPv4Route struct {
+/*type IPv4Route struct {
 	ConfigObj
 	DestinationNw     string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", ACCELERATED: "true", DESCRIPTION: "IP address of the route"`
 	NetworkMask       string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", ACCELERATED: "true", DESCRIPTION: "mask of the route"`
 	Protocol           string   `DESCRIPTION :"Protocol type of the route"`
 	NextHop           []NextHopInfo
-}
+}*/
 type IPv4RouteState struct {
 	ConfigObj
 	DestinationNw      string   `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "IP address of the route", USESTATEDB:"true"`
