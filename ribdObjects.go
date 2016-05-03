@@ -1,5 +1,11 @@
 package models
 
+type NextHopInfo struct {
+	NextHopIp          string   `DESCRIPTION: "next hop ip of the route"`
+	OutgoingIntfType   string   `DESCRIPTION :"Interface type of the next hop interface"`
+	OutgoingInterface  string   `DESCRIPTION :"Interface ID of the next hop interface"`
+	Protocol           string   `DESCRIPTION :"Protocol type of the route"`
+}
 type IPv4Route struct {
 	ConfigObj
 	DestinationNw     string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", ACCELERATED: "true", DESCRIPTION: "IP address of the route"`
@@ -9,8 +15,8 @@ type IPv4Route struct {
 	OutgoingIntfType  string `DESCRIPTION :"Interface type of the next hop interface"`
 	OutgoingInterface string `DESCRIPTION :"Interface ID of the next hop interface"`
 	Protocol          string `DESCRIPTION :"Protocol type of the route"`
-}/*
-type IPv4RouteState struct {
+}
+/*type IPv4RouteState struct {
 	ConfigObj
 	DestinationNw      string   `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "IP address of the route", USESTATEDB:"true"`
 	NextHopIp          string   `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "next hop ip of the route"`
@@ -22,15 +28,17 @@ type IPv4RouteState struct {
 	RouteCreatedTime   string   `DESCRIPTION :"Time when the route was added"`
 	RouteUpdatedTime   string   `DESCRIPTION :"Time when the route was last updated"`
 }*/
-type NextHopInfo struct {
-	NextHopIp          string   `DESCRIPTION: "next hop ip of the route"`
-	OutgoingIntfType   string   `DESCRIPTION :"Interface type of the next hop interface"`
-	OutgoingInterface  string   `DESCRIPTION :"Interface ID of the next hop interface"`
+/*type IPv4Route struct {
+	ConfigObj
+	DestinationNw     string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", ACCELERATED: "true", DESCRIPTION: "IP address of the route"`
+	NetworkMask       string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", ACCELERATED: "true", DESCRIPTION: "mask of the route"`
 	Protocol           string   `DESCRIPTION :"Protocol type of the route"`
-}
+	NextHop           []NextHopInfo
+}*/
 type IPv4RouteState struct {
 	ConfigObj
 	DestinationNw      string   `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "IP address of the route", USESTATEDB:"true"`
+	Protocol           string   `DESCRIPTION :"Protocol type of the route"`
 	IsNetworkReachable bool     `DESCRIPTION :"Indicates whether this network is reachable"`
 	RouteCreatedTime   string   `DESCRIPTION :"Time when the route was added"`
 	RouteUpdatedTime   string   `DESCRIPTION :"Time when the route was last updated"`
