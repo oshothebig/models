@@ -14,7 +14,7 @@ type IPv4Route struct {
 	Cost              uint32 `DESCRIPTION :"Cost of this route", DEFAULT:0`
 	OutgoingIntfType  string `DESCRIPTION :"Interface type of the next hop interface"`
 	OutgoingInterface string `DESCRIPTION :"Interface ID of the next hop interface"`
-	Protocol          string `DESCRIPTION :"Protocol type of the route"`
+	Protocol           string   `DESCRIPTION :"Protocol type of the route"`
 }
 /*type IPv4RouteState struct {
 	ConfigObj
