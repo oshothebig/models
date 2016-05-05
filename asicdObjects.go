@@ -59,6 +59,7 @@ type PortState struct {
 	LastUpEventTime   string `DESCRIPTION: "Timestamp corresponding to the last DOWN to UP operational state change event"`
 	NumDownEvents     int32  `DESCRIPTION: "Number of times the operational state transitioned from UP to DOWN"`
 	LastDownEventTime string `DESCRIPTION: "Timestamp corresponding to the last UP to DOWN operational state change event"`
+	Pvid              int32  `DESCRIPTION: "The vlanid assigned to untagged traffic ingressing this port"`
 	IfInOctets        int64  `DESCRIPTION: "RFC2233 Total number of octets received on this port"`
 	IfInUcastPkts     int64  `DESCRIPTION: "RFC2233 Total number of unicast packets received on this port"`
 	IfInDiscards      int64  `DESCRIPTION: "RFC2233 Total number of inbound packets that were discarded"`
