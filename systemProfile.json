@@ -1,7 +1,7 @@
 {
 "Daemons" : [
             {"Name": "bgpd",
-            "Enable": false},
+            "Enable": true},
 
             {"Name":"lacpd",
             "Enable": true},
@@ -19,14 +19,14 @@
             "Enable": true},
 
             {"Name":"vrrpd",
-            "Enable": false},
+            "Enable": true},
 
             {"Name":"lldpd",
             "Enable": true},
             
             {"Name":"vxland",
             "Enable": true}
-            ]
+            ],
 "TCPPortBase" : 10000,
 "API_Port"    : 8080 
 }
