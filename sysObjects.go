@@ -38,8 +38,9 @@ type IpTableAclState struct {
 
 type Daemon struct {
 	ConfigObj
-	Name   string `SNAPROUTE: "KEY", ACCESS:"x", MULTIPLICITY:"*", DESCRIPTION: "Daemon name"`
-	Enable bool   `DESCRIPTION: "Enable the flexswitch daemon", DEFAULT: "true"`
+	Name     string `SNAPROUTE: "KEY", ACCESS:"x", MULTIPLICITY:"*", DESCRIPTION: "Daemon name"`
+	Enable   bool   `DESCRIPTION: "Enable the flexswitch daemon", DEFAULT: "true"`
+	WatchDog bool   `DESCRIPTION: "Enable watchdog for daemon", DEFAULT: "true"`
 }
 
 type DaemonState struct {
@@ -49,6 +50,7 @@ type DaemonState struct {
 	State         string `DESCRIPTION: "State of the daemon, running or restarting"`
 	Reason        string `DESCRIPTION: "Reason for current state of the daemon"`
 	Version       string `DESCRIPTION: "Software versio of the daemon"`
+	StartTime     string `DESCRIPTION: "Daemon start time"`
 	KeepAlive     string `DESCRIPTION: "KeepAlive state of the daemon"`
 	RestartCount  int32  `DESCRIPTION: "Number of times this daemon has been restarted"`
 	RestartTime   string `DESCRIPTION: "Last restart time"`
