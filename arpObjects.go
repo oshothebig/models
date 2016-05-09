@@ -28,3 +28,11 @@ type ArpDeleteByIfName struct {
 	ConfigObj
 	IfName string `SNAPROUTE: "KEY", ACCESS:"x", MULTIPLICITY:"1", DESCRIPTION: "All the Arp learned on given IfName will be deleted and re-learned"`
 }
+
+type ArpLinuxEntryState struct {
+	ConfigObj
+	IpAddr  string `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Neighbor's IP Address"`
+	HWType  string `DESCRIPTION: "Hardware Type"`
+	MacAddr string `DESCRIPTION: "MAC address of neighbor"`
+	IfName  string `DESCRIPTION: "Interface name"`
+}
