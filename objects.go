@@ -142,3 +142,19 @@ type SystemSwVersionState struct {
 	FlexswitchVersion string     `SNAPROUTE: "KEY", ACCESS:"r",  MULTIPLICITY:"1", DESCRIPTION: "Flexswitch version"`
 	Repos             []RepoInfo `DESCRIPTION: "Git repo details"`
 }
+
+func (obj SystemSwVersionState) UnmarshalObject(body []byte) (ConfigObj, error) {
+	var systemSwVersion SystemSwVersionState
+	var err error
+	if len(body) > 0 {
+		if err = json.Unmarshal(body, &systemSwVersion); err != nil {
+			fmt.Println("### Trouble in unmarshaling SystemSwVersion from Json", body)
+		}
+	}
+
+	return systemSwVersion, err
+}
+
+func (obj SystemSwVersionState) GetKey() string {
+	return ""
+}
