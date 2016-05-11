@@ -22,7 +22,7 @@
             "Enable": true},
 
             {"Name":"lldpd",
-            "Enable": false},
+            "Enable": true},
             
             {"Name":"vxland",
             "Enable": true}
