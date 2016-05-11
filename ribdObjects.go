@@ -1,12 +1,12 @@
 package models
 
 type NextHopInfo struct {
-	NextHopIp          string   `DESCRIPTION: "next hop ip of the route, DEFAULT:"0.0.0.0""`
-	OutgoingIntfType   string   `DESCRIPTION :"Interface type of the next hop interface"`
-	OutgoingInterface  string   `DESCRIPTION :"Interface ID of the next hop interface"`
-	Protocol           string   `DESCRIPTION :"Protocol type of the route",DEFAULT:"STATIC"`
-	Weight             int32    `DESCRIPTION : "Weight of the next hop",DEFAULT:0, RANGE:0-31`
+	NextHopIp     string `DESCRIPTION: "next hop ip of the route, DEFAULT:"0.0.0.0""`
+	NextHopIntRef string `DESCRIPTION: "Interface name or ifindex of port/lag or vlan on which this next hop is configured", OPTIONAL`
+	Weight        int32  `DESCRIPTION : "Weight of the next hop",DEFAULT:0, RANGE:0-31`
 }
+
+/*
 type IPv4Route struct {
 	ConfigObj
 	DestinationNw     string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", ACCELERATED: "true", DESCRIPTION: "IP address of the route, can be specified either in CIDR notation or as a IP address."`
@@ -17,23 +17,25 @@ type IPv4Route struct {
 	OutgoingInterface string `DESCRIPTION :"Interface ID of the next hop interface"`
 	Protocol           string   `DESCRIPTION :"Protocol type of the route", DEFAULT:"STATIC"`
 	Weight             int32    `DESCRIPTION : "Weight of the next hop", DEFAULT:0, RANGE:0-31`
-}
-/*type IPv4Route struct {
-	ConfigObj
-	DestinationNw     string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", ACCELERATED: "true", DESCRIPTION: "IP address of the route"`
-	NetworkMask       string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", ACCELERATED: "true", DESCRIPTION: "mask of the route"`
-	Protocol           string   `DESCRIPTION :"Protocol type of the route"`
-	NextHop           []NextHopInfo
 }*/
+type IPv4Route struct {
+	ConfigObj
+	DestinationNw string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", ACCELERATED: "true", DESCRIPTION: "IP address of the route"`
+	NetworkMask   string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", ACCELERATED: "true", DESCRIPTION: "mask of the route"`
+	Protocol      string `DESCRIPTION :"Protocol type of the route"`
+	Cost          uint32 `DESCRIPTION :"Cost of this route", DEFAULT:0`
+	NullRoute     bool   `DESCRIPTION : "Specify if this is a null route", DEFAULT:false`
+	NextHop       []NextHopInfo
+}
 type IPv4RouteState struct {
 	ConfigObj
-	DestinationNw      string   `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "IP address of the route", USESTATEDB:"true"`
-	Protocol           string   `DESCRIPTION :"Protocol type of the route"`
-	IsNetworkReachable bool     `DESCRIPTION :"Indicates whether this network is reachable"`
-	RouteCreatedTime   string   `DESCRIPTION :"Time when the route was added"`
-	RouteUpdatedTime   string   `DESCRIPTION :"Time when the route was last updated"`
+	DestinationNw      string        `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "IP address of the route", USESTATEDB:"true"`
+	Protocol           string        `DESCRIPTION :"Protocol type of the route"`
+	IsNetworkReachable bool          `DESCRIPTION :"Indicates whether this network is reachable"`
+	RouteCreatedTime   string        `DESCRIPTION :"Time when the route was added"`
+	RouteUpdatedTime   string        `DESCRIPTION :"Time when the route was last updated"`
 	NextHopList        []NextHopInfo `DESCRIPTION: "List of next hops to reach this network"`
-	PolicyList         []string `DESCRIPTION :"List of policies applied on this route"`
+	PolicyList         []string      `DESCRIPTION :"List of policies applied on this route"`
 }
 type IPv4EventState struct {
 	ConfigObj
@@ -73,16 +75,16 @@ type PolicyStmtState struct {
 	PolicyList      []string `DESCRIPTION :"List of policies using this policy statement"`
 }
 type PolicyDefinitionStmtPriority struct {
-	Priority int32
-	Statement  string
+	Priority  int32
+	Statement string
 }
 type PolicyDefinition struct {
 	ConfigObj
-	Name          string                           `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", DESCRIPTION: "Policy Name"`
-	Priority      int32                            `DESCRIPTION :"Priority of the policy w.r.t other policies configured",RANGE:0-255`
-	MatchType     string                           `DESCRIPTION :"Specifies whether to match all/any of the statements within this policy",SELECTION:"all"/"any",DEFAULT:"all"`
-	PolicyType    string                           `DESCRIPTION : Specifies the intended protocol application for the policy", SELECTION: "BGP"/"OSPF"/"ALL", DEFAULT:"ALL"`
-	StatementList []PolicyDefinitionStmtPriority   `DESCRIPTION :"Specifies list of statements along with their precedence order."`
+	Name          string                         `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", DESCRIPTION: "Policy Name"`
+	Priority      int32                          `DESCRIPTION :"Priority of the policy w.r.t other policies configured",RANGE:0-255`
+	MatchType     string                         `DESCRIPTION :"Specifies whether to match all/any of the statements within this policy",SELECTION:"all"/"any",DEFAULT:"all"`
+	PolicyType    string                         `DESCRIPTION : Specifies the intended protocol application for the policy", SELECTION: "BGP"/"OSPF"/"ALL", DEFAULT:"ALL"`
+	StatementList []PolicyDefinitionStmtPriority `DESCRIPTION :"Specifies list of statements along with their precedence order."`
 }
 type PolicyDefinitionState struct {
 	ConfigObj
