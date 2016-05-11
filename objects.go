@@ -103,7 +103,6 @@ func (obj Logout) UnmarshalObject(body []byte) (ConfigObj, error) {
 type SystemStatusState struct {
 	ConfigObj
 	Name           string        `SNAPROUTE: "KEY", ACCESS:"r",  MULTIPLICITY:"1", DESCRIPTION: "Name of the system"`
-	SwVersion      string        `DESCRIPTION: "Flexswitch version sunning on this system"`
 	Ready          bool          `DESCRIPTION: "System is ready to accept api calls"`
 	Reason         string        `DESCRIPTION: "Reaso if system not ready"`
 	UpTime         string        `DESCRIPTION: "Uptime of this system"`

@@ -49,7 +49,6 @@ type DaemonState struct {
 	Enable        bool   `DESCRIPTION: "If the daemon configured to be enabled"`
 	State         string `DESCRIPTION: "State of the daemon, running or restarting"`
 	Reason        string `DESCRIPTION: "Reason for current state of the daemon"`
-	Version       string `DESCRIPTION: "Software versio of the daemon"`
 	StartTime     string `DESCRIPTION: "Daemon start time"`
 	KeepAlive     string `DESCRIPTION: "KeepAlive state of the daemon"`
 	RestartCount  int32  `DESCRIPTION: "Number of times this daemon has been restarted"`
