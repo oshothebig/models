@@ -22,5 +22,11 @@
 		"Owner": "local",
 		"multiplicity":"1",
 		"srcfile": "objects.go"
+	},
+	"SystemSwVersionState" : {
+		"access": "r",
+		"Owner": "local",
+		"multiplicity":"1",
+		"srcfile": "objects.go"
 	}
 }
