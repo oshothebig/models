@@ -41,33 +41,34 @@ type BfdSession struct {
  */
 type BfdSessionState struct {
 	ConfigObj
-	IpAddr                string `SNAPROUTE: "KEY", ACCESS:"r",  MULTIPLICITY:"*",DESCRIPTION: "Neighbor IP address"`
-	SessionId             int32  `DESCRIPTION: "Session index"`
-	ParamName             string `DESCRIPTION: "Session parameters config"`
-	IfIndex               int32  `DESCRIPTION: "Interface index"`
-	InterfaceSpecific     bool   `DESCRIPTION: "This session is tied to an interface"`
-	IfName                string `DESCRIPTION: "Interface to which this session is established on"`
-	PerLinkSession        bool   `DESCRIPTION: "This is a perlink session on LAG"`
-	LocalMacAddr          string `DESCRIPTION: "My MAC address"`
-	RemoteMacAddr         string `DESCRIPTION: "Neighbor MAC address"`
-	RegisteredProtocols   string `DESCRIPTION: "Registered owners"`
-	SessionState          string `DESCRIPTION: "My state"`
-	RemoteSessionState    string `DESCRIPTION: "Neighbor state"`
-	LocalDiscriminator    uint32 `DESCRIPTION: "My discriminator"`
-	RemoteDiscriminator   uint32 `DESCRIPTION: "Neighbor discriminator"`
-	LocalDiagType         string `DESCRIPTION: "My diagnostic"`
-	DesiredMinTxInterval  string `DESCRIPTION: "My desired minimum tx interval"`
-	RequiredMinRxInterval string `DESCRIPTION: "My required minimum rx interval"`
-	RemoteMinRxInterval   string `DESCRIPTION: "Neighbor minimum rx interval"`
-	DetectionMultiplier   uint32 `DESCRIPTION: "My detection multiplier"`
-	DemandMode            bool   `DESCRIPTION: "My demand mode"`
-	RemoteDemandMode      bool   `DESCRIPTION: "Neighbor demand mode"`
-	AuthSeqKnown          bool   `DESCRIPTION: "Authentication sequence known"`
-	AuthType              string `DESCRIPTION: "My Authentication type"`
-	ReceivedAuthSeq       uint32 `DESCRIPTION: "Received authentication sequence number"`
-	SentAuthSeq           uint32 `DESCRIPTION: "Sent authentication sequence number"`
-	NumTxPackets          uint32 `DESCRIPTION: "Number of control packets sent"`
-	NumRxPackets          uint32 `DESCRIPTION: "Number of control packets received"`
+	IpAddr                    string `SNAPROUTE: "KEY", ACCESS:"r",  MULTIPLICITY:"*",DESCRIPTION: "Neighbor IP address"`
+	SessionId                 int32  `DESCRIPTION: "Session index"`
+	ParamName                 string `DESCRIPTION: "Session parameters config"`
+	IfIndex                   int32  `DESCRIPTION: "Interface index"`
+	InterfaceSpecific         bool   `DESCRIPTION: "This session is tied to an interface"`
+	IfName                    string `DESCRIPTION: "Interface to which this session is established on"`
+	PerLinkSession            bool   `DESCRIPTION: "This is a perlink session on LAG"`
+	LocalMacAddr              string `DESCRIPTION: "My MAC address"`
+	RemoteMacAddr             string `DESCRIPTION: "Neighbor MAC address"`
+	RegisteredProtocols       string `DESCRIPTION: "Registered owners"`
+	SessionState              string `DESCRIPTION: "My state"`
+	RemoteSessionState        string `DESCRIPTION: "Neighbor state"`
+	LocalDiscriminator        uint32 `DESCRIPTION: "My discriminator"`
+	RemoteDiscriminator       uint32 `DESCRIPTION: "Neighbor discriminator"`
+	LocalDiagType             string `DESCRIPTION: "My diagnostic"`
+	DesiredMinTxInterval      string `DESCRIPTION: "My desired minimum tx interval"`
+	RequiredMinRxInterval     string `DESCRIPTION: "My required minimum rx interval"`
+	RemoteMinRxInterval       string `DESCRIPTION: "Neighbor minimum rx interval"`
+	DetectionMultiplier       uint32 `DESCRIPTION: "My detection multiplier"`
+	RemoteDetectionMultiplier uint32 `DESCRIPTION: "Neighbor detection multiplier"`
+	DemandMode                bool   `DESCRIPTION: "My demand mode"`
+	RemoteDemandMode          bool   `DESCRIPTION: "Neighbor demand mode"`
+	AuthSeqKnown              bool   `DESCRIPTION: "Authentication sequence known"`
+	AuthType                  string `DESCRIPTION: "My Authentication type"`
+	ReceivedAuthSeq           uint32 `DESCRIPTION: "Received authentication sequence number"`
+	SentAuthSeq               uint32 `DESCRIPTION: "Sent authentication sequence number"`
+	NumTxPackets              uint32 `DESCRIPTION: "Number of control packets sent"`
+	NumRxPackets              uint32 `DESCRIPTION: "Number of control packets received"`
 }
 
 /*
