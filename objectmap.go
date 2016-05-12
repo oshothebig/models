@@ -32,7 +32,11 @@ var ConfigObjectMap = map[string]ConfigObj{
 	//"RouteDistanceState":                               &RouteDistanceState{},
 	"User":                 &User{},
 	"UserState":            &UserState{},
-	"Daemon":               &Daemon{},
 	"SystemStatusState":    &SystemStatusState{},
+	"Daemon":               &Daemon{},
+	"ArpDeleteByIPv4Addr":  &ArpDeleteByIPv4Addr{},
+	"ArpDeleteByIfName":    &ArpDeleteByIfName{},
+	"ArpRefreshByIPv4Addr": &ArpRefreshByIPv4Addr{},
+	"ArpRefreshByIfName":   &ArpRefreshByIfName{},
 	"SystemSwVersionState": &SystemSwVersionState{},
 }

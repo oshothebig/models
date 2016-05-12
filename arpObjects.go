@@ -6,8 +6,8 @@ package models
 type ArpConfig struct {
 	ConfigObj
 	// placeholder to create a key
-	ArpConfigKey string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"1", DESCRIPTION: "Arp config"`
-	Timeout      int32  `DESCRIPTION: "Global Arp entry timeout value. Default value: 600 seconds, Minimum Possible Value: 300 seconds, Unit: second"`
+	Vrf     string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"1", DESCRIPTION: "Vrf Name"`
+	Timeout int32  `DESCRIPTION: "Global Arp entry timeout value. Default value: 600 seconds, Minimum Possible Value: 300 seconds, Unit: second"`
 }
 
 type ArpEntryState struct {
@@ -21,12 +21,22 @@ type ArpEntryState struct {
 
 type ArpDeleteByIPv4Addr struct {
 	ConfigObj
-	IpAddr string `SNAPROUTE: "KEY", ACCESS:"x", MULTIPLICITY:"1", DESCRIPTION: "Neighbor's IP Address for which corresponding Arp entry needed to be re-learned"`
+	IpAddr string `SNAPROUTE: "KEY", ACCESS:"x", MULTIPLICITY:"1", DESCRIPTION: "End Host IP Address for which corresponding Arp entry needed to be deleted"`
 }
 
 type ArpDeleteByIfName struct {
 	ConfigObj
-	IfName string `SNAPROUTE: "KEY", ACCESS:"x", MULTIPLICITY:"1", DESCRIPTION: "All the Arp learned on given IfName will be deleted and re-learned"`
+	IfName string `SNAPROUTE: "KEY", ACCESS:"x", MULTIPLICITY:"1", DESCRIPTION: "All the Arp learned for end host on given L3 interface will be deleted"`
+}
+
+type ArpRefreshByIPv4Addr struct {
+	ConfigObj
+	IpAddr string `SNAPROUTE: "KEY", ACCESS:"x", MULTIPLICITY:"1", DESCRIPTION: "Neighbor's IP Address for which corresponding Arp entry needed to be re-learned"`
+}
+
+type ArpRefreshByIfName struct {
+	ConfigObj
+	IfName string `SNAPROUTE: "KEY", ACCESS:"x", MULTIPLICITY:"1", DESCRIPTION: "All the Arp learned on given L3 interface will be re-learned"`
 }
 
 type ArpLinuxEntryState struct {
