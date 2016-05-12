@@ -326,17 +326,6 @@ import ietf-inet-types { prefix inet; }
          "OSPF Version 2, Appendix C.2 Area parameters";
       }
 
-      leaf AreaNssaTranslatorStabilityInterval {
-        type ospf-mib:PositiveInteger;
-        units "seconds";
-        config true;
-		/*default "40";*/
-        description 
-         "The number of seconds after an elected translator
-          determines its services are no longer required, that
-          it should continue to perform its translation duties.";
-      }
-
     }
 
 list AreaEntryState {
@@ -403,49 +392,8 @@ list AreaEntryState {
           in this area's link state database, excluding
           AS-external LSAs.";
       }
-	      leaf AreaLsaCksumSum {
-        type int32;
-        config false;
-        description 
-         "The 32-bit sum of the link state
-          advertisements' LS checksums contained in this
-          area's link state database.  This sum excludes
-          external (LS type-5) link state advertisements.
-          The sum can be used to determine if there has
-          been a change in a router's link state
-          database, and to compare the link state database of
-          two routers.  The value should be treated as unsigned
-          when comparing two sums of checksums.";
-      }
-     leaf AreaNssaTranslatorState {
-        type enumeration {
-          enum enabled  { value 1; }
-          enum elected  { value 2; }
-          enum disabled { value 3; }
-        }
-        config false;
-        description 
-         "Indicates if and how an NSSA border router is
-          performing NSSA translation of type-7 LSAs into type-5
-          
-          LSAs.  When this object is set to enabled, the NSSA Border
-          router's OspfAreaNssaExtTranslatorRole has been set to
-          always.  When this object is set to elected, a candidate
-          NSSA Border router is Translating type-7 LSAs into type-5.
-          When this object is set to disabled, a candidate NSSA
-          border router is NOT translating type-7 LSAs into type-5.";
-      }
-	      leaf AreaNssaTranslatorEvents {
-        type yang:counter32;
-        config false;
-        description 
-         "Indicates the number of translator state changes
-          that have occurred since the last boot-up.
-          
-          Discontinuities in the value of this counter can occur
-          at re-initialization of the management system, and at other
-          times as indicated by the value of ospfDiscontinuityTime.";
-      }
+	 
+    
 	}
     /* XXX table comments here XXX */
 
@@ -693,17 +641,7 @@ list AreaEntryState {
           value 'pointToPoint'.";
       }
 
-      leaf IfAdminStat {
-        type ospf-mib:Status;
-        config true;
-        description 
-         "The OSPF interface's administrative status.
-          The value formed on the interface, and the interface
-          will be advertised as an internal route to some area.
-          The value 'disabled' denotes that the interface is
-          external to OSPF.";
-      }
-
+      
       leaf IfRtrPriority {
         type ospf-mib:DesignatedRouterPriority;
         config true;
@@ -787,7 +725,8 @@ list AreaEntryState {
         }
         config true;
         description 
-         "The cleartext password used as an OSPF
+         " *** This element is added for future use. ***
+		  The cleartext password used as an OSPF
           authentication key when simplePassword security
           is enabled.  This object does not access any OSPF
           cryptogaphic (e.g., MD5) authentication key under
@@ -814,34 +753,6 @@ list AreaEntryState {
           Structure";
       }
 
-
-      leaf IfMulticastForwarding {
-        type enumeration {
-          enum blocked   { value 1; }
-          enum multicast { value 2; }
-          enum unicast   { value 3; }
-        }
-        config true;
-        description 
-         "The way multicasts should be forwarded on this
-          interface: not forwarded, forwarded as data
-          link multicasts, or forwarded as data link
-          unicasts.  Data link multicasting is not
-          meaningful on point-to-point and NBMA interfaces,
-          and setting ospfMulticastForwarding to 0 effectively
-          disables all multicast forwarding.";
-      }
-
-      leaf IfDemand {
-        type boolean;
-        config true;
-        /*default "false";*/
-        description 
-         "Indicates whether Demand OSPF procedures (hello
-          suppression to FULL neighbors and setting the
-          DoNotAge flag on propagated LSAs) should be
-          performed on this interface.";
-      }
 
       leaf IfAuthType {
         type ospf-mib:OspfAuthenticationType;
@@ -934,19 +845,7 @@ list AreaEntryState {
          "The total number of link-local link state advertisements
           in this interface's link-local link state database.";
       }
-	     leaf IfLsaCksumSum {
-        type uint32;
-        config false;
-        description 
-         "The 32-bit unsigned sum of the Link State
-          Advertisements' LS checksums contained in this
-          interface's link-local link state database.
-          The sum can be used to determine if there has
-          been a change in the interface's link state
-          database and to compare the interface link state
-          database of routers attached to the same subnet.";
-      }
-
+	     
       leaf IfDesignatedRouterId {
         type ospf-mib:RouterID;
         config false;
@@ -970,7 +869,8 @@ list AreaEntryState {
       key "IfMetricIpAddress IfMetricAddressLessIf 
            IfMetricTOS";
       description   
-       "A particular TOS metric for a non-virtual interface
+       "*** This element is added for future use. ***
+	    A particular TOS metric for a non-virtual interface
         identified by the interface index.
         
         Information in this table is persistent and when this object
@@ -1258,67 +1158,18 @@ list NbrEntryState {
           times as indicated by the value of ospfDiscontinuityTime.";
       }
 
-      leaf NbrLsRetransQLen {
-        type yang:gauge32;
-        config false;
-        description 
-         "The current length of the retransmission
-          queue.";
-      }
-	      leaf NbmaNbrPermanence {
-        type enumeration {
-          enum dynamic   { value 1; }
-          enum permanent { value 2; }
-        }
-        config false;
-        description 
-         "This variable displays the status of the entry;
-          'dynamic' and 'permanent' refer to how the neighbor
-          became known.";
-      }
+   
+	     
 
       leaf NbrHelloSuppressed {
         type boolean;
         config false;
         description 
-         "Indicates whether Hellos are being suppressed
+         " *** This element is added for future use. ***
+		 Indicates whether Hellos are being suppressed
           to the neighbor.";
       }
 
-      leaf NbrRestartHelperStatus {
-        type enumeration {
-          enum notHelping { value 1; }
-          enum helping    { value 2; }
-        }
-        config false;
-        description 
-         "Indicates whether the router is acting
-          as a graceful restart helper for the neighbor.";
-      }
-
-      leaf NbrRestartHelperAge {
-        type uint32;
-        units "seconds";
-        config false;
-        description 
-         "Remaining time in current OSPF graceful restart
-          interval, if the router is acting as a restart
-          helper for the neighbor.";
-      }
-
-      leaf NbrRestartHelperExitReason {
-        type enumeration {
-          enum none            { value 1; }
-          enum inProgress      { value 2; }
-          enum completed       { value 3; }
-          enum timedOut        { value 4; }
-          enum topologyChanged { value 5; }
-        }
-        config false;
-        description 
-         "Describes the outcome of the last attempt at acting
-          as a graceful restart helper for the neighbor.";
-      }
 	}
 
     /* XXX table comments here XXX */
@@ -1398,13 +1249,6 @@ list NbrEntryState {
           times as indicated by the value of ospfDiscontinuityTime.";
       }
 
-      leaf VirtNbrLsRetransQLen {
-        type yang:gauge32;
-        config false;
-        description 
-         "The current length of the retransmission
-          queue.";
-      }
 
       leaf VirtNbrHelloSuppressed {
         type boolean;
@@ -1414,168 +1258,9 @@ list NbrEntryState {
           to the neighbor.";
       }
 
-      leaf VirtNbrRestartHelperStatus {
-        type enumeration {
-          enum notHelping { value 1; }
-          enum helping    { value 2; }
-        }
-        config false;
-        description 
-         "Indicates whether the router is acting
-          as a graceful restart helper for the neighbor.";
-      }
-
-      leaf VirtNbrRestartHelperAge {
-        type uint32;
-        units "seconds";
-        config false;
-        description 
-         "Remaining time in current OSPF graceful restart
-          interval, if the router is acting as a restart
-          helper for the neighbor.";
-      }
-
-      leaf VirtNbrRestartHelperExitReason {
-        type enumeration {
-          enum none            { value 1; }
-          enum inProgress      { value 2; }
-          enum completed       { value 3; }
-          enum timedOut        { value 4; }
-          enum topologyChanged { value 5; }
-        }
-        config false;
-        description 
-         "Describes the outcome of the last attempt at acting
-          as a graceful restart helper for the neighbor.";
-      }
     }
 
 
-    /* XXX table comments here XXX */
-
-     list VirtLocalLsdbEntryState {
-	key "VirtLocalLsdbTransitArea 
-           VirtLocalLsdbNeighbor VirtLocalLsdbType 
-           VirtLocalLsdbLsid VirtLocalLsdbRouterId";
-      description   
-       "A single link state advertisement.";
-
-    leaf VirtLocalLsdbTransitArea {
-        type ospf-mib:AreaID;
-        config true;
-        description 
-         "The transit area that the virtual link
-          traverses.  By definition, this is not 0.0.0.0.";
-        reference   
-         "OSPF Version 2, Appendix C.3 Interface parameters";
-      }
-
-      leaf VirtLocalLsdbNeighbor {
-        type ospf-mib:RouterID;
-        config true;
-        description 
-         "The Router ID of the virtual neighbor.";
-        reference   
-         "OSPF Version 2, Appendix C.3 Interface parameters";
-      }
-
-      leaf VirtLocalLsdbType {
-        type enumeration {
-          enum localOpaqueLink { value 9; }
-        }
-        config true;
-        description 
-         "The type of the link state advertisement.
-          Each link state type has a separate
-          advertisement format.";
-        reference   
-         "OSPF Version 2, Appendix A.4.1 The Link State
-          Advertisement header";
-      }
-
-      leaf VirtLocalLsdbLsid {
-        type inet:ipv4-address;
-        config true;
-        description 
-         "The Link State ID is an LS Type Specific field
-          containing a 32-bit identifier in IP address format;
-          it identifies the piece of the routing domain
-          that is being described by the advertisement.";
-        reference   
-         "OSPF Version 2, Section 12.1.4 Link State ID";
-      }
-
-      leaf VirtLocalLsdbRouterId {
-        type ospf-mib:RouterID;
-        config true;
-        description 
-         "The 32-bit number that uniquely identifies the
-          originating router in the Autonomous System.";
-        reference   
-         "OSPF Version 2, Appendix C.1 Global parameters";
-      }
-	
-     leaf VirtLocalLsdbSequence {
-        type int32;
-        config false;
-        description 
-         "The sequence number field is a signed 32-bit
-          integer.  It starts with the value '80000001'h,
-          or -'7FFFFFFF'h, and increments until '7FFFFFFF'h.
-          Thus, a typical sequence number will be very negative.
-          It is used to detect old and duplicate link state
-          advertisements.  The space of sequence numbers is linearly
-          ordered.  The larger the sequence number, the more recent
-          the advertisement.";
-        reference   
-         "OSPF Version 2, Section 12.1.6 LS sequence
-          number";
-      }
-
-      leaf VirtLocalLsdbAge {
-        type int32;
-        units "seconds";
-        config false;
-        description 
-         "This field is the age of the link state
-          advertisement in seconds.";
-        reference   
-         "OSPF Version 2, Section 12.1.1 LS age";
-      }
-
-      leaf VirtLocalLsdbChecksum {
-        type int32;
-        config false;
-        description 
-         "This field is the checksum of the complete
-          contents of the advertisement, excepting the
-          age field.  The age field is excepted so that
-          
-          an advertisement's age can be incremented
-          without updating the checksum.  The checksum
-          used is the same that is used for ISO
-          connectionless datagrams; it is commonly
-          referred to as the Fletcher checksum.";
-        reference   
-         "OSPF Version 2, Section 12.1.7 LS checksum";
-      }
-
-      leaf VirtLocalLsdbAdvertisement {
-        type binary {
-          length "1..65535";
-        }
-        config false;
-        description 
-         "The entire link state advertisement, including
-          its header.";
-        reference   
-         "OSPF Version 2, Section 12 Link State
-          Advertisements.
-          
-          Note that for variable length LSAs, SNMP agents
-          may not be able to return the largest string size.";
-      }
-	}
 
 list Global {
       key RouterId;
@@ -1593,19 +1278,6 @@ list Global {
         the entity SHOULD save the change to non-volatile storage.";
       reference     
        "OSPF Version 2, C.1 Global parameters";
-    }
-
-    leaf AdminStat {
-      type ospf-mib:Status;
-      config true;
-      description   
-       "The administrative status of OSPF in the
-        router.  The value 'enabled' denotes that the
-        OSPF Process is active on at least one interface;
-        'disabled' disables it on all interfaces.
-        
-        This object is persistent and when written
-        the entity SHOULD save the change to non-volatile storage.";
     }
 
      leaf ASBdrRtrStatus {
@@ -1627,8 +1299,8 @@ list Global {
       type boolean;
       config true;
       description   
-       "The router's support for type-of-service routing.
-        
+       "*** This element is added for future use. ***
+		The router's support for type-of-service routing.
         This object is persistent and when written
         the entity SHOULD save the change to non-volatile
         storage.";
@@ -1638,132 +1310,8 @@ list Global {
     }
 
  
-    leaf ExtLsdbLimit {
-      type int32 {
-        range "-1..2147483647";
-      }
-      config true;
-      description   
-       "The maximum number of non-default
-        AS-external LSAs entries that can be stored in the
-        link state database.  If the value is -1, then
-        there is no limit.
-        
-        When the number of non-default AS-external LSAs
-        in a router's link state database reaches
-        ospfExtLsdbLimit, the router enters
-        overflow state.  The router never holds more than
-        ospfExtLsdbLimit non-default AS-external LSAs
-        in its database.  OspfExtLsdbLimit MUST be set
-        identically in all routers attached to the OSPF
-        backbone and/or any regular OSPF area (i.e.,
-        OSPF stub areas and NSSAs are excluded).
-        
-        This object is persistent and when written
-        the entity SHOULD save the change to non-volatile
-        storage.";
-    }
-
-    leaf MulticastExtensions {
-      type int32;
-      config true;
-      description   
-       "A bit mask indicating whether the router is
-        forwarding IP multicast (Class D) datagrams
-        based on the algorithms defined in the
-        multicast extensions to OSPF.
-        
-        Bit 0, if set, indicates that the router can
-        
-        forward IP multicast datagrams in the router's
-        directly attached areas (called intra-area
-        multicast routing).
-        
-        Bit 1, if set, indicates that the router can
-        forward IP multicast datagrams between OSPF
-        areas (called inter-area multicast routing).
-        
-        Bit 2, if set, indicates that the router can
-        forward IP multicast datagrams between
-        Autonomous Systems (called inter-AS multicast
-        routing).
-        
-        Only certain combinations of bit settings are
-        allowed, namely: 0 (no multicast forwarding is
-        enabled), 1 (intra-area multicasting only), 3
-        (intra-area and inter-area multicasting), 5
-        (intra-area and inter-AS multicasting), and 7
-        (multicasting everywhere).  By default, no
-        multicast forwarding is enabled.
-        
-        This object is persistent and when written
-        the entity SHOULD save the change to non-volatile
-        storage.";
-    }
-
-    leaf ExitOverflowInterval {
-      type ospf-mib:PositiveInteger;
-      config true;
-      description   
-       "The number of seconds that, after entering
-        OverflowState, a router will attempt to leave
-        OverflowState.  This allows the router to again
-        originate non-default AS-external LSAs.  When
-        set to 0, the router will not leave
-        overflow state until restarted.
-        
-        This object is persistent and when written
-        the entity SHOULD save the change to non-volatile
-        storage.";
-    }
-
-    leaf DemandExtensions {
-      type boolean;
-      config true;
-      description   
-       "The router's support for demand routing.
-        This object is persistent and when written
-        the entity SHOULD save the change to non-volatile
-        storage.";
-      reference     
-       "Extending OSPF to Support Demand Circuits";
-    }
-
-    leaf RFC1583Compatibility {
-      type boolean;
-      config true;
-      description   
-       "Indicates metrics used to choose among multiple
-        AS-external LSAs.  When RFC1583Compatibility is set to
-        enabled, only cost will be used when choosing among
-        multiple AS-external LSAs advertising the same
-        destination.  When RFC1583Compatibility is set to
-        disabled, preference will be driven first by type of
-        path using cost only to break ties.
-        
-        This object is persistent and when written
-        the entity SHOULD save the change to non-volatile
-        storage.";
-      reference     
-       "OSPF Version 2, Section 16.4.1 External path
-        preferences";
-    }
-
- 
-    leaf ReferenceBandwidth {
-      type uint32;
-      units "kilobits per second";
-      config true;
-      description   
-       "Reference bandwidth in kilobits/second for
-        
-        calculating default interface metrics.  The
-        default value is 100,000 KBPS (100 MBPS).
-        
-        This object is persistent and when written
-        the entity SHOULD save the change to non-volatile
-        storage.";
-    }
+    
+   
 
     leaf RestartSupport {
       type enumeration {
@@ -1773,7 +1321,8 @@ list Global {
       }
       config true;
       description   
-       "The router's support for OSPF graceful restart.
+       "*** This element is added for future use. ***
+		The router's support for OSPF graceful restart.
         Options include: no restart support, only planned
         restarts, or both planned and unplanned restarts.
         
@@ -1789,44 +1338,15 @@ list Global {
       units "seconds";
       config true;
       description   
-       "Configured OSPF graceful restart timeout interval.
-        
+       "*** This element is added for future use. ***
+		Configured OSPF graceful restart timeout interval.
         This object is persistent and when written
         the entity SHOULD save the change to non-volatile
         storage.";
     }
 
-    leaf RestartStrictLsaChecking {
-      type boolean;
-      config true;
-      description   
-       "Indicates if strict LSA checking is enabled for
-        graceful restart.
-        
-        This object is persistent and when written
-        the entity SHOULD save the change to non-volatile
-        
-        storage.";
-    }
-
+    
  
-    leaf StubRouterAdvertisement {
-      type enumeration {
-        enum doNotAdvertise { value 1; }
-        enum advertise      { value 2; }
-      }
-      config true;
-      description   
-       "This object controls the advertisement of
-        stub router LSAs by the router.  The value
-        doNotAdvertise will result in the advertisement
-        of a standard router LSA and is the default value.
-        
-        This object is persistent and when written
-        the entity SHOULD save the change to non-volatile
-        storage.";
-    }
-
   }
 
 list GlobalState {
@@ -1881,50 +1401,6 @@ list GlobalState {
         advertisements";
     }
 
-    leaf ExternLsaCksumSum {
-      type int32;
-      config false;
-      description   
-       "The 32-bit sum of the LS checksums of
-        the external link state advertisements
-        contained in the link state database.  This sum
-        can be used to determine if there has been a
-        change in a router's link state database and
-        to compare the link state database of two
-        routers.  The value should be treated as unsigned
-        when comparing two sums of checksums.";
-    }
-
-
-   leaf OriginateNewLsas {
-      type yang:counter32;
-      config false;
-      description   
-       "The number of new link state advertisements
-        that have been originated.  This number is
-        incremented each time the router originates a new
-        LSA.
-        
-        Discontinuities in the value of this counter can
-        occur at re-initialization of the management system,
-        and at other times as indicated by the value of
-        spfDiscontinuityTime.";
-    }
-
-    leaf RxNewLsas {
-      type yang:counter32;
-      config false;
-      description   
-       "The number of link state advertisements received
-        that are determined to be new instantiations.
-        This number does not include newer instantiations
-        of self-originated link state advertisements.
-        
-        Discontinuities in the value of this counter can
-        occur at re-initialization of the management system,
-        and at other times as indicated by the value of
-        ospfDiscontinuityTime.";
-    }
 
    leaf OpaqueLsaSupport {
       type boolean;
@@ -1934,26 +1410,7 @@ list GlobalState {
       reference     
        "The OSPF Opaque LSA Option";
     }
-   leaf RestartStatus {
-      type enumeration {
-        enum notRestarting    { value 1; }
-        enum plannedRestart   { value 2; }
-        enum unplannedRestart { value 3; }
-      }
-      config false;
-      description   
-       "Current status of OSPF graceful restart.";
-    }
-
-    leaf RestartAge {
-      type uint32;
-      units "seconds";
-      config false;
-      description   
-       "Remaining time in current OSPF graceful restart
-        interval.";
-    }
-
+    
     leaf RestartExitReason {
       type enumeration {
         enum none            { value 1; }
@@ -1970,47 +1427,6 @@ list GlobalState {
         a restart attempt is currently underway.";
     }
 
-    leaf AsLsaCount {
-      type yang:gauge32;
-      config false;
-      description   
-       "The number of AS-scope link state
-        advertisements in the AS-scope link state database.";
-    }
-
-    leaf AsLsaCksumSum {
-      type uint32;
-      config false;
-      description   
-       "The 32-bit unsigned sum of the LS checksums of
-        the AS link state advertisements contained in the AS-scope
-        link state database.  This sum can be used to determine
-        if there has been a change in a router's AS-scope link
-        state database, and to compare the AS-scope link state
-        database of two routers.";
-    }
-
-    leaf StubRouterSupport {
-      type boolean;
-      config false;
-      description   
-       "The router's support for stub router functionality.";
-      reference     
-       "OSPF Stub Router Advertisement";
-    }
-
- leaf DiscontinuityTime {
-      type yang:timestamp;
-      config false;
-      description   
-       "The value of sysUpTime on the most recent occasion
-        at which any one of this MIB's counters suffered
-        a discontinuity.
-        
-        If no such discontinuities have occurred since the last
-        re-initialization of the local management subsystem,
-        then this object contains a zero value.";
-    }
 	
 	}
 
