@@ -104,7 +104,7 @@ type SystemStatusState struct {
 	ConfigObj
 	Name           string        `SNAPROUTE: "KEY", ACCESS:"r",  MULTIPLICITY:"1", DESCRIPTION: "Name of the system"`
 	Ready          bool          `DESCRIPTION: "System is ready to accept api calls"`
-	Reason         string        `DESCRIPTION: "Reaso if system not ready"`
+	Reason         string        `DESCRIPTION: "Reason if system not ready"`
 	UpTime         string        `DESCRIPTION: "Uptime of this system"`
 	NumCreateCalls string        `DESCRIPTION: "Number of create api calls made"`
 	NumDeleteCalls string        `DESCRIPTION: "Number of delete api calls made"`
@@ -127,5 +127,34 @@ func (obj SystemStatusState) UnmarshalObject(body []byte) (ConfigObj, error) {
 }
 
 func (obj SystemStatusState) GetKey() string {
+	return ""
+}
+
+type RepoInfo struct {
+	Name   string `DESCRIPTION: "Name of the git repo"`
+	Sha1   string `DESCRIPTION: "Git commit Sha1"`
+	Branch string `DESCRIPTION: "Branch name"`
+	Time   string `DESCRIPTION: "Build time"`
+}
+
+type SystemSwVersionState struct {
+	ConfigObj
+	FlexswitchVersion string     `SNAPROUTE: "KEY", ACCESS:"r",  MULTIPLICITY:"1", DESCRIPTION: "Flexswitch version"`
+	Repos             []RepoInfo `DESCRIPTION: "Git repo details"`
+}
+
+func (obj SystemSwVersionState) UnmarshalObject(body []byte) (ConfigObj, error) {
+	var systemSwVersion SystemSwVersionState
+	var err error
+	if len(body) > 0 {
+		if err = json.Unmarshal(body, &systemSwVersion); err != nil {
+			fmt.Println("### Trouble in unmarshaling SystemSwVersion from Json", body)
+		}
+	}
+
+	return systemSwVersion, err
+}
+
+func (obj SystemSwVersionState) GetKey() string {
 	return ""
 }
