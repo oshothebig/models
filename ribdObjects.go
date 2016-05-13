@@ -10,8 +10,8 @@ type NextHopInfo struct {
 type IPv4Route struct {
 	baseObj
 	DestinationNw     string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", ACCELERATED: "true", DESCRIPTION: "IP address of the route, can be specified either in CIDR notation or as a IP address."`
-	NetworkMask       string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", ACCELERATED: "true", DESCRIPTION: "mask of the route, required to be non-zero in case DestinationNw is a non-CIDR address.", DEFAULT:"255.255.255.255"`
-	NextHopIp         string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", ACCELERATED: "true", DESCRIPTION: "next hop ip of the route", DEFAULT:"0.0.0.0"`
+	NetworkMask       string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", ACCELERATED: "true", DESCRIPTION: "mask of the route, required to be non-zero in case DestinationNw is a non-CIDR address."`
+	NextHopIp         string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", ACCELERATED: "true", DESCRIPTION: "next hop ip of the route"`
 	Cost              uint32 `DESCRIPTION :"Cost of this route", DEFAULT:0`
 	OutgoingIntfType  string `DESCRIPTION :"Interface type of the next hop interface"`
 	OutgoingInterface string `DESCRIPTION :"Interface ID of the next hop interface"`
