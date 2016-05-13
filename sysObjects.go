@@ -3,19 +3,19 @@ package models
 import ()
 
 type SystemLogging struct {
-	ConfigObj
+	baseObj
 	SRLogger string `SNAPROUTE: "KEY", ACCESS:"w",  MULTIPLICITY:"1", DESCRIPTION: "Global logging"`
 	Logging  string `DESCRIPTION: "Global logging", DEFAULT: "on"`
 }
 
 type ComponentLogging struct {
-	ConfigObj
+	baseObj
 	Module string `SNAPROUTE: "KEY", ACCESS:"w",  MULTIPLICITY:"*", DESCRIPTION: "Module name to set logging level"`
 	Level  string `DESCRIPTION: "Logging level", DEFAULT: "info"`
 }
 
 type IpTableAcl struct {
-	ConfigObj
+	baseObj
 	Name         string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", DESCRIPTION: "Ip Table ACL rule name"`
 	PhysicalPort string `DESCRIPTION: "IfIndex where the acl rule is to be applied", DEFAULT: "all"`
 	Action       string `DESCRIPTION: "ACCEPT or DROP"`
@@ -26,7 +26,7 @@ type IpTableAcl struct {
 
 /*
 type IpTableAclState struct {
-	ConfigObj
+	baseObj
 	Name         string `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Ip Table ACL rule name"`
 	PhysicalPort string `DESCRIPTION: "IfIndex where the acl rule is to be applied", DEFAULT: "all"`
 	Action       string `DESCRIPTION: "ACCEPT or DROP"`
@@ -37,14 +37,14 @@ type IpTableAclState struct {
 */
 
 type Daemon struct {
-	ConfigObj
+	baseObj
 	Name     string `SNAPROUTE: "KEY", ACCESS:"x", MULTIPLICITY:"*", DESCRIPTION: "Daemon name"`
 	Enable   bool   `DESCRIPTION: "Enable the flexswitch daemon", DEFAULT: "true"`
 	WatchDog bool   `DESCRIPTION: "Enable watchdog for daemon", DEFAULT: "true"`
 }
 
 type DaemonState struct {
-	ConfigObj
+	baseObj
 	Name          string `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Daemon name", USESTATEDB:"true"`
 	Enable        bool   `DESCRIPTION: "If the daemon configured to be enabled"`
 	State         string `DESCRIPTION: "State of the daemon, running or restarting"`
