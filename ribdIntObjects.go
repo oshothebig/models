@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 )
+
 type PolicyPrefix struct {
 	IpPrefix string
 	/*
@@ -22,12 +23,12 @@ type PolicyPrefix struct {
 }
 
 type PolicyPrefixSet struct {
-	ConfigObj
+	baseObj
 	PrefixSetName string `SNAPROUTE: "KEY"`
 	/*
 	   List of prefix expressions that are part of the set
 	*/
-	IpPrefixList [ ]PolicyPrefix
+	IpPrefixList []PolicyPrefix
 }
 
 func (obj PolicyPrefixSet) UnmarshalObject(body []byte) (ConfigObj, error) {
@@ -47,6 +48,3 @@ type PolicyDstIpMatchPrefixSetCondition struct {
 	//yang_name: match-set-options class: leaf
 	Prefix PolicyPrefix
 }
-
-
-

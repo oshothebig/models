@@ -4,7 +4,7 @@ package models
  * This DS will be used while Created/Deleting Vrrp Intf Config
  */
 type VrrpIntf struct {
-	ConfigObj
+	baseObj
 	IfIndex  int32 `SNAPROUTE: "KEY", ACCESS:"w",  MULTIPLICITY:"*", DESCRIPTION: ""Interface index for which VRRP Config needs to be done"`
 	VRID     int32 `SNAPROUTE: "KEY", DESCRIPTION: "Virtual Router's Unique Identifier"`
 	Priority int32 `DESCRIPTION: "Sending VRRP router's priority for
@@ -16,7 +16,7 @@ type VrrpIntf struct {
 }
 
 type VrrpIntfState struct {
-	ConfigObj
+	baseObj
 	IfIndex                 int32  `SNAPROUTE: "KEY", ACCESS:"r",  MULTIPLICITY:"*", DESCRIPTION: "Interface index for which VRRP state is requested"`
 	VRID                    int32  `SNAPROUTE: "KEY", DESCRIPTION: "Virtual Router's Unique Identifier"`
 	IntfIpAddr              string `DESCRIPTION: "Ip Address of Interface where VRRP is configured"`
@@ -31,7 +31,7 @@ type VrrpIntfState struct {
 }
 
 type VrrpVridState struct {
-	ConfigObj
+	baseObj
 	IfIndex          int32  `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION:"Interface index for which VRRP state is requested"`
 	VRID             int32  `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION:"Virtual Router's Unique Identifier""`
 	AdverRx          int32  `DESCRIPTION:"Total number of advertisement packets received"`
