@@ -6,7 +6,7 @@ import ()
  * Global DataStructure for DHCP RELAY
  */
 type DhcpRelayGlobal struct {
-	ConfigObj
+	baseObj
 	// This will tell whether DHCP RELAY is enabled/disabled
 	// on the box right now or not.
 	DhcpRelay string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"1",DESCRIPTION: "Global Dhcp Relay Agent Information"`
@@ -17,7 +17,7 @@ type DhcpRelayGlobal struct {
  * This DS will be used while adding/deleting Relay Agent.
  */
 type DhcpRelayIntf struct {
-	ConfigObj
+	baseObj
 	//IpSubnet     string `SNAPROUTE: "KEY"`
 	//Netmask      string `SNAPROUTE: "KEY"`
 	IfIndex int32 `SNAPROUTE: "KEY",  ACCESS:"w", MULTIPLICITY:"*", DESCRIPTION:"Interface index for which Relay Agent Config needs to be done"`
@@ -28,7 +28,7 @@ type DhcpRelayIntf struct {
 }
 
 type DhcpRelayHostDhcpState struct {
-	ConfigObj
+	baseObj
 	MacAddr         string `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Host Hardware/Mac Address"`
 	ServerIp        string `DESCRIPTION: "Configured Dhcp Server"`
 	OfferedIp       string `DESCRIPTION: "Ip Address offered by Dhcp Server"`
@@ -46,7 +46,7 @@ type DhcpRelayHostDhcpState struct {
 }
 
 type DhcpRelayIntfState struct {
-	ConfigObj
+	baseObj
 	IntfId            int32 `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Interface Index for which state is required to be collected"`
 	TotalDrops        int32 `DESCRIPTION: "Total number of Dhcp Packets dropped by relay agent"`
 	TotalDhcpClientRx int32 `DESCRIPTION: "Total number of client requests that camde to relay agent"`
@@ -56,7 +56,7 @@ type DhcpRelayIntfState struct {
 }
 
 type DhcpRelayIntfServerState struct {
-	ConfigObj
+	baseObj
 	IntfId    int32  `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Interface Index for which state is required to be collected"`
 	ServerIp  string `DESCRIPTION: "Information about any one of configured Dhcp server"`
 	Request   int32  `DESCRIPTION: "Total number of requests to Server"`

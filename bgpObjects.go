@@ -5,7 +5,7 @@ type SourcePolicyList struct {
 	Policy  string `DESCRIPTION: "Policy that needs to be applied for redistribution of the specified sources into BGP"`
 }
 type BGPGlobal struct {
-	ConfigObj
+	baseObj
 	ASNum               uint32             `DESCRIPTION: "Local AS for BGP global config"`
 	RouterId            string             `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"1", DESCRIPTION: "Router id for BGP global config"`
 	UseMultiplePaths    bool               `DESCRIPTION: "Enable/disable ECMP for BGP", DEFAULT: "false"`
@@ -16,7 +16,7 @@ type BGPGlobal struct {
 }
 
 type BGPGlobalState struct {
-	ConfigObj
+	baseObj
 	AS                  uint32 `DESCRIPTION: "Local AS for BGP global config"`
 	RouterId            string `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"1", DESCRIPTION: "Router id for BGP global config"`
 	UseMultiplePaths    bool   `DESCRIPTION: "Enable/disable ECMP for BGP"`
@@ -48,7 +48,7 @@ type BGPQueues struct {
 }
 
 type BGPNeighbor struct {
-	ConfigObj
+	baseObj
 	NeighborAddress         string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", DESCRIPTION: "Address of the BGP neighbor"`
 	IfIndex                 int32  `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", DESCRIPTION: "Interface of the BGP neighbor"`
 	PeerAS                  uint32 `DESCRIPTION: "Peer AS of the BGP neighbor"`
@@ -75,7 +75,7 @@ type BGPNeighbor struct {
 }
 
 type BGPNeighborState struct {
-	ConfigObj
+	baseObj
 	NeighborAddress         string      `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Address of the BGP neighbor"`
 	IfIndex                 int32       `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Interface of the BGP neighbor"`
 	PeerAS                  uint32      `DESCRIPTION: "Peer AS of the BGP neighbor"`
@@ -106,7 +106,7 @@ type BGPNeighborState struct {
 }
 
 type BGPPeerGroup struct {
-	ConfigObj
+	baseObj
 	PeerAS                  uint32 `DESCRIPTION: "Peer AS of the BGP neighbor"`
 	LocalAS                 uint32 `DESCRIPTION: "Local AS of the BGP neighbor", DEFAULT: "0"`
 	UpdateSource            string `DESCRIPTION: "Source IP to connect to the BGP neighbor", DEFAULT: ""`
@@ -129,7 +129,7 @@ type BGPPeerGroup struct {
 }
 
 type BGPRouteState struct {
-	ConfigObj
+	baseObj
 	Network         string   `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Network address of the destination"`
 	CIDRLen         uint16   `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "CIDR length of the destination"`
 	NextHop         string   `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Next hop address for the destination"`
@@ -142,7 +142,7 @@ type BGPRouteState struct {
 }
 
 type BGPPolicyCondition struct {
-	ConfigObj
+	baseObj
 	Name            string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", DESCRIPTION: "Name of the BGP policy condition"`
 	ConditionType   string `DESCRIPTION: "Type of the BGP policy condition. "`
 	IpPrefix        string `DESCRIPTION: "IP adddress to match in CIDR format"`
@@ -150,14 +150,14 @@ type BGPPolicyCondition struct {
 }
 
 type BGPPolicyConditionState struct {
-	ConfigObj
+	baseObj
 	Name           string   `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Name of the BGP policy condition"`
 	ConditionInfo  string   `DESCRIPTION: "Description of the BGP policy condition"`
 	PolicyStmtList []string `DESCRIPTION: "Policy statements that use the BGP policy condition"`
 }
 
 type BGPPolicyAction struct {
-	ConfigObj
+	baseObj
 	Name            string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", DESCRIPTION: "Name of the BGP policy action"`
 	ActionType      string `DESCRIPTION: "Type of the BGP policy action"`
 	GenerateASSet   bool   `DESCRIPTION: "Enable/Disable generating AS set for BGP aggregate action"`
@@ -165,14 +165,14 @@ type BGPPolicyAction struct {
 }
 
 type BGPPolicyActionState struct {
-	ConfigObj
+	baseObj
 	Name           string   `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Name of the BGP policy action"`
 	ActionInfo     string   `DESCRIPTION: "Description of the BGP policy action"`
 	PolicyStmtList []string `DESCRIPTION: "Policy statements that use the BGP policy action"`
 }
 
 type BGPPolicyStmt struct {
-	ConfigObj
+	baseObj
 	Name            string   `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", DESCRIPTION: "Name of the BGP policy statement"`
 	MatchConditions string   `DESCRIPTION: "Match conditions all/any"`
 	Conditions      []string `DESCRIPTION: "List of conditions"`
@@ -180,7 +180,7 @@ type BGPPolicyStmt struct {
 }
 
 type BGPPolicyStmtState struct {
-	ConfigObj
+	baseObj
 	Name            string   `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Name of the BGP policy statement"`
 	MatchConditions string   `DESCRIPTION: "Match conditions ,SELECTION: All/Any"`
 	Conditions      []string `DESCRIPTION: "List of conditions"`
@@ -193,7 +193,7 @@ type BGPPolicyDefinitionStmtPrecedence struct {
 }
 
 type BGPPolicyDefinition struct {
-	ConfigObj
+	baseObj
 	Name          string                              `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", DESCRIPTION: "Name of the BGP policy definition"`
 	Precedence    int32                               `DESCRIPTION: "Precedence of the policy definition"`
 	MatchType     string                              `DESCRIPTION: "Match type for policy definition  ,SELECTION: All/Any"`
@@ -201,7 +201,7 @@ type BGPPolicyDefinition struct {
 }
 
 type BGPPolicyDefinitionState struct {
-	ConfigObj
+	baseObj
 	Name         string   `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Name of the BGP policy definition"`
 	HitCounter   int32    `DESCRIPTION: "Number of matches for this policy"`
 	IpPrefixList []string `DESCRIPTION: "IP addresses that matched the policy"`

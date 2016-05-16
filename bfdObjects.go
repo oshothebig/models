@@ -6,7 +6,7 @@ import ()
  * Global Config for BFD
  */
 type BfdGlobal struct {
-	ConfigObj
+	baseObj
 	Bfd    string `SNAPROUTE: "KEY", ACCESS:"w",  MULTIPLICITY:"1", DESCRIPTION: "VRF id where BFD is globally enabled or disabled"`
 	Enable bool   `DESCRIPTION: "Global BFD state in this VRF", DEFAULT: "true"`
 }
@@ -15,7 +15,7 @@ type BfdGlobal struct {
  * Global State
  */
 type BfdGlobalState struct {
-	ConfigObj
+	baseObj
 	Bfd                  string `SNAPROUTE: "KEY", ACCESS:"r",  MULTIPLICITY:"1", DESCRIPTION: "VRF id for which global BFD state is requested"`
 	Enable               bool   `DESCRIPTION: "Global BFD state in this VRF"`
 	NumTotalSessions     uint32 `DESCRIPTION: "Total number of BFD sessions"`
@@ -28,7 +28,7 @@ type BfdGlobalState struct {
  * BFD Session config
  */
 type BfdSession struct {
-	ConfigObj
+	baseObj
 	IpAddr    string `SNAPROUTE: "KEY", ACCESS:"w",  MULTIPLICITY:"*", DESCRIPTION: "BFD neighbor IP address"`
 	ParamName string `DESCRIPTION: "Name of the session parameters object to be applied on this session", DEFAULT: "default"`
 	Interface string `DESCRIPTION: "Name of the interface this session has to be established on", DEFAULT: "None"`
@@ -40,7 +40,7 @@ type BfdSession struct {
  * BFD Session state
  */
 type BfdSessionState struct {
-	ConfigObj
+	baseObj
 	IpAddr                    string `SNAPROUTE: "KEY", ACCESS:"r",  MULTIPLICITY:"*",DESCRIPTION: "Neighbor IP address"`
 	SessionId                 int32  `DESCRIPTION: "Session index"`
 	ParamName                 string `DESCRIPTION: "Session parameters config"`
@@ -75,7 +75,7 @@ type BfdSessionState struct {
  * BFD Session param config
  */
 type BfdSessionParam struct {
-	ConfigObj
+	baseObj
 	Name                      string `SNAPROUTE: "KEY", ACCESS:"w",  MULTIPLICITY:"*", DESCRIPTION: "Session parameters"`
 	LocalMultiplier           uint32 `DESCRIPTION: "Detection multiplier", DEFAULT: "3"`
 	DesiredMinTxInterval      uint32 `DESCRIPTION: "Desired minimum tx interval in ms", DEFAULT: "1000"`
@@ -92,7 +92,7 @@ type BfdSessionParam struct {
  * BFD Session param state
  */
 type BfdSessionParamState struct {
-	ConfigObj
+	baseObj
 	Name                      string `SNAPROUTE: "KEY", ACCESS:"r",  MULTIPLICITY:"*", DESCRIPTION: "Session parameters"`
 	NumSessions               int32  `DESCRIPTION: "Number of sessions using these params"`
 	LocalMultiplier           int32  `DESCRIPTION: "Detection multiplier"`
