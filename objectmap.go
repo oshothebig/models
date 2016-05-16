@@ -1,42 +1,13 @@
 package models
 
 var ConfigObjectMap = map[string]ConfigObj{
-	//"Vlan": &Vlan{}, // created before auto YANG
-	//"IPv4Route":                                        &IPv4Route{}, // created before auto YANG
-	//"IPv4RouteState":                                   &IPv4RouteState{},
-	//"IPv4EventState":                                   &IPv4EventState{},
-	//"IPv4Intf":          &IPv4Intf{}, // created before auto YANG
-	//"LogicalIntfConfig": &LogicalIntfConfig{},
-	//"LogicalIntfState":  &LogicalIntfState{},
-	//"ArpConfig":                                        &ArpConfig{},         // created before auto YANG
-	//"ArpEntry":                                         &ArpEntry{},          // created before auto YANG
-	//"BfdSession":                                       &BfdSession{},
-	//"BfdSessionState":                                  &BfdSessionState{},
-	//"BfdGlobal":                                        &BfdGlobal{},
-	//"BfdGlobalState":                                   &BfdGlobalState{},
-	//"BfdInterface":                                     &BfdInterface{},
-	//"BfdInterfaceState":                                &BfdInterfaceState{},
-	//"DhcpRelayHostDhcpState":   &DhcpRelayHostDhcpState{},
-	//"DhcpRelayIntfServerState": &DhcpRelayIntfServerState{},
-	//"DhcpRelayIntfConfig":      &DhcpRelayIntfConfig{},
-	//"DhcpRelayIntfState":       &DhcpRelayIntfState{},
-	//"DhcpRelayGlobalConfig":    &DhcpRelayGlobalConfig{},
-	//"PolicyDefinitionConfig":                           &PolicyDefinitionConfig{},
-	//"PolicyDefinitionState":                            &PolicyDefinitionState{},
-	//"PolicyStmtConfig":                                 &PolicyStmtConfig{},
-	//"PolicyStmtState":                                  &PolicyStmtState{},
-	//"PolicyConditionConfig":                            &PolicyConditionConfig{},
-	//"PolicyConditionState":                             &PolicyConditionState{},
-	//"PolicyActionConfig":                               &PolicyActionConfig{},
-	//"PolicyActionState":                                &PolicyActionState{},
-	//"RouteDistanceState":                               &RouteDistanceState{},
 	"User":                 &User{},
 	"UserState":            &UserState{},
 	"SystemStatusState":    &SystemStatusState{},
+	"SystemSwVersionState": &SystemSwVersionState{},
 	"Daemon":               &Daemon{},
 	"ArpDeleteByIPv4Addr":  &ArpDeleteByIPv4Addr{},
 	"ArpDeleteByIfName":    &ArpDeleteByIfName{},
 	"ArpRefreshByIPv4Addr": &ArpRefreshByIPv4Addr{},
 	"ArpRefreshByIfName":   &ArpRefreshByIfName{},
-	"SystemSwVersionState": &SystemSwVersionState{},
 }

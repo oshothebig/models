@@ -1,13 +1,13 @@
 package models
 
 type LLDPIntf struct {
-	ConfigObj
+	baseObj
 	IfIndex int32 `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"1",DESCRIPTION: "IfIndex where lldp needs to be configured"`
 	Enable  bool  `DESCRIPTION: "Enable/Disable lldp config"`
 }
 
 type LLDPIntfState struct {
-	ConfigObj
+	baseObj
 	IfIndex      int32  `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"1",DESCRIPTION: "IfIndex where lldp needs to be configured"`
 	Enable       bool   `DESCRIPTION: "Enable/Disable lldp config"`
 	LocalPort    string `DESCRIPTION: "Local interface"`

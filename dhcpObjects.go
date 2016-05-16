@@ -4,7 +4,7 @@ package models
  * This DS will be used while Created/Deleting DHCP Config
  */
 type DhcpGlobalConfig struct {
-	ConfigObj
+	baseObj
 	// placeholder to create a key
 	DhcpConfigKey    string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"1", DESCRIPTION: "DHCP global config"`
 	Enable           bool   `DESCRIPTION: "DHCP Server enable/disable control DEFAULT: false"`
@@ -13,7 +13,7 @@ type DhcpGlobalConfig struct {
 }
 
 type DhcpIntfConfig struct {
-	ConfigObj
+	baseObj
 	// placeholder to create a key
 	IntfRef       string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", DESCRIPTION: "Interface name or ifindex of L3 interface object on which Dhcp Server need to be configured"`
 	Subnet        string `DESCRIPTION: "Subnet"`
