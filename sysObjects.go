@@ -78,3 +78,14 @@ type DaemonState struct {
 	RestartTime   string `DESCRIPTION: "Last restart time"`
 	RestartReason string `DESCRIPTION: "Last restart reason"`
 }
+
+type SystemParams struct {
+	baseObj
+	Vrf         string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", PERVRF: "true", DESCRIPTION: "System Vrf", DEFAULT:"default"`
+	MgmtIp      string `DESCRIPTION: "Management Ip of System"`
+	Hostname    string `DESCRIPTION: "System Host Name"`
+	RouterId    string `DESCRIPTION: "System Router Id"`
+	Version     string `DESCRIPTION: "System Version Information"`
+	SwitchMac   string `DESCRIPTION: "Switch Mac Address`
+	Description string `DESCRIPTION: "System Description"`
+}
