@@ -1,10 +1,33 @@
+//
+//Copyright [2016] [SnapRoute Inc]
+//
+//Licensed under the Apache License, Version 2.0 (the "License");
+//you may not use this file except in compliance with the License.
+//You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+//	 Unless required by applicable law or agreed to in writing, software
+//	 distributed under the License is distributed on an "AS IS" BASIS,
+//	 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//	 See the License for the specific language governing permissions and
+//	 limitations under the License.
+//
+// _______  __       __________   ___      _______.____    __    ____  __  .___________.  ______  __    __  
+// |   ____||  |     |   ____\  \ /  /     /       |\   \  /  \  /   / |  | |           | /      ||  |  |  | 
+// |  |__   |  |     |  |__   \  V  /     |   (----` \   \/    \/   /  |  | `---|  |----`|  ,----'|  |__|  | 
+// |   __|  |  |     |   __|   >   <       \   \      \            /   |  |     |  |     |  |     |   __   | 
+// |  |     |  `----.|  |____ /  .  \  .----)   |      \    /\    /    |  |     |  |     |  `----.|  |  |  | 
+// |__|     |_______||_______/__/ \__\ |_______/        \__/  \__/     |__|     |__|      \______||__|  |__| 
+//                                                                                                           
+
 package models
 
 /*
  * This DS will be used while Created/Deleting DHCP Config
  */
 type DhcpGlobalConfig struct {
-	ConfigObj
+	baseObj
 	// placeholder to create a key
 	DhcpConfigKey    string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"1", DESCRIPTION: "DHCP global config"`
 	Enable           bool   `DESCRIPTION: "DHCP Server enable/disable control DEFAULT: false"`
@@ -13,7 +36,7 @@ type DhcpGlobalConfig struct {
 }
 
 type DhcpIntfConfig struct {
-	ConfigObj
+	baseObj
 	// placeholder to create a key
 	IntfRef       string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", DESCRIPTION: "Interface name or ifindex of L3 interface object on which Dhcp Server need to be configured"`
 	Subnet        string `DESCRIPTION: "Subnet"`

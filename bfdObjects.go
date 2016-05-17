@@ -1,3 +1,26 @@
+//
+//Copyright [2016] [SnapRoute Inc]
+//
+//Licensed under the Apache License, Version 2.0 (the "License");
+//you may not use this file except in compliance with the License.
+//You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+//	 Unless required by applicable law or agreed to in writing, software
+//	 distributed under the License is distributed on an "AS IS" BASIS,
+//	 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//	 See the License for the specific language governing permissions and
+//	 limitations under the License.
+//
+// _______  __       __________   ___      _______.____    __    ____  __  .___________.  ______  __    __  
+// |   ____||  |     |   ____\  \ /  /     /       |\   \  /  \  /   / |  | |           | /      ||  |  |  | 
+// |  |__   |  |     |  |__   \  V  /     |   (----` \   \/    \/   /  |  | `---|  |----`|  ,----'|  |__|  | 
+// |   __|  |  |     |   __|   >   <       \   \      \            /   |  |     |  |     |  |     |   __   | 
+// |  |     |  `----.|  |____ /  .  \  .----)   |      \    /\    /    |  |     |  |     |  `----.|  |  |  | 
+// |__|     |_______||_______/__/ \__\ |_______/        \__/  \__/     |__|     |__|      \______||__|  |__| 
+//                                                                                                           
+
 package models
 
 import ()
@@ -6,7 +29,7 @@ import ()
  * Global Config for BFD
  */
 type BfdGlobal struct {
-	ConfigObj
+	baseObj
 	Bfd    string `SNAPROUTE: "KEY", ACCESS:"w",  MULTIPLICITY:"1", DESCRIPTION: "VRF id where BFD is globally enabled or disabled"`
 	Enable bool   `DESCRIPTION: "Global BFD state in this VRF", DEFAULT: "true"`
 }
@@ -15,7 +38,7 @@ type BfdGlobal struct {
  * Global State
  */
 type BfdGlobalState struct {
-	ConfigObj
+	baseObj
 	Bfd                  string `SNAPROUTE: "KEY", ACCESS:"r",  MULTIPLICITY:"1", DESCRIPTION: "VRF id for which global BFD state is requested"`
 	Enable               bool   `DESCRIPTION: "Global BFD state in this VRF"`
 	NumTotalSessions     uint32 `DESCRIPTION: "Total number of BFD sessions"`
@@ -28,7 +51,7 @@ type BfdGlobalState struct {
  * BFD Session config
  */
 type BfdSession struct {
-	ConfigObj
+	baseObj
 	IpAddr    string `SNAPROUTE: "KEY", ACCESS:"w",  MULTIPLICITY:"*", DESCRIPTION: "BFD neighbor IP address"`
 	ParamName string `DESCRIPTION: "Name of the session parameters object to be applied on this session", DEFAULT: "default"`
 	Interface string `DESCRIPTION: "Name of the interface this session has to be established on", DEFAULT: "None"`
@@ -40,41 +63,42 @@ type BfdSession struct {
  * BFD Session state
  */
 type BfdSessionState struct {
-	ConfigObj
-	IpAddr                string `SNAPROUTE: "KEY", ACCESS:"r",  MULTIPLICITY:"*",DESCRIPTION: "Neighbor IP address"`
-	SessionId             int32  `DESCRIPTION: "Session index"`
-	ParamName             string `DESCRIPTION: "Session parameters config"`
-	IfIndex               int32  `DESCRIPTION: "Interface index"`
-	InterfaceSpecific     bool   `DESCRIPTION: "This session is tied to an interface"`
-	IfName                string `DESCRIPTION: "Interface to which this session is established on"`
-	PerLinkSession        bool   `DESCRIPTION: "This is a perlink session on LAG"`
-	LocalMacAddr          string `DESCRIPTION: "My MAC address"`
-	RemoteMacAddr         string `DESCRIPTION: "Neighbor MAC address"`
-	RegisteredProtocols   string `DESCRIPTION: "Registered owners"`
-	SessionState          string `DESCRIPTION: "My state"`
-	RemoteSessionState    string `DESCRIPTION: "Neighbor state"`
-	LocalDiscriminator    uint32 `DESCRIPTION: "My discriminator"`
-	RemoteDiscriminator   uint32 `DESCRIPTION: "Neighbor discriminator"`
-	LocalDiagType         string `DESCRIPTION: "My diagnostic"`
-	DesiredMinTxInterval  string `DESCRIPTION: "My desired minimum tx interval"`
-	RequiredMinRxInterval string `DESCRIPTION: "My required minimum rx interval"`
-	RemoteMinRxInterval   string `DESCRIPTION: "Neighbor minimum rx interval"`
-	DetectionMultiplier   uint32 `DESCRIPTION: "My detection multiplier"`
-	DemandMode            bool   `DESCRIPTION: "My demand mode"`
-	RemoteDemandMode      bool   `DESCRIPTION: "Neighbor demand mode"`
-	AuthSeqKnown          bool   `DESCRIPTION: "Authentication sequence known"`
-	AuthType              string `DESCRIPTION: "My Authentication type"`
-	ReceivedAuthSeq       uint32 `DESCRIPTION: "Received authentication sequence number"`
-	SentAuthSeq           uint32 `DESCRIPTION: "Sent authentication sequence number"`
-	NumTxPackets          uint32 `DESCRIPTION: "Number of control packets sent"`
-	NumRxPackets          uint32 `DESCRIPTION: "Number of control packets received"`
+	baseObj
+	IpAddr                    string `SNAPROUTE: "KEY", ACCESS:"r",  MULTIPLICITY:"*",DESCRIPTION: "Neighbor IP address"`
+	SessionId                 int32  `DESCRIPTION: "Session index"`
+	ParamName                 string `DESCRIPTION: "Session parameters config"`
+	IfIndex                   int32  `DESCRIPTION: "Interface index"`
+	InterfaceSpecific         bool   `DESCRIPTION: "This session is tied to an interface"`
+	IfName                    string `DESCRIPTION: "Interface to which this session is established on"`
+	PerLinkSession            bool   `DESCRIPTION: "This is a perlink session on LAG"`
+	LocalMacAddr              string `DESCRIPTION: "My MAC address"`
+	RemoteMacAddr             string `DESCRIPTION: "Neighbor MAC address"`
+	RegisteredProtocols       string `DESCRIPTION: "Registered owners"`
+	SessionState              string `DESCRIPTION: "My state"`
+	RemoteSessionState        string `DESCRIPTION: "Neighbor state"`
+	LocalDiscriminator        uint32 `DESCRIPTION: "My discriminator"`
+	RemoteDiscriminator       uint32 `DESCRIPTION: "Neighbor discriminator"`
+	LocalDiagType             string `DESCRIPTION: "My diagnostic"`
+	DesiredMinTxInterval      string `DESCRIPTION: "My desired minimum tx interval"`
+	RequiredMinRxInterval     string `DESCRIPTION: "My required minimum rx interval"`
+	RemoteMinRxInterval       string `DESCRIPTION: "Neighbor minimum rx interval"`
+	DetectionMultiplier       uint32 `DESCRIPTION: "My detection multiplier"`
+	RemoteDetectionMultiplier uint32 `DESCRIPTION: "Neighbor detection multiplier"`
+	DemandMode                bool   `DESCRIPTION: "My demand mode"`
+	RemoteDemandMode          bool   `DESCRIPTION: "Neighbor demand mode"`
+	AuthSeqKnown              bool   `DESCRIPTION: "Authentication sequence known"`
+	AuthType                  string `DESCRIPTION: "My Authentication type"`
+	ReceivedAuthSeq           uint32 `DESCRIPTION: "Received authentication sequence number"`
+	SentAuthSeq               uint32 `DESCRIPTION: "Sent authentication sequence number"`
+	NumTxPackets              uint32 `DESCRIPTION: "Number of control packets sent"`
+	NumRxPackets              uint32 `DESCRIPTION: "Number of control packets received"`
 }
 
 /*
  * BFD Session param config
  */
 type BfdSessionParam struct {
-	ConfigObj
+	baseObj
 	Name                      string `SNAPROUTE: "KEY", ACCESS:"w",  MULTIPLICITY:"*", DESCRIPTION: "Session parameters"`
 	LocalMultiplier           uint32 `DESCRIPTION: "Detection multiplier", DEFAULT: "3"`
 	DesiredMinTxInterval      uint32 `DESCRIPTION: "Desired minimum tx interval in ms", DEFAULT: "1000"`
@@ -91,7 +115,7 @@ type BfdSessionParam struct {
  * BFD Session param state
  */
 type BfdSessionParamState struct {
-	ConfigObj
+	baseObj
 	Name                      string `SNAPROUTE: "KEY", ACCESS:"r",  MULTIPLICITY:"*", DESCRIPTION: "Session parameters"`
 	NumSessions               int32  `DESCRIPTION: "Number of sessions using these params"`
 	LocalMultiplier           int32  `DESCRIPTION: "Detection multiplier"`
