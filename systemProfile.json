@@ -28,6 +28,12 @@
             "Enable": true}
             ],
 "TCPPortBase" : 10000,
-"API_Port"    : 8080 
+"API_Port"    : 8080,
+"SwitchMac": "9a:ed:e6:c2:27:67",
+"RouterId" : "10.1.10.244",
+"MgmtIp"   : "10.1.10.244",
+"Description" : "Flexswitch System",
+"Version" : "1.0.0",
+"HostName" : "FS_SWITCH"
 }
 
