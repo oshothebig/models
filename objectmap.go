@@ -1,38 +1,36 @@
+//
+//Copyright [2016] [SnapRoute Inc]
+//
+//Licensed under the Apache License, Version 2.0 (the "License");
+//you may not use this file except in compliance with the License.
+//You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+//	 Unless required by applicable law or agreed to in writing, software
+//	 distributed under the License is distributed on an "AS IS" BASIS,
+//	 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//	 See the License for the specific language governing permissions and
+//	 limitations under the License.
+//
+// _______  __       __________   ___      _______.____    __    ____  __  .___________.  ______  __    __  
+// |   ____||  |     |   ____\  \ /  /     /       |\   \  /  \  /   / |  | |           | /      ||  |  |  | 
+// |  |__   |  |     |  |__   \  V  /     |   (----` \   \/    \/   /  |  | `---|  |----`|  ,----'|  |__|  | 
+// |   __|  |  |     |   __|   >   <       \   \      \            /   |  |     |  |     |  |     |   __   | 
+// |  |     |  `----.|  |____ /  .  \  .----)   |      \    /\    /    |  |     |  |     |  `----.|  |  |  | 
+// |__|     |_______||_______/__/ \__\ |_______/        \__/  \__/     |__|     |__|      \______||__|  |__| 
+//                                                                                                           
+
 package models
 
 var ConfigObjectMap = map[string]ConfigObj{
-	//"Vlan": &Vlan{}, // created before auto YANG
-	//"IPv4Route":                                        &IPv4Route{}, // created before auto YANG
-	//"IPv4RouteState":                                   &IPv4RouteState{},
-	//"IPv4EventState":                                   &IPv4EventState{},
-	//"IPv4Intf":          &IPv4Intf{}, // created before auto YANG
-	//"LogicalIntfConfig": &LogicalIntfConfig{},
-	//"LogicalIntfState":  &LogicalIntfState{},
-	//"ArpConfig":                                        &ArpConfig{},         // created before auto YANG
-	//"ArpEntry":                                         &ArpEntry{},          // created before auto YANG
-	//"BfdSession":                                       &BfdSession{},
-	//"BfdSessionState":                                  &BfdSessionState{},
-	//"BfdGlobal":                                        &BfdGlobal{},
-	//"BfdGlobalState":                                   &BfdGlobalState{},
-	//"BfdInterface":                                     &BfdInterface{},
-	//"BfdInterfaceState":                                &BfdInterfaceState{},
-	//"DhcpRelayHostDhcpState":   &DhcpRelayHostDhcpState{},
-	//"DhcpRelayIntfServerState": &DhcpRelayIntfServerState{},
-	//"DhcpRelayIntfConfig":      &DhcpRelayIntfConfig{},
-	//"DhcpRelayIntfState":       &DhcpRelayIntfState{},
-	//"DhcpRelayGlobalConfig":    &DhcpRelayGlobalConfig{},
-	//"PolicyDefinitionConfig":                           &PolicyDefinitionConfig{},
-	//"PolicyDefinitionState":                            &PolicyDefinitionState{},
-	//"PolicyStmtConfig":                                 &PolicyStmtConfig{},
-	//"PolicyStmtState":                                  &PolicyStmtState{},
-	//"PolicyConditionConfig":                            &PolicyConditionConfig{},
-	//"PolicyConditionState":                             &PolicyConditionState{},
-	//"PolicyActionConfig":                               &PolicyActionConfig{},
-	//"PolicyActionState":                                &PolicyActionState{},
-	//"RouteDistanceState":                               &RouteDistanceState{},
-	"User":              &User{},
-	"UserState":         &UserState{},
-	"IPV4AddressBlock":  &IPV4AddressBlock{},
-	"SystemStatusState": &SystemStatusState{},
-	"Daemon":            &Daemon{},
+	"User":                 &User{},
+	"UserState":            &UserState{},
+	"SystemStatusState":    &SystemStatusState{},
+	"SystemSwVersionState": &SystemSwVersionState{},
+	"Daemon":               &Daemon{},
+	"ArpDeleteByIPv4Addr":  &ArpDeleteByIPv4Addr{},
+	"ArpDeleteByIfName":    &ArpDeleteByIfName{},
+	"ArpRefreshByIPv4Addr": &ArpRefreshByIPv4Addr{},
+	"ArpRefreshByIfName":   &ArpRefreshByIfName{},
 }

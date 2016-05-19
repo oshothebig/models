@@ -1,5 +1,5 @@
 {
-	"UserConfig" : {
+	"User" : {
 		"access": "w",
 		"Owner": "local",
 		"multiplicity":"*",
@@ -11,13 +11,13 @@
 		"multiplicity":"*",
 		"srcfile": "objects.go"
 	},
-	"IPV4AddressBlock" : {
-		"access": "w",
+	"SystemStatusState" : {
+		"access": "r",
 		"Owner": "local",
-		"multiplicity":"*",
+		"multiplicity":"1",
 		"srcfile": "objects.go"
 	},
-	"SystemStatusState" : {
+	"SystemSwVersionState" : {
 		"access": "r",
 		"Owner": "local",
 		"multiplicity":"1",
