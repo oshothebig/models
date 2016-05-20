@@ -1,3 +1,26 @@
+//
+//Copyright [2016] [SnapRoute Inc]
+//
+//Licensed under the Apache License, Version 2.0 (the "License");
+//you may not use this file except in compliance with the License.
+//You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+//	 Unless required by applicable law or agreed to in writing, software
+//	 distributed under the License is distributed on an "AS IS" BASIS,
+//	 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//	 See the License for the specific language governing permissions and
+//	 limitations under the License.
+//
+// _______  __       __________   ___      _______.____    __    ____  __  .___________.  ______  __    __
+// |   ____||  |     |   ____\  \ /  /     /       |\   \  /  \  /   / |  | |           | /      ||  |  |  |
+// |  |__   |  |     |  |__   \  V  /     |   (----` \   \/    \/   /  |  | `---|  |----`|  ,----'|  |__|  |
+// |   __|  |  |     |   __|   >   <       \   \      \            /   |  |     |  |     |  |     |   __   |
+// |  |     |  `----.|  |____ /  .  \  .----)   |      \    /\    /    |  |     |  |     |  `----.|  |  |  |
+// |__|     |_______||_______/__/ \__\ |_______/        \__/  \__/     |__|     |__|      \______||__|  |__|
+//
+
 package models
 
 import ()
@@ -54,4 +77,26 @@ type DaemonState struct {
 	RestartCount  int32  `DESCRIPTION: "Number of times this daemon has been restarted"`
 	RestartTime   string `DESCRIPTION: "Last restart time"`
 	RestartReason string `DESCRIPTION: "Last restart reason"`
+}
+
+type SystemParam struct {
+	baseObj
+	Vrf         string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", AUTOCREATE: "true", DESCRIPTION: "System Vrf", DEFAULT:"default"`
+	MgmtIp      string `DESCRIPTION: "Management Ip of System"`
+	Hostname    string `DESCRIPTION: "System Host Name"`
+	RouterId    string `DESCRIPTION: "System Router Id"`
+	Version     string `DESCRIPTION: "System Version Information"`
+	SwitchMac   string `DESCRIPTION: "Switch Mac Address`
+	Description string `DESCRIPTION: "System Description"`
+}
+
+type SystemParamState struct {
+	baseObj
+	Vrf         string `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "System Vrf""`
+	MgmtIp      string `DESCRIPTION: "Management Ip of System"`
+	Hostname    string `DESCRIPTION: "System Host Name"`
+	RouterId    string `DESCRIPTION: "System Router Id"`
+	Version     string `DESCRIPTION: "System Version Information"`
+	SwitchMac   string `DESCRIPTION: "Switch Mac Address`
+	Description string `DESCRIPTION: "System Description"`
 }

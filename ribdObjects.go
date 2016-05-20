@@ -1,12 +1,35 @@
+//
+//Copyright [2016] [SnapRoute Inc]
+//
+//Licensed under the Apache License, Version 2.0 (the "License");
+//you may not use this file except in compliance with the License.
+//You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+//	 Unless required by applicable law or agreed to in writing, software
+//	 distributed under the License is distributed on an "AS IS" BASIS,
+//	 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//	 See the License for the specific language governing permissions and
+//	 limitations under the License.
+//
+// _______  __       __________   ___      _______.____    __    ____  __  .___________.  ______  __    __  
+// |   ____||  |     |   ____\  \ /  /     /       |\   \  /  \  /   / |  | |           | /      ||  |  |  | 
+// |  |__   |  |     |  |__   \  V  /     |   (----` \   \/    \/   /  |  | `---|  |----`|  ,----'|  |__|  | 
+// |   __|  |  |     |   __|   >   <       \   \      \            /   |  |     |  |     |  |     |   __   | 
+// |  |     |  `----.|  |____ /  .  \  .----)   |      \    /\    /    |  |     |  |     |  `----.|  |  |  | 
+// |__|     |_______||_______/__/ \__\ |_______/        \__/  \__/     |__|     |__|      \______||__|  |__| 
+//                                                                                                           
+
 package models
 
 type NextHopInfo struct {
-	NextHopIp         string `DESCRIPTION: "next hop ip of the route, DEFAULT:"0.0.0.0""`
-	OutgoingIntfType  string `DESCRIPTION :"Interface type of the next hop interface"`
-	OutgoingInterface string `DESCRIPTION :"Interface ID of the next hop interface"`
-	Protocol          string `DESCRIPTION :"Protocol type of the route",DEFAULT:"STATIC"`
-	Weight            int32  `DESCRIPTION : "Weight of the next hop",DEFAULT:0, RANGE:0-31`
+	NextHopIp     string `DESCRIPTION: "next hop ip of the route, DEFAULT:"0.0.0.0""`
+	NextHopIntRef string `DESCRIPTION: "Interface name or ifindex of port/lag or vlan on which this next hop is configured", OPTIONAL`
+	Weight        int32  `DESCRIPTION : "Weight of the next hop",DEFAULT:0, RANGE:0-31`
 }
+
+/*
 type IPv4Route struct {
 	baseObj
 	DestinationNw     string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", ACCELERATED: "true", DESCRIPTION: "IP address of the route, can be specified either in CIDR notation or as a IP address."`
@@ -26,6 +49,15 @@ type IPv4Route struct {
 	Protocol           string   `DESCRIPTION :"Protocol type of the route"`
 	NextHop           []NextHopInfo
 }*/
+type IPv4Route struct {
+	baseObj
+	DestinationNw string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", ACCELERATED: "true", DESCRIPTION: "IP address of the route"`
+	NetworkMask   string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", ACCELERATED: "true", DESCRIPTION: "mask of the route"`
+	Protocol      string `DESCRIPTION :"Protocol type of the route"`
+	Cost          uint32 `DESCRIPTION :"Cost of this route", DEFAULT:0`
+	NullRoute     bool   `DESCRIPTION : "Specify if this is a null route", DEFAULT:false`
+	NextHop       []NextHopInfo
+}
 type IPv4RouteState struct {
 	baseObj
 	DestinationNw      string        `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "IP address of the route", USESTATEDB:"true"`
