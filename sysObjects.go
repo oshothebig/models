@@ -79,9 +79,20 @@ type DaemonState struct {
 	RestartReason string `DESCRIPTION: "Last restart reason"`
 }
 
-type SystemParams struct {
+type SystemParam struct {
 	baseObj
 	Vrf         string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", AUTOCREATE: "true", DESCRIPTION: "System Vrf", DEFAULT:"default"`
+	MgmtIp      string `DESCRIPTION: "Management Ip of System"`
+	Hostname    string `DESCRIPTION: "System Host Name"`
+	RouterId    string `DESCRIPTION: "System Router Id"`
+	Version     string `DESCRIPTION: "System Version Information"`
+	SwitchMac   string `DESCRIPTION: "Switch Mac Address`
+	Description string `DESCRIPTION: "System Description"`
+}
+
+type SystemParamState struct {
+	baseObj
+	Vrf         string `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "System Vrf""`
 	MgmtIp      string `DESCRIPTION: "Management Ip of System"`
 	Hostname    string `DESCRIPTION: "System Host Name"`
 	RouterId    string `DESCRIPTION: "System Router Id"`
