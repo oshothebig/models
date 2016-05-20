@@ -34,7 +34,7 @@
 "MgmtIp"   : "10.1.10.244",
 "Description" : "Flexswitch System",
 "Version" : "1.0.0",
-"HostName" : "FS_SWITCH",
+"HostName" : "FLEXSWITCH",
 "Vrf": "default"
 }
 
