@@ -1,16 +1,4 @@
 {
-	"User" : {
-		"access": "w",
-		"Owner": "local",
-		"multiplicity":"*",
-		"srcfile": "objects.go"
-	},
-	"UserState" : {
-		"access": "r",
-		"Owner": "local",
-		"multiplicity":"*",
-		"srcfile": "objects.go"
-	},
 	"SystemStatusState" : {
 		"access": "r",
 		"Owner": "local",
