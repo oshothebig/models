@@ -60,21 +60,23 @@ type IPv4IntfState struct {
 
 type Port struct {
 	baseObj
-	PortNum     int32  `SNAPROUTE: "KEY", ACCESS:"rw", DESCRIPTION: "Front panel port number"`
-	Description string `DESCRIPTION: "User provided string description", DEFAULT: "FP Port"`
-	PhyIntfType string `DESCRIPTION: "Type of internal phy interface"`
-	AdminState  string `DESCRIPTION: "Administrative state of this port"`
-	MacAddr     string `DESCRIPTION: "Mac address associated with this port"`
-	Speed       int32  `DESCRIPTION: "Port speed in Mbps"`
-	Duplex      string `DESCRIPTION: "Duplex setting for this port"`
-	Autoneg     string `DESCRIPTION: "Autonegotiation setting for this port"`
-	MediaType   string `DESCRIPTION: "Type of media inserted into this port"`
-	Mtu         int32  `DESCRIPTION: "Maximum transmission unit size for this port"`
+	IntfRef      string `SNAPROUTE: "KEY", ACCESS:"rw", DESCRIPTION: "Front panel port name or system assigned interface id"`
+	IfIndex      int32  `DESCRIPTION: "System assigned interface id for this port. Read only attribute"`
+	Description  string `DESCRIPTION: "User provided string description", DEFAULT: "FP Port"`
+	PhyIntfType  string `DESCRIPTION: "Type of internal phy interface"`
+	AdminState   string `DESCRIPTION: "Administrative state of this port"`
+	MacAddr      string `DESCRIPTION: "Mac address associated with this port"`
+	Speed        int32  `DESCRIPTION: "Port speed in Mbps"`
+	Duplex       string `DESCRIPTION: "Duplex setting for this port"`
+	Autoneg      string `DESCRIPTION: "Autonegotiation setting for this port"`
+	MediaType    string `DESCRIPTION: "Type of media inserted into this port"`
+	Mtu          int32  `DESCRIPTION: "Maximum transmission unit size for this port"`
+	BreakOutMode string `DESCRIPTION: "Break out mode for the port. Only applicable on ports that support breakout. Valid modes - 1x40, 4x10"`
 }
 
 type PortState struct {
 	baseObj
-	PortNum           int32  `SNAPROUTE: "KEY", ACCESS:"r", DESCRIPTION: "Front panel port number"`
+	IntfRef           string `SNAPROUTE: "KEY", ACCESS:"r", DESCRIPTION: "Front panel port name or system assigned interface id"`
 	IfIndex           int32  `DESCRIPTION: "System assigned interface id for this port"`
 	Name              string `DESCRIPTION: "System assigned vlan name"`
 	OperState         string `DESCRIPTION: "Operational state of front panel port"`
@@ -93,6 +95,7 @@ type PortState struct {
 	IfOutDiscards     int64  `DESCRIPTION: "RFC2233 Total number of error free packets discarded and not transmitted"`
 	IfOutErrors       int64  `DESCRIPTION: "RFC2233 Total number of packets discarded and not transmitted due to packet errors"`
 	ErrDisableReason  string `DESCRIPTION: "Reason explaining why port has been disabled by protocol code"`
+	PresentInHW       string `DESCRIPTION: "Indication of whether this port object maps to a physical port. Set to 'No' for ports that are not broken out."`
 }
 
 type MacTableEntryState struct {
