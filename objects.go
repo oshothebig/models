@@ -42,7 +42,11 @@ type ConfigObj interface {
 	GetAllObjFromDb(dbHdl redis.Conn) ([]ConfigObj, error)
 	GetBulkObjFromDb(startIndex int64, count int64, dbHdl redis.Conn) (error, int64, int64, bool, []ConfigObj)
 }
-
+type PatchOpInfo struct {
+	Op string
+	Path string
+	Value interface{}
+}
 type baseObj struct {
 }
 
