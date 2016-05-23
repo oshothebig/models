@@ -27,7 +27,7 @@ import ()
 
 type SystemLogging struct {
 	baseObj
-	Vrf     string `SNAPROUTE: "KEY", ACCESS:"w",  MULTIPLICITY:"1", DESCRIPTION: "Vrf name"`
+	Vrf     string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"1", AUTOCREATE: "true", DEFAULT: "default", DESCRIPTION: "Vrf name"`
 	Logging string `DESCRIPTION: "Global logging", SELECTION: "on/off", DEFAULT: "on"`
 }
 
