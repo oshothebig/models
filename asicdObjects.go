@@ -13,21 +13,21 @@
 //	 See the License for the specific language governing permissions and
 //	 limitations under the License.
 //
-// _______  __       __________   ___      _______.____    __    ____  __  .___________.  ______  __    __  
-// |   ____||  |     |   ____\  \ /  /     /       |\   \  /  \  /   / |  | |           | /      ||  |  |  | 
-// |  |__   |  |     |  |__   \  V  /     |   (----` \   \/    \/   /  |  | `---|  |----`|  ,----'|  |__|  | 
-// |   __|  |  |     |   __|   >   <       \   \      \            /   |  |     |  |     |  |     |   __   | 
-// |  |     |  `----.|  |____ /  .  \  .----)   |      \    /\    /    |  |     |  |     |  `----.|  |  |  | 
-// |__|     |_______||_______/__/ \__\ |_______/        \__/  \__/     |__|     |__|      \______||__|  |__| 
-//                                                                                                           
+// _______  __       __________   ___      _______.____    __    ____  __  .___________.  ______  __    __
+// |   ____||  |     |   ____\  \ /  /     /       |\   \  /  \  /   / |  | |           | /      ||  |  |  |
+// |  |__   |  |     |  |__   \  V  /     |   (----` \   \/    \/   /  |  | `---|  |----`|  ,----'|  |__|  |
+// |   __|  |  |     |   __|   >   <       \   \      \            /   |  |     |  |     |  |     |   __   |
+// |  |     |  `----.|  |____ /  .  \  .----)   |      \    /\    /    |  |     |  |     |  `----.|  |  |  |
+// |__|     |_______||_______/__/ \__\ |_______/        \__/  \__/     |__|     |__|      \______||__|  |__|
+//
 
 package models
 
 type Vlan struct {
 	baseObj
 	VlanId        int32  `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY: "*", DESCRIPTION: "802.1Q tag/Vlan ID for vlan being provisioned"`
-	IntfList      string `DESCRIPTION: "List of interface names or ifindex values to  be added as tagged members of the vlan"`
-	UntagIntfList string `DESCRIPTION: "List of interface names or ifindex values to  be added as untagged members of the vlan"`
+	IntfList      string `DESCRIPTION: "List of interface names or ifindex values to  be added as tagged members of the vlan", DEFAULT:""`
+	UntagIntfList string `DESCRIPTION: "List of interface names or ifindex values to  be added as untagged members of the vlan", DEFAULT:""`
 }
 
 type VlanState struct {
@@ -41,7 +41,7 @@ type VlanState struct {
 type IPv4Intf struct {
 	baseObj
 	IntfRef string `SNAPROUTE: "KEY", ACCESS:"w", DESCRIPTION: "Interface name or ifindex of port/lag or vlan on which this IPv4 object is configured"`
-	IpAddr  string `DESCRIPTION: "Interface IP/Net mask in CIDR format to provision on switch interface"`
+	IpAddr  string `DESCRIPTION: "Interface IP/Net mask in CIDR format to provision on switch interface", STRLEN:"18"`
 }
 
 type IPv4IntfState struct {
@@ -62,16 +62,16 @@ type Port struct {
 	baseObj
 	IntfRef      string `SNAPROUTE: "KEY", ACCESS:"rw", DESCRIPTION: "Front panel port name or system assigned interface id"`
 	IfIndex      int32  `DESCRIPTION: "System assigned interface id for this port. Read only attribute"`
-	Description  string `DESCRIPTION: "User provided string description", DEFAULT: "FP Port"`
-	PhyIntfType  string `DESCRIPTION: "Type of internal phy interface"`
-	AdminState   string `DESCRIPTION: "Administrative state of this port"`
-	MacAddr      string `DESCRIPTION: "Mac address associated with this port"`
-	Speed        int32  `DESCRIPTION: "Port speed in Mbps"`
-	Duplex       string `DESCRIPTION: "Duplex setting for this port"`
-	Autoneg      string `DESCRIPTION: "Autonegotiation setting for this port"`
-	MediaType    string `DESCRIPTION: "Type of media inserted into this port"`
+	Description  string `DESCRIPTION: "User provided string description", DEFAULT:"FP Port", STRLEN:"64"`
+	PhyIntfType  string `DESCRIPTION: "Type of internal phy interface", STRLEN:"16"`
+	AdminState   string `DESCRIPTION: "Administrative state of this port", STRLEN:"4"`
+	MacAddr      string `DESCRIPTION: "Mac address associated with this port", STRLEN:"17"`
+	Speed        int32  `DESCRIPTION: "Port speed in Mbps", MAX: "100000"`
+	Duplex       string `DESCRIPTION: "Duplex setting for this port", STRLEN:"16"`
+	Autoneg      string `DESCRIPTION: "Autonegotiation setting for this port", STRLEN:"4"`
+	MediaType    string `DESCRIPTION: "Type of media inserted into this port", STRLEN:"16"`
 	Mtu          int32  `DESCRIPTION: "Maximum transmission unit size for this port"`
-	BreakOutMode string `DESCRIPTION: "Break out mode for the port. Only applicable on ports that support breakout. Valid modes - 1x40, 4x10"`
+	BreakOutMode string `DESCRIPTION: "Break out mode for the port. Only applicable on ports that support breakout. Valid modes - 1x40, 4x10", STRLEN:"6"`
 }
 
 type PortState struct {
@@ -124,7 +124,7 @@ type ArpEntryHwState struct {
 type LogicalIntf struct {
 	baseObj
 	Name string `SNAPROUTE: "KEY", ACCESS:"w", DESCRIPTION: "Name of logical interface"`
-	Type string `DESCRIPTION: "Type of logical interface (e.x. loopback)"`
+	Type string `DESCRIPTION: "Type of logical interface (e.x. loopback)", DEFAULT:"Loopback", STRLEN:"16"`
 }
 
 type LogicalIntfState struct {
@@ -148,7 +148,7 @@ type SubIPv4Intf struct {
 	baseObj
 	IpAddr  string `SNAPROUTE: "KEY", ACCESS:"w", DESCRIPTION:"Ip Address for the interface"`
 	IntfRef string `SNAPROUTE: "KEY", ACCESS:"w", DESCRIPTION:"Intf name of system generated id (ifindex) of the ipv4Intf where sub interface is to be configured"`
-	Type    string `DESCRIPTION:"Type of interface, e.g. Secondary or Virtual"`
-	MacAddr string `DESCRIPTION:"Mac address to be used for the sub interface. If none specified IPv4Intf mac address will be used`
+	Type    string `DESCRIPTION:"Type of interface, e.g. Secondary or Virtual", STRLEN:"16"`
+	MacAddr string `DESCRIPTION:"Mac address to be used for the sub interface. If none specified IPv4Intf mac address will be used", STRLEN:"17"`
 	Enable  bool   `DESCRIPTION:"Enable or disable this interface", DEFAULT:false`
 }
