@@ -31,7 +31,7 @@ type VrrpIntf struct {
 	IfIndex               int32  `SNAPROUTE: "KEY", ACCESS:"w",  MULTIPLICITY:"*", DESCRIPTION: ""Interface index for which VRRP Config needs to be done"`
 	VRID                  int32  `SNAPROUTE: "KEY", DESCRIPTION: "Virtual Router's Unique Identifier"`
 	Priority              int32  `DESCRIPTION: "Sending VRRP router's priority for the virtual router", DEFAULT:"100", MIN:"1", MAX:"255"`
-	VirtualIPv4Addr       string `DESCRIPTION: "Virtual Router Identifier"`
+	VirtualIPv4Addr       string `DESCRIPTION: "Virtual Router Identifier", STRLEN:"17"`
 	AdvertisementInterval int32  `DESCRIPTION: "Time interval between ADVERTISEMENTS", DEFAULT:"1", MIN:"1", MAX:"4095"`
 	PreemptMode           bool   `DESCRIPTION: "Controls whether a (starting or restarting) higher-priority Backup router preempts a lower-priority Master router", DEFAULT: "true"`
 	AcceptMode            bool   `DESCRIPTION: "Controls whether a virtual router in Master state will accept packets addressed to the address owner's IPvX address as its own if it is not the IPvX address owner.", DEFAULT:"false"`
