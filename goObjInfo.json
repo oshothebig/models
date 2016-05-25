@@ -29,5 +29,8 @@
 						  "svcName" : "nil"},
 "dhcpObjects.go" :	 {"owner": "dhcpd",
 						  "location" : "l3/dhcp/rpc",
-						  "svcName" : "nil"}
+						  "svcName" : "nil"},
+"ospfdObjects.go" : {"owner": "ospfd", 
+		    "location" : "l3/ospf/rpc",
+		    "svcName" : "nil"}
 }
