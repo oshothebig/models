@@ -27,14 +27,14 @@ import ()
 
 type SystemLogging struct {
 	baseObj
-	SRLogger string `SNAPROUTE: "KEY", ACCESS:"w",  MULTIPLICITY:"1", DESCRIPTION: "Global logging"`
-	Logging  string `DESCRIPTION: "Global logging", DEFAULT: "on"`
+	Vrf     string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"1", AUTOCREATE: "true", DEFAULT: "default", DESCRIPTION: "Vrf name"`
+	Logging string `DESCRIPTION: "Global logging", SELECTION: "on/off", DEFAULT: "on"`
 }
 
 type ComponentLogging struct {
 	baseObj
 	Module string `SNAPROUTE: "KEY", ACCESS:"w",  MULTIPLICITY:"*", DESCRIPTION: "Module name to set logging level"`
-	Level  string `DESCRIPTION: "Logging level", DEFAULT: "info"`
+	Level  string `DESCRIPTION: "Logging level", SELECTION: "crit/err/warn/alert/emerg/notice/info/debug/trace/off", DEFAULT: "info"`
 }
 
 type IpTableAcl struct {
@@ -84,7 +84,6 @@ type SystemParam struct {
 	Vrf         string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", AUTOCREATE: "true", DESCRIPTION: "System Vrf", DEFAULT:"default"`
 	MgmtIp      string `DESCRIPTION: "Management Ip of System"`
 	Hostname    string `DESCRIPTION: "System Host Name"`
-	RouterId    string `DESCRIPTION: "System Router Id"`
 	Version     string `DESCRIPTION: "System Version Information"`
 	SwitchMac   string `DESCRIPTION: "Switch Mac Address`
 	Description string `DESCRIPTION: "System Description"`
@@ -95,7 +94,6 @@ type SystemParamState struct {
 	Vrf         string `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "System Vrf""`
 	MgmtIp      string `DESCRIPTION: "Management Ip of System"`
 	Hostname    string `DESCRIPTION: "System Host Name"`
-	RouterId    string `DESCRIPTION: "System Router Id"`
 	Version     string `DESCRIPTION: "System Version Information"`
 	SwitchMac   string `DESCRIPTION: "Switch Mac Address`
 	Description string `DESCRIPTION: "System Description"`

@@ -13,13 +13,13 @@
 //	 See the License for the specific language governing permissions and
 //	 limitations under the License.
 //
-// _______  __       __________   ___      _______.____    __    ____  __  .___________.  ______  __    __  
-// |   ____||  |     |   ____\  \ /  /     /       |\   \  /  \  /   / |  | |           | /      ||  |  |  | 
-// |  |__   |  |     |  |__   \  V  /     |   (----` \   \/    \/   /  |  | `---|  |----`|  ,----'|  |__|  | 
-// |   __|  |  |     |   __|   >   <       \   \      \            /   |  |     |  |     |  |     |   __   | 
-// |  |     |  `----.|  |____ /  .  \  .----)   |      \    /\    /    |  |     |  |     |  `----.|  |  |  | 
-// |__|     |_______||_______/__/ \__\ |_______/        \__/  \__/     |__|     |__|      \______||__|  |__| 
-//                                                                                                           
+// _______  __       __________   ___      _______.____    __    ____  __  .___________.  ______  __    __
+// |   ____||  |     |   ____\  \ /  /     /       |\   \  /  \  /   / |  | |           | /      ||  |  |  |
+// |  |__   |  |     |  |__   \  V  /     |   (----` \   \/    \/   /  |  | `---|  |----`|  ,----'|  |__|  |
+// |   __|  |  |     |   __|   >   <       \   \      \            /   |  |     |  |     |  |     |   __   |
+// |  |     |  `----.|  |____ /  .  \  .----)   |      \    /\    /    |  |     |  |     |  `----.|  |  |  |
+// |__|     |_______||_______/__/ \__\ |_______/        \__/  \__/     |__|     |__|      \______||__|  |__|
+//
 
 package models
 
@@ -30,7 +30,7 @@ import ()
  */
 type BfdGlobal struct {
 	baseObj
-	Bfd    string `SNAPROUTE: "KEY", ACCESS:"w",  MULTIPLICITY:"1", DESCRIPTION: "VRF id where BFD is globally enabled or disabled"`
+	Vrf    string `SNAPROUTE: "KEY", ACCESS:"w",  MULTIPLICITY:"1", AUTOCREATE: "true", DEFAULT: "default", DESCRIPTION: "VRF id where BFD is globally enabled or disabled"`
 	Enable bool   `DESCRIPTION: "Global BFD state in this VRF", DEFAULT: "true"`
 }
 
@@ -39,7 +39,7 @@ type BfdGlobal struct {
  */
 type BfdGlobalState struct {
 	baseObj
-	Bfd                  string `SNAPROUTE: "KEY", ACCESS:"r",  MULTIPLICITY:"1", DESCRIPTION: "VRF id for which global BFD state is requested"`
+	Vrf                  string `SNAPROUTE: "KEY", ACCESS:"r",  MULTIPLICITY:"1", DESCRIPTION: "VRF id for which global BFD state is requested"`
 	Enable               bool   `DESCRIPTION: "Global BFD state in this VRF"`
 	NumTotalSessions     uint32 `DESCRIPTION: "Total number of BFD sessions"`
 	NumUpSessions        uint32 `DESCRIPTION: "Number of BFD sessions in up state"`
@@ -106,7 +106,7 @@ type BfdSessionParam struct {
 	RequiredMinEchoRxInterval uint32 `DESCRIPTION: "Required minimum echo rx interval in ms", DEFAULT: "0"`
 	DemandEnabled             bool   `DESCRIPTION: "Enable or disable demand mode", DEFAULT: "false"`
 	AuthenticationEnabled     bool   `DESCRIPTION: "Enable or disable authentication", DEFAULT: "false"`
-	AuthType                  string `DESCRIPTION: "Authentication type, SELECTION: metmd5/keyedmd5/metsha1/keyedsha1/simple", DEFAULT: "simple"`
+	AuthType                  string `DESCRIPTION: "Authentication type", SELECTION: "metmd5/keyedmd5/metsha1/keyedsha1/simple", DEFAULT: "simple"`
 	AuthKeyId                 uint32 `DESCRIPTION: "Authentication key id", DEFAULT: "1"`
 	AuthData                  string `DESCRIPTION: "Authentication password", DEFAULT: "snaproute"`
 }

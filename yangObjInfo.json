@@ -1,7 +1,4 @@
 {
-"OSPF-MIB" : { "owner": "ospfd",
-	        "location" : "l3/ospf/rpc/",
-                "svcName": "nil"},
 "BRIDGE-MIB" : { "owner": "stpd",
                  "location" : "l2/stp/rpc/",
                  "svcName" : "nil"},

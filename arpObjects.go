@@ -26,11 +26,11 @@ package models
 /*
  * This DS will be used while Created/Deleting Arp Config
  */
-type ArpConfig struct {
+type ArpGlobal struct {
 	baseObj
 	// placeholder to create a key
-	Vrf     string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"1", DESCRIPTION: "Vrf Name"`
-	Timeout int32  `DESCRIPTION: "Global Arp entry timeout value. Default value: 600 seconds, Minimum Possible Value: 300 seconds, Unit: second"`
+	Vrf     string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"1", AUTOCREATE: "true", DESCRIPTION: "System Vrf", DEFAULT:"default"`
+	Timeout int32  `DESCRIPTION: "Global Arp entry timeout value. Default value: 600 seconds, Minimum Possible Value: 300 seconds, Unit: second", DEFAULT: "600"`
 }
 
 type ArpEntryState struct {
