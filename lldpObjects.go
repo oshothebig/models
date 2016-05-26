@@ -23,10 +23,16 @@
 
 package models
 
+type LLDPGlobal struct {
+	baseObj
+	Vrf    string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"1", DESCRIPTION: "LLDP Global Config For Default VRF", DEFAULT:"default", AUTOCREATE:"true"`
+	Enable bool   `DESCRIPTION: "Enable/Disable LLDP Globally", DEFAULT:"false"`
+}
+
 type LLDPIntf struct {
 	baseObj
-	IfIndex int32 `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"1",DESCRIPTION: "IfIndex where lldp needs to be configured"`
-	Enable  bool  `DESCRIPTION: "Enable/Disable lldp config Per Port"`
+	IfIndex int32 `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"1",DESCRIPTION: "IfIndex where lldp needs is enabled/disabled", AUTOCREATE:"true",PARENT:"Port"`
+	Enable  bool  `DESCRIPTION: "Enable/Disable lldp config Per Port", DEFAULT:"true"`
 }
 
 type LLDPIntfState struct {
