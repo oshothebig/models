@@ -205,7 +205,7 @@ type BGPPolicyStmt struct {
 type BGPPolicyStmtState struct {
 	baseObj
 	Name            string   `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Name of the BGP policy statement"`
-	MatchConditions string   `DESCRIPTION: "Match conditions ,SELECTION: All/Any"`
+	MatchConditions string   `DESCRIPTION: "Match conditions" ,SELECTION: "All/Any"`
 	Conditions      []string `DESCRIPTION: "List of conditions"`
 	Actions         []string `DESCRIPTION: "List of actions"`
 }
@@ -219,7 +219,7 @@ type BGPPolicyDefinition struct {
 	baseObj
 	Name          string                              `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", DESCRIPTION: "Name of the BGP policy definition"`
 	Precedence    int32                               `DESCRIPTION: "Precedence of the policy definition"`
-	MatchType     string                              `DESCRIPTION: "Match type for policy definition  ,SELECTION: All/Any"`
+	MatchType     string                              `DESCRIPTION: "Match type for policy definition"  ,SELECTION: "All/Any"`
 	StatementList []BGPPolicyDefinitionStmtPrecedence `DESCRIPTION: "Precedence of statements in the policy"`
 }
 
