@@ -1,3 +1,26 @@
+//
+//Copyright [2016] [SnapRoute Inc]
+//
+//Licensed under the Apache License, Version 2.0 (the "License");
+//you may not use this file except in compliance with the License.
+//You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+//	 Unless required by applicable law or agreed to in writing, software
+//	 distributed under the License is distributed on an "AS IS" BASIS,
+//	 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//	 See the License for the specific language governing permissions and
+//	 limitations under the License.
+//
+// _______  __       __________   ___      _______.____    __    ____  __  .___________.  ______  __    __
+// |   ____||  |     |   ____\  \ /  /     /       |\   \  /  \  /   / |  | |           | /      ||  |  |  |
+// |  |__   |  |     |  |__   \  V  /     |   (----` \   \/    \/   /  |  | `---|  |----`|  ,----'|  |__|  |
+// |   __|  |  |     |   __|   >   <       \   \      \            /   |  |     |  |     |  |     |   __   |
+// |  |     |  `----.|  |____ /  .  \  .----)   |      \    /\    /    |  |     |  |     |  `----.|  |  |  |
+// |__|     |_______||_______/__/ \__\ |_______/        \__/  \__/     |__|     |__|      \______||__|  |__|
+//
+
 package models
 
 import ()
@@ -6,18 +29,18 @@ import ()
  * Global DataStructure for DHCP RELAY
  */
 type DhcpRelayGlobal struct {
-	BaseObj
+	baseObj
 	// This will tell whether DHCP RELAY is enabled/disabled
 	// on the box right now or not.
 	DhcpRelay string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"1",DESCRIPTION: "Global Dhcp Relay Agent Information"`
-	Enable    bool   `DESCRIPTION: "Global Config stating whether DHCP Relay Agent is enabled on the box or not"`
+	Enable    bool   `DESCRIPTION: "Global Config stating whether DHCP Relay Agent is enabled on the box or not", DEFAULT:"false"`
 }
 
 /*
  * This DS will be used while adding/deleting Relay Agent.
  */
 type DhcpRelayIntf struct {
-	BaseObj
+	baseObj
 	//IpSubnet     string `SNAPROUTE: "KEY"`
 	//Netmask      string `SNAPROUTE: "KEY"`
 	IfIndex int32 `SNAPROUTE: "KEY",  ACCESS:"w", MULTIPLICITY:"*", DESCRIPTION:"Interface index for which Relay Agent Config needs to be done"`
@@ -28,7 +51,7 @@ type DhcpRelayIntf struct {
 }
 
 type DhcpRelayHostDhcpState struct {
-	BaseObj
+	baseObj
 	MacAddr         string `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Host Hardware/Mac Address"`
 	ServerIp        string `DESCRIPTION: "Configured Dhcp Server"`
 	OfferedIp       string `DESCRIPTION: "Ip Address offered by Dhcp Server"`
@@ -46,7 +69,7 @@ type DhcpRelayHostDhcpState struct {
 }
 
 type DhcpRelayIntfState struct {
-	BaseObj
+	baseObj
 	IntfId            int32 `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Interface Index for which state is required to be collected"`
 	TotalDrops        int32 `DESCRIPTION: "Total number of Dhcp Packets dropped by relay agent"`
 	TotalDhcpClientRx int32 `DESCRIPTION: "Total number of client requests that camde to relay agent"`
@@ -56,7 +79,7 @@ type DhcpRelayIntfState struct {
 }
 
 type DhcpRelayIntfServerState struct {
-	BaseObj
+	baseObj
 	IntfId    int32  `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Interface Index for which state is required to be collected"`
 	ServerIp  string `DESCRIPTION: "Information about any one of configured Dhcp server"`
 	Request   int32  `DESCRIPTION: "Total number of requests to Server"`

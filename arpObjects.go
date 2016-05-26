@@ -1,20 +1,71 @@
+//
+//Copyright [2016] [SnapRoute Inc]
+//
+//Licensed under the Apache License, Version 2.0 (the "License");
+//you may not use this file except in compliance with the License.
+//You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+//	 Unless required by applicable law or agreed to in writing, software
+//	 distributed under the License is distributed on an "AS IS" BASIS,
+//	 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//	 See the License for the specific language governing permissions and
+//	 limitations under the License.
+//
+// _______  __       __________   ___      _______.____    __    ____  __  .___________.  ______  __    __
+// |   ____||  |     |   ____\  \ /  /     /       |\   \  /  \  /   / |  | |           | /      ||  |  |  |
+// |  |__   |  |     |  |__   \  V  /     |   (----` \   \/    \/   /  |  | `---|  |----`|  ,----'|  |__|  |
+// |   __|  |  |     |   __|   >   <       \   \      \            /   |  |     |  |     |  |     |   __   |
+// |  |     |  `----.|  |____ /  .  \  .----)   |      \    /\    /    |  |     |  |     |  `----.|  |  |  |
+// |__|     |_______||_______/__/ \__\ |_______/        \__/  \__/     |__|     |__|      \______||__|  |__|
+//
+
 package models
 
 /*
  * This DS will be used while Created/Deleting Arp Config
  */
-type ArpConfig struct {
-	BaseObj
+type ArpGlobal struct {
+	baseObj
 	// placeholder to create a key
-	ArpConfigKey string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"1", DESCRIPTION: "Arp config"`
-	Timeout      int32  `DESCRIPTION: "Global Arp entry timeout value. Default value: 600 seconds, Minimum Possible Value: 300 seconds, Unit: second"`
+	Vrf     string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"1", AUTOCREATE: "true", DESCRIPTION: "System Vrf", DEFAULT:"default"`
+	Timeout int32  `DESCRIPTION: "Global Arp entry timeout value. Default value: 600 seconds, Minimum Possible Value: 300 seconds, Unit: second", DEFAULT: "600"`
 }
 
 type ArpEntryState struct {
-	BaseObj
+	baseObj
 	IpAddr         string `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Neighbor's IP Address"`
 	MacAddr        string `DESCRIPTION: "MAC address of the neighbor machine with corresponding IP Address"`
 	Vlan           string `DESCRIPTION: "Vlan ID of the Router Interface to which neighbor is attached to"`
 	Intf           string `DESCRIPTION: "Router Interface to which neighbor is attached to"`
 	ExpiryTimeLeft string `DESCRIPTION: "Time left before entry expires in case neighbor departs"`
+}
+
+type ArpDeleteByIPv4Addr struct {
+	baseObj
+	IpAddr string `SNAPROUTE: "KEY", ACCESS:"x", MULTIPLICITY:"1", DESCRIPTION: "End Host IP Address for which corresponding Arp entry needed to be deleted"`
+}
+
+type ArpDeleteByIfName struct {
+	baseObj
+	IfName string `SNAPROUTE: "KEY", ACCESS:"x", MULTIPLICITY:"1", DESCRIPTION: "All the Arp learned for end host on given L3 interface will be deleted"`
+}
+
+type ArpRefreshByIPv4Addr struct {
+	baseObj
+	IpAddr string `SNAPROUTE: "KEY", ACCESS:"x", MULTIPLICITY:"1", DESCRIPTION: "Neighbor's IP Address for which corresponding Arp entry needed to be re-learned"`
+}
+
+type ArpRefreshByIfName struct {
+	baseObj
+	IfName string `SNAPROUTE: "KEY", ACCESS:"x", MULTIPLICITY:"1", DESCRIPTION: "All the Arp learned on given L3 interface will be re-learned"`
+}
+
+type ArpLinuxEntryState struct {
+	baseObj
+	IpAddr  string `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Neighbor's IP Address"`
+	HWType  string `DESCRIPTION: "Hardware Type"`
+	MacAddr string `DESCRIPTION: "MAC address of neighbor"`
+	IfName  string `DESCRIPTION: "Interface name"`
 }

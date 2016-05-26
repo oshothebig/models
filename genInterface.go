@@ -1,3 +1,26 @@
+//
+//Copyright [2016] [SnapRoute Inc]
+//
+//Licensed under the Apache License, Version 2.0 (the "License");
+//you may not use this file except in compliance with the License.
+//You may obtain a copy of the License at
+//
+//    http://www.apache.org/licenses/LICENSE-2.0
+//
+//	 Unless required by applicable law or agreed to in writing, software
+//	 distributed under the License is distributed on an "AS IS" BASIS,
+//	 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//	 See the License for the specific language governing permissions and
+//	 limitations under the License.
+//
+// _______  __       __________   ___      _______.____    __    ____  __  .___________.  ______  __    __  
+// |   ____||  |     |   ____\  \ /  /     /       |\   \  /  \  /   / |  | |           | /      ||  |  |  | 
+// |  |__   |  |     |  |__   \  V  /     |   (----` \   \/    \/   /  |  | `---|  |----`|  ,----'|  |__|  | 
+// |   __|  |  |     |   __|   >   <       \   \      \            /   |  |     |  |     |  |     |   __   | 
+// |  |     |  `----.|  |____ /  .  \  .----)   |      \    /\    /    |  |     |  |     |  `----.|  |  |  | 
+// |__|     |_______||_______/__/ \__\ |_______/        \__/  \__/     |__|     |__|      \______||__|  |__| 
+//                                                                                                           
+
 package models
 
 type InterfaceConfig struct {
@@ -12,7 +35,7 @@ type InterfaceConfig struct {
 	level
 	*/
 
-	BaseObj
+	ConfigObj
 	//yang_name: type class: leaf
 	Type string
 	//yang_name: mtu class: leaf
@@ -36,7 +59,7 @@ type InterfaceStateCounters struct {
 		YANG Description: A collection of interface-related statistics objects.
 	*/
 
-	BaseObj
+	ConfigObj
 	// parent leaf
 	Description string
 	// parent leaf
@@ -96,7 +119,7 @@ type HoldTimeConfig struct {
 		YANG Description: Configuration data for interface hold-time settings.
 	*/
 
-	BaseObj
+	ConfigObj
 	// parent leaf
 	NameKey string `SNAPROUTE: KEY`
 	// parent leaf
@@ -124,7 +147,7 @@ type HoldTimeState struct {
 		YANG Description: Operational state data for interface hold-time.
 	*/
 
-	BaseObj
+	ConfigObj
 	// parent leaf
 	NameKey string `SNAPROUTE: KEY`
 	// parent leaf
@@ -152,7 +175,7 @@ type SubinterfaceConfig struct {
 		YANG Description: Configurable items at the subinterface level
 	*/
 
-	BaseObj
+	ConfigObj
 	// parent leaf
 	Mtu uint16
 	// parent leaf
@@ -180,7 +203,7 @@ type SubinterfaceStateCounters struct {
 		YANG Description: A collection of interface-related statistics objects.
 	*/
 
-	BaseObj
+	ConfigObj
 	// parent leaf
 	Description string
 	// parent leaf
@@ -244,7 +267,7 @@ type SubinterfaceVlanConfig struct {
 		YANG Description: Configuration parameters for VLANs
 	*/
 
-	BaseObj
+	ConfigObj
 	// parent leaf
 	IndexKey string `SNAPROUTE: KEY`
 	// parent leaf
@@ -277,7 +300,7 @@ type SubinterfaceVlanState struct {
 		YANG Description: State variables for VLANs
 	*/
 
-	BaseObj
+	ConfigObj
 	// parent leaf
 	IndexKey string `SNAPROUTE: KEY`
 	// parent leaf
@@ -311,7 +334,7 @@ type SubinterfaceIpv4AddressConfig struct {
 	address on the interface
 	*/
 
-	BaseObj
+	ConfigObj
 	// parent leaf
 	IndexKey string `SNAPROUTE: KEY`
 	// parent leaf
@@ -344,7 +367,7 @@ type SubinterfaceIpv4AddressState struct {
 	configured on the interface
 	*/
 
-	BaseObj
+	ConfigObj
 	// parent leaf
 	IndexKey string `SNAPROUTE: KEY`
 	// parent leaf
@@ -378,7 +401,7 @@ type SubinterfaceIpv4AddressVrrpVrrpGroupConfig struct {
 		YANG Description: Configuration data for the VRRP group
 	*/
 
-	BaseObj
+	ConfigObj
 	// parent restricted-uint8
 	PrefixLength uint8
 	// parent leaf
@@ -424,7 +447,7 @@ type SubinterfaceIpv4AddressVrrpVrrpGroupState struct {
 		YANG Description: Operational state data for the VRRP group
 	*/
 
-	BaseObj
+	ConfigObj
 	// parent restricted-uint8
 	PrefixLength uint8
 	// parent leaf
@@ -472,7 +495,7 @@ type SubinterfaceIpv4AddressVrrpVrrpGroupInterfaceTrackingConfig struct {
 		YANG Description: Configuration data for VRRP interface tracking
 	*/
 
-	BaseObj
+	ConfigObj
 	// parent restricted-uint16
 	AdvertisementInterval uint16
 	// parent leaf
@@ -522,7 +545,7 @@ type SubinterfaceIpv4AddressVrrpVrrpGroupInterfaceTrackingState struct {
 		YANG Description: Operational state data for VRRP interface tracking
 	*/
 
-	BaseObj
+	ConfigObj
 	// parent restricted-uint16
 	AdvertisementInterval uint16
 	// parent leaf
@@ -573,7 +596,7 @@ type SubinterfaceIpv4NeighborConfig struct {
 	address on the interface
 	*/
 
-	BaseObj
+	ConfigObj
 	// parent leaf
 	IndexKey string `SNAPROUTE: KEY`
 	// parent leaf
@@ -606,7 +629,7 @@ type SubinterfaceIpv4NeighborState struct {
 	configured on the interface
 	*/
 
-	BaseObj
+	ConfigObj
 	// parent leaf
 	IndexKey string `SNAPROUTE: KEY`
 	// parent leaf
@@ -640,7 +663,7 @@ type SubinterfaceIpv4Config struct {
 		YANG Description: Top-level IPv4 configuration data for the interface
 	*/
 
-	BaseObj
+	ConfigObj
 	// parent leaf
 	IndexKey string `SNAPROUTE: KEY`
 	// parent leaf
@@ -668,7 +691,7 @@ type SubinterfaceIpv4State struct {
 		YANG Description: Top level IPv4 operational state data
 	*/
 
-	BaseObj
+	ConfigObj
 	// parent leaf
 	IndexKey string `SNAPROUTE: KEY`
 	// parent leaf
@@ -697,7 +720,7 @@ type SubinterfaceIpv6AddressConfig struct {
 	the interface
 	*/
 
-	BaseObj
+	ConfigObj
 	// parent leaf
 	IndexKey string `SNAPROUTE: KEY`
 	// parent leaf
@@ -732,7 +755,7 @@ type SubinterfaceIpv6AddressState struct {
 	interface
 	*/
 
-	BaseObj
+	ConfigObj
 	// parent leaf
 	Name string
 	// parent leaf
@@ -770,7 +793,7 @@ type SubinterfaceIpv6AddressVrrpVrrpGroupConfig struct {
 		YANG Description: Configuration data for the VRRP group
 	*/
 
-	BaseObj
+	ConfigObj
 	// parent restricted-uint8
 	PrefixLength uint8
 	// parent leaf
@@ -820,7 +843,7 @@ type SubinterfaceIpv6AddressVrrpVrrpGroupState struct {
 		YANG Description: Operational state data for the VRRP group
 	*/
 
-	BaseObj
+	ConfigObj
 	// parent restricted-uint8
 	PrefixLength uint8
 	// parent leaf
@@ -872,7 +895,7 @@ type SubinterfaceIpv6AddressVrrpVrrpGroupInterfaceTrackingConfig struct {
 		YANG Description: Configuration data for VRRP interface tracking
 	*/
 
-	BaseObj
+	ConfigObj
 	// parent restricted-uint16
 	AdvertisementInterval uint16
 	// parent leaf
@@ -926,7 +949,7 @@ type SubinterfaceIpv6AddressVrrpVrrpGroupInterfaceTrackingState struct {
 		YANG Description: Operational state data for VRRP interface tracking
 	*/
 
-	BaseObj
+	ConfigObj
 	// parent restricted-uint16
 	AdvertisementInterval uint16
 	// parent leaf
@@ -981,7 +1004,7 @@ type SubinterfaceIpv6NeighborConfig struct {
 	the interface
 	*/
 
-	BaseObj
+	ConfigObj
 	// parent leaf
 	IndexKey string `SNAPROUTE: KEY`
 	// parent leaf
@@ -1016,7 +1039,7 @@ type SubinterfaceIpv6NeighborState struct {
 	interface
 	*/
 
-	BaseObj
+	ConfigObj
 	// parent leaf
 	IndexKey string `SNAPROUTE: KEY`
 	// parent leaf
@@ -1056,7 +1079,7 @@ type SubinterfaceIpv6Config struct {
 		YANG Description: Top-level config data for the IPv6 interface
 	*/
 
-	BaseObj
+	ConfigObj
 	// parent leaf
 	IndexKey string `SNAPROUTE: KEY`
 	// parent leaf
@@ -1086,7 +1109,7 @@ type SubinterfaceIpv6State struct {
 		YANG Description: Top-level operational state data for the IPv6 interface
 	*/
 
-	BaseObj
+	ConfigObj
 	// parent leaf
 	IndexKey string `SNAPROUTE: KEY`
 	// parent leaf
@@ -1119,7 +1142,7 @@ type SubinterfaceIpv6AutoconfConfig struct {
 	addresses, as described in RFC 4862.
 	*/
 
-	BaseObj
+	ConfigObj
 	// parent leaf
 	IndexKey string `SNAPROUTE: KEY`
 	// parent leaf
@@ -1157,7 +1180,7 @@ type SubinterfaceIpv6AutoconfState struct {
 		YANG Description: Operational state data
 	*/
 
-	BaseObj
+	ConfigObj
 	// parent leaf
 	IndexKey string `SNAPROUTE: KEY`
 	// parent leaf
@@ -1195,7 +1218,7 @@ type EthernetConfig struct {
 		YANG Description: Configuration data for ethernet interfaces
 	*/
 
-	BaseObj
+	ConfigObj
 	// parent leaf
 	NameKey string `SNAPROUTE: KEY`
 	// parent leaf
@@ -1231,7 +1254,7 @@ type EthernetStateCounters struct {
 		YANG Description: Ethernet interface counters
 	*/
 
-	BaseObj
+	ConfigObj
 	// parent leaf
 	EnableFlowControl bool
 	// parent leaf
@@ -1283,7 +1306,7 @@ type EthernetState struct {
 		YANG Description: State variables for Ethernet interfaces
 	*/
 
-	BaseObj
+	ConfigObj
 	// parent leaf
 	EnableFlowControl bool
 	// parent leaf
@@ -1319,7 +1342,7 @@ type EthernetVlanConfig struct {
 		YANG Description: Configuration parameters for VLANs
 	*/
 
-	BaseObj
+	ConfigObj
 	// parent leaf
 	EnableFlowControl bool
 	// parent leaf
@@ -1364,7 +1387,7 @@ type EthernetVlanState struct {
 		YANG Description: State variables for VLANs
 	*/
 
-	BaseObj
+	ConfigObj
 	// parent leaf
 	EnableFlowControl bool
 	// parent leaf
@@ -1410,7 +1433,7 @@ type AggregationConfig struct {
 	LAG interfaces
 	*/
 
-	BaseObj
+	ConfigObj
 	// parent leaf
 	NameKey string `SNAPROUTE: KEY`
 	// parent leaf
@@ -1439,7 +1462,7 @@ type AggregationState struct {
 	aggregate / LAG interfaces
 	*/
 
-	BaseObj
+	ConfigObj
 	// parent leaf
 	NameKey string `SNAPROUTE: KEY`
 	// parent leaf
@@ -1469,7 +1492,7 @@ type AggregationLacpConfig struct {
 		YANG Description: Configuration data for LACP
 	*/
 
-	BaseObj
+	ConfigObj
 	// parent leaf
 	LagType int32
 	// parent leaf
@@ -1507,7 +1530,7 @@ type AggregationLacpState struct {
 		YANG Description: Operational state data for LACP
 	*/
 
-	BaseObj
+	ConfigObj
 	// parent leaf
 	Mtu uint16
 	// parent leaf
@@ -1547,7 +1570,7 @@ type AggregationLacpMemberStateCounters struct {
 		YANG Description: LACP protocol counters
 	*/
 
-	BaseObj
+	ConfigObj
 	// parent leaf
 	Collecting bool
 	// parent leaf
@@ -1661,7 +1684,7 @@ type AggregationVlanConfig struct {
 		YANG Description: Configuration parameters for VLANs
 	*/
 
-	BaseObj
+	ConfigObj
 	// parent leaf
 	LagType int32
 	// parent leaf
@@ -1702,7 +1725,7 @@ type AggregationVlanState struct {
 		YANG Description: State variables for VLANs
 	*/
 
-	BaseObj
+	ConfigObj
 	// parent leaf
 	LagType int32
 	// parent leaf
@@ -1743,7 +1766,7 @@ type RoutedVlanConfig struct {
 		YANG Description: Configuration data for routed vlan interfaces
 	*/
 
-	BaseObj
+	ConfigObj
 	// parent leaf
 	Mtu uint16
 	// parent leaf
@@ -1770,7 +1793,7 @@ type RoutedVlanState struct {
 		YANG Description: Operational state data
 	*/
 
-	BaseObj
+	ConfigObj
 	// parent leaf
 	Mtu uint16
 	// parent leaf
@@ -1798,7 +1821,7 @@ type RoutedVlanIpv4AddressConfig struct {
 	address on the interface
 	*/
 
-	BaseObj
+	ConfigObj
 	// parent leaf
 	NameKey string `SNAPROUTE: KEY`
 	// parent leaf
@@ -1830,7 +1853,7 @@ type RoutedVlanIpv4AddressState struct {
 	configured on the interface
 	*/
 
-	BaseObj
+	ConfigObj
 	// parent leaf
 	NameKey string `SNAPROUTE: KEY`
 	// parent leaf
@@ -1863,7 +1886,7 @@ type RoutedVlanIpv4AddressVrrpVrrpGroupConfig struct {
 		YANG Description: Configuration data for the VRRP group
 	*/
 
-	BaseObj
+	ConfigObj
 	// parent restricted-uint8
 	PrefixLength uint8
 	// parent leaf
@@ -1908,7 +1931,7 @@ type RoutedVlanIpv4AddressVrrpVrrpGroupState struct {
 		YANG Description: Operational state data for the VRRP group
 	*/
 
-	BaseObj
+	ConfigObj
 	// parent restricted-uint8
 	PrefixLength uint8
 	// parent leaf
@@ -1955,7 +1978,7 @@ type RoutedVlanIpv4AddressVrrpVrrpGroupInterfaceTrackingConfig struct {
 		YANG Description: Configuration data for VRRP interface tracking
 	*/
 
-	BaseObj
+	ConfigObj
 	// parent restricted-uint16
 	AdvertisementInterval uint16
 	// parent leaf
@@ -2004,7 +2027,7 @@ type RoutedVlanIpv4AddressVrrpVrrpGroupInterfaceTrackingState struct {
 		YANG Description: Operational state data for VRRP interface tracking
 	*/
 
-	BaseObj
+	ConfigObj
 	// parent restricted-uint16
 	AdvertisementInterval uint16
 	// parent leaf
@@ -2054,7 +2077,7 @@ type RoutedVlanIpv4NeighborConfig struct {
 	address on the interface
 	*/
 
-	BaseObj
+	ConfigObj
 	// parent leaf
 	NameKey string `SNAPROUTE: KEY`
 	// parent leaf
@@ -2086,7 +2109,7 @@ type RoutedVlanIpv4NeighborState struct {
 	configured on the interface
 	*/
 
-	BaseObj
+	ConfigObj
 	// parent leaf
 	NameKey string `SNAPROUTE: KEY`
 	// parent leaf
@@ -2119,7 +2142,7 @@ type RoutedVlanIpv4Config struct {
 		YANG Description: Top-level IPv4 configuration data for the interface
 	*/
 
-	BaseObj
+	ConfigObj
 	// parent leaf
 	NameKey string `SNAPROUTE: KEY`
 	// parent leaf
@@ -2146,7 +2169,7 @@ type RoutedVlanIpv4State struct {
 		YANG Description: Top level IPv4 operational state data
 	*/
 
-	BaseObj
+	ConfigObj
 	// parent leaf
 	NameKey string `SNAPROUTE: KEY`
 	// parent leaf
@@ -2174,7 +2197,7 @@ type RoutedVlanIpv6AddressConfig struct {
 	the interface
 	*/
 
-	BaseObj
+	ConfigObj
 	// parent leaf
 	NameKey string `SNAPROUTE: KEY`
 	// parent leaf
@@ -2208,7 +2231,7 @@ type RoutedVlanIpv6AddressState struct {
 	interface
 	*/
 
-	BaseObj
+	ConfigObj
 	// parent leaf
 	NameKey string `SNAPROUTE: KEY`
 	// parent leaf
@@ -2245,7 +2268,7 @@ type RoutedVlanIpv6AddressVrrpVrrpGroupConfig struct {
 		YANG Description: Configuration data for the VRRP group
 	*/
 
-	BaseObj
+	ConfigObj
 	// parent restricted-uint8
 	PrefixLength uint8
 	// parent leaf
@@ -2294,7 +2317,7 @@ type RoutedVlanIpv6AddressVrrpVrrpGroupState struct {
 		YANG Description: Operational state data for the VRRP group
 	*/
 
-	BaseObj
+	ConfigObj
 	// parent restricted-uint8
 	PrefixLength uint8
 	// parent leaf
@@ -2345,7 +2368,7 @@ type RoutedVlanIpv6AddressVrrpVrrpGroupInterfaceTrackingConfig struct {
 		YANG Description: Configuration data for VRRP interface tracking
 	*/
 
-	BaseObj
+	ConfigObj
 	// parent restricted-uint16
 	AdvertisementInterval uint16
 	// parent leaf
@@ -2398,7 +2421,7 @@ type RoutedVlanIpv6AddressVrrpVrrpGroupInterfaceTrackingState struct {
 		YANG Description: Operational state data for VRRP interface tracking
 	*/
 
-	BaseObj
+	ConfigObj
 	// parent restricted-uint16
 	AdvertisementInterval uint16
 	// parent leaf
@@ -2452,7 +2475,7 @@ type RoutedVlanIpv6NeighborConfig struct {
 	the interface
 	*/
 
-	BaseObj
+	ConfigObj
 	// parent leaf
 	NameKey string `SNAPROUTE: KEY`
 	// parent leaf
@@ -2486,7 +2509,7 @@ type RoutedVlanIpv6NeighborState struct {
 	interface
 	*/
 
-	BaseObj
+	ConfigObj
 	// parent leaf
 	NameKey string `SNAPROUTE: KEY`
 	// parent leaf
@@ -2525,7 +2548,7 @@ type RoutedVlanIpv6Config struct {
 		YANG Description: Top-level config data for the IPv6 interface
 	*/
 
-	BaseObj
+	ConfigObj
 	// parent leaf
 	NameKey string `SNAPROUTE: KEY`
 	// parent leaf
@@ -2554,7 +2577,7 @@ type RoutedVlanIpv6State struct {
 		YANG Description: Top-level operational state data for the IPv6 interface
 	*/
 
-	BaseObj
+	ConfigObj
 	// parent leaf
 	NameKey string `SNAPROUTE: KEY`
 	// parent leaf
@@ -2586,7 +2609,7 @@ type RoutedVlanIpv6AutoconfConfig struct {
 	addresses, as described in RFC 4862.
 	*/
 
-	BaseObj
+	ConfigObj
 	// parent leaf
 	NameKey string `SNAPROUTE: KEY`
 	// parent leaf
@@ -2623,7 +2646,7 @@ type RoutedVlanIpv6AutoconfState struct {
 		YANG Description: Operational state data
 	*/
 
-	BaseObj
+	ConfigObj
 	// parent leaf
 	NameKey string `SNAPROUTE: KEY`
 	// parent leaf

@@ -1,23 +1,11 @@
 {
-	"UserConfig" : {
-		"access": "w",
-		"Owner": "local",
-		"multiplicity":"*",
-		"srcfile": "objects.go"
-	},
-	"UserState" : {
+	"SystemStatusState" : {
 		"access": "r",
 		"Owner": "local",
-		"multiplicity":"*",
+		"multiplicity":"1",
 		"srcfile": "objects.go"
 	},
-	"IPV4AddressBlock" : {
-		"access": "w",
-		"Owner": "local",
-		"multiplicity":"*",
-		"srcfile": "objects.go"
-	},
-	"SystemStatus" : {
+	"SystemSwVersionState" : {
 		"access": "r",
 		"Owner": "local",
 		"multiplicity":"1",
