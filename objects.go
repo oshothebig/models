@@ -37,6 +37,7 @@ type ConfigObj interface {
 	GetObjectFromDbByKey(objKey string, dbHdl redis.Conn) (ConfigObj, error)
 	GetObjectFromDb(objKey string, dbHdl redis.Conn) (ConfigObj, error)
 	CompareObjectsAndDiff(updateKeys map[string]bool, dbObj ConfigObj) ([]bool, error)
+	MergeDbAndConfigObjForPatchUpdate(dbObj ConfigObj, patchOpInfoSlice []PatchOpInfo) (ConfigObj, []bool, error) 
 	MergeDbAndConfigObj(dbObj ConfigObj, attrSet []bool) (ConfigObj, error)
 	UpdateObjectInDb(dbV4Route ConfigObj, attrSet []bool, dbHdl redis.Conn) error
 	GetAllObjFromDb(dbHdl redis.Conn) ([]ConfigObj, error)
@@ -45,7 +46,7 @@ type ConfigObj interface {
 type PatchOpInfo struct {
 	Op string
 	Path string
-	Value interface{}
+	Value string
 }
 type baseObj struct {
 }
@@ -73,6 +74,9 @@ func (obj baseObj) CompareObjectsAndDiff(updateKeys map[string]bool, dbObj Confi
 }
 func (obj baseObj) MergeDbAndConfigObj(dbObj ConfigObj, attrSet []bool) (ConfigObj, error) {
 	return nil, nil
+}
+func (obj baseObj) MergeDbAndConfigObjForPatchUpdate(dbObj ConfigObj, patchOpInfoSlice []PatchOpInfo) (ConfigObj, []bool, error) {
+	return nil,nil, nil
 }
 func (obj baseObj) UpdateObjectInDb(dbV4Route ConfigObj, attrSet []bool, dbHdl redis.Conn) error {
 	return nil
