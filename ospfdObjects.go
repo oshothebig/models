@@ -27,7 +27,7 @@ type OspfStubAreaEntry struct {
 }
 
 type OspfLsdbEntryState struct {
-        baseObj
+	baseObj
 	LsdbType          int32  `SNAPROUTE: "KEY",  ACCESS:"r",  MULTIPLICITY:"*", DESCRIPTION: The type of the link state advertisement. Each link state type has a separate advertisement format.  Note: External link state advertisements are permitted for backward compatibility, but should be displayed in the AsLsdbTable rather than here., SELECTION: routerLink(1)/asSummaryLink(4)/asExternalLink(5)/nssaExternalLink(7)/networkLink(2)/multicastLink(6)/summaryLink(3)/areaOpaqueLink(10)`
 	LsdbLsid          string `SNAPROUTE: "KEY",  DESCRIPTION: The Link State ID is an LS Type Specific field containing either a Router ID or an IP address; it identifies the piece of the routing domain that is being described by the advertisement., SELECTION: {'pattern': u'(([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])(%[\\p{N}\\p{L}]+)?'}`
 	LsdbAreaId        string `SNAPROUTE: "KEY",  DESCRIPTION: The 32-bit identifier of the area from which the LSA was received., SELECTION: {'pattern': u'(([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])(%[\\p{N}\\p{L}]+)?'}`
@@ -140,12 +140,13 @@ type OspfIPv4Routes struct {
 
 type OspfGlobal struct {
 	ConfigObj
-	RouterId        string `SNAPROUTE: "KEY",  ACCESS:"w", MULTIPLICITY:"1", DESCRIPTION: A 32-bit integer uniquely identifying the router in the Autonomous System. By convention, to ensure uniqueness, this should default to the value of one of the router's IP interface addresses.  This object is persistent and when written the entity SHOULD save the change to non-volatile storage., SELECTION: {'pattern': u'(([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])(%[\\p{N}\\p{L}]+)?'}`
-	AdminStat       int32  `DESCRIPTION: Indicates if OSPF is enabled globally`
-	ASBdrRtrStatus  bool   `DESCRIPTION: A flag to note whether this router is configured as an Autonomous System Border Router.  This object is persistent and when written the entity SHOULD save the change to non-volatile storage.`
-	TOSSupport      bool   `DESCRIPTION: *** This element is added for future use. *** The router's support for type-of-service routing. This object is persistent and when written the entity SHOULD save the change to non-volatile storage.`
-	RestartSupport  int32  `DESCRIPTION: *** This element is added for future use. *** The router's support for OSPF graceful restart. Options include: no restart support, only planned restarts, or both planned and unplanned restarts.  This object is persistent and when written the entity SHOULD save the change to non-volatile storage., SELECTION: plannedAndUnplanned(3)/none(1)/plannedOnly(2)`
-	RestartInterval int32  `DESCRIPTION: *** This element is added for future use. *** Configured OSPF graceful restart timeout interval. This object is persistent and when written the entity SHOULD save the change to non-volatile storage., SELECTION: {'range': u'1..1800'}`
+	RouterId           string `SNAPROUTE: "KEY",  ACCESS:"w", MULTIPLICITY:"1", DESCRIPTION: A 32-bit integer uniquely identifying the router in the Autonomous System. By convention, to ensure uniqueness, this should default to the value of one of the router's IP interface addresses.  This object is persistent and when written the entity SHOULD save the change to non-volatile storage., SELECTION: {'pattern': u'(([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])(%[\\p{N}\\p{L}]+)?'}`
+	AdminStat          int32  `DESCRIPTION: Indicates if OSPF is enabled globally`
+	ASBdrRtrStatus     bool   `DESCRIPTION: A flag to note whether this router is configured as an Autonomous System Border Router.  This object is persistent and when written the entity SHOULD save the change to non-volatile storage.`
+	TOSSupport         bool   `DESCRIPTION: *** This element is added for future use. *** The router's support for type-of-service routing. This object is persistent and when written the entity SHOULD save the change to non-volatile storage.`
+	RestartSupport     int32  `DESCRIPTION: *** This element is added for future use. *** The router's support for OSPF graceful restart. Options include: no restart support, only planned restarts, or both planned and unplanned restarts.  This object is persistent and when written the entity SHOULD save the change to non-volatile storage., SELECTION: plannedAndUnplanned(3)/none(1)/plannedOnly(2)`
+	RestartInterval    int32  `DESCRIPTION: *** This element is added for future use. *** Configured OSPF graceful restart timeout interval. This object is persistent and when written the entity SHOULD save the change to non-volatile storage., SELECTION: {'range': u'1..1800'}`
+	ReferenceBandwidth uint32 `DESCRIPTION: "Reference bandwidth in kilobits/second for calculating default interface metrics. Unit: Mbps", SELECTION: {'range': u'100..2147483647'}, DEFAULT: 100`
 }
 
 type OspfGlobalState struct {
