@@ -106,10 +106,6 @@ func (obj SystemStatusState) UnmarshalObject(body []byte) (ConfigObj, error) {
 	return systemStatus, err
 }
 
-func (obj SystemStatusState) GetKey() string {
-	return ""
-}
-
 type RepoInfo struct {
 	Name   string `DESCRIPTION: "Name of the git repo"`
 	Sha1   string `DESCRIPTION: "Git commit Sha1"`
@@ -133,8 +129,4 @@ func (obj SystemSwVersionState) UnmarshalObject(body []byte) (ConfigObj, error) 
 	}
 
 	return systemSwVersion, err
-}
-
-func (obj SystemSwVersionState) GetKey() string {
-	return ""
 }
