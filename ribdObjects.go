@@ -13,20 +13,20 @@
 //	 See the License for the specific language governing permissions and
 //	 limitations under the License.
 //
-// _______  __       __________   ___      _______.____    __    ____  __  .___________.  ______  __    __  
-// |   ____||  |     |   ____\  \ /  /     /       |\   \  /  \  /   / |  | |           | /      ||  |  |  | 
-// |  |__   |  |     |  |__   \  V  /     |   (----` \   \/    \/   /  |  | `---|  |----`|  ,----'|  |__|  | 
-// |   __|  |  |     |   __|   >   <       \   \      \            /   |  |     |  |     |  |     |   __   | 
-// |  |     |  `----.|  |____ /  .  \  .----)   |      \    /\    /    |  |     |  |     |  `----.|  |  |  | 
-// |__|     |_______||_______/__/ \__\ |_______/        \__/  \__/     |__|     |__|      \______||__|  |__| 
-//                                                                                                           
+// _______  __       __________   ___      _______.____    __    ____  __  .___________.  ______  __    __
+// |   ____||  |     |   ____\  \ /  /     /       |\   \  /  \  /   / |  | |           | /      ||  |  |  |
+// |  |__   |  |     |  |__   \  V  /     |   (----` \   \/    \/   /  |  | `---|  |----`|  ,----'|  |__|  |
+// |   __|  |  |     |   __|   >   <       \   \      \            /   |  |     |  |     |  |     |   __   |
+// |  |     |  `----.|  |____ /  .  \  .----)   |      \    /\    /    |  |     |  |     |  `----.|  |  |  |
+// |__|     |_______||_______/__/ \__\ |_______/        \__/  \__/     |__|     |__|      \______||__|  |__|
+//
 
 package models
 
 type NextHopInfo struct {
-	NextHopIp     string `DESCRIPTION: "next hop ip of the route, DEFAULT:"0.0.0.0""`
+	NextHopIp     string `"SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*". DESCRIPTION: "next hop ip of the route, DEFAULT:"0.0.0.0""`
 	NextHopIntRef string `DESCRIPTION: "Interface name or ifindex of port/lag or vlan on which this next hop is configured", OPTIONAL`
-	Weight        int32  `DESCRIPTION : "Weight of the next hop",DEFAULT:0, RANGE:0-31, OPTIONAL `
+	Weight        int32  `DESCRIPTION : "Weight of the next hop",DEFAULT:0, MIN:0, MAX:31, OPTIONAL `
 }
 
 /*
@@ -39,7 +39,7 @@ type IPv4Route struct {
 	OutgoingIntfType  string `DESCRIPTION :"Interface type of the next hop interface"`
 	OutgoingInterface string `DESCRIPTION :"Interface ID of the next hop interface"`
 	Protocol          string `DESCRIPTION :"Protocol type of the route", DEFAULT:"STATIC"`
-	Weight            int32  `DESCRIPTION : "Weight of the next hop", DEFAULT:0, RANGE:0-31`
+	Weight            int32  `DESCRIPTION : "Weight of the next hop", DEFAULT:0, MIN:0, MAX:31`
 }
 
 /*type IPv4Route struct {
@@ -87,7 +87,7 @@ type PolicyConditionState struct {
 	baseObj
 	Name           string `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Condition name"`
 	ConditionInfo  string
-	PolicyStmtList []string `DESCRIPTION: "List of policy statements using this condition"`
+	PolicyStmtList []string `DESCRIPTION: "List of policy statements using this condition", DEFAULT: "[]"`
 }
 
 type PolicyStmt struct {
@@ -101,26 +101,26 @@ type PolicyStmtState struct {
 	baseObj
 	Name            string   `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "PolicyStmtState"`
 	MatchConditions string   `DESCRIPTION :"Specifies whether to match all/any of the conditions of this policy statement"`
-	Conditions      []string `DESCRIPTION :"List of conditions added to this policy statement"`
+	Conditions      []string `DESCRIPTION :"List of conditions added to this policy statement", DEFAULT: "[]"`
 	Action          string   `DESCRIPTION :"Action corresponding to this policy statement"`
-	PolicyList      []string `DESCRIPTION :"List of policies using this policy statement"`
+	PolicyList      []string `DESCRIPTION :"List of policies using this policy statement", DEFAULT: "[]"`
 }
 type PolicyDefinitionStmtPriority struct {
-	Priority  int32
+	Priority  int32 `"SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*". DESCRIPTION:"Priority of the policy w.r.t other policies configured", MIN:0, MAX:255`
 	Statement string
 }
 type PolicyDefinition struct {
 	baseObj
 	Name          string                         `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", DESCRIPTION: "Policy Name"`
-	Priority      int32                          `DESCRIPTION :"Priority of the policy w.r.t other policies configured",RANGE:0-255`
+	Priority      int32                          `DESCRIPTION :"Priority of the policy w.r.t other policies configured", MIN: 0, MAX: 255`
 	MatchType     string                         `DESCRIPTION :"Specifies whether to match all/any of the statements within this policy",SELECTION:"all"/"any",DEFAULT:"all"`
 	PolicyType    string                         `DESCRIPTION : Specifies the intended protocol application for the policy", SELECTION: "BGP"/"OSPF"/"ALL", DEFAULT:"ALL"`
-	StatementList []PolicyDefinitionStmtPriority `DESCRIPTION :"Specifies list of statements along with their precedence order."`
+	StatementList []PolicyDefinitionStmtPriority `DESCRIPTION :"Specifies list of statements along with their precedence order.", DEFAULT: "[]"`
 }
 type PolicyDefinitionState struct {
 	baseObj
 	Name         string   `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "PolicyDefinitionState"`
-	IpPrefixList []string `DESCRIPTION :"List of networks/IP Prefixes this policy has been applied on to."`
+	IpPrefixList []string `DESCRIPTION :"List of networks/IP Prefixes this policy has been applied on to.", DEFAULT: "[]"`
 }
 
 type RouteDistanceState struct {
