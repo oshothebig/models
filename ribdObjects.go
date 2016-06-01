@@ -24,7 +24,7 @@
 package models
 
 type NextHopInfo struct {
-	NextHopIp     string `"SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*". DESCRIPTION: "next hop ip of the route, DEFAULT:"0.0.0.0""`
+	NextHopIp     string `DESCRIPTION: "next hop ip of the route, DEFAULT:"0.0.0.0""`
 	NextHopIntRef string `DESCRIPTION: "Interface name or ifindex of port/lag or vlan on which this next hop is configured", OPTIONAL`
 	Weight        int32  `DESCRIPTION : "Weight of the next hop",DEFAULT:0, MIN:0, MAX:31, OPTIONAL `
 }
@@ -60,7 +60,7 @@ type IPv4Route struct {
 }
 type IPv4RouteState struct {
 	baseObj
-	DestinationNw      string        `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "IP address of the route", USESTATEDB:"true"`
+	DestinationNw      string        `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "IP address of the route"`
 	Protocol           string        `DESCRIPTION :"Protocol type of the route"`
 	IsNetworkReachable bool          `DESCRIPTION :"Indicates whether this network is reachable"`
 	RouteCreatedTime   string        `DESCRIPTION :"Time when the route was added"`
@@ -87,7 +87,7 @@ type PolicyConditionState struct {
 	baseObj
 	Name           string `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Condition name"`
 	ConditionInfo  string
-	PolicyStmtList []string `DESCRIPTION: "List of policy statements using this condition", DEFAULT: "[]"`
+	PolicyStmtList []string `DESCRIPTION: "List of policy statements using this condition"`
 }
 
 type PolicyStmt struct {
@@ -101,12 +101,12 @@ type PolicyStmtState struct {
 	baseObj
 	Name            string   `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "PolicyStmtState"`
 	MatchConditions string   `DESCRIPTION :"Specifies whether to match all/any of the conditions of this policy statement"`
-	Conditions      []string `DESCRIPTION :"List of conditions added to this policy statement", DEFAULT: "[]"`
+	Conditions      []string `DESCRIPTION :"List of conditions added to this policy statement"`
 	Action          string   `DESCRIPTION :"Action corresponding to this policy statement"`
-	PolicyList      []string `DESCRIPTION :"List of policies using this policy statement", DEFAULT: "[]"`
+	PolicyList      []string `DESCRIPTION :"List of policies using this policy statement"`
 }
 type PolicyDefinitionStmtPriority struct {
-	Priority  int32 `"SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*". DESCRIPTION:"Priority of the policy w.r.t other policies configured", MIN:0, MAX:255`
+	Priority  int32 `DESCRIPTION:"Priority of the policy w.r.t other policies configured", MIN:0, MAX:255`
 	Statement string
 }
 type PolicyDefinition struct {
@@ -115,12 +115,12 @@ type PolicyDefinition struct {
 	Priority      int32                          `DESCRIPTION :"Priority of the policy w.r.t other policies configured", MIN: 0, MAX: 255`
 	MatchType     string                         `DESCRIPTION :"Specifies whether to match all/any of the statements within this policy",SELECTION:"all"/"any",DEFAULT:"all"`
 	PolicyType    string                         `DESCRIPTION : Specifies the intended protocol application for the policy", SELECTION: "BGP"/"OSPF"/"ALL", DEFAULT:"ALL"`
-	StatementList []PolicyDefinitionStmtPriority `DESCRIPTION :"Specifies list of statements along with their precedence order.", DEFAULT: "[]"`
+	StatementList []PolicyDefinitionStmtPriority `DESCRIPTION :"Specifies list of statements along with their precedence order."`
 }
 type PolicyDefinitionState struct {
 	baseObj
 	Name         string   `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "PolicyDefinitionState"`
-	IpPrefixList []string `DESCRIPTION :"List of networks/IP Prefixes this policy has been applied on to.", DEFAULT: "[]"`
+	IpPrefixList []string `DESCRIPTION :"List of networks/IP Prefixes this policy has been applied on to."`
 }
 
 type RouteDistanceState struct {
