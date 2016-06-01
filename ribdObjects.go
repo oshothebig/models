@@ -60,7 +60,7 @@ type IPv4Route struct {
 }
 type IPv4RouteState struct {
 	baseObj
-	DestinationNw      string        `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "IP address of the route"`
+	DestinationNw      string        `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "IP address of the route", USESTATEDB:"true"`
 	Protocol           string        `DESCRIPTION :"Protocol type of the route"`
 	IsNetworkReachable bool          `DESCRIPTION :"Indicates whether this network is reachable"`
 	RouteCreatedTime   string        `DESCRIPTION :"Time when the route was added"`
