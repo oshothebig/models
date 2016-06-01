@@ -26,7 +26,7 @@ package models
 type NextHopInfo struct {
 	NextHopIp     string `DESCRIPTION: "next hop ip of the route, DEFAULT:"0.0.0.0""`
 	NextHopIntRef string `DESCRIPTION: "Interface name or ifindex of port/lag or vlan on which this next hop is configured", OPTIONAL`
-	Weight        int32  `DESCRIPTION : "Weight of the next hop",DEFAULT:0, RANGE:0-31`
+	Weight        int32  `DESCRIPTION : "Weight of the next hop",DEFAULT:0, RANGE:0-31, OPTIONAL `
 }
 
 /*
@@ -53,9 +53,9 @@ type IPv4Route struct {
 	baseObj
 	DestinationNw string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", ACCELERATED: "true", DESCRIPTION: "IP address of the route"`
 	NetworkMask   string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", ACCELERATED: "true", DESCRIPTION: "mask of the route"`
-	Protocol      string `DESCRIPTION :"Protocol type of the route"`
-	Cost          uint32 `DESCRIPTION :"Cost of this route", DEFAULT:0`
-	NullRoute     bool   `DESCRIPTION : "Specify if this is a null route", DEFAULT:false`
+	Protocol      string `DESCRIPTION :"Protocol type of the route", OPTIONAL, DEFAULT:"STATIC"`
+	Cost          uint32 `DESCRIPTION :"Cost of this route", OPTIONAL, DEFAULT:0`
+	NullRoute     bool   `DESCRIPTION : "Specify if this is a null route", OPTIONAL, DEFAULT:false`
 	NextHop       []NextHopInfo
 }
 type IPv4RouteState struct {
