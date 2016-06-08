@@ -24,7 +24,7 @@
 package models
 
 type SourcePolicyList struct {
-	Sources string `DESCRIPTION: "Source Protocol(s) which BGP is interested in. Multiple sources can be specified as comma separated strings when the same policy needs to be applied"`
+	Sources string `DESCRIPTION: Source Protocol(s) which BGP is interested in. Multiple sources can be specified as comma separated strings when the same policy needs to be applied", SELECTION:"CONNECTED"/"STATIC"/"OSPF"`
 	Policy  string `DESCRIPTION: "Policy that needs to be applied for redistribution of the specified sources into BGP"`
 }
 type BGPGlobal struct {
