@@ -21,7 +21,7 @@
 // |__|     |_______||_______/__/ \__\ |_______/        \__/  \__/     |__|     |__|      \______||__|  |__|
 //
 
-package models
+package objects
 
 import (
 	"github.com/garyburd/redigo/redis"
@@ -35,15 +35,15 @@ type ConfigObj interface {
 	GetObjectFromDbByKey(objKey string, dbHdl redis.Conn) (ConfigObj, error)
 	GetObjectFromDb(objKey string, dbHdl redis.Conn) (ConfigObj, error)
 	CompareObjectsAndDiff(updateKeys map[string]bool, dbObj ConfigObj) ([]bool, error)
-	MergeDbAndConfigObjForPatchUpdate(dbObj ConfigObj, patchOpInfoSlice []PatchOpInfo) (ConfigObj, []bool, error) 
+	MergeDbAndConfigObjForPatchUpdate(dbObj ConfigObj, patchOpInfoSlice []PatchOpInfo) (ConfigObj, []bool, error)
 	MergeDbAndConfigObj(dbObj ConfigObj, attrSet []bool) (ConfigObj, error)
 	UpdateObjectInDb(dbV4Route ConfigObj, attrSet []bool, dbHdl redis.Conn) error
 	GetAllObjFromDb(dbHdl redis.Conn) ([]ConfigObj, error)
 	GetBulkObjFromDb(startIndex int64, count int64, dbHdl redis.Conn) (error, int64, int64, bool, []ConfigObj)
 }
 type PatchOpInfo struct {
-	Op string
-	Path string
+	Op    string
+	Path  string
 	Value string
 }
 type baseObj struct {
@@ -74,7 +74,7 @@ func (obj baseObj) MergeDbAndConfigObj(dbObj ConfigObj, attrSet []bool) (ConfigO
 	return nil, nil
 }
 func (obj baseObj) MergeDbAndConfigObjForPatchUpdate(dbObj ConfigObj, patchOpInfoSlice []PatchOpInfo) (ConfigObj, []bool, error) {
-	return nil,nil, nil
+	return nil, nil, nil
 }
 func (obj baseObj) UpdateObjectInDb(dbV4Route ConfigObj, attrSet []bool, dbHdl redis.Conn) error {
 	return nil

@@ -21,13 +21,46 @@
 // |__|     |_______||_______/__/ \__\ |_______/        \__/  \__/     |__|     |__|      \______||__|  |__|
 //
 
-package models
+// BGPRoutingPolicy.go
+package objects
 
-//TODO: Only Action objects are manually added here. These will be removed when codagen support added for Action objects.
-var ConfigObjectMap = map[string]ConfigObj{
-	"Daemon":               &Daemon{},
-	"ArpDeleteByIPv4Addr":  &ArpDeleteByIPv4Addr{},
-	"ArpDeleteByIfName":    &ArpDeleteByIfName{},
-	"ArpRefreshByIPv4Addr": &ArpRefreshByIPv4Addr{},
-	"ArpRefreshByIfName":   &ArpRefreshByIfName{},
+import (
+	"encoding/json"
+	"fmt"
+)
+
+/*type BGPPolicyPrefix struct {
+	IpPrefix string
+	MaskLengthRange string
+}
+*/
+type BGPPolicyPrefixSet struct {
+	ConfigObj
+	PrefixSetName string `SNAPROUTE: "KEY"`
+	IpPrefixList  []PolicyPrefix
+}
+
+func (obj BGPPolicyPrefixSet) UnmarshalObject(body []byte) (ConfigObj, error) {
+	var policyPrefixSet BGPPolicyPrefixSet
+	var err error
+	if len(body) > 0 {
+		if err = json.Unmarshal(body, &policyPrefixSet); err != nil {
+			fmt.Println("### Trouble in unmarshaling BGPPolicyPrefixSet from Json", body)
+		}
+	}
+	return policyPrefixSet, err
+}
+
+/*
+type BGPPolicyDstIpMatchPrefixSetCondition struct {
+	//yang_name: prefix-set class: leaf
+	PrefixSet string
+	//yang_name: match-set-options class: leaf
+    Prefix PolicyPrefix
+}
+*/
+
+type BGPPolicyAggregateAction struct {
+	GenerateASSet   bool
+	SendSummaryOnly bool
 }
