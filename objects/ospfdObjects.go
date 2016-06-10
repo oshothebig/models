@@ -1,4 +1,4 @@
-package models
+package objects
 
 type OspfAreaEntry struct {
 	ConfigObj
