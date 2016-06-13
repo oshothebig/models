@@ -161,6 +161,7 @@ module BRIDGE-MIB {
 	          range "0..255";
 	        }
 	        config true;
+	        default 128;
 	        description 
 	         "The value of the priority field that is contained in
 	          the first (in network byte order) octet of the (2 octet
@@ -181,6 +182,7 @@ module BRIDGE-MIB {
 	          enum disabled { value 2; }
 	        }
 	        config true;
+	        default disabled;
 	        description 
 	         "The enabled/disabled status of the port.";
 	        reference   
@@ -192,14 +194,12 @@ module BRIDGE-MIB {
 	          range "1..65535";
 	        }
 	        config true;
+	        default 1;
 	        description 
 	         "The contribution of this port to the path cost of
 	          paths towards the spanning tree root which include
 	          this port.  802.1D-1998 recommends that the default
 	          value of this parameter be in inverse proportion to
-	          
-	          
-	          
 	          the speed of the attached LAN.
 	          
 	          New implementations should support PathCost32.
@@ -207,7 +207,10 @@ module BRIDGE-MIB {
 	          object then this object should report the maximum value,
 	          namely 65535.  Applications should try to read the
 	          PathCost32 object if this object reports
-	          the maximum value.";
+	          the maximum value.
+
+		  Value of 1 will force node to auto discover the value
+                  based on the ports capabilities.";
 	        reference   
 	         "IEEE 802.1D-1998: clause 8.5.5.3";
 	      }
@@ -217,6 +220,7 @@ module BRIDGE-MIB {
 	          range "1..200000000";
 	        }
 	        config true;
+	        default 1;
 	        description 
 	         "The contribution of this port to the path cost of
 	          paths towards the spanning tree root which include
@@ -225,7 +229,9 @@ module BRIDGE-MIB {
 	          the speed of the attached LAN.
 	          
 	          This object replaces PathCost to support
-	          IEEE 802.1t.";
+	          IEEE 802.1t.
+		  Value of 1 will force node to auto discover the value
+                  based on the ports capabilities.";
 	        reference   
 	         "IEEE 802.1t clause 8.10.2, Table 8-5.";
 	      }
@@ -261,6 +267,7 @@ module BRIDGE-MIB {
 	          enum disabled { value 2; }
 	        }
 	        config false;
+	        default enabled;
 	        description
 	         "The enabled/disabled status of the port.";
 	        reference
@@ -394,9 +401,11 @@ list StpBridge {
         the Spanning Tree Protocol state for that port.";
 	
 	leaf Vlan {
-      type uint16;
+      type uint16 {
+          range 1..4095;
+      }
       config true;
-      description   
+      description
        "Each bridge is associated with a domain.  Typically this domain
 	   is represented as the vlan; The default domain is typically 1";
       reference     
@@ -408,12 +417,13 @@ list StpBridge {
 	leaf Address {
       type ieee:mac-address;
       config true;
+      default "00:00:00:00:00:00";
       description   
        "The bridge identifier of the root of the spanning
         tree, as determined by the Spanning Tree Protocol,
         as executed by this node.  This value is used as
         the Root Identifier parameter in all Configuration
-        Bridge PDUs originated by this node.";
+        Bridge PDUs originated by this node.  This is ";
       reference     
        "IEEE 802.1D-1998: clause 8.5.3.1";
     }
@@ -424,13 +434,16 @@ list StpBridge {
         range "0..65535";
       }
       config true;
+      default 4096;
       description   
        "The value of the write-able portion of the Bridge ID
         (i.e., the first two octets of the (8 octet long) Bridge
         ID).  The other (last) 6 octets of the Bridge ID are
         given by the value of Address.
         On bridges supporting IEEE 802.1t or IEEE 802.1w,
-        permissible values are 0-61440, in steps of 4096.";
+        permissible values are 0-61440, in steps of 4096.  Extended
+        Priority is enabled when the lower 12 bits are set using
+        the Bridges VLAN id";
       reference     
        "IEEE 802.1D-1998 clause 8.10.2, Table 8-4,
         IEEE 802.1t clause 8.10.2, Table 8-4, clause 14.3.";
@@ -443,6 +456,7 @@ list StpBridge {
       }
       units "centi-seconds";
       config true;
+      default 2000;
       description   
        "The value that all bridges use for MaxAge when this
         bridge is acting as the root.  Note that 802.1D-1998
@@ -462,6 +476,7 @@ list StpBridge {
       }
       units "centi-seconds";
       config true;
+      default 200;
       description   
        "The value that all bridges use for HelloTime when this
         bridge is acting as the root.  The granularity of this
@@ -481,6 +496,7 @@ list StpBridge {
       }
       units "centi-seconds";
       config true;
+      default 1500;
       description   
        "The value that all bridges use for ForwardDelay when
         this bridge is acting as the root.  Note that
@@ -494,16 +510,24 @@ list StpBridge {
        "IEEE 802.1D-1998: clause 8.5.3.10";
     }
     leaf ForceVersion {
-		type int32;
+        type enumeration {
+          enum stp        { value 1; }
+          enum rstp-pvst  { value 2; }
+          enum mstp       { value 3; }
+        }
 		config true;
+		default rstp-pvst;
 		description
-		 "TODO";
+		 "Stp Version";
     }
     leaf TxHoldCount {
-		type int32;
-		config true;
-		description
-		 "TODO";
+		type int32 {
+            range "1..20";
+        }
+        default 6;
+	config true;
+	description
+        "Configures the number of BPDUs that can be sent before pausing for 1 second.";
     }
     /* XXX table comments here XXX */
   }
