@@ -21,27 +21,31 @@
 // |__|     |_______||_______/__/ \__\ |_______/        \__/  \__/     |__|     |__|      \______||__|  |__|
 //
 
-package models
+package objects
 
-type LLDPGlobal struct {
+type SystemStatusState struct {
 	baseObj
-	Vrf    string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"1", DESCRIPTION: "LLDP Global Config For Default VRF", DEFAULT:"default", AUTOCREATE:"true"`
-	Enable bool   `DESCRIPTION: "Enable/Disable LLDP Globally", DEFAULT:"false"`
+	Name           string        `SNAPROUTE: "KEY", ACCESS:"r",  MULTIPLICITY:"1", DESCRIPTION: "Name of the system"`
+	Ready          bool          `DESCRIPTION: "System is ready to accept api calls"`
+	Reason         string        `DESCRIPTION: "Reason if system not ready"`
+	UpTime         string        `DESCRIPTION: "Uptime of this system"`
+	NumCreateCalls string        `DESCRIPTION: "Number of create api calls made"`
+	NumDeleteCalls string        `DESCRIPTION: "Number of delete api calls made"`
+	NumUpdateCalls string        `DESCRIPTION: "Number of update api calls made"`
+	NumGetCalls    string        `DESCRIPTION: "Number of get api calls made"`
+	NumActionCalls string        `DESCRIPTION: "Number of action api calls made"`
+	FlexDaemons    []DaemonState `DESCRIPTION: "Daemon states"`
 }
 
-type LLDPIntf struct {
-	baseObj
-	IfIndex int32 `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"1",DESCRIPTION: "IfIndex where lldp needs is enabled/disabled", AUTOCREATE:"true",PARENT:"Port"`
-	Enable  bool  `DESCRIPTION: "Enable/Disable lldp config Per Port", DEFAULT:"true"`
+type RepoInfo struct {
+	Name   string `DESCRIPTION: "Name of the git repo"`
+	Sha1   string `DESCRIPTION: "Git commit Sha1"`
+	Branch string `DESCRIPTION: "Branch name"`
+	Time   string `DESCRIPTION: "Build time"`
 }
 
-type LLDPIntfState struct {
+type SystemSwVersionState struct {
 	baseObj
-	IfIndex      int32  `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"1",DESCRIPTION: "IfIndex where lldp needs to be configured"`
-	Enable       bool   `DESCRIPTION: "Enable/Disable lldp config"`
-	LocalPort    string `DESCRIPTION: "Local interface"`
-	PeerMac      string `DESCRIPTION: "Mac address of direct connection"`
-	Port         string `DESCRIPTION: "Name of directtly connected pors"`
-	HoldTime     string `DESCRIPTION: "Validity of the peer information"`
-	Capabilities string `DESCRIPTION: "Capabilities of the peer port"`
+	FlexswitchVersion string     `SNAPROUTE: "KEY", ACCESS:"r",  MULTIPLICITY:"1", DESCRIPTION: "Flexswitch version"`
+	Repos             []RepoInfo `DESCRIPTION: "Git repo details"`
 }

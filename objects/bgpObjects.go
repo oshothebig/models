@@ -21,7 +21,7 @@
 // |__|     |_______||_______/__/ \__\ |_______/        \__/  \__/     |__|     |__|      \______||__|  |__|
 //
 
-package models
+package objects
 
 type SourcePolicyList struct {
 	Sources string `DESCRIPTION: Source Protocol(s) which BGP is interested in. Multiple sources can be specified as comma separated strings when the same policy needs to be applied", SELECTION:"CONNECTED"/"STATIC"/"OSPF"`

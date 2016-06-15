@@ -21,7 +21,7 @@
 // |__|     |_______||_______/__/ \__\ |_______/        \__/  \__/     |__|     |__|      \______||__|  |__|
 //
 
-package models
+package objects
 
 type NextHopInfo struct {
 	NextHopIp     string `DESCRIPTION: "next hop ip of the route, DEFAULT:"0.0.0.0""`
