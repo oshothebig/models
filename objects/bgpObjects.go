@@ -151,17 +151,26 @@ type BGPPeerGroup struct {
 	MaxPrefixesRestartTimer uint8  `DESCRIPTION: "Time to wait before we start BGP peer session when we receive max prefixes", DEFAULT: "0"`
 }
 
+type PathInfo struct {
+	NextHop        string   `DESCRIPTION: "Next hop address for the destination"`
+	Metric         uint32   `DESCRIPTION: "MED of the path to the destination"`
+	LocalPref      uint32   `DESCRIPTION: "Local preference of the path to the destination"`
+	Path           []string `DESCRIPTION: "AS path to the destination"`
+	PathId         uint32   `DESCRIPTION: "Path id of the path"`
+	UpdatedTime    string   `DESCRIPTION: "Last time the destination was updated"`
+	ValidPath      bool     `DESCRIPTION: "Is this path valid I.E. next hop reachable in RIB?"`
+	BestPath       bool     `DESCRIPTION: "best path based on BGP path selection alogrithm"`
+	MultiPath      bool     `DESCRIPTION: "Is this path selected as ECMP"`
+	AdditionalPath bool     `DESCRIPTION: "Path selected as one of the best additional paths"`
+	Origin         string   `DESCRIPTION: "BGP origin type"`
+	PathType       string   `DESCRIPTION: "BGP path type; I.E. external, internal, redistributed, etc."`
+}
+
 type BGPRouteState struct {
 	baseObj
-	Network         string   `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Network address of the destination"`
-	CIDRLen         uint16   `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "CIDR length of the destination"`
-	NextHop         string   `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Next hop address for the destination"`
-	Metric          uint32   `DESCRIPTION: "MED of the path to the destination"`
-	LocalPref       uint32   `DESCRIPTION: "Local preference of the path to the destination"`
-	Path            []string `DESCRIPTION: "AS path to the destination"`
-	UpdatedTime     string   `DESCRIPTION: "Last time the destination was updated"`
-	UpdatedDuration string   `DESCRIPTION: "Time since the destination was last updated"`
-	PathId          uint32   `DESCRIPTION: "Path id of the path"`
+	Network string `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Network address of the destination"`
+	CIDRLen uint16 `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "CIDR length of the destination"`
+	Paths   []PathInfo
 }
 
 type BGPPolicyCondition struct {
