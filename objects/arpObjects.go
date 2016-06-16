@@ -42,7 +42,7 @@ type ArpEntryState struct {
 	ExpiryTimeLeft string `DESCRIPTION: "Time left before entry expires in case neighbor departs"`
 }
 
-type ArpDeleteByIPv4Addr struct {
+/*type ArpDeleteByIPv4Addr struct {
 	baseObj
 	IpAddr string `SNAPROUTE: "KEY", ACCESS:"x", MULTIPLICITY:"1", DESCRIPTION: "End Host IP Address for which corresponding Arp entry needed to be deleted"`
 }
@@ -61,7 +61,7 @@ type ArpRefreshByIfName struct {
 	baseObj
 	IfName string `SNAPROUTE: "KEY", ACCESS:"x", MULTIPLICITY:"1", DESCRIPTION: "All the Arp learned on given L3 interface will be re-learned"`
 }
-
+*/
 type ArpLinuxEntryState struct {
 	baseObj
 	IpAddr  string `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Neighbor's IP Address"`

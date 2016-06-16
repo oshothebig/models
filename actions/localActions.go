@@ -26,7 +26,9 @@ package actions
 /*
  * This File contains all the actions that are supported by local client for configMgr i.e configMgr it self
  */
-
+type baseObj struct{
+	
+}
 type ResetConfig struct {
 	baseObj
 }
