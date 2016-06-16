@@ -168,8 +168,8 @@ type PathInfo struct {
 
 type BGPRouteState struct {
 	baseObj
-	Network string `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Network address of the destination"`
-	CIDRLen uint16 `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "CIDR length of the destination"`
+	Network string `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Network address of the destination", USESTATEDB:"true"`
+	CIDRLen uint16 `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "CIDR length of the destination", USESTATEDB:"true"`
 	Paths   []PathInfo
 }
 
