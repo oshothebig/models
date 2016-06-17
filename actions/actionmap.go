@@ -23,18 +23,7 @@
 
 package actions
 
-/*
- * This File contains all the actions that are supported by local client for configMgr i.e configMgr it self
- */
-
-type ResetConfig struct {
-	baseAction
-}
-
-type SaveConfig struct {
-	baseAction
-}
-
-type ApplyConfig struct {
-	baseAction
+//TODO: Only Action objects are manually added here. These will be removed when codagen support added for Action objects.
+var ActionMap = map[string]ActionObj{
+	"ApplyConfig":  &ApplyConfig{},
 }
