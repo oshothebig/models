@@ -22,11 +22,15 @@
 //
 
 package actions
-
+import (
+	//"models/objects"
+)
 /*
  * This File contains all the actions that are supported by local client for configMgr i.e configMgr it self
  */
-
+type DummyStruct struct {
+	Owner string    `json:"Owner"`
+}
 type ResetConfig struct {
 	baseAction
 }
@@ -37,4 +41,5 @@ type SaveConfig struct {
 
 type ApplyConfig struct {
 	baseAction
+	ConfigData map[string][]interface{}    `json:"ConfigData"`
 }
