@@ -152,32 +152,3 @@ type SubIPv4Intf struct {
 	MacAddr string `DESCRIPTION:"Mac address to be used for the sub interface. If none specified IPv4Intf mac address will be used", STRLEN:"17"`
 	Enable  bool   `DESCRIPTION:"Enable or disable this interface", DEFAULT:false`
 }
-
-type IPv6Intf struct {
-	baseObj
-	IntfRef string `SNAPROUTE: "KEY", ACCESS:"w", DESCRIPTION: "Interface name or ifindex of port/lag or vlan on which this IPv4 object is configured"`
-	IpAddr  string `DESCRIPTION: "Interface IP Address/Prefix-Lenght to provision on switch interface", STRLEN:"43"`
-}
-
-type IPv6IntfState struct {
-	baseObj
-	IntfRef           string `SNAPROUTE: "KEY", ACCESS:"r", DESCRIPTION: "System assigned interface id of L2 interface (port/lag/vlan) to which this IPv4 object is linked"`
-	IfIndex           int32  `DESCRIPTION: "System assigned interface id for this IPv4 interface"`
-	IpAddr            string `DESCRIPTION: "Interface IP Address/Prefix-Lenght to provisioned on switch interface", STRLEN:"43"`
-	OperState         string `DESCRIPTION: "Operational state of this IP interface"`
-	NumUpEvents       int32  `DESCRIPTION: "Number of times the operational state transitioned from DOWN to UP"`
-	LastUpEventTime   string `DESCRIPTION: "Timestamp corresponding to the last DOWN to UP operational state change event"`
-	NumDownEvents     int32  `DESCRIPTION: "Number of times the operational state transitioned from UP to DOWN"`
-	LastDownEventTime string `DESCRIPTION: "Timestamp corresponding to the last UP to DOWN operational state change event"`
-	L2IntfType        string `DESCRIPTION: "Type of L2 interface on which IP has been configured (Port/Lag/Vlan)"`
-	L2IntfId          int32  `DESCRIPTION: "Id of the L2 interface. Port number/lag id/vlan id."`
-}
-
-type SubIPv6Intf struct {
-	baseObj
-	IpAddr  string `SNAPROUTE: "KEY", ACCESS:"w", DESCRIPTION:"Ip Address for the interface", STRLEN:"43"`
-	IntfRef string `SNAPROUTE: "KEY", ACCESS:"w", DESCRIPTION:"Intf name of system generated id (ifindex) of the ipv4Intf where sub interface is to be configured"`
-	Type    string `DESCRIPTION:"Type of interface, e.g. Secondary or Virtual", STRLEN:"16"`
-	MacAddr string `DESCRIPTION:"Mac address to be used for the sub interface. If none specified IPv4Intf mac address will be used", STRLEN:"17"`
-	Enable  bool   `DESCRIPTION:"Enable or disable this interface", DEFAULT:false`
-}
