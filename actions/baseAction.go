@@ -21,7 +21,7 @@
 // |__|     |_______||_______/__/ \__\ |_______/        \__/  \__/     |__|     |__|      \______||__|  |__|
 //
 
-package objects
+package actions
 
 import (
 	"github.com/garyburd/redigo/redis"
