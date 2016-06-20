@@ -563,7 +563,7 @@ module RSTP-MIB {
 	leaf MaxAge {
       type int32;
 	  config false;	
-      units "centi-seconds";
+      units "seconds";
       description   
        "The value that all bridges use for MaxAge as advertised by
 	   the root bridge.  Note that 802.1D-1998
@@ -580,7 +580,7 @@ module RSTP-MIB {
     leaf HelloTime {
       type int32;
       config false;	
-      units "centi-seconds";
+      units "seconds";
       description   
        "The value that all bridges use for HelloTime as advertised by
 	   the root bridge.  The granularity of this
@@ -597,7 +597,7 @@ module RSTP-MIB {
     leaf ForwardDelay {
       type int32 ;
 	  config false;	
-      units "centi-seconds";
+      units "seconds";
       description   
        "The value that all bridges use for ForwardDelay as advertised by
 	   the root bridge.  Note that

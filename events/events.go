@@ -23,20 +23,36 @@
 
 package events
 
-type EventId uint32
-
-const (
-	PORT_UP EventId = iota
-	PORT_DOWN
+import (
+	"time"
 )
 
-type EventBaseMsg struct {
-	TimeStamp   string
+type OwnerId uint8
+type EventId uint32
+
+type EventBase struct {
+	OwnerId     OwnerId
+	OwnerName   string
+	EvtId       EventId
+	EventName   string
+	TimeStamp   time.Time
 	Description string
+	SrcObjName  string
 }
 
-type PortStateEvent struct {
-	Base     EventBaseMsg
-	PortName string
-	State    bool
+type Event struct {
+	EventBase
+	SrcObjKey interface{}
+}
+
+type EventData struct {
+	EventBase
+	SrcObjKey []byte
+}
+
+type KeyMap map[string]interface{}
+
+var EventKeyMap map[string]KeyMap = map[string]KeyMap{
+	"ASICD": AsicdEventKeyMap,
+	"ARPD":  ArpdEventKeyMap,
 }
