@@ -28,8 +28,8 @@ import (
 /*
  * This File contains all the actions that are supported by local client for configMgr i.e configMgr it self
  */
-type DummyStruct struct {
-	Owner string    `json:"Owner"`
+type ConfigObj struct {
+	ObjName     []interface{}`json:"ObjName"`
 }
 type ResetConfig struct {
 	baseAction
