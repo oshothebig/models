@@ -41,7 +41,6 @@ type IPv4Route struct {
 	Protocol          string `DESCRIPTION :"Protocol type of the route", DEFAULT:"STATIC"`
 	Weight            int32  `DESCRIPTION : "Weight of the next hop", DEFAULT:0, MIN:0, MAX:31`
 }
-
 /*type IPv4Route struct {
 	baseObj
 	DestinationNw     string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", ACCELERATED: "true", DESCRIPTION: "IP address of the route"`
