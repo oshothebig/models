@@ -684,7 +684,7 @@ module RSTP-MIB {
 	        type yang:counter64;
 			config false;
 	        description
-	          "Number of STP BPDUs transmitted";
+	          "Number of RSTP BPDUs transmitted";
 	      }
 		leaf tc-in-pkts {
 	        type yang:counter64;
