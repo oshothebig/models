@@ -116,7 +116,7 @@ type OspfNextHop struct {
 	AdvRtr    string `DESCRIPTION: Advertising router id`
 }
 
-type OspfIPv4Routes struct {
+type OspfIPv4RouteState struct {
 	baseObj
 	DestId          string        `SNAPROUTE: "KEY",  ACCESS:"r",  MULTIPLICITY:"*", DESCRIPTION: "Dest ip" , USESTATEDB:"true", SELECTION: {'pattern': u'(([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])(%[\\p{N}\\p{L}]+)?'}`
 	AddrMask        string        ` SNAPROUTE: "KEY", DESCRIPTION: "netmask", SELECTION: {'pattern': u'(([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])(%[\\p{N}\\p{L}]+)?'}`
@@ -151,3 +151,12 @@ type OspfGlobalState struct {
 	OpaqueLsaSupport  bool   `DESCRIPTION: The router's support for Opaque LSA types.`
 	RestartExitReason int32  `DESCRIPTION: Describes the outcome of the last attempt at a graceful restart.  If the value is 'none', no restart has yet been attempted.  If the value is 'inProgress', a restart attempt is currently underway., SELECTION: inProgress(2)/none(1)/timedOut(4)/completed(3)/topologyChanged(5)`
 }
+
+type OspfEventState struct {
+        baseObj
+        Index     uint32 `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Event ID",  USESTATEDB:"true",`
+        TimeStamp string `DESCRIPTION :"Time when the event occured"`
+	EventType string `DESCRIPTION : "Type of the event"`
+        EventInfo string `DESCRIPTION :"Detailed description of the event"`
+}
+
