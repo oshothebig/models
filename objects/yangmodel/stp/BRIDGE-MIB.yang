@@ -452,11 +452,11 @@ list StpBridge {
 
     leaf MaxAge {
       type int32 {
-        range "600..4000";
+        range "6..40";
       }
-      units "centi-seconds";
+      units "seconds";
       config true;
-      default 2000;
+      default 20;
       description   
        "The value that all bridges use for MaxAge when this
         bridge is acting as the root.  Note that 802.1D-1998
@@ -472,11 +472,11 @@ list StpBridge {
 
     leaf HelloTime {
       type int32 {
-        range "100..1000";
+        range "1..2";
       }
-      units "centi-seconds";
+      units "seconds";
       config true;
-      default 200;
+      default 2;
       description   
        "The value that all bridges use for HelloTime when this
         bridge is acting as the root.  The granularity of this
@@ -492,11 +492,11 @@ list StpBridge {
 
     leaf ForwardDelay {
       type int32 {
-        range "400..3000";
+        range "3..30";
       }
-      units "centi-seconds";
+      units "seconds";
       config true;
-      default 1500;
+      default 15;
       description   
        "The value that all bridges use for ForwardDelay when
         this bridge is acting as the root.  Note that
@@ -522,7 +522,7 @@ list StpBridge {
     }
     leaf TxHoldCount {
 		type int32 {
-            range "1..20";
+            range "1..10";
         }
         default 6;
 	config true;
@@ -591,7 +591,7 @@ list StpBridge {
     }
   leaf TimeSinceTopologyChange {
       type yang:timeticks;
-      units "centi-seconds";
+      units "seconds";
       config false;
       description   
        "The time (in hundredths of a second) since the
@@ -650,7 +650,7 @@ list StpBridge {
 
     leaf MaxAge {
       type int32;
-      units "centi-seconds";
+      units "seconds";
       config false;
       description   
        "The maximum age of Spanning Tree Protocol information
@@ -663,7 +663,7 @@ list StpBridge {
 
     leaf HelloTime {
       type int32;
-      units "centi-seconds";
+      units "seconds";
       config false;
       description   
        "The amount of time between the transmission of
@@ -677,7 +677,7 @@ list StpBridge {
 
     leaf HoldTime {
       type int32;
-      units "centi-seconds";
+      units "seconds";
       config false;
       description   
        "This time value determines the interval length
@@ -690,7 +690,7 @@ list StpBridge {
 
     leaf ForwardDelay {
       type int32;
-      units "centi-seconds";
+      units "seconds";
       config false;
       description   
        "This time value, measured in units of hundredths of a
@@ -711,7 +711,7 @@ list StpBridge {
     }
     leaf BridgeMaxAge {
       type int32;
-      units "centi-seconds";
+      units "seconds";
       config false;
       description
        "The maximum age of Spanning Tree Protocol information
@@ -724,7 +724,7 @@ list StpBridge {
 
     leaf BridgeHelloTime {
       type int32;
-      units "centi-seconds";
+      units "seconds";
       config false;
       description
        "The amount of time between the transmission of
@@ -738,7 +738,7 @@ list StpBridge {
 
     leaf BridgeHoldTime {
       type int32;
-      units "centi-seconds";
+      units "seconds";
       config false;
       description
        "This time value determines the interval length
@@ -752,7 +752,7 @@ list StpBridge {
 
     leaf BridgeForwardDelay {
       type int32;
-      units "centi-seconds";
+      units "seconds";
       config false;
       description
        "This time value, measured in units of hundredths of a
