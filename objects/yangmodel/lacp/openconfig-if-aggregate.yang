@@ -306,6 +306,7 @@ module openconfig-if-aggregate {
     leaf system-id-mac {
       type yang:mac-address;
       config true;
+      default "00:00:00:00:00:00";
       description
         "The MAC address portion of the node's System ID. This is
         combined with the system priority to construct the 8-octet
@@ -315,6 +316,7 @@ module openconfig-if-aggregate {
     leaf system-priority {
       type uint16;
       config true;
+      default 32768;
       description
         "Sytem priority used by the node on this LAG interface.
         Lower value is higher priority for determining which node
@@ -331,6 +333,7 @@ module openconfig-if-aggregate {
 	leaf admin-state {
        type string;
        config true;
+       default "enable";
        description
           "Convenient way to disable/enable a lag group.  The behaviour should be such
            that all traffic should stop.  LACP frames should continue to be processed";
@@ -808,6 +811,7 @@ grouping aggregation-lacp-members-statistics {
     leaf lag-type {
       type aggregation-type;
       config true;
+      default LACP;
       description
         "Sets the type of LAG, i.e., how it is
         configured / maintained";
@@ -816,6 +820,7 @@ grouping aggregation-lacp-members-statistics {
     leaf min-links {
       type uint16;
       config true;
+      default 1;
       description
         "Specifies the mininum number of member
         interfaces that must be active for the aggregate interface
