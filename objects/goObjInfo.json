@@ -36,6 +36,10 @@
 "ospfdObjects.go" : {"owner": "ospfd", 
                      "location" : "l3/ospf/rpc",
                      "svcName" : "nil"},
+"opticdObjects.go" : {"owner": "opticd",
+               "location" : "/opticd/rpc",
+               "svcName" : "opticdInt",
+               "finalSvcName" : "opticdServices"},
 "localObjects.go" : {"owner": "local", 
                      "location" : "nil",
                      "svcName" : "nil"}
