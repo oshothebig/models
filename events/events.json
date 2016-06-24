@@ -1,0 +1,79 @@
+{
+	"Daemons": [
+		{
+			"EventOwnerId" : 1,
+			"EventOwnerName" : "ASICD",
+			"EventEnable" : true
+		},
+		{
+			"EventOwnerId" : 2,
+			"EventOwnerName" : "BGPD",
+			"EventEnable" : true
+		},
+		{
+			"EventOwnerId" : 3,
+			"EventOwnerName" : "RIBD",
+			"EventEnable" : true
+		},
+		{
+			"EventOwnerId" : 4,
+			"EventOwnerName" : "ARPD",
+			"EventEnable" : true
+		},
+		{
+			"EventOwnerId" : 5,
+			"EventOwnerName" : "LACPD",
+			"EventEnable" : true
+		},
+		{
+			"EventOwnerId" : 5,
+			"EventOwnerName" : "LACPD",
+			"EventEnable" : true
+		},
+		{
+			"EventOwnerId" : 6,
+			"EventOwnerName" : "OSPFD",
+			"EventEnable" : true
+		},
+		{
+			"EventOwnerId" : 7,
+			"EventOwnerName" : "STPD",
+			"EventEnable" : true
+		},
+		{
+			"EventOwnerId" : 8,
+			"EventOwnerName" : "DHCPRELAYD",
+			"EventEnable" : true
+		},
+		{
+			"EventOwnerId" : 9,
+			"EventOwnerName" : "BFDD",
+			"EventEnable" : true
+		},
+		{
+			"EventOwnerId" : 10,
+			"EventOwnerName" : "VRRPD",
+			"EventEnable" : true
+		},
+		{
+			"EventOwnerId" : 11,
+			"EventOwnerName" : "SYSD",
+			"EventEnable" : true
+		},
+		{
+			"EventOwnerId" : 12,
+			"EventOwnerName" : "LLDPD",
+			"EventEnable" : true
+		},
+		{
+			"EventOwnerId" : 13,
+			"EventOwnerName" : "VXLAND",
+			"EventEnable" : true
+		},
+		{
+			"EventOwnerId" : 14,
+			"EventOwnerName" : "DHCPD",
+			"EventEnable" : true
+		}
+	]
+}
