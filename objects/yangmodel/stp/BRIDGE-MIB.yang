@@ -434,7 +434,7 @@ list StpBridge {
         range "0..65535";
       }
       config true;
-      default 4096;
+      default 32768;
       description   
        "The value of the write-able portion of the Bridge ID
         (i.e., the first two octets of the (8 octet long) Bridge
