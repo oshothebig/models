@@ -37,6 +37,7 @@ type ResetConfig struct {
 
 type SaveConfig struct {
 	baseAction
+	FileName  string  `DESCRIPTION: "FileName for the saved config", QPARAM: "optional" , DEFAULT:"startup-config"`
 }
 
 type ApplyConfig struct {
