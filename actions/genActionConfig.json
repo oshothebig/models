@@ -1,5 +1,11 @@
 {
  "ApplyConfig": {
  "owner": "local"
+ },
+ "SaveConfig": {
+ "owner": "local"
+ },
+ "ResetConfig": {
+ "owner": "local"
  }
 }
