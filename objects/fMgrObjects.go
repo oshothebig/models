@@ -32,3 +32,16 @@ type FMgrGlobal struct {
 	Vrf    string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"1", DESCRIPTION: "System Vrf", DEFAULT:"default"`
 	Enable bool   `DESCRIPTION: "Enable Fault Manager"`
 }
+
+type FaultState struct {
+	baseObj
+	OwnerId        int32  `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Fault owner daemon Id picked up from events.json"`
+	EventId        int32  `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Fault event id picked up from events.json"`
+	OwnerName      string `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Fault owner daemon name picked up from events.json"`
+	EventName      string `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Fault event name picked up from events.json"`
+	SrcObjName     string `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Fault event name picked up from events.json"`
+	Description    string `DESCRIPTION: "Description explaining the fault"`
+	OccuranceTime  string `DESCRIPTION: "Timestamp at which fault occured"`
+	SrcObjKey      string `DESCRIPTION: "Fault Object Key"`
+	ResolutionTime string `DESCRIPTION: "Resolution Time stamp"`
+}

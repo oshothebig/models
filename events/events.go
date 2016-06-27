@@ -45,11 +45,6 @@ type Event struct {
 	SrcObjKey interface{}
 }
 
-type EventData struct {
-	EventBase
-	SrcObjKey []byte
-}
-
 type KeyMap map[string]interface{}
 
 var EventKeyMap map[string]KeyMap = map[string]KeyMap{
