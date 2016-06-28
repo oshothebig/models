@@ -23,25 +23,21 @@
 
 package objects
 
-/*
- * This DS will be used while Created/Deleting Fault Manager Config
- */
-type FMgrGlobal struct {
+type DWDMModuleState struct {
 	baseObj
-	// placeholder to create a key
-	Vrf    string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"1", DESCRIPTION: "System Vrf", DEFAULT:"default"`
-	Enable bool   `DESCRIPTION: "Enable Fault Manager"`
+	ModuleId         uint8  `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY: "*", DESCRIPTION: "DWDM Module identifier"`
+	Populated        bool   `DESCRIPTION: "Is module popluated"`
+	VendorName       string `DESCRIPTION: "Vendor name of dwdm module"`
+	VendorPartNum    string `DESCRIPTION: "Vendor assigned part number of dwdm module"`
+	VendorSerialNum  string `DESCRIPTION: "Vendor assigned serial number of dwdm module "`
+	VendorDateCode   string `DESCRIPTION: "Device manufacture data code of dwdm module"`
+	ModuleHWVersion  string `DESCRIPTION: "HW version of dwdm module"`
+	ModuleFWAVersion string `DESCRIPTION: "Firmware A version of dwdm module"`
+	ModuleFWBVersion string `DESCRIPTION: "Firmware B version of dwdm module"`
 }
 
-type FaultState struct {
+type DWDMModule struct {
 	baseObj
-	OwnerId        int32  `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Fault owner daemon Id picked up from events.json"`
-	EventId        int32  `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Fault event id picked up from events.json"`
-	OwnerName      string `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Fault owner daemon name picked up from events.json"`
-	EventName      string `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Fault event name picked up from events.json"`
-	SrcObjName     string `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Fault event name picked up from events.json"`
-	Description    string `DESCRIPTION: "Description explaining the fault"`
-	OccuranceTime  string `DESCRIPTION: "Timestamp at which fault occured"`
-	SrcObjKey      string `DESCRIPTION: "Fault Object Key"`
-	ResolutionTime string `DESCRIPTION: "Resolution Time stamp"`
+	ModuleId   uint8 `SNAPROUTE: "KEY", ACCESS:"rw", MULTIPLICITY: "*", DESCRIPTION: "DWDM Module identifier"`
+	AdminState uint8 `DESCRIPTION: Administrative state of this dwdm module (0 Disabled, 1 Enabled)", DEFAULT:0`
 }
