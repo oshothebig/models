@@ -1,79 +1,176 @@
 {
-	"Daemons": [
+	"DaemonEvents" : [
 		{
-			"EventOwnerId" : 1,
-			"EventOwnerName" : "ASICD",
-			"EventEnable" : true
+			"DaemonId" : 1,
+			"DaemonName" : "ASICD",
+			"DaemonEventEnable" : true,
+			"EventList" : [
+				{
+					"EventId" : 1,
+					"EventName" : "PortOperStateUp",
+					"Description" : "Port Operational State UP Event",
+					"SrcObjName" : "Port",
+					"EventEnable" : true,
+					"IsFault" : false
+				},
+				{
+					"EventId" : 2,
+					"EventName" : "PortOperStateDown",
+					"Description" : "Port Operational State DOWN Event",
+					"SrcObjName" : "Port",
+					"EventEnable" : true,
+					"IsFault" : true,
+					"Fault" : {
+						"RaiseFault" : true,
+						"ClearingEventId" : 1,
+						"ClearingDaemonId" : 1
+					}
+				},
+				{
+					"EventID" : 3,
+					"EventName": "VlanOperStateUp",
+					"Description" : "Vlan Operational State UP Event",
+					"SrcObjName" : "Vlan",
+					"EventEnable" : true,
+					"IsFault" : false
+				},
+				{
+					"EventID" : 4,
+					"EventName": "VlanOperStateDown",
+					"Description" : "Vlan Operational State DOWN Event",
+					"SrcObjName" : "Vlan",
+					"EventEnable" : true,
+					"IsFault" : true,
+					"Fault" : {
+						"RaiseFault" : true,
+						"ClearingEventId" : 3,
+						"ClearingDaemonId" : 1
+					}
+				},
+				{
+					"EventID" : 5,
+					"EventName": "PortSpeedChange",
+					"Description" : "Port SPEED change Event",
+					"SrcObjName" : "Port",
+					"EventEnable" : true,
+					"IsFault" : false
+				}
+			]
 		},
 		{
-			"EventOwnerId" : 2,
-			"EventOwnerName" : "BGPD",
-			"EventEnable" : true
+			"DaemonId" : 2,
+			"DaemonName" : "BGPD",
+			"DaemonEventEnable" : true,
+			"EventList" : [
+			]
 		},
 		{
-			"EventOwnerId" : 3,
-			"EventOwnerName" : "RIBD",
-			"EventEnable" : true
+			"DaemonId" : 3,
+			"DaemonName" : "RIBD",
+			"DaemonEventEnable" : true,
+			"EventList" : [
+			]
 		},
 		{
-			"EventOwnerId" : 4,
-			"EventOwnerName" : "ARPD",
-			"EventEnable" : true
+			"DaemonId" : 4,
+			"DaemonName" : "ARPD",
+			"DaemonEventEnable" : true,
+			"EventList" : [
+				{
+					"EventId" : 1,
+					"EventName" : "ArpEntryLearned",
+					"Description" : "ARP entry learned",
+					"SrcObjName" : "ArpEntry",
+					"EventEnable" : true,
+					"IsFault" : false
+				},
+				{
+					"EventId" : 2,
+					"EventName" : "ArpEntryDeleted",
+					"Description" : "ARP entry deleted",
+					"SrcObjName" : "ArpEntry",
+					"EventEnable" : true,
+					"IsFault" : false
+				},
+				{
+					"EventId" : 3,
+					"EventName" : "ArpEntryUpdated",
+					"Description" : "ARP entry updated",
+					"SrcObjName" : "ArpEntry",
+					"EventEnable" : false,
+					"IsFault" : false
+				}
+			]
 		},
 		{
-			"EventOwnerId" : 5,
-			"EventOwnerName" : "LACPD",
-			"EventEnable" : true
+			"DaemonId" : 5,
+			"DaemonName" : "LACPD",
+			"DaemonEventEnable" : true,
+			"EventList" : [
+			]
 		},
 		{
-			"EventOwnerId" : 5,
-			"EventOwnerName" : "LACPD",
-			"EventEnable" : true
+			"DaemonId" : 6,
+			"DaemonName" : "OSPFD",
+			"DaemonEventEnable" : true,
+			"EventList" : [
+			]
 		},
 		{
-			"EventOwnerId" : 6,
-			"EventOwnerName" : "OSPFD",
-			"EventEnable" : true
+			"DaemonId" : 7,
+			"DaemonName" : "STPD",
+			"DaemonEventEnable" : true,
+			"EventList" : [
+			]
 		},
 		{
-			"EventOwnerId" : 7,
-			"EventOwnerName" : "STPD",
-			"EventEnable" : true
+			"DaemonId" : 8,
+			"DaemonName" : "DHCPRELAYD",
+			"DaemonEventEnable" : true,
+			"EventList" : [
+			]
 		},
 		{
-			"EventOwnerId" : 8,
-			"EventOwnerName" : "DHCPRELAYD",
-			"EventEnable" : true
+			"DaemonId" : 9,
+			"DaemonName" : "BFDD",
+			"DaemonEventEnable" : true,
+			"EventList" : [
+			]
 		},
 		{
-			"EventOwnerId" : 9,
-			"EventOwnerName" : "BFDD",
-			"EventEnable" : true
+			"DaemonId" : 10,
+			"DaemonName" : "VRRPD",
+			"DaemonEventEnable" : true,
+			"EventList" : [
+			]
 		},
 		{
-			"EventOwnerId" : 10,
-			"EventOwnerName" : "VRRPD",
-			"EventEnable" : true
+			"DaemonId" : 11,
+			"DaemonName" : "SYSD",
+			"DaemonEventEnable" : true,
+			"EventList" : [
+			]
 		},
 		{
-			"EventOwnerId" : 11,
-			"EventOwnerName" : "SYSD",
-			"EventEnable" : true
+			"DaemonId" : 12,
+			"DaemonName" : "LLDPD",
+			"DaemonEventEnable" : true,
+			"EventList" : [
+			]
 		},
 		{
-			"EventOwnerId" : 12,
-			"EventOwnerName" : "LLDPD",
-			"EventEnable" : true
+			"DaemonId" : 13,
+			"DaemonName" : "VXLAND",
+			"DaemonEventEnable" : true,
+			"EventList" : [
+			]
 		},
 		{
-			"EventOwnerId" : 13,
-			"EventOwnerName" : "VXLAND",
-			"EventEnable" : true
-		},
-		{
-			"EventOwnerId" : 14,
-			"EventOwnerName" : "DHCPD",
-			"EventEnable" : true
+			"DaemonId" : 14,
+			"DaemonName" : "DHCPD",
+			"DaemonEventEnable" : true,
+			"EventList" : [
+			]
 		}
 	]
 }
