@@ -24,7 +24,8 @@
 package actions
 
 import (
-	"github.com/garyburd/redigo/redis"
+//	"github.com/garyburd/redigo/redis"
+    "fmt"
 )
 
 type ActionObj interface {
@@ -35,5 +36,6 @@ type baseAction struct {
 }
 
 func (obj baseAction) UnmarshalAction(data []byte) (ActionObj, error) {
+	fmt.Println("base action unmarshal")
 	return nil, nil
 }
