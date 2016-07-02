@@ -41,7 +41,6 @@ type IPv4Route struct {
 	Protocol          string `DESCRIPTION :"Protocol type of the route", DEFAULT:"STATIC"`
 	Weight            int32  `DESCRIPTION : "Weight of the next hop", DEFAULT:0, MIN:0, MAX:31`
 }
-
 /*type IPv4Route struct {
 	baseObj
 	DestinationNw     string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", ACCELERATED: "true", DESCRIPTION: "IP address of the route"`
@@ -68,26 +67,6 @@ type IPv4RouteState struct {
 	NextHopList        []NextHopInfo `DESCRIPTION: "List of next hops to reach this network"`
 	PolicyList         []string      `DESCRIPTION :"List of policies applied on this route"`
 }
-type IPv6Route struct {
-	baseObj
-	DestinationNw string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", ACCELERATED: "true", DESCRIPTION: "IP address of the route"`
-	NetworkMask   string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", ACCELERATED: "true", DESCRIPTION: "mask of the route"`
-	Protocol      string `DESCRIPTION :"Protocol type of the route", OPTIONAL, DEFAULT:"STATIC"`
-	Cost          uint32 `DESCRIPTION :"Cost of this route", OPTIONAL, DEFAULT:0`
-	NullRoute     bool   `DESCRIPTION : "Specify if this is a null route", OPTIONAL, DEFAULT:false`
-	NextHop       []NextHopInfo
-}
-type IPv6RouteState struct {
-	baseObj
-	DestinationNw      string        `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "IP address of the route", USESTATEDB:"true"`
-	Protocol           string        `DESCRIPTION :"Protocol type of the route"`
-	IsNetworkReachable bool          `DESCRIPTION :"Indicates whether this network is reachable"`
-	RouteCreatedTime   string        `DESCRIPTION :"Time when the route was added"`
-	RouteUpdatedTime   string        `DESCRIPTION :"Time when the route was last updated"`
-	NextHopList        []NextHopInfo `DESCRIPTION: "List of next hops to reach this network"`
-	PolicyList         []string      `DESCRIPTION :"List of policies applied on this route"`
-}
-
 type IPv4EventState struct {
 	baseObj
 	Index     uint32 `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Event ID"`
