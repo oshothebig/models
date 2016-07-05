@@ -21,9 +21,11 @@
 // |__|     |_______||_______/__/ \__\ |_______/        \__/  \__/     |__|     |__|      \______||__|  |__|
 //
 
-package objects
+package actions
 
 //TODO: Only Action objects are manually added here. These will be removed when codagen support added for Action objects.
-var ConfigObjectMap = map[string]ConfigObj{
-	"Daemon":               &Daemon{},
+var ActionMap = map[string]ActionObj{
+	"ApplyConfig":  &ApplyConfig{},
+	"SaveConfig" :  &SaveConfig{},
+	"ResetConfig":  &ResetConfig{},
 }

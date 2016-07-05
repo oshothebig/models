@@ -21,9 +21,21 @@
 // |__|     |_______||_______/__/ \__\ |_______/        \__/  \__/     |__|     |__|      \______||__|  |__|
 //
 
-package objects
+package actions
 
-//TODO: Only Action objects are manually added here. These will be removed when codagen support added for Action objects.
-var ConfigObjectMap = map[string]ConfigObj{
-	"Daemon":               &Daemon{},
+import (
+//	"github.com/garyburd/redigo/redis"
+    "fmt"
+)
+
+type ActionObj interface {
+	UnmarshalAction(data []byte) (ActionObj, error)
+}
+
+type baseAction struct {
+}
+
+func (obj baseAction) UnmarshalAction(data []byte) (ActionObj, error) {
+	fmt.Println("base action unmarshal")
+	return nil, nil
 }
