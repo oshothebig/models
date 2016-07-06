@@ -171,6 +171,182 @@
 			"DaemonEventEnable" : true,
 			"EventList" : [
 			]
+		},
+		{
+			"DaemonId" : 15,
+			"DaemonName" : "OPTICD",
+			"DaemonEventEnable" : true,
+			"EventList" : [
+				{
+					"EventId" : 0,
+					"EventName" : "TempHiAlarm",
+					"Description" : "DWDM Module temperature high alarm",
+					"SrcObjName" : "DWDMModuleState",
+					"EventEnable" : true,
+					"IsFault" : true,
+					"Fault" : {
+						"RaiseFault" : true,
+						"ClearingEventId" : 1,
+						"ClearingDaemonId" : 15
+					}
+				},
+				{
+					"EventId" : 1,
+					"EventName" : "TempHiAlarmClear",
+					"Description" : "DWDM Module temperature high alarm cleared",
+					"SrcObjName" : "DWDMModuleState",
+					"EventEnable" : true,
+					"IsFault" : false
+				},
+				{
+					"EventId" : 2,
+					"EventName" : "TempHiWarn",
+					"Description" : "DWDM Module temperature high warning",
+					"SrcObjName" : "DWDMModuleState",
+					"EventEnable" : true,
+					"IsFault" : true,
+					"Fault" : {
+						"RaiseFault" : true,
+						"ClearingEventId" : 3,
+						"ClearingDaemonId" : 15
+					}
+				},
+				{
+					"EventId" : 3,
+					"EventName" : "TempHiWarnClear",
+					"Description" : "DWDM Module temperature high warning cleared",
+					"SrcObjName" : "DWDMModuleState",
+					"EventEnable" : true,
+					"IsFault" : false
+				},
+				{
+					"EventId" : 4,
+					"EventName" : "TempLoAlarm",
+					"Description" : "DWDM Module temperature low alarm",
+					"SrcObjName" : "DWDMModuleState",
+					"EventEnable" : true,
+					"IsFault" : true,
+					"Fault" : {
+						"RaiseFault" : true,
+						"ClearingEventId" : 5,
+						"ClearingDaemonId" : 15
+					}
+				},
+				{
+					"EventId" : 5,
+					"EventName" : "TempLoAlarmClear",
+					"Description" : "DWDM Module temperature low alarm cleared",
+					"SrcObjName" : "DWDMModuleState",
+					"EventEnable" : true,
+					"IsFault" : false
+				},
+				{
+					"EventId" : 6,
+					"EventName" : "TempLoWarn",
+					"Description" : "DWDM Module temperature low warning",
+					"SrcObjName" : "DWDMModuleState",
+					"EventEnable" : true,
+					"IsFault" : true,
+					"Fault" : {
+						"RaiseFault" : true,
+						"ClearingEventId" : 7,
+						"ClearingDaemonId" : 15
+					}
+				},
+				{
+					"EventId" : 7,
+					"EventName" : "TempLoWarnClear",
+					"Description" : "DWDM Module temperature low warning cleared",
+					"SrcObjName" : "DWDMModuleState",
+					"EventEnable" : true,
+					"IsFault" : false
+				},
+
+                {
+					"EventId" : 8,
+					"EventName" : "VoltageHiAlarm",
+					"Description" : "DWDM Module voltage high alarm",
+					"SrcObjName" : "DWDMModuleState",
+					"EventEnable" : true,
+					"IsFault" : true,
+					"Fault" : {
+						"RaiseFault" : true,
+						"ClearingEventId" : 9,
+						"ClearingDaemonId" : 15
+					}
+				},
+				{
+					"EventId" : 9,
+					"EventName" : "VoltageHiAlarmClear",
+					"Description" : "DWDM Module voltage high alarm cleared",
+					"SrcObjName" : "DWDMModuleState",
+					"EventEnable" : true,
+					"IsFault" : false
+				},
+				{
+					"EventId" : 10,
+					"EventName" : "VoltageHiWarn",
+					"Description" : "DWDM Module voltage high warning",
+					"SrcObjName" : "DWDMModuleState",
+					"EventEnable" : true,
+					"IsFault" : true,
+					"Fault" : {
+						"RaiseFault" : true,
+						"ClearingEventId" : 11,
+						"ClearingDaemonId" : 15
+					}
+				},
+				{
+					"EventId" : 11,
+					"EventName" : "VoltageHiWarnClear",
+					"Description" : "DWDM Module voltage high warning cleared",
+					"SrcObjName" : "DWDMModuleState",
+					"EventEnable" : true,
+					"IsFault" : false
+				},
+				{
+					"EventId" : 12,
+					"EventName" : "VoltageLoAlarm",
+					"Description" : "DWDM Module voltage low alarm",
+					"SrcObjName" : "DWDMModuleState",
+					"EventEnable" : true,
+					"IsFault" : true,
+					"Fault" : {
+						"RaiseFault" : true,
+						"ClearingEventId" : 13,
+						"ClearingDaemonId" : 15
+					}
+				},
+				{
+					"EventId" : 13,
+					"EventName" : "VoltageLoAlarmClear",
+					"Description" : "DWDM Module voltage low alarm cleared",
+					"SrcObjName" : "DWDMModuleState",
+					"EventEnable" : true,
+					"IsFault" : false
+				},
+				{
+					"EventId" : 14,
+					"EventName" : "VoltageLoWarn",
+					"Description" : "DWDM Module voltage low warning",
+					"SrcObjName" : "DWDMModuleState",
+					"EventEnable" : true,
+					"IsFault" : true,
+					"Fault" : {
+						"RaiseFault" : true,
+						"ClearingEventId" : 15,
+						"ClearingDaemonId" : 15
+					}
+				},
+				{
+					"EventId" : 15,
+					"EventName" : "VoltageLoWarnClear",
+					"Description" : "DWDM Module voltage low warning cleared",
+					"SrcObjName" : "DWDMModuleState",
+					"EventEnable" : true,
+					"IsFault" : false
+				}
+			]
 		}
 	]
 }
