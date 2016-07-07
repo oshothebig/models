@@ -25,9 +25,6 @@
             "Enable": true},
 
             {"Name":"vxland",
-            "Enable": true},
-
-            {"Name":"ldpd",
             "Enable": true}
             ],
 "TCPPortBase" : 10000,

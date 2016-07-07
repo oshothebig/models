@@ -10,8 +10,5 @@
             "svcName" : "nil"},
 "openconfig-if-aggregate": { "owner": "lacpd",
             "location": "l2/lacp/rpc/",
-            "svcName" : "nil"},
-"ldp" : { "owner": "ldpd",
-            "location": "mpls/ldp/rpc/",
             "svcName" : "nil"}
 }
