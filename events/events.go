@@ -51,3 +51,12 @@ var EventKeyMap map[string]KeyMap = map[string]KeyMap{
 	"ASICD": AsicdEventKeyMap,
 	"ARPD":  ArpdEventKeyMap,
 }
+
+type EventObject struct {
+	OwnerName   string
+	EventName   string
+	TimeStamp   string
+	Description string
+	SrcObjName  string
+	SrcObjKey   string
+}
