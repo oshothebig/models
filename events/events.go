@@ -57,7 +57,7 @@ type EventObject struct {
 	OwnerName   string
 	EventName   string
 	TimeStamp   string
-	Description string
 	SrcObjName  string
 	SrcObjKey   string
+	Description string
 }
