@@ -34,9 +34,9 @@ type VlanKey struct {
 const (
 	PortOperStateUp   EventId = 1
 	PortOperStateDown EventId = 2
-	PortSpeedChange   EventId = 3
-	VlanOperStateUp   EventId = 4
-	VlanStateDown     EventId = 5
+	VlanOperStateUp   EventId = 3
+	VlanStateDown     EventId = 4
+	PortSpeedChange   EventId = 5
 )
 
 var AsicdEventKeyMap KeyMap = KeyMap{

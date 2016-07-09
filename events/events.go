@@ -45,14 +45,18 @@ type Event struct {
 	SrcObjKey interface{}
 }
 
-type EventData struct {
-	EventBase
-	SrcObjKey []byte
-}
-
 type KeyMap map[string]interface{}
 
 var EventKeyMap map[string]KeyMap = map[string]KeyMap{
 	"ASICD": AsicdEventKeyMap,
 	"ARPD":  ArpdEventKeyMap,
+}
+
+type EventObject struct {
+	OwnerName   string
+	EventName   string
+	TimeStamp   string
+	SrcObjName  string
+	SrcObjKey   string
+	Description string
 }
