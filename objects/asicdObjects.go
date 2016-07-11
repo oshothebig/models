@@ -152,3 +152,25 @@ type SubIPv4Intf struct {
 	MacAddr string `DESCRIPTION:"Mac address to be used for the sub interface. If none specified IPv4Intf mac address will be used", STRLEN:"17"`
 	Enable  bool   `DESCRIPTION:"Enable or disable this interface", DEFAULT:false`
 }
+
+/*
+ * MPLS Interface config
+ */
+type MplsIntf struct {
+	baseObj
+	IntfRef string `SNAPROUTE: "KEY", ACCESS:"w",  MULTIPLICITY:"*", AUTOCREATE: "false", DESCRIPTION: "Interface which is MPLS enabled"`
+}
+
+/*
+ * MPLS Interface State
+ */
+type MplsIntfState struct {
+	baseObj
+	IntfRef           string `SNAPROUTE: "KEY", ACCESS:"r",  MULTIPLICITY:"*", DESCRIPTION: "Interface which is MPLS enabled"`
+	IfIndex           int32  `DESCRIPTION: "System assigned interface id for this MPLS interface"`
+	OperState         string `DESCRIPTION: "Operational state of this MPLS interface"`
+	NumUpEvents       int32  `DESCRIPTION: "Number of times the operational state transitioned from DOWN to UP"`
+	LastUpEventTime   string `DESCRIPTION: "Timestamp corresponding to the last DOWN to UP operational state change event"`
+	NumDownEvents     int32  `DESCRIPTION: "Number of times the operational state transitioned from UP to DOWN"`
+	LastDownEventTime string `DESCRIPTION: "Timestamp corresponding to the last UP to DOWN operational state change event"`
+}
