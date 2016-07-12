@@ -24,45 +24,33 @@
 package events
 
 import (
+	"encoding/json"
+	"fmt"
 	"github.com/garyburd/redigo/redis"
 )
 
-type OwnerId uint8
-type EventId uint32
-
-type KeyMap map[string]interface{}
-
-var EventKeyMap map[string]KeyMap = map[string]KeyMap{
-	"ASICD":  AsicdEventKeyMap,
-	"ARPD":   ArpdEventKeyMap,
-	"OPTICD": OpticdEventKeyMap,
+func (obj Event) GetKey() string {
+	return ""
 }
 
-type Event struct {
-	OwnerName   string
-	EventName   string
-	TimeStamp   string
-	SrcObjName  string
-	SrcObjKey   string
-	Description string
+func (obj Event) StoreObjectInDb(dbHdl redis.Conn) error {
+	return nil
 }
 
-type EventStats struct {
-	EventId       EventId
-	EventName     string
-	NumEvents     uint32
-	LastEventTime string
+func (obj Event) GetObjectFromDb(objKey string, dbHdl redis.Conn) (EventObj, error) {
+	return obj, nil
 }
 
-type EventObj interface {
-	UnmarshalObject([]byte) (EventObj, error)
-	GetKey() string
-	StoreObjectInDb(redis.Conn) error
-	GetObjectFromDb(string, redis.Conn) (EventObj, error)
-	GetAllObjFromDb(redis.Conn) ([]EventObj, error)
+func (obj Event) GetAllObjFromDb(dbHdl redis.Conn) (objList []EventObj, err error) {
+	return nil, nil
 }
 
-var EventObjectMap = map[string]EventObj{
-	"Event":      Event{},
-	"EventStats": EventStats{},
+func (obj Event) UnmarshalObject(body []byte) (EventObj, error) {
+	var err error
+	if len(body) > 0 {
+		if err = json.Unmarshal(body, &obj); err != nil {
+			fmt.Println("Event unmarshal failed", obj, err)
+		}
+	}
+	return obj, err
 }
