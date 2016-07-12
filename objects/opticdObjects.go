@@ -44,12 +44,3 @@ type DWDMModule struct {
 	ModuleId   uint8 `SNAPROUTE: "KEY", ACCESS:"rw", MULTIPLICITY: "*", DESCRIPTION: "DWDM Module identifier"`
 	AdminState uint8 `DESCRIPTION: Administrative state of this dwdm module (0 Disabled, 1 Enabled)", DEFAULT:0`
 }
-
-type DWDMEventsState struct {
-	baseObj
-	EventId       uint16 `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY: "*", DESCRIPTION: "Event ID for the debug data"`
-	EventName     string `DESCRIPTION: "Event name corresponding to this event"`
-	Asserted      bool   `DESCRIPTION: "Current state for this event"`
-	NumEvents     uint32 `DESCRIPTION: "Number of events that have been generated"`
-	LastEventTime string `DESCRIPTION: "Timestamp of when the most recent event was generated"`
-}
