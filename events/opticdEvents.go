@@ -47,6 +47,18 @@ const (
 	ModuleVoltageLoWarnClear
 )
 
+type DWDMModuleNwIntfKey struct {
+	ModuleId uint8
+	NwIntfId uint8
+}
+
+//Module NW Intf event id's
+const (
+	RXLOS EventId = 128
+	RXLOSClear
+)
+
 var OpticdEventKeyMap KeyMap = KeyMap{
-	"DWDMModule": DWDMModuleKey{},
+	"DWDMModule":       DWDMModuleKey{},
+	"DWDMModuleNwIntf": DWDMModuleNwIntfKey{},
 }
