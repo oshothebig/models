@@ -41,6 +41,37 @@ type DWDMModuleState struct {
 
 type DWDMModule struct {
 	baseObj
-	ModuleId   uint8 `SNAPROUTE: "KEY", ACCESS:"rw", MULTIPLICITY: "*", DESCRIPTION: "DWDM Module identifier"`
-	AdminState uint8 `DESCRIPTION: Administrative state of this dwdm module (0 Disabled, 1 Enabled)", DEFAULT:0`
+	ModuleId            uint8 `SNAPROUTE: "KEY", ACCESS:"rw", MULTIPLICITY: "*", DESCRIPTION: "DWDM Module identifier"`
+	ModuleReset         bool  `DESCRIPTION: "Reset state of this dwdm module (false (Reset deasserted), true (Reset asserted))", DEFAULT:false`
+	IndependentLaneMode bool  `DESCRIPTION: "Network lane configuration for the DWDM Module. true-Independent lanes, false-Coupled lanes, DEFAULT:true"`
 }
+
+type DWDMModuleNwIntf struct {
+	baseObj
+	ModuleId      uint8  `SNAPROUTE: "KEY", ACCESS:"rw", MULTIPLICITY: "*", DESCRIPTION: "DWDM Module identifier"`
+	NwIntfId      uint8  `SNAPROUTE: "KEY", DESCRIPTION: "DWDM Module network interface identifier"`
+	ModulationFmt string `DESCRIPTION: "Modulation format to use for this network interface", SELECTION: "QPSK"/"8QAM/"16QAM"`
+	TxPower       int16  `DESCRIPTION: "Transmit output power for this network interface in dBm, MIN:0, MAX:4294967295"`
+	WaveLength    uint16 `DESCRIPTION: "The ITU-T G.694.1 grid wavelength value to use for this network interface in nm", MIN:1530, MAX:1565`
+}
+
+type DWDMModuleNwIntfState struct {
+	baseObj
+	ModuleId          uint8  `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY: "*", DESCRIPTION: "DWDM Module identifier"`
+	NwIntfId          uint8  `SNAPROUTE: "KEY", DESCRIPTION: "DWDM Module network interface identifier"`
+	TxChanGridSpacing string `DESCRIPTION: "The channel grid spacing used for this network interface in GHz"`
+}
+
+/*
+type DWDMModuleClntIntf struct {
+	baseObj
+	ModuleId   uint8 `SNAPROUTE: "KEY", ACCESS:"rw", MULTIPLICITY: "*", DESCRIPTION: "DWDM Module identifier"`
+	ClntIntfId uint8 `SNAPROUTE: "KEY", DESCRIPTION: "DWDM Module client interface identifier"`
+}
+
+type DWDMModuleClntIntfState struct {
+	baseObj
+	ModuleId   uint8 `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY: "*", DESCRIPTION: "DWDM Module identifier"`
+	ClntIntfId uint8 `SNAPROUTE: "KEY", DESCRIPTION: "DWDM Module client interface identifier"`
+}
+*/
