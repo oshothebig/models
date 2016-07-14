@@ -23,7 +23,8 @@
 					"Fault" : {
 						"RaiseFault" : true,
 						"ClearingEventId" : 1,
-						"ClearingDaemonId" : 1
+						"ClearingDaemonId" : 1,
+						"AlarmSeverity" : "Critical"
 					}
 				},
 				{
@@ -44,7 +45,8 @@
 					"Fault" : {
 						"RaiseFault" : true,
 						"ClearingEventId" : 3,
-						"ClearingDaemonId" : 1
+						"ClearingDaemonId" : 1,
+						"AlarmSeverity" : "Critical"
 					}
 				},
 				{
@@ -208,7 +210,8 @@
 					"Fault" : {
 						"RaiseFault" : true,
 						"ClearingEventId" : 1,
-						"ClearingDaemonId" : 15
+						"ClearingDaemonId" : 15,
+						"AlarmSeverity" : "Critical"
 					}
 				},
 				{
@@ -229,7 +232,8 @@
 					"Fault" : {
 						"RaiseFault" : true,
 						"ClearingEventId" : 3,
-						"ClearingDaemonId" : 15
+						"ClearingDaemonId" : 15,
+						"AlarmSeverity" : "Major"
 					}
 				},
 				{
@@ -250,7 +254,8 @@
 					"Fault" : {
 						"RaiseFault" : true,
 						"ClearingEventId" : 5,
-						"ClearingDaemonId" : 15
+						"ClearingDaemonId" : 15,
+						"AlarmSeverity" : "Critical"
 					}
 				},
 				{
@@ -271,7 +276,8 @@
 					"Fault" : {
 						"RaiseFault" : true,
 						"ClearingEventId" : 7,
-						"ClearingDaemonId" : 15
+						"ClearingDaemonId" : 15,
+						"AlarmSeverity" : "Major"
 					}
 				},
 				{
@@ -293,7 +299,8 @@
 					"Fault" : {
 						"RaiseFault" : true,
 						"ClearingEventId" : 9,
-						"ClearingDaemonId" : 15
+						"ClearingDaemonId" : 15,
+						"AlarmSeverity" : "Critical"
 					}
 				},
 				{
@@ -314,7 +321,8 @@
 					"Fault" : {
 						"RaiseFault" : true,
 						"ClearingEventId" : 11,
-						"ClearingDaemonId" : 15
+						"ClearingDaemonId" : 15,
+						"AlarmSeverity" : "Major"
 					}
 				},
 				{
@@ -335,7 +343,8 @@
 					"Fault" : {
 						"RaiseFault" : true,
 						"ClearingEventId" : 13,
-						"ClearingDaemonId" : 15
+						"ClearingDaemonId" : 15,
+						"AlarmSeverity" : "Critical"
 					}
 				},
 				{
@@ -356,7 +365,8 @@
 					"Fault" : {
 						"RaiseFault" : true,
 						"ClearingEventId" : 15,
-						"ClearingDaemonId" : 15
+						"ClearingDaemonId" : 15,
+						"AlarmSeverity" : "Major"
 					}
 				},
 				{
