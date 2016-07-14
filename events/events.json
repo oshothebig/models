@@ -398,6 +398,182 @@
 					"SrcObjName" : "DWDMModuleNwIntf",
 					"EventEnable" : true,
 					"IsFault" : false
+				},
+                {
+					"EventId" : 130,
+					"EventName" : "TxPwrHiAlarm",
+					"Description" : "DWDM Module network interface TX laser power high alarm",
+					"SrcObjName" : "DWDMModuleNwIntf",
+					"EventEnable" : true,
+					"IsFault" : true,
+					"Fault" : {
+						"RaiseFault" : true,
+						"ClearingEventId" : 131,
+						"ClearingDaemonId" : 15,
+						"AlarmSeverity" : "Major"
+					}
+				},
+				{
+					"EventId" : 131,
+					"EventName" : "TxPwrHiAlarmClear",
+					"Description" : "DWDM Module network interface TX laser power high alarm cleared",
+					"SrcObjName" : "DWDMModuleNwIntf",
+					"EventEnable" : true,
+					"IsFault" : false
+				},
+                {
+					"EventId" : 132,
+					"EventName" : "TxPwrHiWarn",
+					"Description" : "DWDM Module network interface TX laser power high warning",
+					"SrcObjName" : "DWDMModuleNwIntf",
+					"EventEnable" : true,
+					"IsFault" : true,
+					"Fault" : {
+						"RaiseFault" : true,
+						"ClearingEventId" : 133,
+						"ClearingDaemonId" : 15,
+						"AlarmSeverity" : "Minor"
+					}
+				},
+				{
+					"EventId" : 133,
+					"EventName" : "TxPwrHiWarnClear",
+					"Description" : "DWDM Module network interface TX power high warning cleared",
+					"SrcObjName" : "DWDMModuleNwIntf",
+					"EventEnable" : true,
+					"IsFault" : false
+				},
+                {
+					"EventId" : 134,
+					"EventName" : "TxPwrLoWarn",
+					"Description" : "DWDM Module network interface TX laser power low warning",
+					"SrcObjName" : "DWDMModuleNwIntf",
+					"EventEnable" : true,
+					"IsFault" : true,
+					"Fault" : {
+						"RaiseFault" : true,
+						"ClearingEventId" : 135,
+						"ClearingDaemonId" : 15,
+						"AlarmSeverity" : "Minor"
+					}
+				},
+				{
+					"EventId" : 135,
+					"EventName" : "TxPwrLoWarnClear",
+					"Description" : "DWDM Module network interface TX laser power low warning cleared",
+					"SrcObjName" : "DWDMModuleNwIntf",
+					"EventEnable" : true,
+					"IsFault" : false
+				},
+                {
+					"EventId" : 136,
+					"EventName" : "TxPwrLoAlarm",
+					"Description" : "DWDM Module network interface TX laser power low alarm",
+					"SrcObjName" : "DWDMModuleNwIntf",
+					"EventEnable" : true,
+					"IsFault" : true,
+					"Fault" : {
+						"RaiseFault" : true,
+						"ClearingEventId" : 137,
+						"ClearingDaemonId" : 15,
+						"AlarmSeverity" : "Major"
+					}
+				},
+				{
+					"EventId" : 137,
+					"EventName" : "TxPwrLoAlarmClear",
+					"Description" : "DWDM Module network interface TX power low alarm cleared",
+					"SrcObjName" : "DWDMModuleNwIntf",
+					"EventEnable" : true,
+					"IsFault" : false
+				},
+                {
+					"EventId" : 138,
+					"EventName" : "RxPwrHiAlarm",
+					"Description" : "DWDM Module network interface RX power high alarm",
+					"SrcObjName" : "DWDMModuleNwIntf",
+					"EventEnable" : true,
+					"IsFault" : true,
+					"Fault" : {
+						"RaiseFault" : true,
+						"ClearingEventId" : 139,
+						"ClearingDaemonId" : 15,
+						"AlarmSeverity" : "Major"
+					}
+				},
+				{
+					"EventId" : 139,
+					"EventName" : "RxPwrHiAlarmClear",
+					"Description" : "DWDM Module network interface RX power high alarm cleared",
+					"SrcObjName" : "DWDMModuleNwIntf",
+					"EventEnable" : true,
+					"IsFault" : false
+				},
+                {
+					"EventId" : 140,
+					"EventName" : "RxPwrHiWarn",
+					"Description" : "DWDM Module network interface RX power high warning",
+					"SrcObjName" : "DWDMModuleNwIntf",
+					"EventEnable" : true,
+					"IsFault" : true,
+					"Fault" : {
+						"RaiseFault" : true,
+						"ClearingEventId" : 141,
+						"ClearingDaemonId" : 15,
+						"AlarmSeverity" : "Minor"
+					}
+				},
+				{
+					"EventId" : 141,
+					"EventName" : "RxPwrHiWarnClear",
+					"Description" : "DWDM Module network interface TX power high warning cleared",
+					"SrcObjName" : "DWDMModuleNwIntf",
+					"EventEnable" : true,
+					"IsFault" : false
+				},
+                {
+					"EventId" : 142,
+					"EventName" : "RxPwrLoWarn",
+					"Description" : "DWDM Module network interface RX power low warning",
+					"SrcObjName" : "DWDMModuleNwIntf",
+					"EventEnable" : true,
+					"IsFault" : true,
+					"Fault" : {
+						"RaiseFault" : true,
+						"ClearingEventId" : 143,
+						"ClearingDaemonId" : 15,
+						"AlarmSeverity" : "Minor"
+					}
+				},
+				{
+					"EventId" : 143,
+					"EventName" : "RxPwrLoWarnClear",
+					"Description" : "DWDM Module network interface RX power low warning cleared",
+					"SrcObjName" : "DWDMModuleNwIntf",
+					"EventEnable" : true,
+					"IsFault" : false
+				},
+                {
+					"EventId" : 144,
+					"EventName" : "RxPwrLoAlarm",
+					"Description" : "DWDM Module network interface RX power low alarm",
+					"SrcObjName" : "DWDMModuleNwIntf",
+					"EventEnable" : true,
+					"IsFault" : true,
+					"Fault" : {
+						"RaiseFault" : true,
+						"ClearingEventId" : 145,
+						"ClearingDaemonId" : 15,
+						"AlarmSeverity" : "Major"
+					}
+				},
+				{
+					"EventId" : 145,
+					"EventName" : "RxPwrLoAlarmClear",
+					"Description" : "DWDM Module network interface TX power low alarm cleared",
+					"SrcObjName" : "DWDMModuleNwIntf",
+					"EventEnable" : true,
+					"IsFault" : false
 				}
 			]
 		}
