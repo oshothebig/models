@@ -48,11 +48,11 @@ type DWDMModule struct {
 
 type DWDMModuleNwIntf struct {
 	baseObj
-	ModuleId      uint8  `SNAPROUTE: "KEY", ACCESS:"rw", MULTIPLICITY: "*", DESCRIPTION: "DWDM Module identifier"`
-	NwIntfId      uint8  `SNAPROUTE: "KEY", DESCRIPTION: "DWDM Module network interface identifier"`
-	ModulationFmt string `DESCRIPTION: "Modulation format to use for this network interface", SELECTION: "QPSK"/"8QAM/"16QAM"`
-	TxPower       int16  `DESCRIPTION: "Transmit output power for this network interface in dBm, MIN:0, MAX:4294967295"`
-	WaveLength    uint16 `DESCRIPTION: "The ITU-T G.694.1 grid wavelength value to use for this network interface in nm", MIN:1530, MAX:1565`
+	ModuleId      uint8   `SNAPROUTE: "KEY", ACCESS:"rw", MULTIPLICITY: "*", DESCRIPTION: "DWDM Module identifier"`
+	NwIntfId      uint8   `SNAPROUTE: "KEY", DESCRIPTION: "DWDM Module network interface identifier"`
+	ModulationFmt string  `DESCRIPTION: "Modulation format to use for this network interface", SELECTION: "QPSK"/"8QAM/"16QAM"`
+	TxPower       float64 `DESCRIPTION: "Transmit output power for this network interface in dBm, MIN:0, MAX:4294967295"`
+	WaveLength    uint16  `DESCRIPTION: "The ITU-T G.694.1 grid wavelength value to use for this network interface in nm", MIN:1530, MAX:1565`
 }
 
 type DWDMModuleNwIntfState struct {

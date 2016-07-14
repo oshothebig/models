@@ -56,6 +56,22 @@ type DWDMModuleNwIntfKey struct {
 const (
 	RXLOS EventId = 128
 	RXLOSClear
+	TxPwrHiAlarm
+	TxPwrHiAlarmClear
+	TxPwrHiWarn
+	TxPwrHiWarnClear
+	TxPwrLoWarn
+	TxPwrLoWarnClear
+	TxPwrLoAlarm
+	TxPwrLoAlarmClear
+	RxPwrHiAlarm
+	RxPwrHiAlarmClear
+	RxPwrHiWarn
+	RxPwrHiWarnClear
+	RxPwrLoWarn
+	RxPwrLoWarnClear
+	RxPwrLoAlarm
+	RxPwrLoAlarmClear
 )
 
 var OpticdEventKeyMap KeyMap = KeyMap{
