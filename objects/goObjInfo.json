@@ -36,6 +36,9 @@
 "ospfdObjects.go" : {"owner": "ospfd", 
                      "location" : "l3/ospf/rpc",
                      "svcName" : "nil"},
+"platformdObjects.go" : {"owner": "platformd",
+                     "location" : "infra/platformd/rpc",
+                     "svcName" : "nil"},
 "localObjects.go" : {"owner": "local", 
                      "location" : "nil",
                      "svcName" : "nil"}
