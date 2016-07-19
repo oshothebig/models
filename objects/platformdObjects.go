@@ -31,3 +31,21 @@ type PlatformSystemState struct {
 	ObjName   string `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"1", DESCRIPTION: "ObjName", DEFAULT: "System"`
 	SerialNum string `DESCRIPTION: "Serial Number"`
 }
+
+type Fan struct {
+	baseObj
+	FanId          int32  `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", DESCRIPTION: "Fan unit id", DEFAULT:0`
+	AdminSpeed     int32  `DESCRIPTION: "Fan admin speed in rpm"`
+	AdminDirection string `DESCRIPTION: "Air flow caused because of fan rotation", SELECTION: B2F/F2B, DEFAULT: B2F"`
+}
+
+type FanState struct {
+	baseObj
+	FanId         int32  `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Fan unit id", DEFAULT:0`
+	OperMode      string `DESCRIPTION: "Operational state of Fan", SELECTION: ON/OFF`
+	OperSpeed     int32  `DESCRIPTION: "Fan operational speed in rpm"`
+	OperDirection string `DESCRIPTION: "Air flow caused because of fan rotation", SELECTION: B2F/F2B"`
+	Status        string `DESCRIPTION: "Fan status PRESENT/MISSING/FAILED/NORMAL"`
+	Model         string `DESCRIPTION: "Model of Fan"`
+	SerialNum     string `DESCRIPTION: "Serial Number"`
+}
