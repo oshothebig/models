@@ -22,19 +22,26 @@
 //
 
 package actions
-
+import (
+	//"models/objects"
+	"encoding/json"
+)
 /*
  * This File contains all the actions that are supported by local client for configMgr i.e configMgr it self
  */
-
+type SaveConfigObj struct {
+	ConfigData map[string][]interface{}    `json:"ConfigData"`
+}
 type ResetConfig struct {
-	baseObj
+	baseAction
 }
 
 type SaveConfig struct {
-	baseObj
+	baseAction
+	FileName  string  `DESCRIPTION: "FileName for the saved config", QPARAM: "optional" , DEFAULT:"startup-config"`
 }
 
 type ApplyConfig struct {
-	baseObj
+	baseAction
+	ConfigData map[string][]json.RawMessage    `json:"ConfigData"`
 }

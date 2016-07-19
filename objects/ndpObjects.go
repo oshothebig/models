@@ -21,21 +21,11 @@
 // |__|     |_______||_______/__/ \__\ |_______/        \__/  \__/     |__|     |__|      \______||__|  |__|
 //
 
-package actions
+package objects
 
-import (
-//	"github.com/garyburd/redigo/redis"
-    "fmt"
-)
-
-type ActionObj interface {
-	UnmarshalAction(data []byte) (ActionObj, error)
-}
-
-type baseAction struct {
-}
-
-func (obj baseAction) UnmarshalAction(data []byte) (ActionObj, error) {
-	fmt.Println("base action unmarshal")
-	return nil, nil
+type NDGlobal struct {
+	baseObj
+	// placeholder to create a key
+	Vrf    string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"1", AUTOCREATE: "true", DESCRIPTION: "System Vrf", DEFAULT:"default"`
+	Enable string `DESCRIPTION: "Enable/Diable Neighbor Discovery Globally", DEFAULT: "true"`
 }

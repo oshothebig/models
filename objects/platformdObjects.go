@@ -7,11 +7,11 @@
 //
 //    http://www.apache.org/licenses/LICENSE-2.0
 //
-//	 Unless required by applicable law or agreed to in writing, software
-//	 distributed under the License is distributed on an "AS IS" BASIS,
-//	 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-//	 See the License for the specific language governing permissions and
-//	 limitations under the License.
+//       Unless required by applicable law or agreed to in writing, software
+//       distributed under the License is distributed on an "AS IS" BASIS,
+//       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//       See the License for the specific language governing permissions and
+//       limitations under the License.
 //
 // _______  __       __________   ___      _______.____    __    ____  __  .___________.  ______  __    __
 // |   ____||  |     |   ____\  \ /  /     /       |\   \  /  \  /   / |  | |           | /      ||  |  |  |
@@ -21,21 +21,13 @@
 // |__|     |_______||_______/__/ \__\ |_______/        \__/  \__/     |__|     |__|      \______||__|  |__|
 //
 
-package actions
+package objects
 
-import (
-//	"github.com/garyburd/redigo/redis"
-    "fmt"
-)
-
-type ActionObj interface {
-	UnmarshalAction(data []byte) (ActionObj, error)
-}
-
-type baseAction struct {
-}
-
-func (obj baseAction) UnmarshalAction(data []byte) (ActionObj, error) {
-	fmt.Println("base action unmarshal")
-	return nil, nil
+/*
+ * This DS will be used while Created/Deleting Platform Config
+ */
+type PlatformSystemState struct {
+	baseObj
+	ObjName   string `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"1", DESCRIPTION: "ObjName", DEFAULT: "System"`
+	SerialNum string `DESCRIPTION: "Serial Number"`
 }
