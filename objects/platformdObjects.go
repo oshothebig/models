@@ -34,7 +34,7 @@ type PlatformSystemState struct {
 
 type Fan struct {
 	baseObj
-	FanId          int32  `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", DESCRIPTION: "Fan unit id", DEFAULT:0`
+	FanId          int32  `SNAPROUTE: "KEY", ACCESS:"rw", MULTIPLICITY:"*", AUTODISCOVER: "true", DESCRIPTION: "Fan unit id", DEFAULT:0`
 	AdminSpeed     int32  `DESCRIPTION: "Fan admin speed in rpm"`
 	AdminDirection string `DESCRIPTION: "Air flow caused because of fan rotation", SELECTION: B2F/F2B, DEFAULT: B2F"`
 }
