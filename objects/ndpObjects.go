@@ -23,9 +23,18 @@
 
 package objects
 
-type NDGlobal struct {
+type NDPGlobal struct {
 	baseObj
 	// placeholder to create a key
 	Vrf    string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"1", AUTOCREATE: "true", DESCRIPTION: "System Vrf", DEFAULT:"default"`
 	Enable string `DESCRIPTION: "Enable/Diable Neighbor Discovery Globally", DEFAULT: "true"`
+}
+
+type NDPEntryState struct {
+	baseObj
+	IpAddr         string `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Neighbor's IP Address"`
+	MacAddr        string `DESCRIPTION: "MAC address of the neighbor machine with corresponding IP Address"`
+	Vlan           string `DESCRIPTION: "Vlan ID of the Router Interface to which neighbor is attached to"`
+	Intf           string `DESCRIPTION: "Router Interface to which neighbor is attached to"`
+	ExpiryTimeLeft string `DESCRIPTION: "Time left before entry expires in case neighbor departs"`
 }
