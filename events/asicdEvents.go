@@ -31,15 +31,21 @@ type VlanKey struct {
 	VlanId int32
 }
 
+type IPv4IntfKey struct {
+	IntfRef string
+}
+
 const (
-	PortOperStateUp   EventId = 1
-	PortOperStateDown EventId = 2
-	VlanOperStateUp   EventId = 3
-	VlanStateDown     EventId = 4
-	PortSpeedChange   EventId = 5
+	PortOperStateUp       EventId = 1
+	PortOperStateDown     EventId = 2
+	VlanOperStateUp       EventId = 3
+	VlanOperStateDown     EventId = 4
+	IPv4IntfOperStateUp   EventId = 5
+	IPv4IntfOperStateDown EventId = 6
 )
 
 var AsicdEventKeyMap KeyMap = KeyMap{
-	"Port": PortKey{},
-	"Vlan": VlanKey{},
+	"Port":     PortKey{},
+	"Vlan":     VlanKey{},
+	"IPv4Intf": IPv4IntfKey{},
 }
