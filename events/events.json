@@ -75,6 +75,14 @@
 			"DaemonName" : "BGPD",
 			"DaemonEventEnable" : true,
 			"EventList" : [
+				{
+					"EventId" : 1,
+					"EventName" : "BGPNeighborStateChange",
+					"Description" : "BGP Neighbor State Change",
+					"SrcObjName" : "BGPNeighbor",
+					"EventEnable" : true,
+					"IsFault" : false
+				}
 			]
 		},
 		{
