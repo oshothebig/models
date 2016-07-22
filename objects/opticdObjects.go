@@ -62,7 +62,6 @@ type DWDMModuleNwIntfState struct {
 	TxChanGridSpacing string `DESCRIPTION: "The channel grid spacing used for this network interface in GHz"`
 }
 
-/*
 type DWDMModuleClntIntf struct {
 	baseObj
 	ModuleId   uint8 `SNAPROUTE: "KEY", ACCESS:"rw", MULTIPLICITY: "*", DESCRIPTION: "DWDM Module identifier"`
@@ -74,4 +73,3 @@ type DWDMModuleClntIntfState struct {
 	ModuleId   uint8 `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY: "*", DESCRIPTION: "DWDM Module identifier"`
 	ClntIntfId uint8 `SNAPROUTE: "KEY", DESCRIPTION: "DWDM Module client interface identifier"`
 }
-*/
