@@ -23,29 +23,15 @@
 
 package events
 
-type PortKey struct {
-	IntfRef string
-}
-
-type VlanKey struct {
-	VlanId int32
-}
-
-type IPv4IntfKey struct {
-	IntfRef string
+type BGPNeighborKey struct {
+	NeighborAddress string
+	IfIndex         int32
 }
 
 const (
-	PortOperStateUp       EventId = 1
-	PortOperStateDown     EventId = 2
-	VlanOperStateUp       EventId = 3
-	VlanOperStateDown     EventId = 4
-	IPv4IntfOperStateUp   EventId = 5
-	IPv4IntfOperStateDown EventId = 6
+	BGPNeighborStateChange EventId = 1
 )
 
-var AsicdEventKeyMap KeyMap = KeyMap{
-	"Port":     PortKey{},
-	"Vlan":     VlanKey{},
-	"IPv4Intf": IPv4IntfKey{},
+var BGPdEventKeyMap KeyMap = KeyMap{
+	"BGPNeighbor": BGPNeighborKey{},
 }

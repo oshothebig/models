@@ -21,31 +21,31 @@
 // |__|     |_______||_______/__/ \__\ |_______/        \__/  \__/     |__|     |__|      \______||__|  |__|
 //
 
-package events
+package objects
 
-type PortKey struct {
-	IntfRef string
+/*
+ * This DS will be used while Created/Deleting Platform Config
+ */
+type PlatformSystemState struct {
+	baseObj
+	ObjName   string `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"1", DESCRIPTION: "ObjName", DEFAULT: "System"`
+	SerialNum string `DESCRIPTION: "Serial Number"`
 }
 
-type VlanKey struct {
-	VlanId int32
+type Fan struct {
+	baseObj
+	FanId          int32  `SNAPROUTE: "KEY", ACCESS:"rw", MULTIPLICITY:"*", AUTODISCOVER: "true", DESCRIPTION: "Fan unit id", DEFAULT:0`
+	AdminSpeed     int32  `DESCRIPTION: "Fan admin speed in rpm"`
+	AdminDirection string `DESCRIPTION: "Air flow caused because of fan rotation", SELECTION: B2F/F2B, DEFAULT: B2F"`
 }
 
-type IPv4IntfKey struct {
-	IntfRef string
-}
-
-const (
-	PortOperStateUp       EventId = 1
-	PortOperStateDown     EventId = 2
-	VlanOperStateUp       EventId = 3
-	VlanOperStateDown     EventId = 4
-	IPv4IntfOperStateUp   EventId = 5
-	IPv4IntfOperStateDown EventId = 6
-)
-
-var AsicdEventKeyMap KeyMap = KeyMap{
-	"Port":     PortKey{},
-	"Vlan":     VlanKey{},
-	"IPv4Intf": IPv4IntfKey{},
+type FanState struct {
+	baseObj
+	FanId         int32  `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Fan unit id", DEFAULT:0`
+	OperMode      string `DESCRIPTION: "Operational state of Fan", SELECTION: ON/OFF`
+	OperSpeed     int32  `DESCRIPTION: "Fan operational speed in rpm"`
+	OperDirection string `DESCRIPTION: "Air flow caused because of fan rotation", SELECTION: B2F/F2B"`
+	Status        string `DESCRIPTION: "Fan status PRESENT/MISSING/FAILED/NORMAL"`
+	Model         string `DESCRIPTION: "Model of Fan"`
+	SerialNum     string `DESCRIPTION: "Serial Number"`
 }

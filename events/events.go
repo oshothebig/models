@@ -36,6 +36,7 @@ var EventKeyMap map[string]KeyMap = map[string]KeyMap{
 	"ASICD":  AsicdEventKeyMap,
 	"ARPD":   ArpdEventKeyMap,
 	"OPTICD": OpticdEventKeyMap,
+	"BGPD":   BGPdEventKeyMap,
 }
 
 type Event struct {
