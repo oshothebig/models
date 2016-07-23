@@ -21,43 +21,31 @@
 // |__|     |_______||_______/__/ \__\ |_______/        \__/  \__/     |__|     |__|      \______||__|  |__|
 //
 
-package events
+package objects
 
-import (
-	"time"
-)
-
-type OwnerId uint8
-type EventId uint32
-
-type EventBase struct {
-	OwnerId     OwnerId
-	OwnerName   string
-	EvtId       EventId
-	EventName   string
-	TimeStamp   time.Time
-	Description string
-	SrcObjName  string
+/*
+ * This DS will be used while Created/Deleting Platform Config
+ */
+type PlatformSystemState struct {
+	baseObj
+	ObjName   string `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"1", DESCRIPTION: "ObjName", DEFAULT: "System"`
+	SerialNum string `DESCRIPTION: "Serial Number"`
 }
 
-type Event struct {
-	EventBase
-	SrcObjKey interface{}
+type Fan struct {
+	baseObj
+	FanId          int32  `SNAPROUTE: "KEY", ACCESS:"rw", MULTIPLICITY:"*", AUTODISCOVER: "true", DESCRIPTION: "Fan unit id", DEFAULT:0`
+	AdminSpeed     int32  `DESCRIPTION: "Fan admin speed in rpm"`
+	AdminDirection string `DESCRIPTION: "Air flow caused because of fan rotation", SELECTION: B2F/F2B, DEFAULT: B2F"`
 }
 
-type KeyMap map[string]interface{}
-
-var EventKeyMap map[string]KeyMap = map[string]KeyMap{
-	"ASICD": AsicdEventKeyMap,
-	"ARPD":  ArpdEventKeyMap,
-	"BGPD":  BGPdEventKeyMap,
-}
-
-type EventObject struct {
-	OwnerName   string
-	EventName   string
-	TimeStamp   string
-	SrcObjName  string
-	SrcObjKey   string
-	Description string
+type FanState struct {
+	baseObj
+	FanId         int32  `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Fan unit id", DEFAULT:0`
+	OperMode      string `DESCRIPTION: "Operational state of Fan", SELECTION: ON/OFF`
+	OperSpeed     int32  `DESCRIPTION: "Fan operational speed in rpm"`
+	OperDirection string `DESCRIPTION: "Air flow caused because of fan rotation", SELECTION: B2F/F2B"`
+	Status        string `DESCRIPTION: "Fan status PRESENT/MISSING/FAILED/NORMAL"`
+	Model         string `DESCRIPTION: "Model of Fan"`
+	SerialNum     string `DESCRIPTION: "Serial Number"`
 }
