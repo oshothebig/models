@@ -49,11 +49,24 @@
 				},
 				{
 					"EventID" : 5,
-					"EventName": "PortSpeedChange",
-					"Description" : "Port SPEED change Event",
-					"SrcObjName" : "Port",
+					"EventName": "IPv4IntfOperStateUp",
+					"Description" : "IPv4 Interface Operational State UP Event",
+					"SrcObjName" : "IPv4Intf",
 					"EventEnable" : true,
 					"IsFault" : false
+				},
+				{
+					"EventID" : 6,
+					"EventName": "IPv4IntfOperStateDown",
+					"Description" : "IPv4 Interface Operational State DOWN Event",
+					"SrcObjName" : "IPv4Intf",
+					"EventEnable" : true,
+					"IsFault" : true,
+					"Fault" : {
+						"RaiseFault" : true,
+						"ClearingEventId" : 5,
+						"ClearingDaemonId" : 1
+					}
 				}
 			]
 		},
@@ -62,6 +75,14 @@
 			"DaemonName" : "BGPD",
 			"DaemonEventEnable" : true,
 			"EventList" : [
+				{
+					"EventId" : 1,
+					"EventName" : "BGPNeighborStateChange",
+					"Description" : "BGP Neighbor State Change",
+					"SrcObjName" : "BGPNeighbor",
+					"EventEnable" : true,
+					"IsFault" : false
+				}
 			]
 		},
 		{
