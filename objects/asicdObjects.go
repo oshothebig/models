@@ -181,3 +181,26 @@ type SubIPv6Intf struct {
 	MacAddr string `DESCRIPTION:"Mac address to be used for the sub interface. If none specified IPv4Intf mac address will be used", STRLEN:"17"`
 	Enable  bool   `DESCRIPTION:"Enable or disable this interface", DEFAULT:false`
 }
+
+
+type BufferStatState struct {
+        baseObj
+        IntfRef                      string `SNAPROUTE: "KEY", ACCESS:"r", DESCRIPTION: "Front panel port name interface id"`
+        IfIndex                      int32  `DESCRIPTION: "System assigned interface id for this port. Read only attribute"`
+        Cos                          int32  `DESCRIPTION: "Class of service for the port "`
+        DeviceBufferStat             uint64 `DESCRIPTION: "Device Buffer Statistics "`
+        EgrPoolBufferStat            uint64 `DESCRIPTION: "Egress pool Buffer Statistics "`
+        EgrMCastPoolBufferStat       uint64 `DESCRIPTION: "Mcast pool Buffer Statistics "`
+        IngPoolBufferStat            uint64 `DESCRIPTION: "Ingress pool Buffer Statistics "`
+        PortPoolBufferStat           uint64 `DESCRIPTION: "Pool Buffer Statistics "`
+        PriGroupSharedBufferStat     uint64 `DESCRIPTION: "Group Buffer Statistics "`
+        PriGroupHeadroomBufferStat   uint64 `DESCRIPTION: "Headroom Buffer Statistics "`
+        UcastBufferStat              uint64 `DESCRIPTION: "Unicast Buffer Statistics "`
+        McastBufferStat              uint64 `DESCRIPTION: "Multicast Buffer Statistics "`
+        EgrUCastPortSharedBufferStat uint64 `DESCRIPTION: "Egress Ucast Buffer Statistics "`
+        EgrPortSharedBufferStat      uint64 `DESCRIPTION: "Egress Shared Buffer Statistics "`
+        RQEQueueBufferStat           uint64 `DESCRIPTION: "Rx Queue Statistics "`
+        RQEPoolBufferStat            uint64 `DESCRIPTION: "Rx Pool Statistics "`
+        UcastGroupBufferStat         uint64 `DESCRIPTION: "Unicast group  Statistics "`
+        CpuQueueBufferStat           uint64 `DESCRIPTION: "CPU Buffer Statistics "`
+}
