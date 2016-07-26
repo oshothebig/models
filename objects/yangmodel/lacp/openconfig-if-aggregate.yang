@@ -234,6 +234,8 @@ module openconfig-if-aggregate {
 	}
   }
 
+
+
   typedef mux-machine-state {
 	type enumeration {
 		enum MUX_DETACHED {
@@ -274,6 +276,26 @@ module openconfig-if-aggregate {
 	} 
   }
 
+	typedef drcp-rx-machine-state {
+		type enumeration {
+			enum CURRENT {
+				description "CURRENT state";
+			}
+			enum EXPIRED {
+				description "expired state";
+			}
+			enum DEFAULTED {
+				description "DEFAULTED state";
+			}
+			enum INITIALIZE {
+				description "INITIALIZE state";
+			}
+			enum REPORT_TO_MANAGEMENT {
+			    description "REPORT_TO_MANAGEMENT state";
+			}
+		}
+	}
+
 
   // grouping statements
 
@@ -308,7 +330,7 @@ module openconfig-if-aggregate {
       config true;
       default "00:00:00:00:00:00";
       description
-        "The MAC address portion of the node's System ID. This is
+        "The MAC address portion of the nodes System ID. This is
         combined with the system priority to construct the 8-octet
         system-id";
     }
@@ -370,7 +392,7 @@ grouping aggregation-lacp-state {
       type yang:mac-address;
       config false;
       description
-        "The MAC address portion of the node's System ID. This is
+        "The MAC address portion of the nodes System ID. This is
         combined with the system priority to construct the 8-octet
         system-id";
     }
@@ -535,7 +557,7 @@ grouping aggregation-lacp-state {
       type yang:mac-address;
       config false;
       description
-        "MAC address representing the protocol partner's interface
+        "MAC address representing the protocol partners interface
         system ID";
     }
 
@@ -543,7 +565,7 @@ grouping aggregation-lacp-state {
       type uint16;
       config false;
       description
-        "Operational value of the protocol partner's key";
+        "Operational value of the protocol partners key";
     }
 
 	// same as AggregationPort
@@ -617,7 +639,7 @@ grouping aggregation-lacp-state {
 		type yang:counter64;
       config false;
 		description
-			"Number of times the Actor's Mux state machine has entered the 
+			"Number of times the Actors Mux state machine has entered the 
 			IN_SYNC state.";
 	} 
 	
@@ -625,7 +647,7 @@ grouping aggregation-lacp-state {
 		type yang:counter64;
       config false;
 		description
-			"Number of times the Partner's Mux state machine has entered the 
+			"Number of times the Partners Mux state machine has entered the 
 			IN_SYNC state.";
 	} 
 	
@@ -633,7 +655,7 @@ grouping aggregation-lacp-state {
 		type yang:counter64;
       config false;
 		description
-			"Number of times the Actor's perception of the LAG ID for the 
+			"Number of times the Actors perception of the LAG ID for the 
 			Aggregation Port has changed.";
 	}
 	
@@ -641,7 +663,7 @@ grouping aggregation-lacp-state {
 		type yang:counter64;
       config false;
 		description
-			"Number of times the Partner's perception of the LAG ID for the 
+			"Number of times the Partners perception of the LAG ID for the 
 			Aggregation Port has changed.";
 	}
 	
@@ -755,53 +777,6 @@ grouping aggregation-lacp-members-statistics {
 			"Number of LAMPDU Response received";
 	  }
   }
-
-  grouping aggregation-lacp-members-top {
-    description
-      "Top-level grouping for aggregate members list";
-
-    container members {
-      config false;
-      description
-        "Enclosing container for the list of members interfaces of
-        the aggregate. This list is considered operational state
-        only so is labeled config false and has no config container";
-
-      list member {
-        key  ifIndex;
-        description
-          "List of member interfaces and their associated status for
-          a LACP-controlled aggregate interface.  Member list is not
-          configurable here -- each interface indicates items
-          its participation in the LAG.";
-
-        leaf ifIndex {
-          type int32; 
-          config false;
-	      description
-            "Reference to aggregate member interface";
-        }
-
-
-        container state {
-
-          config false;
-
-          description
-            "Operational state data for aggregate members";
-
-	      leaf oper-state {
-             type string;
-	         description
-               "The operation state, typically UP IN BUNDLE, or DOWN";
-          }
-          uses aggregation-lacp-members-state;
-          uses aggregation-lacp-members-statistics;
-        }
-      }
-    }
-  }
-
 
   grouping aggregation-logical-config {
     description
@@ -972,60 +947,498 @@ grouping aggregation-lacp-members-statistics {
         }
       }
     }
-
-
   }
 
-    container la-port-channel {
-       config false;
-       description
-          "Port Channel Member States container";
+  grouping distributed-relay-state {
+	
+	leaf drni-id {
+      type uint32;
+      description
+        "The unique identifier allocated to this Distributed Relay by the local System. This attribute
+		identifies a Distributed Relay instance among the subordinate managed objects of the
+		containing object.";
+    	}
+	
+	leaf description {
+      type string;
+      description
+        "A human-readable text string containing information about the Distribute Relay. This string
+		is read-only. The contents are vendor specific";
+    	}
 
-        leaf lagId {
-          type int32;
-          description "Id of the lag group to which this port is associated with";
-        }
-       uses aggregation-lacp-members-top;
+  	leaf portal-address {
+      type yang:mac-address;
+	  description
+        "A read-write identifier of a particular Portal. Portal-Addr has to be unique among at least
+		all of the potential Portal Systems to which a given Portal System might be attached via an
+		IPL Intra-Portal Link. Also used as the Actors System ID (6.3.2) for the emulated system";
+    	}
+		
+	leaf portal-priority {
+		type uint16;
+		description 
+		  "A 2 octet read-write value indicating the priority value associated with the Portals System
+		   ID. Also used as the Actors System Priority (6.3.2) for the emulated system.";
+	}
+	
+	leaf three-portal-system {
+		type uint16;
+		description 
+		  "A read-write Boolean value indicating whether this Portal System is part of a Portal
+			consisting of three Portal Systems or not. Value 1 stands for a Portal of three Portal Systems,
+			value 0 stands for a Portal of two or one Portal Systems. The default value is 0";
+	}
+
+	// intra portal links
+	leaf-list intra-portal-link-list {
+          type uint32;
+          description
+            "Read-write list of the Interface Identifiers of the Ports to the Intra-Portal Links assigned to
+			this Distributed Relay. Each Interface Identifier, a Port ID (6.3.4), has the two least
+			significant bits of its Port Priority (7.3.2.1.15) configured to match the Portal System Number
+			of the attached Portal System. The number of IPLs in the list depends on the Portal topology.
+			For a Portal of three Portal Systems two or three IPLs can be used, for a Portal of two Portal
+			Systems a single IPL is required and for a single Portal System no IPL is required";
     }
+	
+	leaf lagId {
+		type uint32;
+		description
+		   "Read-write Interface Identifier of the Aggregator Port assigned to this Distributed Relay";		
+	}
+	
+	leaf-list conv-admin-gateway {
+		type uint32;
+		description
+		   "There are 4096 aDrniConvAdminGateway[] variables, aDrniConvAdminGateway[0]
+			through aDrniConvAdminGateway[4095], indexed by Gateway Conversation ID. Each
+			contains administrative values of the Gateway selection priority list for the Distributed Relay
+			for the referenced Gateway Conversation ID. This selection priority list, a sequence of
+			integers for each Gateway Conversation ID, is a list of Portal System Numbers in the order of
+			preference, highest to lowest, for the corresponding preferred Portal Systems Gateway to
+			carry that Conversation.";
+	}
+	// TODO needs to be represented as 16 octect MD5 Digest
+	//leaf-list neighbor-admin-conv-gateway-list-digest {
+	//	type uint8;
+	//	default 
+	//}
+	
+	//leaf neighbor-admin-conv-port-list-digest {
+	//	type string;
+	//}
+	
+	leaf gateway-algorithm {
+		type string;
+		description
+		   "This object identifies the algorithm used by the DR Function to assign frames to a Gateway
+			Conversation ID. Table 9-7 provides the IEEE 802.1 OUI (00:80:C2) Gateway Algorithm
+			encodings";
+	}
+	
+	leaf neighbor-gateway-algorithm {
+		type string;
+		description
+		   "TThis object identifies the value for the Gateway algorithm of the Neighbor Portal System,
+		    assigned by administrator or System policy for use when the Neighbor Portal System’s
+		    information is unknown. Table 9-7 provides the IEEE 802.1 OUI (00-80-C2) Gateway
+			Algorithm encodings";
+	}
+	
+	leaf port-algorithm {
+		type string;
+		description
+		   "This object identifies the value for the Port Algorithm of the Neighbor Portal System,
+			assigned by administrator or System policy for use when the Neighbor Portal System’s
+			information is unknown. Table 6-4 provides the IEEE 802.1 OUI (00-80-C2) Port Algorithm
+			encodings.";
+	}
+	
+	leaf neighbor-Admin-DRCP-State {
+		type string;
+		description
+		   "A string of 8 bits, corresponding to the administrative values of DRCP_State [item s) in
+			9.4.3.2] as transmitted by this Portal System in DRCPDUs. The first bit corresponds to bit 0
+			of DRCP_State (Home_Gateway), the second bit corresponds to bit 1 (Neighbor_Gateway),
+			the third bit corresponds to bit 2 (Other_Gateway), the fourth bit corresponds to bit 3
+			(IPP_Activity), the fifth bit corresponds to bit 4 (DRCP_Timeout), the sixth bit corresponds
+			to bit 5 (Gateway_Sync), the seventh bit corresponds to bit 6 (Port_Sync), and the eighth bit
+			corresponds to bit 7 (Expired). These values allow administrative control over the values of
+			Home_Gateway, Neighbor_Gateway, Other_Gateway, IPP_Activity, and DRCP_Timeout.";
+	}
+	
+	leaf encap-method {
+		type string;
+		description
+		   "This managed object is applicable only when Network / IPL sharing by time (9.3.2.1) or
+			Network / IPL sharing by tag (9.3.2.2) or Network / IPL sharing by encapsulation (9.3.2.3) is
+			supported. The object identifies the value representing the encapsulation method that is used
+			to transport IPL frames to the Neighbor Portal System when the IPL and network link are
+			sharing the same physical link. It consists of the 3-octet OUI or CID identifying the
+			organization that is responsible for this encapsulation and one following octet used to identify
+			the encapsulation method defined by that organization. Table 9-11 provides the IEEE 802.1
+			OUI (00-80-C2) encapsulation method encodings. A Default value of 0x00-80-C2-00
+			indicates that the IPL is using a separate physical or Aggregation link. A value of 1 indicates
+			that Network / IPL sharing by time (9.3.2.1) is used. A value of 2 indicates that the
+			encapsulation method used is the same as the one used by network frames and that Network /
+			IPL sharing by tag (9.3.2.2) is used";
+	}
+	
+	leaf-list IPL-Encap-Map {
+		type uint32;
+		description
+		   "This managed object is applicable only when Network / IPL sharing by tag (9.3.2.2) or
+			Network / IPL sharing by encapsulation (9.3.2.3) is supported. Each entry represents the
+			value of the identifier used for an IPL frame associated with that Gateway Conversation ID
+			for the encapsulation method specified in 7.4.1.1.17. There are 1024 possible Conversation Ids
+			in a three portal system";
+	}
+	
+	leaf-list Net-Encap-Map {
+		type uint32;
+		description
+		   "This managed object is applicable only when Network / IPL sharing by tag (9.3.2.2) is
+			supported. Each entry represents the translated value of the identifier used for a network
+			frame associated with that Gateway Conversation ID when the method specified in 7.4.1.1.17
+			is the Network / IPL sharing by tag method specified in 9.3.2.2 and the network frames need
+			to share the tag space used by IPL frames";
+	}
+	
+	leaf DR-Port-Conversation-Passes {
+		type string;
+		description
+		   "A read-only current operational vector of Boolean values, with one value for each possible
+			Port Conversation ID. A 1 indicates that the Port Conversation ID is allowed to be distributed
+			through this DR Function’s Aggregator, and a 0 indicates that it cannot.
+			aDrniDRPortConversationPasses is referencing the current value of 
+			Drni_Portal_System_Port_Conversation ()";
+	}
+
+	leaf DR-Gateway-Conversation-Passes {
+		type string;
+		description
+		   "A read-only current operational vector of Boolean values, with one value for each possible
+			Port Conversation ID. A 1 indicates that the Port Conversation ID is allowed to be distributed
+			through this DR Function’s Aggregator, and a 0 indicates that it cannot.
+			aDrniDRPortConversationPasses is referencing the current value of 
+			Drni_Portal_System_Port_Conversation ()";
+	}
+	
+	leaf PSI {
+	    type boolean;
+	    description
+	       "A read-only Boolean value providing the value of PSI, which indicates whether this Portal
+		    System is isolated from the other Portal Systems within the same Portal (“TRUE”) or not
+		    (“FALSE”)";
+	}
+
+	leaf-list Port-Conversation-Control {
+	    type boolean;
+	    description
+	       "A read-write Boolean value that controls the operation of the updateDRFHomeState (9.4.11).
+			When set to TRUE the Home Gateway Vector is set equal to
+			Drni_Portal_System_Port_Conversation. Setting this object to TRUE is only possible when
+			the Gateway algorithm and the Port algorithm use the same distributions methods. The default
+			is FALSE, indicating that the Home Gateway Vector is controlled by the network control
+			protocol";
+	}
+
+	leaf Intra-Portal-Port-Protocol-DA {
+	    type yang:mac-address;
+	  	description
+	       "A 6-octet read-write MAC Address value specifying the DA to be used when
+			sending DRCPDUs, corresponding to the value of DRCP_Protocol_DA in 9.4.4.1.3. Its
+			values is one of the addresses selected from Table 9-6 and its default shall be the IEEE 802.1
+			Nearest non-TPMR Bridge group address (01-80-C2-00-00-03).";
+	}
+		
+  }
+
+  grouping distributed-relay-config {
+	description "Configuration data for Distributed Relay System / MLAG";
+
+    	leaf portal-address {
+      type yang:mac-address;
+	  config true;
+	  default "00:00:00:00:00:00";
+	  description
+        "A read-write identifier of a particular Portal. Portal-Addr has to be unique among at least
+		all of the potential Portal Systems to which a given Portal System might be attached via an
+		IPL Intra-Portal Link. Also used as the Actors System ID (6.3.2) for the emulated system";
+    	}
+		
+	leaf portal-priority {
+		type uint16;
+		config true;
+		default 32768;
+		description 
+		  "A 2octet read-write value indicating the priority value associated with the Portals System
+		   ID. Also used as the Actors System Priority (6.3.2) for the emulated system.";
+	}
+	
+	leaf three-portal-system {
+		type boolean;
+		config true;
+		default false;
+		description 
+		  "A read-write Boolean value indicating whether this Portal System is part of a Portal
+			consisting of three Portal Systems or not. Value 1 stands for a Portal of three Portal Systems,
+			value 0 stands for a Portal of two or one Portal Systems. The default value is 0";
+	}
+
+	// intra portal links
+	leaf-list intra-portal-link-list {
+          type uint32;
+          config true;
+          description
+            "Read-write list of the Interface Identifiers of the Ports to the Intra-Portal Links assigned to
+			this Distributed Relay. Each Interface Identifier, a Port ID (6.3.4), has the two least
+			significant bits of its Port Priority (7.3.2.1.15) configured to match the Portal System Number
+			of the attached Portal System. The number of IPLs in the list depends on the Portal topology.
+			For a Portal of three Portal Systems two or three IPLs can be used, for a Portal of two Portal
+			Systems a single IPL is required and for a single Portal System no IPL is required";
+
+    }
+	
+	leaf lagId {
+		type uint32;
+		config true;
+		description
+		   "Read-write Interface Identifier of the Aggregator Port assigned to this Distributed Relay";		
+	}
+	
+	leaf-list conv-admin-gateway {
+		type uint32;
+		config true;
+		description
+		   "There are 4096 aDrniConvAdminGateway[] variables, aDrniConvAdminGateway[0]
+			through aDrniConvAdminGateway[4095], indexed by Gateway Conversation ID. Each
+			contains administrative values of the Gateway selection priority list for the Distributed Relay
+			for the referenced Gateway Conversation ID. This selection priority list, a sequence of
+			integers for each Gateway Conversation ID, is a list of Portal System Numbers in the order of
+			preference, highest to lowest, for the corresponding preferred Portal Systems Gateway to
+			carry that Conversation.";
+	}
+	// TODO needs to be represented as 16 octect MD5 Digest
+	//leaf-list neighbor-admin-conv-gateway-list-digest {
+	//	type uint8;
+	//	default 
+	//}
+	
+	//leaf neighbor-admin-conv-port-list-digest {
+	//	type string;
+	//}
+	
+	leaf gateway-algorithm {
+		type string;
+		config true;
+		default "00:80:C2:01";
+		description
+		   "This object identifies the algorithm used by the DR Function to assign frames to a Gateway
+			Conversation ID. Table 9-7 provides the IEEE 802.1 OUI (00:80:C2) Gateway Algorithm
+			encodings";
+	}
+	
+	leaf neighbor-gateway-algorithm {
+		type string;
+		config true;
+		default "00:80:C2:01";
+		description
+		   "TThis object identifies the value for the Gateway algorithm of the Neighbor Portal System,
+		    assigned by administrator or System policy for use when the Neighbor Portal Systems
+		    information is unknown. Table 9-7 provides the IEEE 802.1 OUI (00-80-C2) Gateway
+			Algorithm encodings";
+	}
+	
+	leaf port-algorithm {
+		type string;
+		config true;
+		default "00:80:C2:01";
+		description
+		   "This object identifies the value for the Port Algorithm of the Neighbor Portal System,
+			assigned by administrator or System policy for use when the Neighbor Portal System’s
+			information is unknown. Table 6-4 provides the IEEE 802.1 OUI (00-80-C2) Port Algorithm
+			encodings.";
+	}
+	
+	leaf neighbor-Admin-DRCP-State {
+		type string;
+		config true;
+		default "00000000";
+		description
+		   "A string of 8 bits, corresponding to the administrative values of DRCP_State [item s) in
+			9.4.3.2] as transmitted by this Portal System in DRCPDUs. The first bit corresponds to bit 0
+			of DRCP_State (Home_Gateway), the second bit corresponds to bit 1 (Neighbor_Gateway),
+			the third bit corresponds to bit 2 (Other_Gateway), the fourth bit corresponds to bit 3
+			(IPP_Activity), the fifth bit corresponds to bit 4 (DRCP_Timeout), the sixth bit corresponds
+			to bit 5 (Gateway_Sync), the seventh bit corresponds to bit 6 (Port_Sync), and the eighth bit
+			corresponds to bit 7 (Expired). These values allow administrative control over the values of
+			Home_Gateway, Neighbor_Gateway, Other_Gateway, IPP_Activity, and DRCP_Timeout.";
+	}
+	
+	leaf encap-method {
+		type string;
+		config true;
+		default "00:80:C2:01";
+		description
+		   "This managed object is applicable only when Network / IPL sharing by time (9.3.2.1) or
+			Network / IPL sharing by tag (9.3.2.2) or Network / IPL sharing by encapsulation (9.3.2.3) is
+			supported. The object identifies the value representing the encapsulation method that is used
+			to transport IPL frames to the Neighbor Portal System when the IPL and network link are
+			sharing the same physical link. It consists of the 3-octet OUI or CID identifying the
+			organization that is responsible for this encapsulation and one following octet used to identify
+			the encapsulation method defined by that organization. Table 9-11 provides the IEEE 802.1
+			OUI (00-80-C2) encapsulation method encodings. A Default value of 0x00-80-C2-00
+			indicates that the IPL is using a separate physical or Aggregation link. A value of 1 indicates
+			that Network / IPL sharing by time (9.3.2.1) is used. A value of 2 indicates that the
+			encapsulation method used is the same as the one used by network frames and that Network /
+			IPL sharing by tag (9.3.2.2) is used";
+	}
+	
+	leaf-list IPL-Encap-Map {
+		type uint32;
+		config true;
+		description
+		   "This managed object is applicable only when Network / IPL sharing by tag (9.3.2.2) or
+			Network / IPL sharing by encapsulation (9.3.2.3) is supported. Each entry represents the
+			value of the identifier used for an IPL frame associated with that Gateway Conversation ID
+			for the encapsulation method specified in 7.4.1.1.17. There are 1024 possible Conversation Ids
+			in a three portal system";
+	}
+	
+	leaf-list Net-Encap-Map {
+		type uint32;
+		config true;
+		description
+		   "This managed object is applicable only when Network / IPL sharing by tag (9.3.2.2) is
+			supported. Each entry represents the translated value of the identifier used for a network
+			frame associated with that Gateway Conversation ID when the method specified in 7.4.1.1.17
+			is the Network / IPL sharing by tag method specified in 9.3.2.2 and the network frames need
+			to share the tag space used by IPL frames";
+	}
+	
+	leaf Port-Conversation-Control {
+	    type boolean;
+		config true;
+		default false;
+	    description
+	       "A read-write Boolean value that controls the operation of the updateDRFHomeState (9.4.11).
+			When set to TRUE the Home Gateway Vector is set equal to
+			Drni_Portal_System_Port_Conversation. Setting this object to TRUE is only possible when
+			the Gateway algorithm and the Port algorithm use the same distributions methods. The default
+			is FALSE, indicating that the Home Gateway Vector is controlled by the network control
+			protocol";
+	}
+
+	leaf Intra-Portal-Port-Protocol-DA {
+	    type yang:mac-address;
+	  	config true;
+	  	default "01:80:C2:00:00:03";
+	  	description
+	       "A 6-octet read-write MAC Address value specifying the DA to be used when
+			sending DRCPDUs, corresponding to the value of DRCP_Protocol_DA in 9.4.4.1.3. Its
+			values is one of the addresses selected from Table 9-6 and its default shall be the IEEE 802.1
+			Nearest non-TPMR Bridge group address (01-80-C2-00-00-03).";
+	}
+	
+  }
+
+  grouping ipp-link-statistics {
+
+  	leaf DRCPDUsRx {
+		type yang:counter64;
+		description
+		    "The number of valid DRCPDUs received on this IPP.";
+	}
+	leaf DRCPDUsTx {
+		type yang:counter64;
+		description
+		    "The number of DRCPDUs transmitted on this IPP.";
+	}
+  }
+
+  grouping ipp-link-debug {
+	leaf DRCPRxState {
+		type drcp-rx-machine-state;
+		description 
+		 "This attribute holds the value current if the DRCPDU Receive state machine for the IPP is
+		  in the CURRENT state, expired if the DRCPDU Receive state machine is in the EXPIRED
+		  state, defaulted if the DRCPDU Receive state machine is in the DEFAULTED state,
+		  initialize if the DRCPDU Receive state machine is in the INITIALIZE state, or
+		  reportToManagement if the Receive state machine is in the REPORT_TO_MANAGEMENT state";
+	}
+	leaf LastRxTime {
+		type uint32;
+		description
+		    "The time at which the last DRCPDU was received by this IPP, in terms of centiseconds since
+			the system was last reset. The ifLastChange object in the Interfaces MIB defined in IETF
+			RFC 2863 is a suitable object for supplying a value for aIPPDebugLastRxTime";
+	}
+	
+	leaf Diff-portal-reason {
+		type string;
+		description
+			"A human-readable text string indicating the most recent set of variables that are responsible
+			for setting the variable Differ_Portal or Differ_Conf_Portal (9.4.8) on this IPP to TRUE";
+	}
+  }
+
+  list ipp-link-state {
+	description "Top-level data definitions for Distributed Relay / MLAGs";
+     key intfRef;
+
+     leaf intfRef {
+        type string;
+        description "A human-readable text string containing a locally significant name for the Distributed Relay IPP port link";
+     }
+	
+	leaf IPPID {
+		type uint32;
+		description
+		  "The unique identifier allocated to this IPP by the local Portal System. This attribute identifies
+			an IPP instance among the subordinate managed objects of the containing object.";
+	}
+	
+	leaf Port-Conversation-Passes {
+		type string;
+		description
+		   "A read-only current operational vector of Boolean values, with one value for each possible
+		  	Port Conversation ID. A 1 indicates that the Port Conversation ID is allowed to be
+			transmitted through this IPP Intra-Portal Port, and a 0 indicates that it cannot.
+			aIPPPortConversationPasses is referencing Ipp_Port_Conversation_Passes (9.3.4.3).";
+	}
+	
+	leaf Gateway-Conversation-Direction {
+		type string;
+		description
+		   "A read-only current operational vector of Boolean values, with one value for each possible
+		  	Port Conversation ID. A 1 indicates that the Port Conversation ID is allowed to be
+			transmitted through this IPP Intra-Portal Port, and a 0 indicates that it cannot.
+			aIPPPortConversationPasses is referencing Ipp_Port_Conversation_Passes (9.3.4.3).";
+	}
+	
+	uses ipp-link-statistics;
+	uses ipp-link-debug;
+  }
 
 
-  // data definition statements
+  // 802.1ax-2014 Section 7.4.1.1 Distributed Relay
+  list mlag {
+  	description "Top-level data definitions for Distributed Relay / MLAGs";
+     key name;
 
-  // augment statements
+     leaf name {
+        type string;
+	    config true;
+        description "A human-readable text string containing a locally significant name for the Distributed Relay / MLAG";
+     }
 
-  //augment "/ocif:interfaces/ocif:interface" {
-  //  when "ocif:type = 'ift:ieee8023adLag'" {
-  //    description "active when the interface is set to type LAG";
-  //  }
-  //  description "Adds LAG configuration to the interface module";
-
-  //  uses aggregation-logical-top;
-  //}
-
-  //augment "/ocif:interfaces/ocif:interface/eth:ethernet/" +
-  //  "eth:config" {
-  //  when "ocif:type = 'ift:ethernetCsmacd'" {
-  //    description "active when the interface is Ethernet";
-  //  }
-  //  description "Adds LAG settings to individual Ethernet
-  //  interfaces";
-
-  //  uses ethernet-if-aggregation-config;
-  //}
-
-  //augment "/ocif:interfaces/ocif:interface/eth:ethernet/" +
-  //  "eth:state" {
-  //  when "ocif:type = 'ift:ethernetCsmacd'" {
-  //    description "active when the interface is Ethernet";
-  // }
-  //  description "Adds LAG settings to individual Ethernet
-  //  interfaces";
-
-  //  uses ethernet-if-aggregation-config;
-  //}
-
-  // rpc statements
-
-  // notification statements
-
+	container group {
+		uses distributed-relay-config;
+	}
+	
+	container state {
+		uses distributed-relay-state;
+	}
+  }
 }
