@@ -24,12 +24,7 @@
 package events
 
 type LLDPIntfKey struct {
-	LocalPort           string
-	NeighborPort        string
-	NeighborMac         string
-	HoldTime            string
-	SystemCapabilities  string
-	EnabledCapabilities string
+	IfIndex int32
 }
 
 const (
