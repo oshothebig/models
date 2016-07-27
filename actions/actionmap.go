@@ -25,7 +25,7 @@ package actions
 
 //TODO: Only Action objects are manually added here. These will be removed when codagen support added for Action objects.
 var ActionMap = map[string]ActionObj{
-	"ApplyConfig":  &ApplyConfig{},
-	"SaveConfig" :  &SaveConfig{},
-	"ResetConfig":  &ResetConfig{},
+//"ApplyConfig": &ApplyConfig{},
+//"SaveConfig":  &SaveConfig{},
+//"ResetConfig": &ResetConfig{},
 }

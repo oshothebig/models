@@ -7,5 +7,8 @@
  },
  "ResetConfig": {
  "owner": "local"
+ },
+ "Daemon": {
+ "owner": "sysd"
  }
 }
