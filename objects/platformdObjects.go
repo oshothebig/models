@@ -104,9 +104,9 @@ type LedState struct {
 
 type Fan struct {
 	baseObj
-	FanId      int32 `SNAPROUTE: "KEY", ACCESS:"rw", MULTIPLICITY:"*", AUTODISCOVER: "true", DESCRIPTION: "Fan unit id", DEFAULT:0`
-	AdminState int32 `DESCRIPTION: "Fan admin ON/OFF"`
-	AdminSpeed int32 `DESCRIPTION: "Fan set speed in rpm"`
+	FanId      int32  `SNAPROUTE: "KEY", ACCESS:"rw", MULTIPLICITY:"*", AUTODISCOVER: "true", DESCRIPTION: "Fan unit id", DEFAULT:0`
+	AdminState string `DESCRIPTION: "Fan admin ON/OFF"`
+	AdminSpeed int32  `DESCRIPTION: "Fan set speed in rpm"`
 }
 
 type FanState struct {
