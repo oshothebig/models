@@ -31,7 +31,7 @@ type LLDPGlobal struct {
 
 type LLDPIntf struct {
 	baseObj
-	IfIndex int32 `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"1",DESCRIPTION: "IfIndex where lldp needs is enabled/disabled", AUTOCREATE:"true",PARENT:"Port"`
+	IfIndex int32 `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"1",DESCRIPTION: "IfIndex where lldp needs is enabled/disabled", AUTODISCOVER:"true"`
 	Enable  bool  `DESCRIPTION: "Enable/Disable lldp config Per Port", DEFAULT:"true"`
 }
 
