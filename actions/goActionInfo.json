@@ -1,0 +1,11 @@
+{
+"sysActions.go" : {"owner": "sysd",
+                   "location" : "infra/sysd/rpc",
+                   "svcName" : "sysdInt"},
+"arpActions.go" : {"owner": "arpd",
+                   "location" : "l3/arpd/rpc",
+                   "svcName" : "arpdInt"},
+"localActions.go" : {"owner": "local", 
+                     "location" : "nil",
+                     "svcName" : "nil"}
+}

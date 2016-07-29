@@ -23,22 +23,9 @@
 
 package actions
 
-import (
-	"fmt"
-)
-
-type ActionObj interface {
-	UnmarshalAction(data []byte) (ActionObj, error)
-}
-
-type baseAction struct {
-}
-
-func (obj baseAction) UnmarshalAction(data []byte) (ActionObj, error) {
-	fmt.Println("base action unmarshal")
-	return nil, nil
-}
-
-type SaveConfigObj struct {
-	ConfigData map[string][]interface{} `json:"ConfigData"`
+type Daemon struct {
+	baseAction
+	Name     string `DESCRIPTION: "Daemon name"`
+	Enable   bool   `DESCRIPTION: "Enable the flexswitch daemon"`
+	WatchDog bool   `DESCRIPTION: "Enable watchdog for daemon"`
 }
