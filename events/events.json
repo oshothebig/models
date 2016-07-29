@@ -177,6 +177,32 @@
 			"DaemonName" : "LLDPD",
 			"DaemonEventEnable" : true,
 			"EventList" : [
+				{
+					"EventId" : 1,
+					"EventName" : "NeighborLearned",
+					"Description" : "LLDP Neighbor learned Information",
+					"SrcObjName" : "LLDPIntfKey",
+					"EventEnable" : true,
+					"IsFault" : false
+				},
+                                {
+					"EventId" : 2,
+					"EventName" : "NeighborUpdated",
+					"Description" : "LLDP Neighbor learned Information Updated",
+					"SrcObjName" : "LLDPIntfKey",
+					"EventEnable" : true,
+					"IsFault" : false
+
+                                },
+                                {
+					"EventId" : 3,
+					"EventName" : "NeighborRemoved",
+					"Description" : "LLDP Neighbor Information Removed",
+					"SrcObjName" : "LLDPIntfKey",
+					"EventEnable" : true,
+					"IsFault" : false
+                                }
+
 			]
 		},
 		{

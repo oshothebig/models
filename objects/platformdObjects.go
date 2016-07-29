@@ -26,10 +26,31 @@ package objects
 /*
  * This DS will be used while Created/Deleting Platform Config
  */
+
 type PlatformSystemState struct {
 	baseObj
-	ObjName   string `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"1", DESCRIPTION: "ObjName", DEFAULT: "System"`
-	SerialNum string `DESCRIPTION: "Serial Number"`
+	ObjName      string `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"1", DESCRIPTION: "ObjName", DEFAULT: "System"`
+	ProductName  string `DESCRIPTION: "Product Number"`
+	SerialNum    string `DESCRIPTION: "Serial Number"`
+	Manufacturer string `DESCRIPTION: "Manufacturer"`
+	Vendor       string `DESCRIPTION: "Vendor"`
+	Release      string `DESCRIPTION: "Relese version"`
+	PlatformName string `DESCRIPTION: "Platform Number"`
+}
+
+type Sfp struct {
+	baseObj
+	SfpId      int32  `SNAPROUTE: "KEY", ACCESS:"rw", MULTIPLICITY:"*", AUTODISCOVER: "true", DESCRIPTION: "SFP id", DEFAULT:0`
+	AdminState string `DESCRIPTION: "Admin PORT UP/DOWN(TX OFF)"`
+}
+
+type SfpState struct {
+	baseObj
+	SfpId   int32  `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", AUTODISCOVER: "true", DESCRIPTION: "SFP id", DEFAULT:0`
+	Status  string `DESCRIPTION: "SFP status PRESENT/MISSING"`
+	SfpLOS  string `DESCRIPTION: "SFP status RX LOS"`
+	SfpType string `DESCRIPTION: "SFP type Copper/Optical"`
+	EEPROM  string `DESCRIPTION: "SFP eeprom"`
 }
 
 type Fan struct {
