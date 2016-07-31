@@ -27,16 +27,16 @@ package objects
  * This DS will be used while Created/Deleting Platform Config
  */
 
-type PlatformSystemState struct {
+type PlatformState struct {
 	baseObj
-	ObjName      string `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"1", DESCRIPTION: "ObjName", DEFAULT: "System"`
+	ObjName      string `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"1", DESCRIPTION: "ObjName", DEFAULT: "Platform"`
 	ProductName  string `DESCRIPTION: "Product Number"`
 	SerialNum    string `DESCRIPTION: "Serial Number"`
 	Manufacturer string `DESCRIPTION: "Manufacturer"`
 	Vendor       string `DESCRIPTION: "Vendor"`
 	Release      string `DESCRIPTION: "Relese version"`
 	PlatformName string `DESCRIPTION: "Platform Number"`
-	ONIEVersion  string `DESCRIPTION: "ONIE version"`
+	Version      string `DESCRIPTION: "Platform Driver version, in case of ONLP(ONIE Version) and OpenBMC(BMC Version)"`
 }
 
 type Sfp struct {
