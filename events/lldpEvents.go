@@ -23,48 +23,16 @@
 
 package events
 
-import (
-	"github.com/garyburd/redigo/redis"
+type LLDPIntfKey struct {
+	IfIndex int32
+}
+
+const (
+	NeighborLearned EventId = 1
+	NeighborUpdated EventId = 2
+	NeighborRemoved EventId = 3
 )
 
-type OwnerId uint8
-type EventId uint32
-
-type KeyMap map[string]interface{}
-
-var EventKeyMap map[string]KeyMap = map[string]KeyMap{
-	"ASICD":  AsicdEventKeyMap,
-	"ARPD":   ArpdEventKeyMap,
-	"OPTICD": OpticdEventKeyMap,
-	"BGPD":   BGPdEventKeyMap,
-	"LLDP":  LLDPEventKeyMap,
-}
-
-type Event struct {
-	OwnerName   string
-	EventName   string
-	TimeStamp   string
-	SrcObjName  string
-	SrcObjKey   string
-	Description string
-}
-
-type EventStats struct {
-	EventId       EventId
-	EventName     string
-	NumEvents     uint32
-	LastEventTime string
-}
-
-type EventObj interface {
-	UnmarshalObject([]byte) (EventObj, error)
-	GetKey() string
-	StoreObjectInDb(redis.Conn) error
-	GetObjectFromDb(string, redis.Conn) (EventObj, error)
-	GetAllObjFromDb(redis.Conn) ([]EventObj, error)
-}
-
-var EventObjectMap = map[string]EventObj{
-	"Event":      Event{},
-	"EventStats": EventStats{},
+var LLDPEventKeyMap KeyMap = KeyMap{
+	"LLDPIntf": LLDPIntfKey{},
 }

@@ -8,7 +8,7 @@
 
             {"Name":"ospfd",
             "Enable": true},
-            
+
             {"Name":"stpd",
             "Enable": true},
 
@@ -23,7 +23,7 @@
 
             {"Name":"lldpd",
             "Enable": true},
-            
+
             {"Name":"vxland",
             "Enable": true}
             ],
