@@ -181,3 +181,20 @@ type SubIPv6Intf struct {
 	MacAddr string `DESCRIPTION:"Mac address to be used for the sub interface. If none specified IPv4Intf mac address will be used", STRLEN:"17"`
 	Enable  bool   `DESCRIPTION:"Enable or disable this interface", DEFAULT:false`
 }
+
+type BufferPortStatState struct {
+	baseObj
+	IntfRef        string `SNAPROUTE: "KEY", ACCESS:"r", DESCRIPTION: "Front panel port name interface id"`
+	IfIndex        int32  `DESCRIPTION: "System assigned interface id for this port. Read only attribute"`
+	EgressPort     uint64 `DESCRIPTION: "Egress port buffer stats "`
+	IngressPort    uint64 `DESCRIPTION: "Ingress port buffer stats "`
+	PortBufferStat uint64 `DESCRIPTION: "Per port buffer stats"`
+}
+
+type BufferGlobalStatState struct {
+	baseObj
+	DeviceId          uint32 `SNAPROUTE: "KEY", ACCESS:"r", DESCRIPTION: "Device id"`
+	BufferStat        uint64 `DESCRIPTION: "Buffer stats for the device "`
+	EgressBufferStat  uint64 `DESCRIPTION: "Egress Buffer stats "`
+	IngressBufferStat uint64 `DESCRIPTION: "Ingress buffer stats "`
+}

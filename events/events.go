@@ -51,6 +51,7 @@ var EventKeyMap map[string]KeyMap = map[string]KeyMap{
 	"ASICD": AsicdEventKeyMap,
 	"ARPD":  ArpdEventKeyMap,
 	"BGPD":  BGPdEventKeyMap,
+	"LLDP":  LLDPEventKeyMap,
 }
 
 type EventObject struct {
