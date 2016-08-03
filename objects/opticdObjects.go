@@ -41,14 +41,14 @@ type DWDMModuleState struct {
 
 type DWDMModule struct {
 	baseObj
-	ModuleId            uint8 `SNAPROUTE: "KEY", ACCESS:"rw", MULTIPLICITY: "*", DESCRIPTION: "DWDM Module identifier"`
+	ModuleId            uint8 `SNAPROUTE: "KEY", ACCESS:"rw", MULTIPLICITY: "*", AUTODISCOVER: "true", DESCRIPTION: "DWDM Module identifier"`
 	ModuleReset         bool  `DESCRIPTION: "Reset state of this dwdm module (false (Reset deasserted), true (Reset asserted))", DEFAULT:false`
 	IndependentLaneMode bool  `DESCRIPTION: "Network lane configuration for the DWDM Module. true-Independent lanes, false-Coupled lanes, DEFAULT:true"`
 }
 
 type DWDMModuleNwIntf struct {
 	baseObj
-	ModuleId      uint8   `SNAPROUTE: "KEY", ACCESS:"rw", MULTIPLICITY: "*", DESCRIPTION: "DWDM Module identifier"`
+	ModuleId      uint8   `SNAPROUTE: "KEY", ACCESS:"rw", MULTIPLICITY: "*", AUTODISCOVER: "true", DESCRIPTION: "DWDM Module identifier"`
 	NwIntfId      uint8   `SNAPROUTE: "KEY", DESCRIPTION: "DWDM Module network interface identifier"`
 	ModulationFmt string  `DESCRIPTION: "Modulation format to use for this network interface", SELECTION: "QPSK"/"8QAM/"16QAM"`
 	TxPower       float64 `DESCRIPTION: "Transmit output power for this network interface in dBm, MIN:0, MAX:4294967295"`
