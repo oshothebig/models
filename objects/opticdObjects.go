@@ -48,11 +48,15 @@ type DWDMModule struct {
 
 type DWDMModuleNwIntf struct {
 	baseObj
-	ModuleId      uint8   `SNAPROUTE: "KEY", ACCESS:"rw", MULTIPLICITY: "*", AUTODISCOVER: "true", DESCRIPTION: "DWDM Module identifier"`
-	NwIntfId      uint8   `SNAPROUTE: "KEY", DESCRIPTION: "DWDM Module network interface identifier"`
-	ModulationFmt string  `DESCRIPTION: "Modulation format to use for this network interface", SELECTION: "QPSK"/"8QAM/"16QAM"`
-	TxPower       float64 `DESCRIPTION: "Transmit output power for this network interface in dBm, MIN:0, MAX:4294967295"`
-	WaveLength    uint16  `DESCRIPTION: "The ITU-T G.694.1 grid wavelength value to use for this network interface in nm", MIN:1530, MAX:1565`
+	ModuleId                uint8   `SNAPROUTE: "KEY", ACCESS:"rw", MULTIPLICITY: "*", DESCRIPTION: "DWDM Module identifier"`
+	NwIntfId                uint8   `SNAPROUTE: "KEY", DESCRIPTION: "DWDM Module network interface identifier"`
+	ModulationFmt           string  `DESCRIPTION: "Modulation format to use for this network interface", SELECTION: "QPSK"/"8QAM/"16QAM", DEFAULT:"16QAM"`
+	TxPower                 float64 `DESCRIPTION: "Transmit output power for this network interface in dBm, MIN:0, MAX:4294967295", DEFAULT:0`
+	WaveLength              uint16  `DESCRIPTION: "The ITU-T G.694.1 grid wavelength value to use for this network interface in nm", MIN:1530, MAX:1565`
+	FECMode                 string  `DESCRIPTION: "DWDM Module network interface FEC mode", SELECTION: "15%SDFEC"/"15OvrHeadSDFEC%/25%OvrHeadSDFEC"`
+	DiffEncoding            bool    `DESCRIPTION: "Control to enable/disable DWDM Module network interface encoding type", DEFAULT: true`
+	TxPulseShapeFltrType    string  `DESCRIPTION: "TX pulse shaping filter type", SELECTION: "RootRaisedCos"/"RaisedCos"/"Gaussian", DEFAULT:RootRaisedCos"`
+	TxPulseShapeFltrRollOff float64 `DESCRIPTION: "TX pulse shape filter roll off factor, MIN:0.004, MAX:1.0", DEFAULT:0.301`
 }
 
 type DWDMModuleNwIntfState struct {
@@ -64,8 +68,17 @@ type DWDMModuleNwIntfState struct {
 
 type DWDMModuleClntIntf struct {
 	baseObj
-	ModuleId   uint8 `SNAPROUTE: "KEY", ACCESS:"rw", MULTIPLICITY: "*", AUTODISCOVER: "true", DESCRIPTION: "DWDM Module identifier"`
-	ClntIntfId uint8 `SNAPROUTE: "KEY", DESCRIPTION: "DWDM Module client interface identifier"`
+	ModuleId                  uint8 `SNAPROUTE: "KEY", ACCESS:"rw", MULTIPLICITY: "*", DESCRIPTION: "DWDM Module identifier"`
+	ClntIntfId                uint8 `SNAPROUTE: "KEY", DESCRIPTION: "DWDM Module client interface identifier"`
+	FECEnabled                bool  `DESCRIPTION: "802.3bj FEC enable/disable state", DEFAULT: false`
+	HostTxEqLfCtle            uint8 `DESCRIPTION: "Host interface TX deserializer equalization. LELPZRC LF-CTLE LFPZ gain code.", MIN:0, MAX:8, DEFAULT:0`
+	HostTxEqCtle              uint8 `DESCRIPTION: "Host interface TX deserializer equalization. LELRC CTLE LE gain code.", MIN:0, MAX:20, DEFAULT:18`
+	HostTxEqDfe               uint8 `DESCRIPTION: "Host interface TX deserializer equalization. s-DFE, DFE tap coefficient", MIN:0, MAX:63, DEFAULT:0`
+	HostRxSerializerTap0Gain  uint8 `DESCRIPTION: "Host RX Serializer tap 0 control, gain for equalization filter tap", DEFAULT:7, MIN:0, MAX:7`
+	HostRxSerializerTap0Delay uint8 `DESCRIPTION: "Host RX Serializer tap 0 control, delay for equalization filter tap", DEFAULT:7, MIN:0, MAX:7`
+	HostRxSerializerTap1Gain  uint8 `DESCRIPTION: "Host RX Serializer tap 1 control, gain for equalization filter tap", DEFAULT:7, MIN:0, MAX:7`
+	HostRxSerializerTap2Gain  uint8 `DESCRIPTION: "Host RX Serializer tap 2 control, gain for equalization filter tap", DEFAULT:15, MIN:0, MAX:15`
+	HostRxSerializerTap2Delay uint8 `DESCRIPTION: "Host RX Serializer tap 2 control, delay for equalization filter tap", DEFAULT:5, MIN:0, MAX:7`
 }
 
 type DWDMModuleClntIntfState struct {
