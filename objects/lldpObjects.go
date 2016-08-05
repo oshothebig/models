@@ -41,7 +41,8 @@ type LLDPIntfState struct {
 	Enable              bool   `DESCRIPTION: "Enable/Disable lldp config"`
 	LocalPort           string `DESCRIPTION: "Local interface"`
 	PeerMac             string `DESCRIPTION: "Mac address of direct connection"`
-	Port                string `DESCRIPTION: "Name of directtly connected pors"`
+	PeerPort            string `DESCRIPTION: "Name of directtly connected pors"`
+	PeerHostName        string `DESCRIPTION: "Name of the peer host`
 	HoldTime            string `DESCRIPTION: "Validity of the peer information"`
 	SystemCapabilities  string `DESCRIPTION: "System Capabilities of the peer port"`
 	EnabledCapabilities string `DESCRIPTION: "Enabled Capabilities of the peer port"`

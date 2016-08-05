@@ -37,7 +37,7 @@ var EventKeyMap map[string]KeyMap = map[string]KeyMap{
 	"ARPD":   ArpdEventKeyMap,
 	"OPTICD": OpticdEventKeyMap,
 	"BGPD":   BGPdEventKeyMap,
-	"LLDP":  LLDPEventKeyMap,
+	"LLDP":   LLDPEventKeyMap,
 }
 
 type Event struct {
@@ -45,7 +45,7 @@ type Event struct {
 	EventName   string
 	TimeStamp   string
 	SrcObjName  string
-	SrcObjKey   string
+	SrcObjKey   interface{}
 	Description string
 }
 
@@ -65,6 +65,6 @@ type EventObj interface {
 }
 
 var EventObjectMap = map[string]EventObj{
-	"Event":      Event{},
+	"Events":     Event{},
 	"EventStats": EventStats{},
 }
