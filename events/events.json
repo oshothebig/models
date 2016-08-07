@@ -67,7 +67,8 @@
 					"Fault" : {
 						"RaiseFault" : true,
 						"ClearingEventId" : 5,
-						"ClearingDaemonId" : 1
+						"ClearingDaemonId" : 1,
+						"AlarmSeverity" : "Critical"
 					}
 				}
 			]
