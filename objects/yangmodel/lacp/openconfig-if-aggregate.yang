@@ -841,6 +841,63 @@ grouping aggregation-lacp-members-statistics {
 
   }
 
+  grouping aggregation-lacp-members-top {
+    description
+      "Top-level grouping for aggregate members list";
+
+    container members {
+      config false;
+      description
+        "Enclosing container for the list of members interfaces of
+        the aggregate. This list is considered operational state
+        only so is labeled config false and has no config container";
+
+      list member {
+        key  ifIndex;
+        description
+          "List of member interfaces and their associated status for
+          a LACP-controlled aggregate interface.  Member list is not
+          configurable here -- each interface indicates items
+          its participation in the LAG.";
+
+        leaf ifIndex {
+          type int32; 
+          config false;
+	      description
+            "Reference to aggregate member interface";
+        }
+
+
+        container state {
+
+          config false;
+
+          description
+            "Operational state data for aggregate members";
+
+	      leaf oper-state {
+             type string;
+	         description
+               "The operation state, typically UP IN BUNDLE, or DOWN";
+          }
+          uses aggregation-lacp-members-state;
+          uses aggregation-lacp-members-statistics;
+        }
+      }
+    }
+  }
+
+  container la-port-channel {
+       config false;
+       description
+          "Port Channel Member States container";
+	   
+	   leaf lagId {
+          type int32;
+          description "Id of the lag group to which this port is associated with";
+        }
+       uses aggregation-lacp-members-top;
+  }
   grouping ethernet-if-aggregation-config {
     description
       "Adds configuration items for Ethernet interfaces
@@ -982,11 +1039,19 @@ grouping aggregation-lacp-members-statistics {
 	}
 	
 	leaf three-portal-system {
-		type uint16;
+		type boolean;
 		description 
 		  "A read-write Boolean value indicating whether this Portal System is part of a Portal
 			consisting of three Portal Systems or not. Value 1 stands for a Portal of three Portal Systems,
 			value 0 stands for a Portal of two or one Portal Systems. The default value is 0";
+	}
+
+	leaf portal-system-number {
+		type uint8;
+		description
+		   "A read-write identifier of this particular Portal System within a Portal. It is the responsibility
+		    of the network administrator to ensure that these numbers are unique among the Portal
+		    Systems with the same aDrniPortalAddr (7.4.1.1.4)";
 	}
 
 	// intra portal links
@@ -1018,15 +1083,22 @@ grouping aggregation-lacp-members-statistics {
 			preference, highest to lowest, for the corresponding preferred Portal Systems Gateway to
 			carry that Conversation.";
 	}
-	// TODO needs to be represented as 16 octect MD5 Digest
-	//leaf-list neighbor-admin-conv-gateway-list-digest {
-	//	type uint8;
-	//	default 
-	//}
+
+	leaf-list neighbor-admin-conv-gateway-list-digest {
+		type uint8;
+		description
+		 "The value for the digest of the prioritized Gateway Conversation ID-to-Gateway assignments
+		  of the Neighbor Portal System, assigned by administrator or System policy for use when the
+		  Neighbor Portal System’s information is unknown";
+	}
 	
-	//leaf neighbor-admin-conv-port-list-digest {
-	//	type string;
-	//}
+	leaf-list neighbor-admin-conv-port-list-digest {
+		type uint8;
+		description
+		 "The value for the digest of the prioritized Port Conversation ID-to-Aggregation Port
+		  assignments of the Neighbor Portal System, assigned by administrator or System policy for
+		  use when the Neighbor Portal System’s information is unknown";
+	}
 	
 	leaf gateway-algorithm {
 		type string;
@@ -1168,7 +1240,9 @@ grouping aggregation-lacp-members-statistics {
     	}
 		
 	leaf portal-priority {
-		type uint16;
+		type uint16 {
+			range 1..65535;
+		}
 		config true;
 		default 32768;
 		description 
@@ -1184,6 +1258,17 @@ grouping aggregation-lacp-members-statistics {
 		  "A read-write Boolean value indicating whether this Portal System is part of a Portal
 			consisting of three Portal Systems or not. Value 1 stands for a Portal of three Portal Systems,
 			value 0 stands for a Portal of two or one Portal Systems. The default value is 0";
+	}
+
+	leaf portal-system-number {
+		type uint8 {
+			range 1..2;
+		}
+		config true;
+		description
+		   "A read-write identifier of this particular Portal System within a Portal. It is the responsibility
+		    of the network administrator to ensure that these numbers are unique among the Portal
+		    Systems with the same aDrniPortalAddr (7.4.1.1.4)";
 	}
 
 	// intra portal links
@@ -1219,15 +1304,23 @@ grouping aggregation-lacp-members-statistics {
 			preference, highest to lowest, for the corresponding preferred Portal Systems Gateway to
 			carry that Conversation.";
 	}
-	// TODO needs to be represented as 16 octect MD5 Digest
-	//leaf-list neighbor-admin-conv-gateway-list-digest {
-	//	type uint8;
-	//	default 
-	//}
+	leaf-list neighbor-admin-conv-gateway-list-digest {
+		type uint8;
+		config true;
+		description
+		 "The value for the digest of the prioritized Gateway Conversation ID-to-Gateway assignments
+		  of the Neighbor Portal System, assigned by administrator or System policy for use when the
+		  Neighbor Portal System’s information is unknown";
+	}
 	
-	//leaf neighbor-admin-conv-port-list-digest {
-	//	type string;
-	//}
+	leaf-list neighbor-admin-conv-port-list-digest {
+		type uint8;
+		config true;
+		description
+		 "The value for the digest of the prioritized Port Conversation ID-to-Aggregation Port
+		  assignments of the Neighbor Portal System, assigned by administrator or System policy for
+		  use when the Neighbor Portal System’s information is unknown";
+	}
 	
 	leaf gateway-algorithm {
 		type string;
@@ -1250,7 +1343,7 @@ grouping aggregation-lacp-members-statistics {
 			Algorithm encodings";
 	}
 	
-	leaf port-algorithm {
+	leaf neighbor-port-algorithm {
 		type string;
 		config true;
 		default "00:80:C2:01";
@@ -1347,11 +1440,13 @@ grouping aggregation-lacp-members-statistics {
 
   	leaf DRCPDUsRx {
 		type yang:counter64;
+		config false;
 		description
 		    "The number of valid DRCPDUs received on this IPP.";
 	}
 	leaf DRCPDUsTx {
 		type yang:counter64;
+		config false;
 		description
 		    "The number of DRCPDUs transmitted on this IPP.";
 	}
@@ -1360,6 +1455,7 @@ grouping aggregation-lacp-members-statistics {
   grouping ipp-link-debug {
 	leaf DRCPRxState {
 		type drcp-rx-machine-state;
+		config false;
 		description 
 		 "This attribute holds the value current if the DRCPDU Receive state machine for the IPP is
 		  in the CURRENT state, expired if the DRCPDU Receive state machine is in the EXPIRED
@@ -1369,6 +1465,7 @@ grouping aggregation-lacp-members-statistics {
 	}
 	leaf LastRxTime {
 		type uint32;
+		config false;
 		description
 		    "The time at which the last DRCPDU was received by this IPP, in terms of centiseconds since
 			the system was last reset. The ifLastChange object in the Interfaces MIB defined in IETF
@@ -1383,17 +1480,10 @@ grouping aggregation-lacp-members-statistics {
 	}
   }
 
-  list ipp-link-state {
-	description "Top-level data definitions for Distributed Relay / MLAGs";
-     key intfRef;
-
-     leaf intfRef {
-        type string;
-        description "A human-readable text string containing a locally significant name for the Distributed Relay IPP port link";
-     }
-	
+  grouping ipp-link-state {
 	leaf IPPID {
 		type uint32;
+		config false;
 		description
 		  "The unique identifier allocated to this IPP by the local Portal System. This attribute identifies
 			an IPP instance among the subordinate managed objects of the containing object.";
@@ -1401,6 +1491,7 @@ grouping aggregation-lacp-members-statistics {
 	
 	leaf Port-Conversation-Passes {
 		type string;
+		config false;
 		description
 		   "A read-only current operational vector of Boolean values, with one value for each possible
 		  	Port Conversation ID. A 1 indicates that the Port Conversation ID is allowed to be
@@ -1410,6 +1501,7 @@ grouping aggregation-lacp-members-statistics {
 	
 	leaf Gateway-Conversation-Direction {
 		type string;
+		config false;
 		description
 		   "A read-only current operational vector of Boolean values, with one value for each possible
 		  	Port Conversation ID. A 1 indicates that the Port Conversation ID is allowed to be
@@ -1421,23 +1513,42 @@ grouping aggregation-lacp-members-statistics {
 	uses ipp-link-debug;
   }
 
+  list ipp {
+	description "Top-level data definitions for Distributed Relay / MLAGs IPP link";
+     key "intfRef drNameRef";
+
+     leaf intfRef {
+        type string;
+        description "A human-readable text string containing a locally significant name for the Distributed Relay IPP port link";
+     }
+	
+	 leaf drNameRef {
+		type string;
+		description "A human-readable text string containing the Distributed Relay Instance name to which this IPP is associated";
+	}
+		
+	container link-state {
+		uses ipp-link-state;
+	}
+  }
 
   // 802.1ax-2014 Section 7.4.1.1 Distributed Relay
-  list mlag {
+  list distributed {
   	description "Top-level data definitions for Distributed Relay / MLAGs";
      key name;
 
      leaf name {
         type string;
-	    config true;
-        description "A human-readable text string containing a locally significant name for the Distributed Relay / MLAG";
+	    description "A human-readable text string containing a locally significant name for the Distributed Relay / MLAG";
      }
 
-	container group {
+	container relay {
+		config true;
 		uses distributed-relay-config;
 	}
 	
-	container state {
+	container relay-state {
+		config false;
 		uses distributed-relay-state;
 	}
   }
