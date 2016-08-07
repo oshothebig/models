@@ -23,7 +23,8 @@
 					"Fault" : {
 						"RaiseFault" : true,
 						"ClearingEventId" : 1,
-						"ClearingDaemonId" : 1
+						"ClearingDaemonId" : 1,
+						"AlarmSeverity" : "Critical"
 					}
 				},
 				{
@@ -44,7 +45,8 @@
 					"Fault" : {
 						"RaiseFault" : true,
 						"ClearingEventId" : 3,
-						"ClearingDaemonId" : 1
+						"ClearingDaemonId" : 1,
+						"AlarmSeverity" : "Critical"
 					}
 				},
 				{
@@ -65,7 +67,8 @@
 					"Fault" : {
 						"RaiseFault" : true,
 						"ClearingEventId" : 5,
-						"ClearingDaemonId" : 1
+						"ClearingDaemonId" : 1,
+						"AlarmSeverity" : "Critical"
 					}
 				}
 			]
@@ -177,6 +180,32 @@
 			"DaemonName" : "LLDPD",
 			"DaemonEventEnable" : true,
 			"EventList" : [
+				{
+					"EventId" : 1,
+					"EventName" : "NeighborLearned",
+					"Description" : "LLDP Neighbor learned Information",
+					"SrcObjName" : "LLDPIntfKey",
+					"EventEnable" : true,
+					"IsFault" : false
+				},
+                                {
+					"EventId" : 2,
+					"EventName" : "NeighborUpdated",
+					"Description" : "LLDP Neighbor learned Information Updated",
+					"SrcObjName" : "LLDPIntfKey",
+					"EventEnable" : true,
+					"IsFault" : false
+
+                                },
+                                {
+					"EventId" : 3,
+					"EventName" : "NeighborRemoved",
+					"Description" : "LLDP Neighbor Information Removed",
+					"SrcObjName" : "LLDPIntfKey",
+					"EventEnable" : true,
+					"IsFault" : false
+                                }
+
 			]
 		},
 		{
@@ -191,6 +220,388 @@
 			"DaemonName" : "DHCPD",
 			"DaemonEventEnable" : true,
 			"EventList" : [
+			]
+		},
+		{
+			"DaemonId" : 15,
+			"DaemonName" : "OPTICD",
+			"DaemonEventEnable" : true,
+			"EventList" : [
+				{
+					"EventId" : 0,
+					"EventName" : "TempHiAlarm",
+					"Description" : "DWDM Module temperature high alarm",
+					"SrcObjName" : "DWDMModule",
+					"EventEnable" : true,
+					"IsFault" : true,
+					"Fault" : {
+						"RaiseFault" : true,
+						"ClearingEventId" : 1,
+						"ClearingDaemonId" : 15,
+						"AlarmSeverity" : "Critical"
+					}
+				},
+				{
+					"EventId" : 1,
+					"EventName" : "TempHiAlarmClear",
+					"Description" : "DWDM Module temperature high alarm cleared",
+					"SrcObjName" : "DWDMModule",
+					"EventEnable" : true,
+					"IsFault" : false
+				},
+				{
+					"EventId" : 2,
+					"EventName" : "TempHiWarn",
+					"Description" : "DWDM Module temperature high warning",
+					"SrcObjName" : "DWDMModule",
+					"EventEnable" : true,
+					"IsFault" : true,
+					"Fault" : {
+						"RaiseFault" : true,
+						"ClearingEventId" : 3,
+						"ClearingDaemonId" : 15,
+						"AlarmSeverity" : "Major"
+					}
+				},
+				{
+					"EventId" : 3,
+					"EventName" : "TempHiWarnClear",
+					"Description" : "DWDM Module temperature high warning cleared",
+					"SrcObjName" : "DWDMModule",
+					"EventEnable" : true,
+					"IsFault" : false
+				},
+				{
+					"EventId" : 4,
+					"EventName" : "TempLoAlarm",
+					"Description" : "DWDM Module temperature low alarm",
+					"SrcObjName" : "DWDMModule",
+					"EventEnable" : true,
+					"IsFault" : true,
+					"Fault" : {
+						"RaiseFault" : true,
+						"ClearingEventId" : 5,
+						"ClearingDaemonId" : 15,
+						"AlarmSeverity" : "Critical"
+					}
+				},
+				{
+					"EventId" : 5,
+					"EventName" : "TempLoAlarmClear",
+					"Description" : "DWDM Module temperature low alarm cleared",
+					"SrcObjName" : "DWDMModule",
+					"EventEnable" : true,
+					"IsFault" : false
+				},
+				{
+					"EventId" : 6,
+					"EventName" : "TempLoWarn",
+					"Description" : "DWDM Module temperature low warning",
+					"SrcObjName" : "DWDMModule",
+					"EventEnable" : true,
+					"IsFault" : true,
+					"Fault" : {
+						"RaiseFault" : true,
+						"ClearingEventId" : 7,
+						"ClearingDaemonId" : 15,
+						"AlarmSeverity" : "Major"
+					}
+				},
+				{
+					"EventId" : 7,
+					"EventName" : "TempLoWarnClear",
+					"Description" : "DWDM Module temperature low warning cleared",
+					"SrcObjName" : "DWDMModule",
+					"EventEnable" : true,
+					"IsFault" : false
+				},
+
+                {
+					"EventId" : 8,
+					"EventName" : "VoltageHiAlarm",
+					"Description" : "DWDM Module voltage high alarm",
+					"SrcObjName" : "DWDMModule",
+					"EventEnable" : true,
+					"IsFault" : true,
+					"Fault" : {
+						"RaiseFault" : true,
+						"ClearingEventId" : 9,
+						"ClearingDaemonId" : 15,
+						"AlarmSeverity" : "Critical"
+					}
+				},
+				{
+					"EventId" : 9,
+					"EventName" : "VoltageHiAlarmClear",
+					"Description" : "DWDM Module voltage high alarm cleared",
+					"SrcObjName" : "DWDMModule",
+					"EventEnable" : true,
+					"IsFault" : false
+				},
+				{
+					"EventId" : 10,
+					"EventName" : "VoltageHiWarn",
+					"Description" : "DWDM Module voltage high warning",
+					"SrcObjName" : "DWDMModule",
+					"EventEnable" : true,
+					"IsFault" : true,
+					"Fault" : {
+						"RaiseFault" : true,
+						"ClearingEventId" : 11,
+						"ClearingDaemonId" : 15,
+						"AlarmSeverity" : "Major"
+					}
+				},
+				{
+					"EventId" : 11,
+					"EventName" : "VoltageHiWarnClear",
+					"Description" : "DWDM Module voltage high warning cleared",
+					"SrcObjName" : "DWDMModule",
+					"EventEnable" : true,
+					"IsFault" : false
+				},
+				{
+					"EventId" : 12,
+					"EventName" : "VoltageLoAlarm",
+					"Description" : "DWDM Module voltage low alarm",
+					"SrcObjName" : "DWDMModule",
+					"EventEnable" : true,
+					"IsFault" : true,
+					"Fault" : {
+						"RaiseFault" : true,
+						"ClearingEventId" : 13,
+						"ClearingDaemonId" : 15,
+						"AlarmSeverity" : "Critical"
+					}
+				},
+				{
+					"EventId" : 13,
+					"EventName" : "VoltageLoAlarmClear",
+					"Description" : "DWDM Module voltage low alarm cleared",
+					"SrcObjName" : "DWDMModule",
+					"EventEnable" : true,
+					"IsFault" : false
+				},
+				{
+					"EventId" : 14,
+					"EventName" : "VoltageLoWarn",
+					"Description" : "DWDM Module voltage low warning",
+					"SrcObjName" : "DWDMModule",
+					"EventEnable" : true,
+					"IsFault" : true,
+					"Fault" : {
+						"RaiseFault" : true,
+						"ClearingEventId" : 15,
+						"ClearingDaemonId" : 15,
+						"AlarmSeverity" : "Major"
+					}
+				},
+				{
+					"EventId" : 15,
+					"EventName" : "VoltageLoWarnClear",
+					"Description" : "DWDM Module voltage low warning cleared",
+					"SrcObjName" : "DWDMModule",
+					"EventEnable" : true,
+					"IsFault" : false
+				},
+				{
+					"EventId" : 128,
+					"EventName" : "RXLOS",
+					"Description" : "DWDM Module Network interface RX loss of signal",
+					"SrcObjName" : "DWDMModuleNwIntf",
+					"EventEnable" : true,
+					"IsFault" : true,
+					"Fault" : {
+						"RaiseFault" : true,
+						"ClearingEventId" : 129,
+						"ClearingDaemonId" : 15,
+						"AlarmSeverity" : "Critical"
+					}
+				},
+				{
+					"EventId" : 129,
+					"EventName" : "RXLOSClear",
+					"Description" : "DWDM Module Network interface RX loss of signal deasserted",
+					"SrcObjName" : "DWDMModuleNwIntf",
+					"EventEnable" : true,
+					"IsFault" : false
+				},
+                {
+					"EventId" : 130,
+					"EventName" : "TxPwrHiAlarm",
+					"Description" : "DWDM Module network interface TX laser power high alarm",
+					"SrcObjName" : "DWDMModuleNwIntf",
+					"EventEnable" : true,
+					"IsFault" : true,
+					"Fault" : {
+						"RaiseFault" : true,
+						"ClearingEventId" : 131,
+						"ClearingDaemonId" : 15,
+						"AlarmSeverity" : "Major"
+					}
+				},
+				{
+					"EventId" : 131,
+					"EventName" : "TxPwrHiAlarmClear",
+					"Description" : "DWDM Module network interface TX laser power high alarm cleared",
+					"SrcObjName" : "DWDMModuleNwIntf",
+					"EventEnable" : true,
+					"IsFault" : false
+				},
+                {
+					"EventId" : 132,
+					"EventName" : "TxPwrHiWarn",
+					"Description" : "DWDM Module network interface TX laser power high warning",
+					"SrcObjName" : "DWDMModuleNwIntf",
+					"EventEnable" : true,
+					"IsFault" : true,
+					"Fault" : {
+						"RaiseFault" : true,
+						"ClearingEventId" : 133,
+						"ClearingDaemonId" : 15,
+						"AlarmSeverity" : "Minor"
+					}
+				},
+				{
+					"EventId" : 133,
+					"EventName" : "TxPwrHiWarnClear",
+					"Description" : "DWDM Module network interface TX power high warning cleared",
+					"SrcObjName" : "DWDMModuleNwIntf",
+					"EventEnable" : true,
+					"IsFault" : false
+				},
+                {
+					"EventId" : 134,
+					"EventName" : "TxPwrLoWarn",
+					"Description" : "DWDM Module network interface TX laser power low warning",
+					"SrcObjName" : "DWDMModuleNwIntf",
+					"EventEnable" : true,
+					"IsFault" : true,
+					"Fault" : {
+						"RaiseFault" : true,
+						"ClearingEventId" : 135,
+						"ClearingDaemonId" : 15,
+						"AlarmSeverity" : "Minor"
+					}
+				},
+				{
+					"EventId" : 135,
+					"EventName" : "TxPwrLoWarnClear",
+					"Description" : "DWDM Module network interface TX laser power low warning cleared",
+					"SrcObjName" : "DWDMModuleNwIntf",
+					"EventEnable" : true,
+					"IsFault" : false
+				},
+                {
+					"EventId" : 136,
+					"EventName" : "TxPwrLoAlarm",
+					"Description" : "DWDM Module network interface TX laser power low alarm",
+					"SrcObjName" : "DWDMModuleNwIntf",
+					"EventEnable" : true,
+					"IsFault" : true,
+					"Fault" : {
+						"RaiseFault" : true,
+						"ClearingEventId" : 137,
+						"ClearingDaemonId" : 15,
+						"AlarmSeverity" : "Major"
+					}
+				},
+				{
+					"EventId" : 137,
+					"EventName" : "TxPwrLoAlarmClear",
+					"Description" : "DWDM Module network interface TX power low alarm cleared",
+					"SrcObjName" : "DWDMModuleNwIntf",
+					"EventEnable" : true,
+					"IsFault" : false
+				},
+                {
+					"EventId" : 138,
+					"EventName" : "RxPwrHiAlarm",
+					"Description" : "DWDM Module network interface RX power high alarm",
+					"SrcObjName" : "DWDMModuleNwIntf",
+					"EventEnable" : true,
+					"IsFault" : true,
+					"Fault" : {
+						"RaiseFault" : true,
+						"ClearingEventId" : 139,
+						"ClearingDaemonId" : 15,
+						"AlarmSeverity" : "Major"
+					}
+				},
+				{
+					"EventId" : 139,
+					"EventName" : "RxPwrHiAlarmClear",
+					"Description" : "DWDM Module network interface RX power high alarm cleared",
+					"SrcObjName" : "DWDMModuleNwIntf",
+					"EventEnable" : true,
+					"IsFault" : false
+				},
+                {
+					"EventId" : 140,
+					"EventName" : "RxPwrHiWarn",
+					"Description" : "DWDM Module network interface RX power high warning",
+					"SrcObjName" : "DWDMModuleNwIntf",
+					"EventEnable" : true,
+					"IsFault" : true,
+					"Fault" : {
+						"RaiseFault" : true,
+						"ClearingEventId" : 141,
+						"ClearingDaemonId" : 15,
+						"AlarmSeverity" : "Minor"
+					}
+				},
+				{
+					"EventId" : 141,
+					"EventName" : "RxPwrHiWarnClear",
+					"Description" : "DWDM Module network interface TX power high warning cleared",
+					"SrcObjName" : "DWDMModuleNwIntf",
+					"EventEnable" : true,
+					"IsFault" : false
+				},
+                {
+					"EventId" : 142,
+					"EventName" : "RxPwrLoWarn",
+					"Description" : "DWDM Module network interface RX power low warning",
+					"SrcObjName" : "DWDMModuleNwIntf",
+					"EventEnable" : true,
+					"IsFault" : true,
+					"Fault" : {
+						"RaiseFault" : true,
+						"ClearingEventId" : 143,
+						"ClearingDaemonId" : 15,
+						"AlarmSeverity" : "Minor"
+					}
+				},
+				{
+					"EventId" : 143,
+					"EventName" : "RxPwrLoWarnClear",
+					"Description" : "DWDM Module network interface RX power low warning cleared",
+					"SrcObjName" : "DWDMModuleNwIntf",
+					"EventEnable" : true,
+					"IsFault" : false
+				},
+                {
+					"EventId" : 144,
+					"EventName" : "RxPwrLoAlarm",
+					"Description" : "DWDM Module network interface RX power low alarm",
+					"SrcObjName" : "DWDMModuleNwIntf",
+					"EventEnable" : true,
+					"IsFault" : true,
+					"Fault" : {
+						"RaiseFault" : true,
+						"ClearingEventId" : 145,
+						"ClearingDaemonId" : 15,
+						"AlarmSeverity" : "Major"
+					}
+				},
+				{
+					"EventId" : 145,
+					"EventName" : "RxPwrLoAlarmClear",
+					"Description" : "DWDM Module network interface TX power low alarm cleared",
+					"SrcObjName" : "DWDMModuleNwIntf",
+					"EventEnable" : true,
+					"IsFault" : false
+				}
 			]
 		}
 	]

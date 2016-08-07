@@ -31,17 +31,19 @@ type LLDPGlobal struct {
 
 type LLDPIntf struct {
 	baseObj
-	IfIndex int32 `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"1",DESCRIPTION: "IfIndex where lldp needs is enabled/disabled", AUTOCREATE:"true",PARENT:"Port"`
+	IfIndex int32 `SNAPROUTE: "KEY", ACCESS:"rw", MULTIPLICITY:"*",DESCRIPTION: "IfIndex where lldp needs is enabled/disabled", AUTODISCOVER:"true"`
 	Enable  bool  `DESCRIPTION: "Enable/Disable lldp config Per Port", DEFAULT:"true"`
 }
 
 type LLDPIntfState struct {
 	baseObj
-	IfIndex      int32  `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"1",DESCRIPTION: "IfIndex where lldp needs to be configured"`
-	Enable       bool   `DESCRIPTION: "Enable/Disable lldp config"`
-	LocalPort    string `DESCRIPTION: "Local interface"`
-	PeerMac      string `DESCRIPTION: "Mac address of direct connection"`
-	Port         string `DESCRIPTION: "Name of directtly connected pors"`
-	HoldTime     string `DESCRIPTION: "Validity of the peer information"`
-	Capabilities string `DESCRIPTION: "Capabilities of the peer port"`
+	IfIndex             int32  `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*",DESCRIPTION: "IfIndex where lldp needs to be configured"`
+	Enable              bool   `DESCRIPTION: "Enable/Disable lldp config"`
+	LocalPort           string `DESCRIPTION: "Local interface"`
+	PeerMac             string `DESCRIPTION: "Mac address of direct connection"`
+	PeerPort            string `DESCRIPTION: "Name of directtly connected pors"`
+	PeerHostName        string `DESCRIPTION: "Name of the peer host`
+	HoldTime            string `DESCRIPTION: "Validity of the peer information"`
+	SystemCapabilities  string `DESCRIPTION: "System Capabilities of the peer port"`
+	EnabledCapabilities string `DESCRIPTION: "Enabled Capabilities of the peer port"`
 }

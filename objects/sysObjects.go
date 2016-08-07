@@ -59,13 +59,6 @@ type IpTableAclState struct {
 }
 */
 
-type Daemon struct {
-	baseObj
-	Name     string `SNAPROUTE: "KEY", ACCESS:"x", MULTIPLICITY:"*", DESCRIPTION: "Daemon name"`
-	Enable   bool   `DESCRIPTION: "Enable the flexswitch daemon", DEFAULT: "true"`
-	WatchDog bool   `DESCRIPTION: "Enable watchdog for daemon", DEFAULT: "true"`
-}
-
 type DaemonState struct {
 	baseObj
 	Name          string `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Daemon name", USESTATEDB:"true"`

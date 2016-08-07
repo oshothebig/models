@@ -26,17 +26,89 @@ package objects
 /*
  * This DS will be used while Created/Deleting Platform Config
  */
-type PlatformSystemState struct {
+
+type PlatformState struct {
 	baseObj
-	ObjName   string `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"1", DESCRIPTION: "ObjName", DEFAULT: "System"`
-	SerialNum string `DESCRIPTION: "Serial Number"`
+	ObjName      string `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"1", DESCRIPTION: "ObjName", DEFAULT: "Platform"`
+	ProductName  string `DESCRIPTION: "Product Number"`
+	SerialNum    string `DESCRIPTION: "Serial Number"`
+	Manufacturer string `DESCRIPTION: "Manufacturer"`
+	Vendor       string `DESCRIPTION: "Vendor"`
+	Release      string `DESCRIPTION: "Relese version"`
+	PlatformName string `DESCRIPTION: "Platform Number"`
+	Version      string `DESCRIPTION: "Platform Driver version, in case of ONLP(ONIE Version) and OpenBMC(BMC Version)"`
+}
+
+type Sfp struct {
+	baseObj
+	SfpId      int32  `SNAPROUTE: "KEY", ACCESS:"rw", MULTIPLICITY:"*", AUTODISCOVER: "true", DESCRIPTION: "SFP id", DEFAULT:0`
+	AdminState string `DESCRIPTION: "Admin PORT UP/DOWN(TX OFF)"`
+}
+
+type SfpState struct {
+	baseObj
+	SfpId      int32  `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "SFP id", DEFAULT:0`
+	SfpSpeed   string `DESCRIPTION: "SFP speed in MBPS"`
+	SfpLOS     string `DESCRIPTION: "SFP status RX LOS"`
+	SfpPresent string `DESCRIPTION: "SFP status PRESENT/MISSING"`
+	SfpType    string `DESCRIPTION: "SFP type Copper/Optical"`
+	SerialNum  string `DESCRIPTION: "SFP SerialNum"`
+	EEPROM     string `DESCRIPTION: "SFP eeprom"`
+}
+
+type ThermalState struct {
+	baseObj
+	ThermalId                 int32  `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Thermal sensor id", DEFAULT:0`
+	Location                  string `DESCRIPTION: "Thermal sensor location CPU/PSU/Motherboard"`
+	Temperature               string `DESCRIPTION: "Temperature current"`
+	LowerWatermarkTemperature string `DESCRIPTION: "Temperature warning"`
+	UpperWatermarkTemperature string `DESCRIPTION: "Temperature error"`
+	ShutdownTemperature       string `DESCRIPTION: "Temperature panic"`
+}
+
+type Psu struct {
+	baseObj
+	PsuId      int32  `SNAPROUTE: "KEY", ACCESS:"rw", MULTIPLICITY:"*", AUTODISCOVER: "true", DESCRIPTION: "PSU id", DEFAULT:0`
+	AdminState string `DESCRIPTION: "Admin UP/DOWN PSU"`
+}
+
+type PsuState struct {
+	baseObj
+	PsuId      int32  `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "PSU id", DEFAULT:0`
+	AdminState string `DESCRIPTION: "Admin UP/DOWN PSU"`
+	ModelNum   string `DESCRIPTION: "Model Number"`
+	SerialNum  string `DESCRIPTION: "Serial Number"`
+	Vin        int32  `DESCRIPTION: "Voltage in"`
+	Vout       int32  `DESCRIPTION: "Voltage out"`
+	Iin        int32  `DESCRIPTION: "Current in"`
+	Iout       int32  `DESCRIPTION: "Current out"`
+	Pin        int32  `DESCRIPTION: "Power in"`
+	Pout       int32  `DESCRIPTION: "power out"`
+	Fan        string `DESCRIPTION: "Fan PRESENT/MISSING"`
+	FanId      int32  `DESCRIPTION: "Fan Info"`
+	LedId      int32  `DESCRIPTION: "LED Info"`
+}
+
+type Led struct {
+	baseObj
+	LedId       int32  `SNAPROUTE: "KEY", ACCESS:"rw", MULTIPLICITY:"*", AUTODISCOVER: "true", DESCRIPTION: "LED id", DEFAULT:0`
+	LedAdmin    string `DESCRIPTION: "LED ON/OFF"`
+	LedSetColor string `DESCRIPTION: "LED set color"`
+}
+
+type LedState struct {
+	baseObj
+	LedId       int32  `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "LED id", DEFAULT:0`
+	LedIdentify string `DESCRIPTION: "LED represents FAN/PSU/RESET etc"`
+	LedState    string `DESCRIPTION: "LED State ON/OFF"`
+	LedColor    string `DESCRIPTION: "LED Color"`
 }
 
 type Fan struct {
 	baseObj
-	FanId          int32  `SNAPROUTE: "KEY", ACCESS:"rw", MULTIPLICITY:"*", AUTODISCOVER: "true", DESCRIPTION: "Fan unit id", DEFAULT:0`
-	AdminSpeed     int32  `DESCRIPTION: "Fan admin speed in rpm"`
-	AdminDirection string `DESCRIPTION: "Air flow caused because of fan rotation", SELECTION: B2F/F2B, DEFAULT: B2F"`
+	FanId      int32  `SNAPROUTE: "KEY", ACCESS:"rw", MULTIPLICITY:"*", AUTODISCOVER: "true", DESCRIPTION: "Fan unit id", DEFAULT:0`
+	AdminState string `DESCRIPTION: "Fan admin ON/OFF"`
+	AdminSpeed int32  `DESCRIPTION: "Fan set speed in rpm"`
 }
 
 type FanState struct {
@@ -48,4 +120,5 @@ type FanState struct {
 	Status        string `DESCRIPTION: "Fan status PRESENT/MISSING/FAILED/NORMAL"`
 	Model         string `DESCRIPTION: "Model of Fan"`
 	SerialNum     string `DESCRIPTION: "Serial Number"`
+	LedId         int32  `DESCRIPTION: "LED Info"`
 }

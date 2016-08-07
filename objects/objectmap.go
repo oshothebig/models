@@ -24,6 +24,4 @@
 package objects
 
 //TODO: Only Action objects are manually added here. These will be removed when codagen support added for Action objects.
-var ConfigObjectMap = map[string]ConfigObj{
-	"Daemon":               &Daemon{},
-}
+var ConfigObjectMap = map[string]ConfigObj{}

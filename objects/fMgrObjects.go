@@ -45,3 +45,17 @@ type FaultState struct {
 	SrcObjKey      string `DESCRIPTION: "Fault Object Key"`
 	ResolutionTime string `DESCRIPTION: "Resolution Time stamp"`
 }
+
+type AlarmState struct {
+	baseObj
+	OwnerId        int32  `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Alarm owner daemon Id picked up from events.json"`
+	EventId        int32  `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Alarm event id picked up from events.json"`
+	OwnerName      string `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Alarm owner daemon name picked up from events.json"`
+	EventName      string `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Alarm event name picked up from events.json"`
+	SrcObjName     string `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Alarm event name picked up from events.json"`
+	Severity       string `DESCRIPTION: "Alarm Severity"`
+	Description    string `DESCRIPTION: "Description explaining the fault"`
+	OccuranceTime  string `DESCRIPTION: "Timestamp at which fault occured"`
+	SrcObjKey      string `DESCRIPTION: "Fault Object Key"`
+	ResolutionTime string `DESCRIPTION: "Resolution Time stamp"`
+}

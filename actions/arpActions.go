@@ -23,22 +23,22 @@
 
 package actions
 
-import (
-	"fmt"
-)
-
-type ActionObj interface {
-	UnmarshalAction(data []byte) (ActionObj, error)
+type ArpDeleteByIPv4Addr struct {
+	baseAction
+	IpAddr string `DESCRIPTION: "End Host IP Address for which corresponding Arp entry needed to be deleted"`
 }
 
-type baseAction struct {
+type ArpDeleteByIfName struct {
+	baseAction
+	IfName string `DESCRIPTION: "All the Arp learned for end host on given L3 interface will be deleted"`
 }
 
-func (obj baseAction) UnmarshalAction(data []byte) (ActionObj, error) {
-	fmt.Println("base action unmarshal")
-	return nil, nil
+type ArpRefreshByIPv4Addr struct {
+	baseAction
+	IpAddr string `DESCRIPTION: "Neighbor's IP Address for which corresponding Arp entry needed to be re-learned"`
 }
 
-type SaveConfigObj struct {
-	ConfigData map[string][]interface{} `json:"ConfigData"`
+type ArpRefreshByIfName struct {
+	baseAction
+	IfName string `DESCRIPTION: "All the Arp learned on given L3 interface will be re-learned"`
 }
