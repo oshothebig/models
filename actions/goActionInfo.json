@@ -5,6 +5,9 @@
 "arpActions.go" : {"owner": "arpd",
                    "location" : "l3/arpd/rpc",
                    "svcName" : "arpdInt"},
+"fMgrActions.go" : {"owner": "fMgrd",
+                   "location" : "infra/fMgrd/rpc",
+                   "svcName" : "nil"},
 "localActions.go" : {"owner": "local", 
                      "location" : "nil",
                      "svcName" : "nil"}

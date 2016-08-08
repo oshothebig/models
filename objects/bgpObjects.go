@@ -247,3 +247,10 @@ type BGPAggregate struct {
 	GenerateASSet   bool   `DESCRIPTION: "Generate AS set when aggregating routes", DEFAULT: "false"`
 	SendSummaryOnly bool   `DESCRIPTION: "Send summary route only when aggregating routes", DEFAULT: "false"`
 }
+
+type BGPIPv6Aggregate struct {
+	baseObj
+	IpPrefix        string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", DESCRIPTION: "IPv6 Prefix in CIDR format to match"`
+	GenerateASSet   bool   `DESCRIPTION: "Generate AS set when aggregating routes", DEFAULT: "false"`
+	SendSummaryOnly bool   `DESCRIPTION: "Send summary route only when aggregating routes", DEFAULT: "false"`
+}
