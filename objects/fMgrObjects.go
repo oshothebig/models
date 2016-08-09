@@ -43,6 +43,7 @@ type FaultState struct {
 	Description      string `DESCRIPTION: "Description explaining the fault"`
 	OccuranceTime    string `DESCRIPTION: "Timestamp at which fault occured"`
 	SrcObjKey        string `DESCRIPTION: "Fault Object Key"`
+	SrcObjUUID       string `DESCRIPTION: "Fault Object UUID"`
 	ResolutionTime   string `DESCRIPTION: "Resolution Time stamp"`
 	ResolutionReason string `DESCRIPTION: "Cleared/Disabled"`
 }
@@ -58,6 +59,7 @@ type AlarmState struct {
 	Description      string `DESCRIPTION: "Description explaining the fault"`
 	OccuranceTime    string `DESCRIPTION: "Timestamp at which fault occured"`
 	SrcObjKey        string `DESCRIPTION: "Fault Object Key"`
+	SrcObjUUID       string `DESCRIPTION: "Fault Object UUID"`
 	ResolutionTime   string `DESCRIPTION: "Resolution Time stamp"`
 	ResolutionReason string `DESCRIPTION: "Cleared/Disabled"`
 }
