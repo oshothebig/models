@@ -48,7 +48,7 @@ type DWDMModule struct {
 
 type DWDMModuleNwIntf struct {
 	baseObj
-	ModuleId                uint8   `SNAPROUTE: "KEY", ACCESS:"rw", MULTIPLICITY: "*", DESCRIPTION: "DWDM Module identifier"`
+	ModuleId                uint8   `SNAPROUTE: "KEY", ACCESS:"rw", MULTIPLICITY: "*", AUTODISCOVER: "true", DESCRIPTION: "DWDM Module identifier"`
 	NwIntfId                uint8   `SNAPROUTE: "KEY", DESCRIPTION: "DWDM Module network interface identifier"`
 	ModulationFmt           string  `DESCRIPTION: "Modulation format to use for this network interface", SELECTION: "QPSK"/"8QAM/"16QAM", DEFAULT:"16QAM"`
 	TxPower                 float64 `DESCRIPTION: "Transmit output power for this network interface in dBm, MIN:0, MAX:4294967295", DEFAULT:0`
@@ -74,7 +74,7 @@ type DWDMModuleNwIntfState struct {
 
 type DWDMModuleClntIntf struct {
 	baseObj
-	ModuleId                  uint8 `SNAPROUTE: "KEY", ACCESS:"rw", MULTIPLICITY: "*", DESCRIPTION: "DWDM Module identifier"`
+	ModuleId                  uint8 `SNAPROUTE: "KEY", ACCESS:"rw", MULTIPLICITY: "*", AUTODISCOVER: "true", DESCRIPTION: "DWDM Module identifier"`
 	ClntIntfId                uint8 `SNAPROUTE: "KEY", DESCRIPTION: "DWDM Module client interface identifier"`
 	TXFECDecDisable           bool  `DESCRIPTION: "802.3bj FEC decoder enable/disable state for traffic from Host to DWDM Module", DEFAULT: false`
 	RXFECDecDisable           bool  `DESCRIPTION: "802.3bj FEC decoder enable/disable state for traffic from DWDM module to Host", DEFAULT: false`
