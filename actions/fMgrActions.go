@@ -29,3 +29,10 @@ type FaultEnable struct {
 	EventName string `DESCRIPTION: "Fault event name"`
 	Enable    bool   `DESCRIPTION:"Enable/Disbale control"`
 }
+
+type FaultClear struct {
+	baseAction
+	OwnerName  string `DESCRIPTION: "Fault owner name"`
+	EventName  string `DESCRIPTION: "Fault event name"`
+	SrcObjUUID string `DESCRIPTION: "Source object Key UUID"`
+}
