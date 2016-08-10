@@ -121,6 +121,14 @@ type ArpEntryHwState struct {
 	Port    string `DESCRIPTION: "Router Interface to which neighbor is attached to", QPARAM: "optional" `
 }
 
+type NdpEntryHwState struct {
+	baseObj
+	IpAddr  string `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", QPARAM: "optional" ,DESCRIPTION: "Neighbor's IP Address"`
+	MacAddr string `DESCRIPTION: "MAC address of the neighbor machine with corresponding IP Address", QPARAM: "optional" `
+	Vlan    string `DESCRIPTION: "Vlan ID of the Router Interface to which neighbor is attached to", QPARAM: "optional" `
+	Port    string `DESCRIPTION: "Router Interface to which neighbor is attached to", QPARAM: "optional" `
+}
+
 type LogicalIntf struct {
 	baseObj
 	Name string `SNAPROUTE: "KEY", ACCESS:"w", DESCRIPTION: "Name of logical interface"`
