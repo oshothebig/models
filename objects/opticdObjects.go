@@ -95,3 +95,18 @@ type DWDMModuleClntIntfState struct {
 	ModuleId   uint8 `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY: "*", DESCRIPTION: "DWDM Module identifier"`
 	ClntIntfId uint8 `SNAPROUTE: "KEY", DESCRIPTION: "DWDM Module client interface identifier"`
 }
+
+type DWDMModulePMData struct {
+	TimeStamp string  `DESCRIPTION: "Timestamp at which data is collected"`
+	Value     float64 `DESCRIPTION: "PM Data Value"`
+}
+
+type DWDMModuleNwIntfPMState struct {
+	baseObj
+	ModuleId uint8  `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY: "*", DESCRIPTION: "DWDM Module identifier"`
+	NwIntfId uint8  `SNAPROUTE: "KEY", DESCRIPTION: "DWDM Module network interface identifier"`
+	Resource string `SNAPROUTE: "KEY", DESCRIPTION: "Opticd resource name for which PM Data is required"`
+	Type     string `SNAPROUTE: "KEY", DESCRIPTION: "Min/Max/Avg"`
+	Class    string `SNAPROUTE: "KEY", DESCRIPTION: "Class of PM Data", SELECTION: CLASS-A/CLASS-B/CLASS-B, DEFAULT: CLASS-A`
+	Data     []DWDMModulePMData
+}
