@@ -41,9 +41,9 @@ type DWDMModuleState struct {
 
 type DWDMModule struct {
 	baseObj
-	ModuleId            uint8 `SNAPROUTE: "KEY", ACCESS:"rw", MULTIPLICITY: "*", AUTODISCOVER: "true", DESCRIPTION: "DWDM Module identifier"`
-	AdminState          bool  `DESCRIPTION: "Reset state of this dwdm module (false (Reset deasserted), true (Reset asserted))", DEFAULT:true`
-	IndependentLaneMode bool  `DESCRIPTION: "Network lane configuration for the DWDM Module. true-Independent lanes, false-Coupled lanes, DEFAULT:true"`
+	ModuleId            uint8  `SNAPROUTE: "KEY", ACCESS:"rw", MULTIPLICITY: "*", AUTODISCOVER: "true", DESCRIPTION: "DWDM Module identifier"`
+	AdminState          string `DESCRIPTION: "Reset state of this dwdm module (false (Reset deasserted), true (Reset asserted))", SELECTION: "UP"/"DOWN", DEFAULT:"DOWN"`
+	IndependentLaneMode bool   `DESCRIPTION: "Network lane configuration for the DWDM Module. true-Independent lanes, false-Coupled lanes, DEFAULT:true"`
 }
 
 type DWDMModuleNwIntf struct {
@@ -57,7 +57,7 @@ type DWDMModuleNwIntf struct {
 	DiffEncoding            bool    `DESCRIPTION: "Control to enable/disable DWDM Module network interface encoding type", DEFAULT: true`
 	TxPulseShapeFltrType    string  `DESCRIPTION: "TX pulse shaping filter type", SELECTION: "RootRaisedCos"/"RaisedCos"/"Gaussian", DEFAULT:RootRaisedCos"`
 	TxPulseShapeFltrRollOff float64 `DESCRIPTION: "TX pulse shape filter roll off factor, MIN:0.004, MAX:1.0", DEFAULT:0.301`
-	AdminState              bool    `DESCRIPTION: "Administrative state of this network interface", DEFAULT: true`
+	AdminState              string  `DESCRIPTION: "Administrative state of this network interface", SELECTION: "UP"/"DOWN", DEFAULT: "UP"`
 }
 
 type DWDMModuleNwIntfState struct {
@@ -75,19 +75,19 @@ type DWDMModuleNwIntfState struct {
 
 type DWDMModuleClntIntf struct {
 	baseObj
-	ModuleId                  uint8 `SNAPROUTE: "KEY", ACCESS:"rw", MULTIPLICITY: "*", AUTODISCOVER: "true", DESCRIPTION: "DWDM Module identifier"`
-	ClntIntfId                uint8 `SNAPROUTE: "KEY", DESCRIPTION: "DWDM Module client interface identifier"`
-	TXFECDecDisable           bool  `DESCRIPTION: "802.3bj FEC decoder enable/disable state for traffic from Host to DWDM Module", DEFAULT: false`
-	RXFECDecDisable           bool  `DESCRIPTION: "802.3bj FEC decoder enable/disable state for traffic from DWDM module to Host", DEFAULT: false`
-	HostTxEqLfCtle            uint8 `DESCRIPTION: "Host interface TX deserializer equalization. LELPZRC LF-CTLE LFPZ gain code.", MIN:0, MAX:8, DEFAULT:0`
-	HostTxEqCtle              uint8 `DESCRIPTION: "Host interface TX deserializer equalization. LELRC CTLE LE gain code.", MIN:0, MAX:20, DEFAULT:18`
-	HostTxEqDfe               uint8 `DESCRIPTION: "Host interface TX deserializer equalization. s-DFE, DFE tap coefficient", MIN:0, MAX:63, DEFAULT:0`
-	HostRxSerializerTap0Gain  uint8 `DESCRIPTION: "Host RX Serializer tap 0 control, gain for equalization filter tap", DEFAULT:7, MIN:0, MAX:7`
-	HostRxSerializerTap0Delay uint8 `DESCRIPTION: "Host RX Serializer tap 0 control, delay for equalization filter tap", DEFAULT:7, MIN:0, MAX:7`
-	HostRxSerializerTap1Gain  uint8 `DESCRIPTION: "Host RX Serializer tap 1 control, gain for equalization filter tap", DEFAULT:7, MIN:0, MAX:7`
-	HostRxSerializerTap2Gain  uint8 `DESCRIPTION: "Host RX Serializer tap 2 control, gain for equalization filter tap", DEFAULT:15, MIN:0, MAX:15`
-	HostRxSerializerTap2Delay uint8 `DESCRIPTION: "Host RX Serializer tap 2 control, delay for equalization filter tap", DEFAULT:5, MIN:0, MAX:7`
-	AdminState                bool  `DESCRIPTION: "Administrative state of this client interface", DEFAULT: true`
+	ModuleId                  uint8  `SNAPROUTE: "KEY", ACCESS:"rw", MULTIPLICITY: "*", AUTODISCOVER: "true", DESCRIPTION: "DWDM Module identifier"`
+	ClntIntfId                uint8  `SNAPROUTE: "KEY", DESCRIPTION: "DWDM Module client interface identifier"`
+	TXFECDecDisable           bool   `DESCRIPTION: "802.3bj FEC decoder enable/disable state for traffic from Host to DWDM Module", DEFAULT: false`
+	RXFECDecDisable           bool   `DESCRIPTION: "802.3bj FEC decoder enable/disable state for traffic from DWDM module to Host", DEFAULT: false`
+	HostTxEqLfCtle            uint8  `DESCRIPTION: "Host interface TX deserializer equalization. LELPZRC LF-CTLE LFPZ gain code.", MIN:0, MAX:8, DEFAULT:0`
+	HostTxEqCtle              uint8  `DESCRIPTION: "Host interface TX deserializer equalization. LELRC CTLE LE gain code.", MIN:0, MAX:20, DEFAULT:18`
+	HostTxEqDfe               uint8  `DESCRIPTION: "Host interface TX deserializer equalization. s-DFE, DFE tap coefficient", MIN:0, MAX:63, DEFAULT:0`
+	HostRxSerializerTap0Gain  uint8  `DESCRIPTION: "Host RX Serializer tap 0 control, gain for equalization filter tap", DEFAULT:7, MIN:0, MAX:7`
+	HostRxSerializerTap0Delay uint8  `DESCRIPTION: "Host RX Serializer tap 0 control, delay for equalization filter tap", DEFAULT:7, MIN:0, MAX:7`
+	HostRxSerializerTap1Gain  uint8  `DESCRIPTION: "Host RX Serializer tap 1 control, gain for equalization filter tap", DEFAULT:7, MIN:0, MAX:7`
+	HostRxSerializerTap2Gain  uint8  `DESCRIPTION: "Host RX Serializer tap 2 control, gain for equalization filter tap", DEFAULT:15, MIN:0, MAX:15`
+	HostRxSerializerTap2Delay uint8  `DESCRIPTION: "Host RX Serializer tap 2 control, delay for equalization filter tap", DEFAULT:5, MIN:0, MAX:7`
+	AdminState                string `DESCRIPTION: "Administrative state of this client interface", SELECTION: "UP"/"DOWN", DEFAULT: "UP"`
 }
 
 type DWDMModuleClntIntfState struct {
