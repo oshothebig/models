@@ -41,12 +41,13 @@ var EventKeyMap map[string]KeyMap = map[string]KeyMap{
 }
 
 type Event struct {
-	OwnerName   string
-	EventName   string
-	TimeStamp   string
-	SrcObjName  string
-	SrcObjKey   interface{}
-	Description string
+	OwnerName      string
+	EventName      string
+	TimeStamp      string
+	SrcObjName     string
+	SrcObjKey      interface{}
+	Description    string
+	AdditionalData interface{}
 }
 
 type EventStats struct {
