@@ -21,18 +21,16 @@
 // |__|     |_______||_______/__/ \__\ |_______/        \__/  \__/     |__|     |__|      \______||__|  |__|
 //
 
-package actions
+package objects
 
-type FaultEnable struct {
-	baseAction
-	OwnerName string `DESCRIPTION: "Fault owner name"`
-	EventName string `DESCRIPTION: "Fault event name"`
-	Enable    bool   `DESCRIPTION:"Enable/Disbale control"`
-}
-
-type FaultClear struct {
-	baseAction
-	OwnerName  string `DESCRIPTION: "Fault owner name"`
-	EventName  string `DESCRIPTION: "Fault event name"`
-	SrcObjUUID string `DESCRIPTION: "Source object Key UUID"`
+/*
+ * This DS will be used while Created/Deleting Notifier Config
+ */
+type NotifierEnable struct {
+	baseObj
+	// placeholder to create a key
+	Vrf         string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"1", AUTOCREATE: "true", DESCRIPTION: "Vrf name", DEFAULT:"default"`
+	EventEnable bool   `DESCRIPTION: "Enable Notifier", DEFAULT:true`
+	AlarmEnable bool   `DESCRIPTION: "Enable Notifier", DEFAULT:true`
+	FaultEnable bool   `DESCRIPTION: "Enable Notifier", DEFAULT:true`
 }
