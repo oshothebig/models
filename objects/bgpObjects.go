@@ -75,7 +75,7 @@ type BGPQueues struct {
 type BGPNeighbor struct {
 	baseObj
 	NeighborAddress         string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", DESCRIPTION: "Address of the BGP neighbor"`
-	IfIndex                 int32  `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", DESCRIPTION: "Interface of the BGP neighbor"`
+	IntfRef                 string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", DESCRIPTION: "Interface of the BGP neighbor"`
 	PeerAS                  uint32 `DESCRIPTION: "Peer AS of the BGP neighbor", DEFAULT: "0"`
 	LocalAS                 uint32 `DESCRIPTION: "Local AS of the BGP neighbor", DEFAULT: "0"`
 	UpdateSource            string `DESCRIPTION: "Source IP to connect to the BGP neighbor", DEFAULT: ""`
@@ -102,7 +102,7 @@ type BGPNeighbor struct {
 type BGPNeighborState struct {
 	baseObj
 	NeighborAddress         string      `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Address of the BGP neighbor"`
-	IfIndex                 int32       `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Interface of the BGP neighbor"`
+	IntfRef                 string      `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Interface of the BGP neighbor"`
 	PeerAS                  uint32      `DESCRIPTION: "Peer AS of the BGP neighbor"`
 	LocalAS                 uint32      `DESCRIPTION: "Local AS of the BGP neighbor"`
 	UpdateSource            string      `DESCRIPTION: "Source IP to connect to the BGP neighbor"`
