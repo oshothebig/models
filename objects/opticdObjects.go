@@ -52,8 +52,8 @@ type DWDMModuleNwIntf struct {
 	NwIntfId                uint8   `SNAPROUTE: "KEY", DESCRIPTION: "DWDM Module network interface identifier"`
 	ModulationFmt           string  `DESCRIPTION: "Modulation format to use for this network interface", SELECTION: "QPSK"/"8QAM/"16QAM", DEFAULT:"16QAM"`
 	TxPower                 float64 `DESCRIPTION: "Transmit output power for this network interface in dBm, MIN:0, MAX:4294967295", DEFAULT:0`
-	WaveLength              uint16  `DESCRIPTION: "The ITU-T G.694.1 grid wavelength value to use for this network interface in nm", MIN:1530, MAX:1565`
-	FECMode                 string  `DESCRIPTION: "DWDM Module network interface FEC mode", SELECTION: "15%SDFEC"/"15%OvrHeadSDFEC/25%OvrHeadSDFEC"`
+	ChannelNumber           uint8   `DESCRIPTION: "TX Channel number to use for this network interface", MIN:1, MAX:100, DEFAULT:48`
+	FECMode                 string  `DESCRIPTION: "DWDM Module network interface FEC mode", SELECTION: "15%SDFEC"/"15%OvrHeadSDFEC"/"25%OvrHeadSDFEC", DEFAULT:"15%SDFEC"`
 	DiffEncoding            bool    `DESCRIPTION: "Control to enable/disable DWDM Module network interface encoding type", DEFAULT: true`
 	TxPulseShapeFltrType    string  `DESCRIPTION: "TX pulse shaping filter type", SELECTION: "RootRaisedCos"/"RaisedCos"/"Gaussian", DEFAULT:RootRaisedCos"`
 	TxPulseShapeFltrRollOff float64 `DESCRIPTION: "TX pulse shape filter roll off factor, MIN:0.004, MAX:1.0", DEFAULT:0.301`
