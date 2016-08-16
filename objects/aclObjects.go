@@ -25,14 +25,15 @@ package objects
 
 type Acl struct {
 	baseObj
-	AclName  string    `SNAPROUTE: "KEY", ACCESS:"w",MULTIPLICITY: "*", DESCRIPTION: "Acl name to be used to refer to this ACL"`
-	RuleList []AclRule `DESCRIPTION: "List of rules to be applied to this ACL"`
+	AclName   string    `SNAPROUTE: "KEY", ACCESS:"w",MULTIPLICITY: "*", DESCRIPTION: "Acl name to be used to refer to this ACL"`
+	RuleList  []AclRule `DESCRIPTION: "List of rules to be applied to this ACL"`
+	Direction string    `SNAPROUTE: "IN/OUT direction in which ACL to be applied"`
 }
 
 type AclRule struct {
 	baseObj
 	RuleName   string `SNAPROUTE: "KEY", MULTIPLICITY: "*", ACCESS:"w", DESCRIPTION: "Acl rule name"`
-	SourceMac  string `SNAPROUTE: "KEY",  DESCRIPTION: "Source MAC address."`
+	SourceMac  string `DESCRIPTION: "Source MAC address."`
 	DestMac    string `DESCRIPTION: "Destination MAC address"`
 	SourceIp   string `DESCRIPTION: "Source IP address"`
 	DestIp     string `DESCRIPTION: "Destination IP address"`
@@ -40,18 +41,20 @@ type AclRule struct {
 	DestMask   string `DESCRIPTION: "Network mark for dest IP"`
 	Action     string `DESCRIPTION: "Type of action (Allow/Deny)", DEFAULT:"Allow", STRLEN:"16"`
 	Proto      string `DESCRIPTION: "Protocol type"`
+	Port       int    `DESCRIPTION: "L4 Port"`
 }
 
 type AclState struct {
 	baseObj
-	AclName  string    `SNAPROUTE: "KEY", ACCESS:"r",MULTIPLICITY: "*", DESCRIPTION: "Acl name to be used to refer to this ACL"`
-	RuleList []AclRule `DESCRIPTION: "List of rules to be applied to this ACL"`
+	AclName   string    `SNAPROUTE: "KEY", ACCESS:"r",MULTIPLICITY: "*", DESCRIPTION: "Acl name to be used to refer to this ACL"`
+	RuleList  []AclRule `DESCRIPTION: "List of rules to be applied to this ACL"`
+	Direction string    `SNAPROUTE: "IN/OUT direction in which ACL to be applied"`
 }
 
 type AclRuleState struct {
 	baseObj
 	RuleName   string `SNAPROUTE: "KEY", MULTIPLICITY: "*", ACCESS:"r", DESCRIPTION: "Acl rule name"`
-	SourceMac  string `SNAPROUTE: "KEY",  DESCRIPTION: "Source MAC address."`
+	SourceMac  string `DESCRIPTION: "Source MAC address."`
 	DestMac    string `DESCRIPTION: "Destination MAC address"`
 	SourceIp   string `DESCRIPTION: "Source IP address"`
 	DestIp     string `DESCRIPTION: "Destination IP address"`
@@ -59,4 +62,5 @@ type AclRuleState struct {
 	DestMask   string `DESCRIPTION: "Network mark for dest IP"`
 	Action     string `DESCRIPTION: "Type of action (Allow/Deny)", DEFAULT:"Allow", STRLEN:"16"`
 	Proto      string `DESCRIPTION: "Protocol type"`
+	Port       int    `DESCRIPTION: "L4 Port"`
 }
