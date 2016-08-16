@@ -143,12 +143,12 @@ type PerProtocolRouteCount struct {
 }
 type RouteStatState struct {
 	baseObj
-	Vrf                       string `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"1", DESCRIPTION: "System Vrf", DEFAULT:"default"`
-	TotalRouteCount           int32
-	ECMPRouteCount            int32
-	V4RouteCount              int32
-	V6RouteCount              int32
-	PerProtocolRouteCountList []PerProtocolRouteCount
+	Vrf                       string                  `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"1", DESCRIPTION: "System Vrf", DEFAULT:"default"`
+	TotalRouteCount           int32                   `DESCRIPTION: Total number of routes on the system`
+	ECMPRouteCount            int32                   `DESCRIPTION: ECMP routes on the system`
+	V4RouteCount              int32                   `DESCRIPTION: Total number of IPv4 routes on the system`
+	V6RouteCount              int32                   `DESCRIPTION: Total number of IPv6 routes on the system`
+	PerProtocolRouteCountList []PerProtocolRouteCount `DESCRIPTION: Per Protocol routes stats`
 }
 type RouteInfoSummary struct {
 	DestinationNw   string        `DESCRIPTION: "IP address of the route"`
@@ -160,4 +160,10 @@ type RouteStatsPerProtocolState struct {
 	Protocol string             `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"1", DESCRIPTION :"Protocol type of the route"`
 	V4Routes []RouteInfoSummary `DESCRIPTION: "Brief summary info of ipv4 routes of this protocol type"`
 	V6Routes []RouteInfoSummary `DESCRIPTION: "Brief summary info of ipv6 routes of this protocol type"`
+}
+type RouteStatsPerInterfaceState struct {
+	baseObj
+	Intfref  string   `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"1", DESCRIPTION :Interface of the next hop"`
+	V4Routes []string `DESCRIPTION: "Brief summary info of ipv4 routes which have nexthop on this interface"`
+	V6Routes []string `DESCRIPTION: "Brief summary info of ipv6 routes which have nexthop on this interface"`
 }
