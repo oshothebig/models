@@ -75,7 +75,7 @@ type BGPQueues struct {
 type BGPv4Neighbor struct {
 	baseObj
 	NeighborAddress         string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", DESCRIPTION: "Address of the BGP neighbor"`
-	IfIndex                 int32  `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", DESCRIPTION: "Interface of the BGP neighbor"`
+	IntfRef                 string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", DESCRIPTION: "Interface of the BGP neighbor"`
 	Description             string `DESCRIPTION: "Description of the BGP neighbor", DEFAULT: ""`
 	PeerGroup               string `DESCRIPTION: "Peer group of the BGP neighbor", DEFAULT: ""`
 	PeerAS                  uint32 `DESCRIPTION: "Peer AS of the BGP neighbor", DEFAULT: "0"`
@@ -102,7 +102,7 @@ type BGPv4Neighbor struct {
 type BGPv4NeighborState struct {
 	baseObj
 	NeighborAddress         string      `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Address of the BGP neighbor"`
-	IfIndex                 int32       `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Interface of the BGP neighbor"`
+	IntfRef                 string      `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Interface of the BGP neighbor"`
 	Description             string      `DESCRIPTION: "Description of the BGP neighbor"`
 	PeerGroup               string      `DESCRIPTION: "Peer group of the BGP neighbor"`
 	PeerType                int8        `DESCRIPTION: "Type of the peer (internal/external)"`
@@ -133,7 +133,7 @@ type BGPv4NeighborState struct {
 type BGPv6Neighbor struct {
 	baseObj
 	NeighborAddress         string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", DESCRIPTION: "Address of the BGP neighbor"`
-	IfIndex                 int32  `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", DESCRIPTION: "Interface of the BGP neighbor"`
+	IntfRef                 string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", DESCRIPTION: "Interface of the BGP neighbor"`
 	Description             string `DESCRIPTION: "Description of the BGP neighbor", DEFAULT: ""`
 	PeerGroup               string `DESCRIPTION: "Peer group of the BGP neighbor", DEFAULT: ""`
 	PeerAS                  uint32 `DESCRIPTION: "Peer AS of the BGP neighbor", DEFAULT: "0"`
@@ -159,7 +159,7 @@ type BGPv6Neighbor struct {
 type BGPv6NeighborState struct {
 	baseObj
 	NeighborAddress         string      `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Address of the BGP neighbor"`
-	IfIndex                 int32       `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Interface of the BGP neighbor"`
+	IntfRef                 string      `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Interface of the BGP neighbor"`
 	Description             string      `DESCRIPTION: "Description of the BGP neighbor"`
 	PeerGroup               string      `DESCRIPTION: "Peer group of the BGP neighbor"`
 	PeerType                int8        `DESCRIPTION: "Type of the peer (internal/external)"`
