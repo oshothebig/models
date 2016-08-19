@@ -36,5 +36,6 @@ type NDPEntryState struct {
 	MacAddr        string `DESCRIPTION: "MAC address of the neighbor machine with corresponding IP Address"`
 	Vlan           string `DESCRIPTION: "Vlan ID of the Router Interface to which neighbor is attached to"`
 	Intf           string `DESCRIPTION: "Router Interface to which neighbor is attached to"`
+	IfIndex        int32  `DESCRIPTION: "ifIndex where neighbor is learned"`
 	ExpiryTimeLeft string `DESCRIPTION: "Time left before entry expires in case neighbor departs"`
 }
