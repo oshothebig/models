@@ -23,19 +23,22 @@
 
 package objects
 
-type NDPGlobal struct {
+import ()
+
+/*
+ * Global Config for ISIS
+ */
+type IsisGlobal struct {
 	baseObj
-	// placeholder to create a key
-	Vrf    string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"1", AUTOCREATE: "true", DESCRIPTION: "System Vrf", DEFAULT:"default"`
-	Enable string `DESCRIPTION: "Enable/Diable Neighbor Discovery Globally", DEFAULT: "true"`
+	Vrf    string `SNAPROUTE: "KEY", ACCESS:"w",  MULTIPLICITY:"1", AUTOCREATE: "true", DEFAULT: "default", DESCRIPTION: "VRF id where ISIS is globally enabled or disabled"`
+	Enable bool   `DESCRIPTION: "Global ISIS state in this VRF", DEFAULT: "true"`
 }
 
-type NDPEntryState struct {
+/*
+ * Global State
+ */
+type IsisGlobalState struct {
 	baseObj
-	IpAddr         string `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Neighbor's IP Address"`
-	MacAddr        string `DESCRIPTION: "MAC address of the neighbor machine with corresponding IP Address"`
-	Vlan           string `DESCRIPTION: "Vlan ID of the Router Interface to which neighbor is attached to"`
-	Intf           string `DESCRIPTION: "Router Interface to which neighbor is attached to"`
-	IfIndex        int32  `DESCRIPTION: "ifIndex where neighbor is learned"`
-	ExpiryTimeLeft string `DESCRIPTION: "Time left before entry expires in case neighbor departs"`
+	Vrf    string `SNAPROUTE: "KEY", ACCESS:"r",  MULTIPLICITY:"1", DESCRIPTION: "VRF id for which global ISIS state is requested"`
+	Enable bool   `DESCRIPTION: "Global ISIS state in this VRF"`
 }
