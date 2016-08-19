@@ -224,7 +224,7 @@
 		},
 		{
 			"DaemonId" : 15,
-			"DaemonName" : "OPTICD",
+			"DaemonName" : "opticd",
 			"DaemonEventEnable" : true,
 			"EventList" : [
 				{
