@@ -49,3 +49,11 @@ type SystemSwVersionState struct {
 	FlexswitchVersion string     `SNAPROUTE: "KEY", ACCESS:"r",  MULTIPLICITY:"1", DESCRIPTION: "Flexswitch version"`
 	Repos             []RepoInfo `DESCRIPTION: "Git repo details"`
 }
+
+//Voyager specific config object
+type XponderGlobal struct {
+	baseObj
+	XponderId          uint8  `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY: "1", DESCRIPTION: "Xponder module identifier", DEFAULT:0, AUTOCREATE:"true"`
+	XponderMode        string `DESCRIPTION: "Global operational mode of Xponder module", SELECTION:"InService"/"InServiceOverSub"/"InServicePacketOptical"/"OutOfService", DEFAULT:"OutOfService"`
+	XponderDescription string `DESCRIPTION: "User configurable description string for the xponder module", DEFAULT:""`
+}
