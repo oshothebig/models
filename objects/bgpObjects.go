@@ -97,6 +97,8 @@ type BGPv4Neighbor struct {
 	MaxPrefixesThresholdPct uint8  `DESCRIPTION: "The percentage of maximum prefixes before we start logging", DEFAULT: "80"`
 	MaxPrefixesDisconnect   bool   `DESCRIPTION: "Disconnect the BGP peer session when we receive the max prefixes from the neighbor", DEFAULT: "false"`
 	MaxPrefixesRestartTimer uint8  `DESCRIPTION: "Time in seconds to wait before we start BGP peer session when we receive max prefixes", DEFAULT: "0"`
+	AdjRIBInFilter          string `DESCRIPTION: "Policy that is applied for Adj-RIB-In prefix filtering"`
+	AdjRIBOutFilter         string `DESCRIPTION: "Policy that is applied for Adj-RIB-Out prefix filtering"`
 }
 
 type BGPv4NeighborState struct {
@@ -126,6 +128,8 @@ type BGPv4NeighborState struct {
 	MaxPrefixesDisconnect   bool        `DESCRIPTION: "Disconnect the BGP peer session when we receive the max prefixes from the neighbor"`
 	MaxPrefixesRestartTimer uint8       `DESCRIPTION: "Time to wait before we start BGP peer session when we receive max prefixes"`
 	TotalPrefixes           uint32      `DESCRIPTION: "Total number of prefixes received from the BGP neighbor"`
+	AdjRIBInFilter          string      `DESCRIPTION: "Policy that is applied for Adj-RIB-In prefix filtering"`
+	AdjRIBOutFilter         string      `DESCRIPTION: "Policy that is applied for Adj-RIB-Out prefix filtering"`
 	Messages                BGPMessages `DESCRIPTION: "Rx/Tx counter for BGP update and notification packets"`
 	Queues                  BGPQueues   `DESCRIPTION: "Input/Output size of BGP packet queues"`
 }
@@ -154,6 +158,8 @@ type BGPv6Neighbor struct {
 	MaxPrefixesThresholdPct uint8  `DESCRIPTION: "The percentage of maximum prefixes before we start logging", DEFAULT: "80"`
 	MaxPrefixesDisconnect   bool   `DESCRIPTION: "Disconnect the BGP peer session when we receive the max prefixes from the neighbor", DEFAULT: "false"`
 	MaxPrefixesRestartTimer uint8  `DESCRIPTION: "Time in seconds to wait before we start BGP peer session when we receive max prefixes", DEFAULT: "0"`
+	AdjRIBInFilter          string `DESCRIPTION: "Policy that is applied for Adj-RIB-In prefix filtering"`
+	AdjRIBOutFilter         string `DESCRIPTION: "Policy that is applied for Adj-RIB-Out prefix filtering"`
 }
 
 type BGPv6NeighborState struct {
@@ -182,6 +188,8 @@ type BGPv6NeighborState struct {
 	MaxPrefixesDisconnect   bool        `DESCRIPTION: "Disconnect the BGP peer session when we receive the max prefixes from the neighbor"`
 	MaxPrefixesRestartTimer uint8       `DESCRIPTION: "Time to wait before we start BGP peer session when we receive max prefixes"`
 	TotalPrefixes           uint32      `DESCRIPTION: "Total number of prefixes received from the BGP neighbor"`
+	AdjRIBInFilter          string      `DESCRIPTION: "Policy that is applied for Adj-RIB-In prefix filtering"`
+	AdjRIBOutFilter         string      `DESCRIPTION: "Policy that is applied for Adj-RIB-Out prefix filtering"`
 	Messages                BGPMessages `DESCRIPTION: "Rx/Tx counter for BGP update and notification packets"`
 	Queues                  BGPQueues   `DESCRIPTION: "Input/Output size of BGP packet queues"`
 }
@@ -207,6 +215,8 @@ type BGPv4PeerGroup struct {
 	MaxPrefixesThresholdPct uint8  `DESCRIPTION: "The percentage of maximum prefixes before we start logging", DEFAULT: "0"`
 	MaxPrefixesDisconnect   bool   `DESCRIPTION: "Disconnect the BGP peer session when we receive the max prefixes from the neighbor", DEFAULT: "false"`
 	MaxPrefixesRestartTimer uint8  `DESCRIPTION: "Time to wait before we start BGP peer session when we receive max prefixes", DEFAULT: "0"`
+	AdjRIBInFilter          string `DESCRIPTION: "Policy that is applied for Adj-RIB-In prefix filtering"`
+	AdjRIBOutFilter         string `DESCRIPTION: "Policy that is applied for Adj-RIB-Out prefix filtering"`
 }
 
 type BGPv6PeerGroup struct {
@@ -229,6 +239,8 @@ type BGPv6PeerGroup struct {
 	MaxPrefixesThresholdPct uint8  `DESCRIPTION: "The percentage of maximum prefixes before we start logging", DEFAULT: "0"`
 	MaxPrefixesDisconnect   bool   `DESCRIPTION: "Disconnect the BGP peer session when we receive the max prefixes from the neighbor", DEFAULT: "false"`
 	MaxPrefixesRestartTimer uint8  `DESCRIPTION: "Time to wait before we start BGP peer session when we receive max prefixes", DEFAULT: "0"`
+	AdjRIBInFilter          string `DESCRIPTION: "Policy that is applied for Adj-RIB-In prefix filtering"`
+	AdjRIBOutFilter         string `DESCRIPTION: "Policy that is applied for Adj-RIB-Out prefix filtering"`
 }
 
 type PathInfo struct {
