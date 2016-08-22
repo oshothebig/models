@@ -7,36 +7,21 @@ module openconfig-if-aggregate {
 
   prefix "lag";
 
-  // import some basic types
-  //import openconfig-interfaces { prefix ocif; }
   import ietf-yang-types { prefix yang; }
-  //import iana-if-type { prefix ift; }
-  //import openconfig-extensions { prefix oc-ext; }
-
+  
   // meta
-  organization "OpenConfig working group";
-
-  contact
-    "OpenConfig working group
-    netopenconfig@googlegroups.com";
+  organization "SnapRoute";
 
   description
-    "Model for managing aggregated interfaces, including LACP-
+    "Model for managing aggregated interfaces, including LACP, DR, IPP-
     managed aggregates";
 
-  //oc-ext:openconfig-version "0.1.1";
-
-  revision "2015-10-09" {
+  revision "2016-08-16" {
     description
-      "Initial OpenConfig public release";
+      "Initial SnapRoute public release";
     reference "0.1.1";
   }
 
-  revision "2015-08-20" {
-    description
-      "Initial revision";
-    reference "Pre-release";
-  }
 
   // extension statements
 
@@ -433,55 +418,19 @@ grouping aggregation-lacp-state {
   }
 
 
-  //grouping aggregation-lacp-state {
-  //  description
-  //    "Operational data for LACP aggregate interfaces";
-	
-  //	leaf ifindex {
-  //		type uint32;
-  //              config false;
-  //		description
-  //		 "Linux ifIndex representation of a bonded interface";
-  //	}
-
-  //}
-
-  grouping aggregation-lacp-members-config {
-    description
-      "Configuration data for lacp member interfaces";
-
-    //currently a placeholder -- the list of member interfaces
-    //and their status is considered opstate only
-    list member {
-        key  ifIndex;
-        description
-          "List of member interfaces and their associated status for
-          a LACP-controlled aggregate interface.  Member list is not
-          configurable here -- each interface indicates items
-          its participation in the LAG.";
-
-        leaf ifIndex {
-          type int32;
-          config true;
-          description
-            "Reference to aggregate member interface";
-        }
-
-      }
-  }
-
+  
   grouping aggregation-lacp-members-state {
     description
       "Operational status data for the member interfaces";
 
-    leaf lagIfIndex {
+    leaf IfIndex {
       //type ocif:interface-ref;
       type int32;
       config false;
       description
         "Interface member of the LACP aggregate";
     }
-
+	
     leaf activity {
       type lacp-activity-type;
       config false;
@@ -808,18 +757,11 @@ grouping aggregation-lacp-members-statistics {
     description
       "Configuration data for aggregate interfaces";
 
-    leaf ifIndex {
+    leaf IfIndex {
       type int32;
       config false;
       description
          "the ifindex of the bonded interface";
-    }
-
-    leaf name {
-      type string;
-      config false;
-      description
-         "The name associated with the aggregation object in linux";
     }
 
     leaf lag-type {
@@ -845,23 +787,23 @@ grouping aggregation-lacp-members-statistics {
     description
       "Top-level grouping for aggregate members list";
 
-    container members {
+    container Intf {
       config false;
       description
         "Enclosing container for the list of members interfaces of
         the aggregate. This list is considered operational state
         only so is labeled config false and has no config container";
 
-      list member {
-        key  ifIndex;
+      list RefList {
+        key  IntfRef;
         description
           "List of member interfaces and their associated status for
           a LACP-controlled aggregate interface.  Member list is not
           configurable here -- each interface indicates items
           its participation in the LAG.";
 
-        leaf ifIndex {
-          type int32; 
+        leaf IntfRef {
+          type string; 
           config false;
 	      description
             "Reference to aggregate member interface";
@@ -892,37 +834,20 @@ grouping aggregation-lacp-members-statistics {
        description
           "Port Channel Member States container";
 	   
-	   leaf lagId {
-          type int32;
+	   leaf LagIntfRef {
+          type string;
+		 config false;
           description "Id of the lag group to which this port is associated with";
         }
        uses aggregation-lacp-members-top;
   }
-  grouping ethernet-if-aggregation-config {
-    description
-      "Adds configuration items for Ethernet interfaces
-      belonging to a logical aggregate / LAG";
-
-    leaf aggregate-id {
-      //type ocif:interface-ref;
-      type int32; 
-      config true;
-      //must "ocif:type = 'ift:ieee8023adLag'" {
-      //  description "The referenced interface must be a
-      //  LAG interface.";
-      //}
-      description
-        "Specify the logical aggregate interface to which
-        this interface belongs";
-    }
-  }
 
   list la {
     description "Top-level data definitions for LAGs";
-    key lagId;
+    key IntfRef;
 
-    leaf lagId {
-        type int32;
+    leaf IntfRef {
+        type string;
         description "Id of the lag group";
     }
 
@@ -940,7 +865,7 @@ grouping aggregation-lacp-members-statistics {
 
         uses aggregation-logical-config;
         uses aggregation-lacp-config;
-        leaf-list members {
+        leaf-list IntfRefList {
           //TODO: this should be active only for non-LACP LAGs,
           //otherwise the LAG state has the list of members and
           // their status
@@ -949,8 +874,7 @@ grouping aggregation-lacp-members-statistics {
               "The simple list of member interfaces is active
               when the aggregate is statically configured";
           }
-          //type ocif:interface-ref;
-          type int32;
+          type string;
           config true;
           description
             "List of current member interfaces for the aggregate,
@@ -969,7 +893,7 @@ grouping aggregation-lacp-members-statistics {
         uses aggregation-lacp-state;
         //TODO: identity other state variable as the LAG level
 
-        leaf-list members {
+        leaf-list IntfRefList {
           //TODO: this should be active only for non-LACP LAGs,
           //otherwise the LAG state has the list of members and
           // their status
@@ -978,15 +902,14 @@ grouping aggregation-lacp-members-statistics {
               "The list of member interfaces is active
               when the aggregate is up in bundle";
           }
-          //type ocif:interface-ref;
-          type int32;
+          type string;
           config false;
           description
             "List of current member interfaces for the aggregate,
             expressed as references to existing interfaces";
         }
 
-        leaf-list members-up-in-bundle {
+        leaf-list IntfRefList-up-in-bundle {
           //TODO: this should be active only for non-LACP LAGs,
           //otherwise the LAG state has the list of members and
           // their status
@@ -995,8 +918,7 @@ grouping aggregation-lacp-members-statistics {
               "The list of member interfaces is active
               when the aggregate is up in bundle";
           }
-          //type ocif:interface-ref;
-          type int32;
+          type string;
           config false;
           description
             "List of current member interfaces for the aggregate,
@@ -1007,15 +929,7 @@ grouping aggregation-lacp-members-statistics {
   }
 
   grouping distributed-relay-state {
-	
-	leaf drni-id {
-      type uint32;
-      description
-        "The unique identifier allocated to this Distributed Relay by the local System. This attribute
-		identifies a Distributed Relay instance among the subordinate managed objects of the
-		containing object.";
-    	}
-	
+		
 	leaf description {
       type string;
       description
@@ -1066,8 +980,8 @@ grouping aggregation-lacp-members-statistics {
 			Systems a single IPL is required and for a single Portal System no IPL is required";
     }
 	
-	leaf lagId {
-		type uint32;
+	leaf IntfRef {
+		type string;
 		description
 		   "Read-write Interface Identifier of the Aggregator Port assigned to this Distributed Relay";		
 	}
@@ -1285,8 +1199,8 @@ grouping aggregation-lacp-members-statistics {
 
     }
 	
-	leaf lagId {
-		type uint32;
+	leaf IntfRef {
+		type string;
 		config true;
 		description
 		   "Read-write Interface Identifier of the Aggregator Port assigned to this Distributed Relay";		
@@ -1535,11 +1449,13 @@ grouping aggregation-lacp-members-statistics {
   // 802.1ax-2014 Section 7.4.1.1 Distributed Relay
   list distributed {
   	description "Top-level data definitions for Distributed Relay / MLAGs";
-     key name;
+     key drniName;
 
-     leaf name {
+     leaf drniName {
         type string;
-	    description "A human-readable text string containing a locally significant name for the Distributed Relay / MLAG";
+	    description "The unique identifier allocated to this Distributed Relay by the local System. This attribute
+		identifies a Distributed Relay instance among the subordinate managed objects of the
+		containing object.";
      }
 
 	container relay {

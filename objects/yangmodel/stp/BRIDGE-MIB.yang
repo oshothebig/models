@@ -71,7 +71,7 @@ module BRIDGE-MIB {
     description     
      "The Bridge-Identifier, as used in the Spanning Tree
       Protocol, to uniquely identify a bridge.  Its first two
-      octets (in network byte order) contain a priority value,
+      octets in network byte order contain a priority value,
       and its last 6 octets contain the MAC address used to
       refer to a bridge in a unique fashion (typically, the
       numerically smallest MAC address of all ports on the
@@ -164,8 +164,8 @@ module BRIDGE-MIB {
 	        default 128;
 	        description 
 	         "The value of the priority field that is contained in
-	          the first (in network byte order) octet of the (2 octet
-	          long) Port ID.  The other octet of the Port ID is given
+	          the first in network byte order octet of the 2 octet
+	          long Port ID.  The other octet of the Port ID is given
 	          by the value of StpPort.
 	          On bridges supporting IEEE 802.1t or IEEE 802.1w,
 	          permissible values are 0-240, in steps of 16.";
@@ -249,8 +249,8 @@ module BRIDGE-MIB {
 	        config false;
 	        description
 	         "The value of the priority field that is contained in
-	          the first (in network byte order) octet of the (2 octet
-	          long) Port ID.  The other octet of the Port ID is given
+	          the first in network byte order octet of the 2 octet
+	          long Port ID.  The other octet of the Port ID is given
 	          by the value of StpPort.
 	          On bridges supporting IEEE 802.1t or IEEE 802.1w,
 	          permissible values are 0-240, in steps of 16.";
@@ -437,8 +437,8 @@ list StpBridge {
       default 32768;
       description   
        "The value of the write-able portion of the Bridge ID
-        (i.e., the first two octets of the (8 octet long) Bridge
-        ID).  The other (last) 6 octets of the Bridge ID are
+        i.e., the first two octets of the 8 octet long Bridge
+        ID.  The other last 6 octets of the Bridge ID are
         given by the value of Address.
         On bridges supporting IEEE 802.1t or IEEE 802.1w,
         permissible values are 0-61440, in steps of 4096.  Extended
@@ -563,8 +563,8 @@ list StpBridge {
       config false;
       description
        "The value of the write-able portion of the Bridge ID
-        (i.e., the first two octets of the (8 octet long) Bridge
-        ID).  The other (last) 6 octets of the Bridge ID are
+        i.e., the first two octets of the 8 octet long Bridge
+        ID.  The other last 6 octets of the Bridge ID are
         given by the value of Address.
         On bridges supporting IEEE 802.1t or IEEE 802.1w,
         permissible values are 0-61440, in steps of 4096.";
