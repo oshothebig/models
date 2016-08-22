@@ -44,6 +44,7 @@ type LLDPIntfState struct {
 	PeerPort            string `DESCRIPTION: "Name of directtly connected pors"`
 	PeerHostName        string `DESCRIPTION: "Name of the peer host`
 	HoldTime            string `DESCRIPTION: "Validity of the peer information"`
+	SystemDescription   string `DESCRIPTION: "System Description of the peer port"`
 	SystemCapabilities  string `DESCRIPTION: "System Capabilities of the peer port"`
 	EnabledCapabilities string `DESCRIPTION: "Enabled Capabilities of the peer port"`
 }
