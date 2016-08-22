@@ -49,6 +49,9 @@
                "location" : "/opticd/rpc",
                "svcName" : "opticdInt",
                "finalSvcName" : "opticdServices"},
+"isisObjects.go" : {"owner": "isisd",
+                    "location" : "l3/isis/rpc",
+                    "svcName" : "nil"},
 "localObjects.go" : {"owner": "local", 
                      "location" : "nil",
                      "svcName" : "nil"}

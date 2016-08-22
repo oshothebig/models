@@ -164,7 +164,8 @@ type SubIPv4Intf struct {
 type IPv6Intf struct {
 	baseObj
 	IntfRef string `SNAPROUTE: "KEY", ACCESS:"w", DESCRIPTION: "Interface name or ifindex of port/lag or vlan on which this IPv4 object is configured"`
-	IpAddr  string `DESCRIPTION: "Interface IP Address/Prefix-Length to provision on switch interface", STRLEN:"43"`
+	IpAddr  string `DESCRIPTION: "Interface Global Scope IP Address/Prefix-Length to provision on switch interface", STRLEN:"43", DEFAULT:""`
+	LinkIp  bool   `DESCRIPTION: "Interface Link Scope IP Address auto-configured", DEFAULT:"true"`
 }
 
 type IPv6IntfState struct {

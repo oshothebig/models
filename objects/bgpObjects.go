@@ -72,15 +72,16 @@ type BGPQueues struct {
 	Output uint32 `ACCESS:"", MULTIPLICITY:"*", DESCRIPTION: "Output queue length of the BGP neighbor"`
 }
 
-type BGPNeighbor struct {
+type BGPv4Neighbor struct {
 	baseObj
 	NeighborAddress         string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", DESCRIPTION: "Address of the BGP neighbor"`
-	IfIndex                 int32  `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", DESCRIPTION: "Interface of the BGP neighbor"`
+	IntfRef                 string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", DESCRIPTION: "Interface of the BGP neighbor"`
+	Description             string `DESCRIPTION: "Description of the BGP neighbor", DEFAULT: ""`
+	PeerGroup               string `DESCRIPTION: "Peer group of the BGP neighbor", DEFAULT: ""`
 	PeerAS                  uint32 `DESCRIPTION: "Peer AS of the BGP neighbor", DEFAULT: "0"`
 	LocalAS                 uint32 `DESCRIPTION: "Local AS of the BGP neighbor", DEFAULT: "0"`
 	UpdateSource            string `DESCRIPTION: "Source IP to connect to the BGP neighbor", DEFAULT: ""`
 	AuthPassword            string `DESCRIPTION: "Password to connect to the BGP neighbor", DEFAULT: ""`
-	Description             string `DESCRIPTION: "Description of the BGP neighbor", DEFAULT: ""`
 	RouteReflectorClusterId uint32 `DESCRIPTION: "Cluster Id of the internal BGP neighbor route reflector client", DEFAULT: "0"`
 	RouteReflectorClient    bool   `DESCRIPTION: "Set/Clear BGP neighbor as a route reflector client", DEFAULT: "false"`
 	MultiHopEnable          bool   `DESCRIPTION: "Enable/Disable multi hop for BGP neighbor", DEFAULT: "false"`
@@ -90,28 +91,28 @@ type BGPNeighbor struct {
 	KeepaliveTime           uint32 `DESCRIPTION: "Keep alive time for the BGP neighbor", DEFAULT: "60"`
 	AddPathsRx              bool   `DESCRIPTION: "Receive additional paths from BGP neighbor", DEFAULT: "false"`
 	AddPathsMaxTx           uint8  `DESCRIPTION: "Max number of additional paths that can be transmitted to BGP neighbor", DEFAULT: "0"`
-	PeerGroup               string `DESCRIPTION: "Peer group of the BGP neighbor", DEFAULT: ""`
 	BfdEnable               bool   `DESCRIPTION: "Enable/Disable BFD for the BGP neighbor", DEFAULT: "false"`
 	BfdSessionParam         string `DESCRIPTION: "Bfd session param name to be applied", DEFAULT: "default"`
 	MaxPrefixes             uint32 `DESCRIPTION: "Maximum number of prefixes that can be received from the BGP neighbor", DEFAULT: "0"`
 	MaxPrefixesThresholdPct uint8  `DESCRIPTION: "The percentage of maximum prefixes before we start logging", DEFAULT: "80"`
 	MaxPrefixesDisconnect   bool   `DESCRIPTION: "Disconnect the BGP peer session when we receive the max prefixes from the neighbor", DEFAULT: "false"`
 	MaxPrefixesRestartTimer uint8  `DESCRIPTION: "Time in seconds to wait before we start BGP peer session when we receive max prefixes", DEFAULT: "0"`
+	AdjRIBInFilter          string `DESCRIPTION: "Policy that is applied for Adj-RIB-In prefix filtering", DEFAULT: ""`
+	AdjRIBOutFilter         string `DESCRIPTION: "Policy that is applied for Adj-RIB-Out prefix filtering", DEFAULT: ""`
 }
 
-type BGPNeighborState struct {
+type BGPv4NeighborState struct {
 	baseObj
 	NeighborAddress         string      `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Address of the BGP neighbor"`
-	IfIndex                 int32       `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Interface of the BGP neighbor"`
+	IntfRef                 string      `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Interface of the BGP neighbor"`
+	Description             string      `DESCRIPTION: "Description of the BGP neighbor"`
+	PeerGroup               string      `DESCRIPTION: "Peer group of the BGP neighbor"`
+	PeerType                int8        `DESCRIPTION: "Type of the peer (internal/external)"`
+	SessionState            uint32      `DESCRIPTION: "Session state of the BGP neighbor"`
 	PeerAS                  uint32      `DESCRIPTION: "Peer AS of the BGP neighbor"`
 	LocalAS                 uint32      `DESCRIPTION: "Local AS of the BGP neighbor"`
 	UpdateSource            string      `DESCRIPTION: "Source IP to connect to the BGP neighbor"`
-	PeerType                int8        `DESCRIPTION: "Type of the peer (internal/external)"`
 	AuthPassword            string      `DESCRIPTION: "Password to connect to the BGP neighbor"`
-	Description             string      `DESCRIPTION: "Description of the BGP neighbor"`
-	SessionState            uint32      `DESCRIPTION: "Session state of the BGP neighbor"`
-	Messages                BGPMessages `DESCRIPTION: "Rx/Tx counter for BGP update and notification packets"`
-	Queues                  BGPQueues   `DESCRIPTION: "Input/Output size of BGP packet queues"`
 	RouteReflectorClusterId uint32      `DESCRIPTION: "Cluster Id of the internal BGP neighbor route reflector client"`
 	RouteReflectorClient    bool        `DESCRIPTION: "Set/Clear BGP neighbor as a route reflector client"`
 	MultiHopEnable          bool        `DESCRIPTION: "Enable/Disable multi hop for BGP neighbor"`
@@ -119,18 +120,81 @@ type BGPNeighborState struct {
 	ConnectRetryTime        uint32      `DESCRIPTION: "Connect retry time to connect to BGP neighbor after disconnect"`
 	HoldTime                uint32      `DESCRIPTION: "Hold time for the BGP neighbor"`
 	KeepaliveTime           uint32      `DESCRIPTION: "Keep alive time for the BGP neighbor"`
-	PeerGroup               string      `DESCRIPTION: "Peer group of the BGP neighbor"`
-	BfdNeighborState        string      `DESCRIPTION: "BFD state of the BGP neighbor"`
 	AddPathsRx              bool        `DESCRIPTION: "Receive additional paths from BGP neighbor"`
 	AddPathsMaxTx           uint8       `DESCRIPTION: "Max number of additional paths that can be transmitted to BGP neighbor"`
+	BfdNeighborState        string      `DESCRIPTION: "BFD state of the BGP neighbor"`
 	MaxPrefixes             uint32      `DESCRIPTION: "Maximum number of prefixes that can be received from the BGP neighbor"`
 	MaxPrefixesThresholdPct uint8       `DESCRIPTION: "The percentage of maximum prefixes before we start logging"`
 	MaxPrefixesDisconnect   bool        `DESCRIPTION: "Disconnect the BGP peer session when we receive the max prefixes from the neighbor"`
 	MaxPrefixesRestartTimer uint8       `DESCRIPTION: "Time to wait before we start BGP peer session when we receive max prefixes"`
 	TotalPrefixes           uint32      `DESCRIPTION: "Total number of prefixes received from the BGP neighbor"`
+	AdjRIBInFilter          string      `DESCRIPTION: "Policy that is applied for Adj-RIB-In prefix filtering"`
+	AdjRIBOutFilter         string      `DESCRIPTION: "Policy that is applied for Adj-RIB-Out prefix filtering"`
+	Messages                BGPMessages `DESCRIPTION: "Rx/Tx counter for BGP update and notification packets"`
+	Queues                  BGPQueues   `DESCRIPTION: "Input/Output size of BGP packet queues"`
 }
 
-type BGPPeerGroup struct {
+type BGPv6Neighbor struct {
+	baseObj
+	NeighborAddress         string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", DESCRIPTION: "Address of the BGP neighbor"`
+	IntfRef                 string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", DESCRIPTION: "Interface of the BGP neighbor"`
+	Description             string `DESCRIPTION: "Description of the BGP neighbor", DEFAULT: ""`
+	PeerGroup               string `DESCRIPTION: "Peer group of the BGP neighbor", DEFAULT: ""`
+	PeerAS                  uint32 `DESCRIPTION: "Peer AS of the BGP neighbor", DEFAULT: "0"`
+	LocalAS                 uint32 `DESCRIPTION: "Local AS of the BGP neighbor", DEFAULT: "0"`
+	UpdateSource            string `DESCRIPTION: "Source IP to connect to the BGP neighbor", DEFAULT: ""`
+	RouteReflectorClusterId uint32 `DESCRIPTION: "Cluster Id of the internal BGP neighbor route reflector client", DEFAULT: "0"`
+	RouteReflectorClient    bool   `DESCRIPTION: "Set/Clear BGP neighbor as a route reflector client", DEFAULT: "false"`
+	MultiHopEnable          bool   `DESCRIPTION: "Enable/Disable multi hop for BGP neighbor", DEFAULT: "false"`
+	MultiHopTTL             uint8  `DESCRIPTION: "TTL for multi hop BGP neighbor", DEFAULT: "0"`
+	ConnectRetryTime        uint32 `DESCRIPTION: "Connect retry time to connect to BGP neighbor after disconnect", DEFAULT: "60"`
+	HoldTime                uint32 `DESCRIPTION: "Hold time for the BGP neighbor", DEFAULT: "180"`
+	KeepaliveTime           uint32 `DESCRIPTION: "Keep alive time for the BGP neighbor", DEFAULT: "60"`
+	AddPathsRx              bool   `DESCRIPTION: "Receive additional paths from BGP neighbor", DEFAULT: "false"`
+	AddPathsMaxTx           uint8  `DESCRIPTION: "Max number of additional paths that can be transmitted to BGP neighbor", DEFAULT: "0"`
+	BfdEnable               bool   `DESCRIPTION: "Enable/Disable BFD for the BGP neighbor", DEFAULT: "false"`
+	BfdSessionParam         string `DESCRIPTION: "Bfd session param name to be applied", DEFAULT: "default"`
+	MaxPrefixes             uint32 `DESCRIPTION: "Maximum number of prefixes that can be received from the BGP neighbor", DEFAULT: "0"`
+	MaxPrefixesThresholdPct uint8  `DESCRIPTION: "The percentage of maximum prefixes before we start logging", DEFAULT: "80"`
+	MaxPrefixesDisconnect   bool   `DESCRIPTION: "Disconnect the BGP peer session when we receive the max prefixes from the neighbor", DEFAULT: "false"`
+	MaxPrefixesRestartTimer uint8  `DESCRIPTION: "Time in seconds to wait before we start BGP peer session when we receive max prefixes", DEFAULT: "0"`
+	AdjRIBInFilter          string `DESCRIPTION: "Policy that is applied for Adj-RIB-In prefix filtering", DEFAULT: ""`
+	AdjRIBOutFilter         string `DESCRIPTION: "Policy that is applied for Adj-RIB-Out prefix filtering", DEFAULT: ""`
+}
+
+type BGPv6NeighborState struct {
+	baseObj
+	NeighborAddress         string      `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Address of the BGP neighbor"`
+	IntfRef                 string      `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Interface of the BGP neighbor"`
+	Description             string      `DESCRIPTION: "Description of the BGP neighbor"`
+	PeerGroup               string      `DESCRIPTION: "Peer group of the BGP neighbor"`
+	PeerType                int8        `DESCRIPTION: "Type of the peer (internal/external)"`
+	SessionState            uint32      `DESCRIPTION: "Session state of the BGP neighbor"`
+	PeerAS                  uint32      `DESCRIPTION: "Peer AS of the BGP neighbor"`
+	LocalAS                 uint32      `DESCRIPTION: "Local AS of the BGP neighbor"`
+	UpdateSource            string      `DESCRIPTION: "Source IP to connect to the BGP neighbor"`
+	RouteReflectorClusterId uint32      `DESCRIPTION: "Cluster Id of the internal BGP neighbor route reflector client"`
+	RouteReflectorClient    bool        `DESCRIPTION: "Set/Clear BGP neighbor as a route reflector client"`
+	MultiHopEnable          bool        `DESCRIPTION: "Enable/Disable multi hop for BGP neighbor"`
+	MultiHopTTL             uint8       `DESCRIPTION: "TTL for multi hop BGP neighbor"`
+	ConnectRetryTime        uint32      `DESCRIPTION: "Connect retry time to connect to BGP neighbor after disconnect"`
+	HoldTime                uint32      `DESCRIPTION: "Hold time for the BGP neighbor"`
+	KeepaliveTime           uint32      `DESCRIPTION: "Keep alive time for the BGP neighbor"`
+	AddPathsRx              bool        `DESCRIPTION: "Receive additional paths from BGP neighbor"`
+	AddPathsMaxTx           uint8       `DESCRIPTION: "Max number of additional paths that can be transmitted to BGP neighbor"`
+	BfdNeighborState        string      `DESCRIPTION: "BFD state of the BGP neighbor"`
+	MaxPrefixes             uint32      `DESCRIPTION: "Maximum number of prefixes that can be received from the BGP neighbor"`
+	MaxPrefixesThresholdPct uint8       `DESCRIPTION: "The percentage of maximum prefixes before we start logging"`
+	MaxPrefixesDisconnect   bool        `DESCRIPTION: "Disconnect the BGP peer session when we receive the max prefixes from the neighbor"`
+	MaxPrefixesRestartTimer uint8       `DESCRIPTION: "Time to wait before we start BGP peer session when we receive max prefixes"`
+	TotalPrefixes           uint32      `DESCRIPTION: "Total number of prefixes received from the BGP neighbor"`
+	AdjRIBInFilter          string      `DESCRIPTION: "Policy that is applied for Adj-RIB-In prefix filtering"`
+	AdjRIBOutFilter         string      `DESCRIPTION: "Policy that is applied for Adj-RIB-Out prefix filtering"`
+	Messages                BGPMessages `DESCRIPTION: "Rx/Tx counter for BGP update and notification packets"`
+	Queues                  BGPQueues   `DESCRIPTION: "Input/Output size of BGP packet queues"`
+}
+
+type BGPv4PeerGroup struct {
 	baseObj
 	PeerAS                  uint32 `DESCRIPTION: "Peer AS of the BGP neighbor", DEFAULT: "0"`
 	LocalAS                 uint32 `DESCRIPTION: "Local AS of the BGP neighbor", DEFAULT: "0"`
@@ -151,6 +215,32 @@ type BGPPeerGroup struct {
 	MaxPrefixesThresholdPct uint8  `DESCRIPTION: "The percentage of maximum prefixes before we start logging", DEFAULT: "0"`
 	MaxPrefixesDisconnect   bool   `DESCRIPTION: "Disconnect the BGP peer session when we receive the max prefixes from the neighbor", DEFAULT: "false"`
 	MaxPrefixesRestartTimer uint8  `DESCRIPTION: "Time to wait before we start BGP peer session when we receive max prefixes", DEFAULT: "0"`
+	AdjRIBInFilter          string `DESCRIPTION: "Policy that is applied for Adj-RIB-In prefix filtering", DEFAULT: ""`
+	AdjRIBOutFilter         string `DESCRIPTION: "Policy that is applied for Adj-RIB-Out prefix filtering", DEFAULT: ""`
+}
+
+type BGPv6PeerGroup struct {
+	baseObj
+	PeerAS                  uint32 `DESCRIPTION: "Peer AS of the BGP neighbor", DEFAULT: "0"`
+	LocalAS                 uint32 `DESCRIPTION: "Local AS of the BGP neighbor", DEFAULT: "0"`
+	UpdateSource            string `DESCRIPTION: "Source IP to connect to the BGP neighbor", DEFAULT: ""`
+	Description             string `DESCRIPTION: "Description of the BGP neighbor", DEFAULT: ""`
+	Name                    string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", DESCRIPTION: "Name of the BGP peer group"`
+	RouteReflectorClusterId uint32 `DESCRIPTION: "Cluster Id of the internal BGP neighbor route reflector client", DEFAULT: "0"`
+	RouteReflectorClient    bool   `DESCRIPTION: "Set/Clear BGP neighbor as a route reflector client", DEFAULT: "false"`
+	MultiHopEnable          bool   `DESCRIPTION: "Enable/Disable multi hop for BGP neighbor", DEFAULT: "false"`
+	MultiHopTTL             uint8  `DESCRIPTION: "TTL for multi hop BGP neighbor", DEFAULT: "0"`
+	ConnectRetryTime        uint32 `DESCRIPTION: "Connect retry time to connect to BGP neighbor after disconnect", DEFAULT: "60"`
+	HoldTime                uint32 `DESCRIPTION: "Hold time for the BGP neighbor", DEFAULT: "180"`
+	KeepaliveTime           uint32 `DESCRIPTION: "Keep alive time for the BGP neighbor", DEFAULT: "60"`
+	AddPathsRx              bool   `DESCRIPTION: "Receive additional paths from BGP neighbor", DEFAULT: "false"`
+	AddPathsMaxTx           uint8  `DESCRIPTION: "Max number of additional paths that can be transmitted to BGP neighbor", DEFAULT: "0"`
+	MaxPrefixes             uint32 `DESCRIPTION: "Maximum number of prefixes that can be received from the BGP neighbor", DEFAULT: "0"`
+	MaxPrefixesThresholdPct uint8  `DESCRIPTION: "The percentage of maximum prefixes before we start logging", DEFAULT: "0"`
+	MaxPrefixesDisconnect   bool   `DESCRIPTION: "Disconnect the BGP peer session when we receive the max prefixes from the neighbor", DEFAULT: "false"`
+	MaxPrefixesRestartTimer uint8  `DESCRIPTION: "Time to wait before we start BGP peer session when we receive max prefixes", DEFAULT: "0"`
+	AdjRIBInFilter          string `DESCRIPTION: "Policy that is applied for Adj-RIB-In prefix filtering", DEFAULT: ""`
+	AdjRIBOutFilter         string `DESCRIPTION: "Policy that is applied for Adj-RIB-Out prefix filtering", DEFAULT: ""`
 }
 
 type PathInfo struct {

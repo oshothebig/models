@@ -54,4 +54,5 @@ var AsicdEventKeyMap KeyMap = KeyMap{
 	"Port":     PortKey{},
 	"Vlan":     VlanKey{},
 	"IPv4Intf": IPv4IntfKey{},
+	"IPv6Intf": IPv6IntfKey{},
 }
