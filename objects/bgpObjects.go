@@ -331,14 +331,14 @@ type BGPPolicyDefinitionState struct {
 	IpPrefixList []string `DESCRIPTION: "IP addresses that matched the policy"`
 }
 
-type BGPAggregate struct {
+type BGPv4Aggregate struct {
 	baseObj
 	IpPrefix        string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", DESCRIPTION: "IP Prefix in CIDR format to match"`
 	GenerateASSet   bool   `DESCRIPTION: "Generate AS set when aggregating routes", DEFAULT: "false"`
 	SendSummaryOnly bool   `DESCRIPTION: "Send summary route only when aggregating routes", DEFAULT: "false"`
 }
 
-type BGPIPv6Aggregate struct {
+type BGPv6Aggregate struct {
 	baseObj
 	IpPrefix        string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", DESCRIPTION: "IPv6 Prefix in CIDR format to match"`
 	GenerateASSet   bool   `DESCRIPTION: "Generate AS set when aggregating routes", DEFAULT: "false"`
