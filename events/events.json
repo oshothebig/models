@@ -70,6 +70,28 @@
 						"ClearingDaemonId" : 1,
 						"AlarmSeverity" : "Critical"
 					}
+				},
+				{
+					"EventID" : 7,
+					"EventName": "IPv6IntfOperStateUp",
+					"Description" : "IPv6 Interface Operational State UP Event",
+					"SrcObjName" : "IPv6Intf",
+					"EventEnable" : true,
+					"IsFault" : false
+				},
+				{
+					"EventID" : 8,
+					"EventName": "IPv6IntfOperStateDown",
+					"Description" : "IPv6 Interface Operational State DOWN Event",
+					"SrcObjName" : "IPv6Intf",
+					"EventEnable" : true,
+					"IsFault" : true,
+					"Fault" : {
+						"RaiseFault" : true,
+						"ClearingEventId" : 5,
+						"ClearingDaemonId" : 1,
+						"AlarmSeverity" : "Critical"
+					}
 				}
 			]
 		},
@@ -224,7 +246,7 @@
 		},
 		{
 			"DaemonId" : 15,
-			"DaemonName" : "OPTICD",
+			"DaemonName" : "opticd",
 			"DaemonEventEnable" : true,
 			"EventList" : [
 				{
