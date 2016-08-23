@@ -29,7 +29,7 @@ type DWDMModuleKey struct {
 
 //Module wide event id's
 const (
-	ModuleTempHiAlarm EventId = 0
+	ModuleTempHiAlarm EventId = iota + 0
 	ModuleTempHiAlarmClear
 	ModuleTempHiWarn
 	ModuleTempHiWarnClear
@@ -54,7 +54,7 @@ type DWDMModuleNwIntfKey struct {
 
 //Module NW Intf event id's
 const (
-	RXLOS EventId = 128
+	RXLOS EventId = iota + 128
 	RXLOSClear
 	TxPwrHiAlarm
 	TxPwrHiAlarmClear
