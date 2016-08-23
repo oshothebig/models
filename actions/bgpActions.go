@@ -21,21 +21,24 @@
 // |__|     |_______||_______/__/ \__\ |_______/        \__/  \__/     |__|     |__|      \______||__|  |__|
 //
 
-package objects
+package actions
 
-type NDPGlobal struct {
-	baseObj
-	// placeholder to create a key
-	Vrf    string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"1", AUTOCREATE: "true", DESCRIPTION: "System Vrf", DEFAULT:"default"`
-	Enable string `DESCRIPTION: "Enable/Diable Neighbor Discovery Globally", DEFAULT: "true"`
+type ResetBGPv4NeighborByIPAddr struct {
+	baseAction
+	IPAddr string `DESCRIPTION: "IP address of the BGP IPv4 neighbor to restart"`
 }
 
-type NDPEntryState struct {
-	baseObj
-	IpAddr         string `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Neighbor's IP Address"`
-	MacAddr        string `DESCRIPTION: "MAC address of the neighbor machine with corresponding IP Address"`
-	Vlan           string `DESCRIPTION: "Vlan ID of the Router Interface to which neighbor is attached to"`
-	Intf           string `DESCRIPTION: "Router Interface to which neighbor is attached to"`
-	IfIndex        int32  `DESCRIPTION: "ifIndex where neighbor is learned"`
-	ExpiryTimeLeft string `DESCRIPTION: "Time left before entry expires in case neighbor departs"`
+type ResetBGPv4NeighborByInterface struct {
+	baseAction
+	IntfRef string `DESCRIPTION: "Interface of the BGP IPv4 neighbor to restart"`
+}
+
+type ResetBGPv6NeighborByIPAddr struct {
+	baseAction
+	IPAddr string `DESCRIPTION: "IP address of the BGP IPv6 neighbor to restart"`
+}
+
+type ResetBGPv6NeighborByInterface struct {
+	baseAction
+	IntfRef string `DESCRIPTION: "Interface of the BGP IPv6 neighbor to restart"`
 }
