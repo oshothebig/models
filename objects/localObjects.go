@@ -54,6 +54,6 @@ type SystemSwVersionState struct {
 type XponderGlobal struct {
 	baseObj
 	XponderId          uint8  `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY: "1", DESCRIPTION: "Xponder module identifier", DEFAULT:0, AUTOCREATE:"true"`
-	XponderMode        string `DESCRIPTION: "Global operational mode of Xponder module", SELECTION:"InService"/"InServiceOverSub"/"InServicePacketOptical"/"OutOfService", DEFAULT:"OutOfService"`
+	XponderMode        string `DESCRIPTION: "Global operational mode of Xponder module", SELECTION:"InServiceWire"/"InServiceRegen"/"InServiceOverSub"/"InServicePacketOptical"/"OutOfService", DEFAULT:"OutOfService"`
 	XponderDescription string `DESCRIPTION: "User configurable description string for the xponder module", DEFAULT:""`
 }
