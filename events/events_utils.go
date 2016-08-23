@@ -23,35 +23,34 @@
 
 package events
 
-type PortKey struct {
-	IntfRef string
-}
-
-type VlanKey struct {
-	VlanId int32
-}
-
-type IPv4IntfKey struct {
-	IntfRef string
-}
-
-type IPv6IntfKey struct {
-	IntfRef string
-}
-
-const (
-	PortOperStateUp       EventId = 1
-	PortOperStateDown     EventId = 2
-	VlanOperStateUp       EventId = 3
-	VlanOperStateDown     EventId = 4
-	IPv4IntfOperStateUp   EventId = 5
-	IPv4IntfOperStateDown EventId = 6
-	IPv6IntfOperStateUp   EventId = 7
-	IPv6IntfOperStateDown EventId = 8
+import (
+	"encoding/json"
+	"fmt"
+	"github.com/garyburd/redigo/redis"
 )
 
-var AsicdEventKeyMap KeyMap = KeyMap{
-	"Port":     PortKey{},
-	"Vlan":     VlanKey{},
-	"IPv4Intf": IPv4IntfKey{},
+func (obj Event) GetKey() string {
+	return ""
+}
+
+func (obj Event) StoreObjectInDb(dbHdl redis.Conn) error {
+	return nil
+}
+
+func (obj Event) GetObjectFromDb(objKey string, dbHdl redis.Conn) (EventObj, error) {
+	return obj, nil
+}
+
+func (obj Event) GetAllObjFromDb(dbHdl redis.Conn) (objList []EventObj, err error) {
+	return nil, nil
+}
+
+func (obj Event) UnmarshalObject(body []byte) (EventObj, error) {
+	var err error
+	if len(body) > 0 {
+		if err = json.Unmarshal(body, &obj); err != nil {
+			fmt.Println("Event unmarshal failed", obj, err)
+		}
+	}
+	return obj, err
 }

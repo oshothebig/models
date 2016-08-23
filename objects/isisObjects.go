@@ -7,11 +7,11 @@
 //
 //    http://www.apache.org/licenses/LICENSE-2.0
 //
-//       Unless required by applicable law or agreed to in writing, software
-//       distributed under the License is distributed on an "AS IS" BASIS,
-//       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-//       See the License for the specific language governing permissions and
-//       limitations under the License.
+//	 Unless required by applicable law or agreed to in writing, software
+//	 distributed under the License is distributed on an "AS IS" BASIS,
+//	 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//	 See the License for the specific language governing permissions and
+//	 limitations under the License.
 //
 // _______  __       __________   ___      _______.____    __    ____  __  .___________.  ______  __    __
 // |   ____||  |     |   ____\  \ /  /     /       |\   \  /  \  /   / |  | |           | /      ||  |  |  |
@@ -21,37 +21,24 @@
 // |__|     |_______||_______/__/ \__\ |_______/        \__/  \__/     |__|     |__|      \______||__|  |__|
 //
 
-package events
+package objects
 
-type PortKey struct {
-	IntfRef string
+import ()
+
+/*
+ * Global Config for ISIS
+ */
+type IsisGlobal struct {
+	baseObj
+	Vrf    string `SNAPROUTE: "KEY", ACCESS:"w",  MULTIPLICITY:"1", AUTOCREATE: "true", DEFAULT: "default", DESCRIPTION: "VRF id where ISIS is globally enabled or disabled"`
+	Enable bool   `DESCRIPTION: "Global ISIS state in this VRF", DEFAULT: "true"`
 }
 
-type VlanKey struct {
-	VlanId int32
-}
-
-type IPv4IntfKey struct {
-	IntfRef string
-}
-
-type IPv6IntfKey struct {
-	IntfRef string
-}
-
-const (
-	PortOperStateUp       EventId = 1
-	PortOperStateDown     EventId = 2
-	VlanOperStateUp       EventId = 3
-	VlanOperStateDown     EventId = 4
-	IPv4IntfOperStateUp   EventId = 5
-	IPv4IntfOperStateDown EventId = 6
-	IPv6IntfOperStateUp   EventId = 7
-	IPv6IntfOperStateDown EventId = 8
-)
-
-var AsicdEventKeyMap KeyMap = KeyMap{
-	"Port":     PortKey{},
-	"Vlan":     VlanKey{},
-	"IPv4Intf": IPv4IntfKey{},
+/*
+ * Global State
+ */
+type IsisGlobalState struct {
+	baseObj
+	Vrf    string `SNAPROUTE: "KEY", ACCESS:"r",  MULTIPLICITY:"1", DESCRIPTION: "VRF id for which global ISIS state is requested"`
+	Enable bool   `DESCRIPTION: "Global ISIS state in this VRF"`
 }

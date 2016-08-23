@@ -121,6 +121,14 @@ type ArpEntryHwState struct {
 	Port    string `DESCRIPTION: "Router Interface to which neighbor is attached to", QPARAM: "optional" `
 }
 
+type NdpEntryHwState struct {
+	baseObj
+	IpAddr  string `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", QPARAM: "optional" ,DESCRIPTION: "Neighbor's IP Address"`
+	MacAddr string `DESCRIPTION: "MAC address of the neighbor machine with corresponding IP Address", QPARAM: "optional" `
+	Vlan    string `DESCRIPTION: "Vlan ID of the Router Interface to which neighbor is attached to", QPARAM: "optional" `
+	Port    string `DESCRIPTION: "Router Interface to which neighbor is attached to", QPARAM: "optional" `
+}
+
 type LogicalIntf struct {
 	baseObj
 	Name string `SNAPROUTE: "KEY", ACCESS:"w", DESCRIPTION: "Name of logical interface"`
@@ -156,7 +164,8 @@ type SubIPv4Intf struct {
 type IPv6Intf struct {
 	baseObj
 	IntfRef string `SNAPROUTE: "KEY", ACCESS:"w", DESCRIPTION: "Interface name or ifindex of port/lag or vlan on which this IPv4 object is configured"`
-	IpAddr  string `DESCRIPTION: "Interface IP Address/Prefix-Length to provision on switch interface", STRLEN:"43"`
+	IpAddr  string `DESCRIPTION: "Interface Global Scope IP Address/Prefix-Length to provision on switch interface", STRLEN:"43", DEFAULT:""`
+	LinkIp  bool   `DESCRIPTION: "Interface Link Scope IP Address auto-configured", DEFAULT:"true"`
 }
 
 type IPv6IntfState struct {

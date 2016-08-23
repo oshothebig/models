@@ -47,16 +47,18 @@ type Sfp struct {
 
 type SfpState struct {
 	baseObj
-	SfpId   int32  `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", AUTODISCOVER: "true", DESCRIPTION: "SFP id", DEFAULT:0`
-	Status  string `DESCRIPTION: "SFP status PRESENT/MISSING"`
-	SfpLOS  string `DESCRIPTION: "SFP status RX LOS"`
-	SfpType string `DESCRIPTION: "SFP type Copper/Optical"`
-	EEPROM  string `DESCRIPTION: "SFP eeprom"`
+	SfpId      int32  `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "SFP id", DEFAULT:0`
+	SfpSpeed   string `DESCRIPTION: "SFP speed in MBPS"`
+	SfpLOS     string `DESCRIPTION: "SFP status RX LOS"`
+	SfpPresent string `DESCRIPTION: "SFP status PRESENT/MISSING"`
+	SfpType    string `DESCRIPTION: "SFP type Copper/Optical"`
+	SerialNum  string `DESCRIPTION: "SFP SerialNum"`
+	EEPROM     string `DESCRIPTION: "SFP eeprom"`
 }
 
 type ThermalState struct {
 	baseObj
-	ThermalId                 int32  `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", AUTODISCOVER: "true", DESCRIPTION: "Thermal sensor id", DEFAULT:0`
+	ThermalId                 int32  `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Thermal sensor id", DEFAULT:0`
 	Location                  string `DESCRIPTION: "Thermal sensor location CPU/PSU/Motherboard"`
 	Temperature               string `DESCRIPTION: "Temperature current"`
 	LowerWatermarkTemperature string `DESCRIPTION: "Temperature warning"`
@@ -72,7 +74,7 @@ type Psu struct {
 
 type PsuState struct {
 	baseObj
-	PsuId      int32  `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", AUTODISCOVER: "true", DESCRIPTION: "PSU id", DEFAULT:0`
+	PsuId      int32  `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "PSU id", DEFAULT:0`
 	AdminState string `DESCRIPTION: "Admin UP/DOWN PSU"`
 	ModelNum   string `DESCRIPTION: "Model Number"`
 	SerialNum  string `DESCRIPTION: "Serial Number"`
@@ -96,7 +98,7 @@ type Led struct {
 
 type LedState struct {
 	baseObj
-	LedId       int32  `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", AUTODISCOVER: "true", DESCRIPTION: "LED id", DEFAULT:0`
+	LedId       int32  `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "LED id", DEFAULT:0`
 	LedIdentify string `DESCRIPTION: "LED represents FAN/PSU/RESET etc"`
 	LedState    string `DESCRIPTION: "LED State ON/OFF"`
 	LedColor    string `DESCRIPTION: "LED Color"`

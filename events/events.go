@@ -24,41 +24,48 @@
 package events
 
 import (
-	"time"
+	"github.com/garyburd/redigo/redis"
 )
 
 type OwnerId uint8
 type EventId uint32
 
-type EventBase struct {
-	OwnerId     OwnerId
-	OwnerName   string
-	EvtId       EventId
-	EventName   string
-	TimeStamp   time.Time
-	Description string
-	SrcObjName  string
-}
-
-type Event struct {
-	EventBase
-	SrcObjKey interface{}
-}
-
 type KeyMap map[string]interface{}
 
 var EventKeyMap map[string]KeyMap = map[string]KeyMap{
-	"ASICD": AsicdEventKeyMap,
-	"ARPD":  ArpdEventKeyMap,
-	"BGPD":  BGPdEventKeyMap,
-	"LLDP":  LLDPEventKeyMap,
+	"ASICD":  AsicdEventKeyMap,
+	"ARPD":   ArpdEventKeyMap,
+	"OPTICD": OpticdEventKeyMap,
+	"BGPD":   BGPdEventKeyMap,
+	"LLDP":   LLDPEventKeyMap,
 }
 
-type EventObject struct {
-	OwnerName   string
-	EventName   string
-	TimeStamp   string
-	SrcObjName  string
-	SrcObjKey   string
-	Description string
+type Event struct {
+	OwnerName      string
+	EventName      string
+	TimeStamp      string
+	SrcObjName     string
+	SrcObjKey      interface{}
+	Description    string
+	AdditionalData interface{}
+}
+
+type EventStats struct {
+	EventId       EventId
+	EventName     string
+	NumEvents     uint32
+	LastEventTime string
+}
+
+type EventObj interface {
+	UnmarshalObject([]byte) (EventObj, error)
+	GetKey() string
+	StoreObjectInDb(redis.Conn) error
+	GetObjectFromDb(string, redis.Conn) (EventObj, error)
+	GetAllObjFromDb(redis.Conn) ([]EventObj, error)
+}
+
+var EventObjectMap = map[string]EventObj{
+	"Events":     Event{},
+	"EventStats": EventStats{},
 }
