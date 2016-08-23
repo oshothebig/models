@@ -619,7 +619,7 @@
 				{
 					"EventId" : 145,
 					"EventName" : "RxPwrLoAlarmClear",
-					"Description" : "DWDM Module network interface TX power low alarm cleared",
+					"Description" : "DWDM Module network interface RX power low alarm cleared",
 					"SrcObjName" : "DWDMModuleNwIntf",
 					"EventEnable" : true,
 					"IsFault" : false
