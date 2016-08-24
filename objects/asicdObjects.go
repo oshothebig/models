@@ -253,3 +253,11 @@ type AclRuleState struct {
 	SrcPort    int32  `DESCRIPTION: "Ingress Port"`
 	DstPort    int32  `DESCRIPTION: "Egress Port"`
 }
+
+// NEED TO ADD SUPPORT TO MAKE THIS INTERNAL ONLY
+type LinkScopeIpState struct {
+	baseObj
+	LinkScopeIp string `SNAPROUTE: "KEY", MULTIPLICITY: "*", ACCESS:"r", DESCRIPTION:"Link scope IP Address", USESTATEDB:"true"`
+	IntfRef     string `DESCRIPTION: "Interface where the link scope ip is configured"`
+	Used        bool   `DESCRIPTION : "states whether the ip being used"`
+}
