@@ -207,3 +207,49 @@ type BufferGlobalStatState struct {
 	EgressBufferStat  uint64 `DESCRIPTION: "Egress Buffer stats "`
 	IngressBufferStat uint64 `DESCRIPTION: "Ingress buffer stats "`
 }
+
+type Acl struct {
+	baseObj
+	AclName      string   `SNAPROUTE: "KEY", ACCESS:"w",MULTIPLICITY: "*", DESCRIPTION: "Acl name to be used to refer to this ACL"`
+	IntfList     []string `DESCRIPTION: "list of IntfRef can be port/lag object"`
+	RuleNameList []string `DESCRIPTION: "List of rules to be applied to this ACL. This should match with AclRule RuleName"`
+	Direction    string   `SNAPROUTE: "IN/OUT direction in which ACL to be applied"`
+}
+
+type AclRule struct {
+	baseObj
+	RuleName   string `SNAPROUTE: "KEY", MULTIPLICITY: "*", ACCESS:"w", DESCRIPTION: "Acl rule name"`
+	SourceMac  string `DESCRIPTION: "Source MAC address."`
+	DestMac    string `DESCRIPTION: "Destination MAC address"`
+	SourceIp   string `DESCRIPTION: "Source IP address"`
+	DestIp     string `DESCRIPTION: "Destination IP address"`
+	SourceMask string `DESCRIPTION: "Network mask for source IP"`
+	DestMask   string `DESCRIPTION: "Network mark for dest IP"`
+	Action     string `DESCRIPTION: "Type of action (Allow/Deny)", DEFAULT:"Allow", STRLEN:"16"`
+	Proto      string `DESCRIPTION: "Protocol type"`
+	SrcPort    int32  `DESCRIPTION: "Source Port"`
+	DstPort    int32  `DESCRIPTION: "Dest Port"`
+}
+
+type AclState struct {
+	baseObj
+	AclName      string   `SNAPROUTE: "KEY", ACCESS:"r",MULTIPLICITY: "*", DESCRIPTION: "Acl name to be used to refer to this ACL", USESTATEDB:"true"`
+	RuleNameList []string `DESCRIPTION: "List of acl rules  to be applied to this ACL. This should match with Acl rule key"`
+	IntfList     []string `DESCRIPTION: "list of IntfRef can be port/lag object"`
+	Direction    string   `SNAPROUTE: "IN/OUT direction in which ACL to be applied"`
+}
+
+type AclRuleState struct {
+	baseObj
+	RuleName   string `SNAPROUTE: "KEY", MULTIPLICITY: "*", ACCESS:"r", DESCRIPTION: "Acl rule name"`
+	SourceMac  string `DESCRIPTION: "Source MAC address."`
+	DestMac    string `DESCRIPTION: "Destination MAC address"`
+	SourceIp   string `DESCRIPTION: "Source IP address"`
+	DestIp     string `DESCRIPTION: "Destination IP address"`
+	SourceMask string `DESCRIPTION: "Network mask for source IP"`
+	DestMask   string `DESCRIPTION: "Network mark for dest IP"`
+	Action     string `DESCRIPTION: "Type of action (Allow/Deny)", DEFAULT:"Allow", STRLEN:"16"`
+	Proto      string `DESCRIPTION: "Protocol type"`
+	SrcPort    int32  `DESCRIPTION: "Ingress Port"`
+	DstPort    int32  `DESCRIPTION: "Egress Port"`
+}
