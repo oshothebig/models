@@ -23,6 +23,12 @@
 
 package events
 
+import (
+	"encoding/json"
+	"errors"
+	"fmt"
+)
+
 type LLDPIntfKey struct {
 	IfIndex int32
 }
@@ -35,4 +41,15 @@ const (
 
 var LLDPEventKeyMap KeyMap = KeyMap{
 	"LLDPIntf": LLDPIntfKey{},
+}
+
+func (obj LLDPIntfKey) GetObjDBKey(bytes []byte) (string, string, error) {
+	var err error
+	if len(bytes) == 0 {
+		return "", "", errors.New("Empty byte stream")
+	}
+	if err = json.Unmarshal(bytes, &obj); err != nil {
+		return "", "", err
+	}
+	return fmt.Sprintf("IfIndex:%d", obj.IfIndex), fmt.Sprintf("LLDPIntf#%d", obj.IfIndex), nil
 }

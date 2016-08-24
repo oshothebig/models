@@ -23,6 +23,12 @@
 
 package events
 
+import (
+	"encoding/json"
+	"errors"
+	"fmt"
+)
+
 type DWDMModuleKey struct {
 	ModuleId uint8
 }
@@ -77,4 +83,26 @@ const (
 var OpticdEventKeyMap KeyMap = KeyMap{
 	"DWDMModule":       DWDMModuleKey{},
 	"DWDMModuleNwIntf": DWDMModuleNwIntfKey{},
+}
+
+func (obj DWDMModuleKey) GetObjDBKey(bytes []byte) (string, string, error) {
+	var err error
+	if len(bytes) == 0 {
+		return "", "", errors.New("Empty byte stream")
+	}
+	if err = json.Unmarshal(bytes, &obj); err != nil {
+		return "", "", err
+	}
+	return fmt.Sprintf("ModuleId:%d", obj.ModuleId), fmt.Sprintf("DWDMModule#%d", obj.ModuleId), nil
+}
+
+func (obj DWDMModuleNwIntfKey) GetObjDBKey(bytes []byte) (string, string, error) {
+	var err error
+	if len(bytes) == 0 {
+		return "", "", errors.New("Empty byte stream")
+	}
+	if err = json.Unmarshal(bytes, &obj); err != nil {
+		return "", "", err
+	}
+	return fmt.Sprintf("ModuleId:%d NwIntfId:%d", obj.ModuleId, obj.NwIntfId), fmt.Sprintf("DWDMModuleNwIntf#%d#%d", obj.ModuleId, obj.NwIntfId), nil
 }
