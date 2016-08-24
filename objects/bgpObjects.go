@@ -30,9 +30,9 @@ type SourcePolicyList struct {
 
 type BGPGlobal struct {
 	baseObj
-	Vrf                 string             `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"1", DESCRIPTION: "VRF id for BGP global config", DEFAULT:"default"`
-	ASNum               uint32             `DESCRIPTION: "Local AS for BGP global config"`
-	RouterId            string             `DESCRIPTION: "Router id for BGP global config"`
+	Vrf                 string             `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"1", AUTOCREATE: "true", DESCRIPTION: "VRF id for BGP global config", DEFAULT:"default"`
+	ASNum               uint32             `DESCRIPTION: "Local AS for BGP global config", DEFAULT: "0"`
+	RouterId            string             `DESCRIPTION: "Router id for BGP global config", DEFAULT: "0.0.0.0"`
 	UseMultiplePaths    bool               `DESCRIPTION: "Enable/disable ECMP for BGP", DEFAULT: "false"`
 	EBGPMaxPaths        uint32             `DESCRIPTION: "Max ECMP paths from External BGP neighbors", DEFAULT: "0"`
 	EBGPAllowMultipleAS bool               `DESCRIPTION: "Enable/diable ECMP paths from multiple ASes", DEFAULT: "false"`
@@ -258,10 +258,17 @@ type PathInfo struct {
 	PathType       string   `DESCRIPTION: "BGP path type; I.E. external, internal, redistributed, etc."`
 }
 
-type BGPRouteState struct {
+type BGPv4RouteState struct {
 	baseObj
-	Network string `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Network address of the destination", USESTATEDB:"true"`
-	CIDRLen uint16 `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "CIDR length of the destination", USESTATEDB:"true"`
+	Network string `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Network address of the IPv4 destination", USESTATEDB:"true"`
+	CIDRLen uint16 `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "CIDR length of the IPv4 destination", USESTATEDB:"true"`
+	Paths   []PathInfo
+}
+
+type BGPv6RouteState struct {
+	baseObj
+	Network string `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Network address of the IPv6 destination", USESTATEDB:"true"`
+	CIDRLen uint16 `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "CIDR length of the IPv6 destination", USESTATEDB:"true"`
 	Paths   []PathInfo
 }
 
