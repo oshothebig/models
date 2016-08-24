@@ -92,6 +92,9 @@ type BfdSessionState struct {
 	SentAuthSeq               uint32 `DESCRIPTION: "Sent authentication sequence number"`
 	NumTxPackets              uint32 `DESCRIPTION: "Number of control packets sent"`
 	NumRxPackets              uint32 `DESCRIPTION: "Number of control packets received"`
+	ToDownCount               uint32 `DESCRIPTION: "Number of times this session have moved to down state"`
+	ToUpCount                 uint32 `DESCRIPTION: "Number of times this session have moved to up state"`
+	UpDuration                string `DESCRIPTION: "Duration of this session in up state"`
 }
 
 /*
