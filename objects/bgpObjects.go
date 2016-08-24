@@ -258,10 +258,17 @@ type PathInfo struct {
 	PathType       string   `DESCRIPTION: "BGP path type; I.E. external, internal, redistributed, etc."`
 }
 
-type BGPRouteState struct {
+type BGPv4RouteState struct {
 	baseObj
-	Network string `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Network address of the destination", USESTATEDB:"true"`
-	CIDRLen uint16 `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "CIDR length of the destination", USESTATEDB:"true"`
+	Network string `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Network address of the IPv4 destination", USESTATEDB:"true"`
+	CIDRLen uint16 `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "CIDR length of the IPv4 destination", USESTATEDB:"true"`
+	Paths   []PathInfo
+}
+
+type BGPv6RouteState struct {
+	baseObj
+	Network string `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Network address of the IPv6 destination", USESTATEDB:"true"`
+	CIDRLen uint16 `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "CIDR length of the IPv6 destination", USESTATEDB:"true"`
 	Paths   []PathInfo
 }
 
