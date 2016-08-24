@@ -257,7 +257,7 @@ type AclRuleState struct {
 // NEED TO ADD SUPPORT TO MAKE THIS INTERNAL ONLY
 type LinkScopeIpState struct {
 	baseObj
-	LinkScopeIp string `SNAPROUTE: "KEY", MULTIPLICITY: "*", ACCESS:"r", DESCRIPTION:"Link scope IP Address"m USESTATEDB:"true"`
+	LinkScopeIp string `SNAPROUTE: "KEY", MULTIPLICITY: "*", ACCESS:"r", DESCRIPTION:"Link scope IP Address", USESTATEDB:"true"`
 	IntfRef     string `DESCRIPTION: "Interface where the link scope ip is configured"`
 	Used        bool   `DESCRIPTION : "states whether the ip being used"`
 }
