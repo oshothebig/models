@@ -23,6 +23,12 @@
 
 package events
 
+import (
+	"encoding/json"
+	"errors"
+	"fmt"
+)
+
 type ArpEntryKey struct {
 	IpAddr string
 }
@@ -35,4 +41,15 @@ const (
 
 var ArpdEventKeyMap KeyMap = KeyMap{
 	"ArpEntry": ArpEntryKey{},
+}
+
+func (obj ArpEntryKey) GetObjDBKey(bytes []byte) (string, string, error) {
+	var err error
+	if len(bytes) == 0 {
+		return "", "", errors.New("Empty byte stream")
+	}
+	if err = json.Unmarshal(bytes, &obj); err != nil {
+		return "", "", err
+	}
+	return fmt.Sprintf("IpAddr:%s", obj.IpAddr), fmt.Sprintf("ArpEntry#%s", obj.IpAddr), nil
 }
