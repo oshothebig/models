@@ -969,7 +969,7 @@ grouping aggregation-lacp-members-statistics {
 	}
 
 	// intra portal links
-	leaf-list intfrefipplist {
+	leaf-list intfreflist {
           type string;
           description
             "Read-write list of the Interface Identifiers of the Ports to the Intra-Portal Links assigned to
@@ -1185,8 +1185,8 @@ grouping aggregation-lacp-members-statistics {
 	}
 
 	// intra portal links
-	leaf-list intra-portal-link-list {
-          type uint32;
+	leaf-list intfreflist {
+          type string;
           config true;
           description
             "Read-write list of the Interface Identifiers of the Ports to the Intra-Portal Links assigned to
