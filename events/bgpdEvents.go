@@ -23,6 +23,12 @@
 
 package events
 
+import (
+	"encoding/json"
+	"errors"
+	"fmt"
+)
+
 type BGPNeighborKey struct {
 	NeighborAddress string
 	IfIndex         int32
@@ -34,4 +40,15 @@ const (
 
 var BGPdEventKeyMap KeyMap = KeyMap{
 	"BGPNeighbor": BGPNeighborKey{},
+}
+
+func (obj BGPNeighborKey) GetObjDBKey(bytes []byte) (string, string, error) {
+	var err error
+	if len(bytes) == 0 {
+		return "", "", errors.New("Empty byte stream")
+	}
+	if err = json.Unmarshal(bytes, &obj); err != nil {
+		return "", "", err
+	}
+	return fmt.Sprintf("NeighborAddress:%s IfIndex:%d", obj.NeighborAddress, obj.IfIndex), fmt.Sprintf("BGPNeighbor#%s#%d", obj.NeighborAddress, obj.IfIndex), nil
 }
