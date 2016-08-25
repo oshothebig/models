@@ -259,5 +259,6 @@ type LinkScopeIpState struct {
 	baseObj
 	LinkScopeIp string `SNAPROUTE: "KEY", MULTIPLICITY: "*", ACCESS:"r", DESCRIPTION:"Link scope IP Address", USESTATEDB:"true"`
 	IntfRef     string `DESCRIPTION: "Interface where the link scope ip is configured"`
+	IfIndex     int32  `DESCRIPTION: "System Generated Unique Interface Id"`
 	Used        bool   `DESCRIPTION : "states whether the ip being used"`
 }
