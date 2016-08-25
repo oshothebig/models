@@ -103,7 +103,7 @@ type PolicyCondition struct {
 	Protocol        string `DESCRIPTION: "Protocol to match on if the ConditionType is set to MatchProtocol",SELECTION:"CONNECTED"/"STATIC"/"OSPF"/"BGP"`
 	IpPrefix        string `DESCRIPTION: "Used in conjunction with MaskLengthRange to specify the IP Prefix to match on when the ConditionType is MatchDstIpPrefix/MatchSrcIpPrefix."`
 	MaskLengthRange string `DESCRIPTION: "Used in conjuction with IpPrefix to specify specify the IP Prefix to match on when the ConditionType is MatchDstIpPrefix/MatchSrcIpPrefix."`
-	PrefixSet       string `DESCRIPTION: "Name of a pre-defined prefix set to be used as a condition qualifier."`
+	PrefixSet       string `DESCRIPTION: "Name of a pre-defined prefix set to be used as a condition qualifier.", OPTIONAL, DEFAULT:""`
 }
 type PolicyConditionState struct {
 	baseObj
