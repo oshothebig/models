@@ -23,6 +23,12 @@
 
 package events
 
+import (
+	"encoding/json"
+	"errors"
+	"fmt"
+)
+
 type PortKey struct {
 	IntfRef string
 }
@@ -55,4 +61,48 @@ var AsicdEventKeyMap KeyMap = KeyMap{
 	"Vlan":     VlanKey{},
 	"IPv4Intf": IPv4IntfKey{},
 	"IPv6Intf": IPv6IntfKey{},
+}
+
+func (obj PortKey) GetObjDBKey(bytes []byte) (string, string, error) {
+	var err error
+	if len(bytes) == 0 {
+		return "", "", errors.New("Empty byte stream")
+	}
+	if err = json.Unmarshal(bytes, &obj); err != nil {
+		return "", "", err
+	}
+	return fmt.Sprintf("IntfRef:%s", obj.IntfRef), fmt.Sprintf("Port#%s", obj.IntfRef), nil
+}
+
+func (obj VlanKey) GetObjDBKey(bytes []byte) (string, string, error) {
+	var err error
+	if len(bytes) == 0 {
+		return "", "", errors.New("Empty byte stream")
+	}
+	if err = json.Unmarshal(bytes, &obj); err != nil {
+		return "", "", err
+	}
+	return fmt.Sprintf("VlanId:%d", obj.VlanId), fmt.Sprintf("Vlan#%d", obj.VlanId), nil
+}
+
+func (obj IPv4IntfKey) GetObjDBKey(bytes []byte) (string, string, error) {
+	var err error
+	if len(bytes) == 0 {
+		return "", "", errors.New("Empty byte stream")
+	}
+	if err = json.Unmarshal(bytes, &obj); err != nil {
+		return "", "", err
+	}
+	return fmt.Sprintf("IntfRef:%s", obj.IntfRef), fmt.Sprintf("IPv4Intf#%s", obj.IntfRef), nil
+}
+
+func (obj IPv6IntfKey) GetObjDBKey(bytes []byte) (string, string, error) {
+	var err error
+	if len(bytes) == 0 {
+		return "", "", errors.New("Empty byte stream")
+	}
+	if err = json.Unmarshal(bytes, &obj); err != nil {
+		return "", "", err
+	}
+	return fmt.Sprintf("IntfRef:%s", obj.IntfRef), fmt.Sprintf("IPv6Intf#%s", obj.IntfRef), nil
 }

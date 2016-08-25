@@ -227,7 +227,8 @@ type AclRule struct {
 	DestMask   string `DESCRIPTION: "Network mark for dest IP"`
 	Action     string `DESCRIPTION: "Type of action (Allow/Deny)", DEFAULT:"Allow", STRLEN:"16"`
 	Proto      string `DESCRIPTION: "Protocol type"`
-	Port       int32  `DESCRIPTION: "L4 Port"`
+	SrcPort    int32  `DESCRIPTION: "Source Port"`
+	DstPort    int32  `DESCRIPTION: "Dest Port"`
 }
 
 type AclState struct {
@@ -249,5 +250,14 @@ type AclRuleState struct {
 	DestMask   string `DESCRIPTION: "Network mark for dest IP"`
 	Action     string `DESCRIPTION: "Type of action (Allow/Deny)", DEFAULT:"Allow", STRLEN:"16"`
 	Proto      string `DESCRIPTION: "Protocol type"`
-	Port       int32  `DESCRIPTION: "L4 Port"`
+	SrcPort    int32  `DESCRIPTION: "Ingress Port"`
+	DstPort    int32  `DESCRIPTION: "Egress Port"`
+}
+
+// NEED TO ADD SUPPORT TO MAKE THIS INTERNAL ONLY
+type LinkScopeIpState struct {
+	baseObj
+	LinkScopeIp string `SNAPROUTE: "KEY", MULTIPLICITY: "*", ACCESS:"r", DESCRIPTION:"Link scope IP Address", USESTATEDB:"true"`
+	IntfRef     string `DESCRIPTION: "Interface where the link scope ip is configured"`
+	Used        bool   `DESCRIPTION : "states whether the ip being used"`
 }
