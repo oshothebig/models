@@ -57,3 +57,10 @@ type XponderGlobal struct {
 	XponderMode        string `DESCRIPTION: "Global operational mode of Xponder module", SELECTION:"InServiceWire"/"InServiceRegen"/"InServiceOverSub"/"InServicePacketOptical"/"OutOfService", DEFAULT:"OutOfService"`
 	XponderDescription string `DESCRIPTION: "User configurable description string for the xponder module", DEFAULT:""`
 }
+
+type XponderGlobalState struct {
+	baseObj
+	XponderId          uint8  `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY: "1", DESCRIPTION: "Xponder module identifier"`
+	XponderMode        string `DESCRIPTION: "Global operational mode of Xponder module"`
+	XponderDescription string `DESCRIPTION: "User configurable description string for the xponder module"`
+}
