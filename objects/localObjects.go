@@ -50,6 +50,17 @@ type SystemSwVersionState struct {
 	Repos             []RepoInfo `DESCRIPTION: "Git repo details"`
 }
 
+type ApiCallState struct {
+	baseObj
+	Time      string `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY: "*", DESCRIPTION: "When the API was called", USESTATEDB:"true"`
+	API       string `SNAPROUTE: "KEY", DESCRIPTION: "Name of the API called"`
+	Operation string `DESCRIPTION: "Oprtation executed on this API"`
+	Data      string `DESCRIPTION: "User provided data"`
+	Result    string `DESCRIPTION: "Result of the API call"`
+	UserAddr  string `DESCRIPTION: "Host address from where the call was made"`
+	UserName  string `DESCRIPTION: "User who made the call"`
+}
+
 //Voyager specific config object
 type XponderGlobal struct {
 	baseObj
