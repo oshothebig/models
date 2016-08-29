@@ -25,8 +25,8 @@ type StpPort struct {
 
 type StpPortState struct {
 	baseObj
-	Vlan                        int32  `SNAPROUTE: "KEY", ACCESS: "r", MULTIPLICITY:"*", DESCRIPTION: The value of instance of the vlan object,  for the bridge corresponding to this port., MIN: "0" ,  MAX: "4094"`
-	IntfRef                     string `SNAPROUTE: "KEY", ACCESS: "r", DESCRIPTION: The port number of the port for which this entry contains Spanning Tree Protocol management information. `
+	Vlan                        int32  `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: The value of instance of the vlan object,  for the bridge corresponding to this port., MIN: "0" ,  MAX: "4094"`
+	IntfRef                     string `SNAPROUTE: "KEY", ACCESS:"r", DESCRIPTION: The port number of the port for which this entry contains Spanning Tree Protocol management information. `
 	Priority                    int32  `DESCRIPTION: The value of the priority field that is contained in the first in network byte order octet of the 2 octet long Port ID.  The other octet of the Port ID is given by the value of StpPort. On bridges supporting IEEE 802.1t or IEEE 802.1w permissible values are 0-240 in steps of 16., MIN: "0" ,  MAX: "255"`
 	Enable                      int32  `DESCRIPTION: The enabled/disabled status of the port., SELECTION: disabled(2)/enabled(1), DEFAULT: 1`
 	PathCost                    int32  `DESCRIPTION: The contribution of this port to the path cost of paths towards the spanning tree root which include this port.  802.1D-1998 recommends that the default value of this parameter be in inverse proportion to    the speed of the attached LAN.  New implementations should support PathCost32. If the port path costs exceeds the maximum value of this object then this object should report the maximum value namely 65535.  Applications should try to read the PathCost32 object if this object reports the maximum value., MIN: "1" ,  MAX: "65535"`
