@@ -25,7 +25,7 @@ type StpPort struct {
 
 type StpPortState struct {
 	baseObj
-	Vlan                        int32  `SNAPROUTE: "KEY", ACCESS: "r", DESCRIPTION: The value of instance of the vlan object,  for the bridge corresponding to this port., MIN: "0" ,  MAX: "4094"`
+	Vlan                        int32  `SNAPROUTE: "KEY", ACCESS: "r", MULTIPLICITY:"*", DESCRIPTION: The value of instance of the vlan object,  for the bridge corresponding to this port., MIN: "0" ,  MAX: "4094"`
 	IntfRef                     string `SNAPROUTE: "KEY", ACCESS: "r", DESCRIPTION: The port number of the port for which this entry contains Spanning Tree Protocol management information. `
 	Priority                    int32  `DESCRIPTION: The value of the priority field that is contained in the first in network byte order octet of the 2 octet long Port ID.  The other octet of the Port ID is given by the value of StpPort. On bridges supporting IEEE 802.1t or IEEE 802.1w permissible values are 0-240 in steps of 16., MIN: "0" ,  MAX: "255"`
 	Enable                      int32  `DESCRIPTION: The enabled/disabled status of the port., SELECTION: disabled(2)/enabled(1), DEFAULT: 1`
@@ -104,7 +104,7 @@ type StpBridgeInstance struct {
 
 type StpBridgeState struct {
 	baseObj
-	Vlan                    uint16 `SNAPROUTE: "KEY",  ACCESS:"r", DESCRIPTION: Each bridge is associated with a domain.  Typically this domain is represented as the vlan; The default domain is typically 1, MIN: "1" ,  MAX: "4095"`
+	Vlan                    uint16 `SNAPROUTE: "KEY",  ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: Each bridge is associated with a domain.  Typically this domain is represented as the vlan; The default domain is typically 1, MIN: "1" ,  MAX: "4095"`
 	IfIndex                 int32  `DESCRIPTION: The value of the instance of the ifIndex object for the bridge, MIN: "1" ,  MAX: "2147483647"`
 	Address                 string `DESCRIPTION: The bridge identifier of the root of the spanning tree as determined by the Spanning Tree Protocol as executed by this node.  This value is used as the Root Identifier parameter in all Configuration Bridge PDUs originated by this node."`
 	Priority                int32  `DESCRIPTION: The value of the write-able portion of the Bridge ID i.e. the first two octets of the 8 octet long Bridge ID.  The other last 6 octets of the Bridge ID are given by the value of Address. On bridges supporting IEEE 802.1t or IEEE 802.1w permissible values are 0-61440 in steps of 4096., MIN: "0" ,  MAX: "65535"`
