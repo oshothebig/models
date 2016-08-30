@@ -82,6 +82,8 @@ type DWDMModuleNwIntfState struct {
 	CurrUncorrectableFECBlkCnt      float64 `DESCRIPTION: "Current value of uncorrectable FEC code block count"`
 	UncorrectableFECBlkCntOverPMInt float64 `DESCRIPTION: "Average value of uncorrectable FEC code block count over the last PM interval"`
 	PRBSRxErrCnt                    float64 `DESCRIPTION: "RX PRBS error count for network interface"`
+	RxPower                         float64 `DESCRIPTION: "Current RX power for the DWDM module network interface"`
+	ChanFrequency                   float64 `DESCRIPTION: "Channel frequency corresponding to selected channel number for the DWDM module network interface"`
 }
 
 type DWDMModuleClntIntf struct {
