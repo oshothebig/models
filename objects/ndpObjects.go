@@ -26,8 +26,10 @@ package objects
 type NDPGlobal struct {
 	baseObj
 	// placeholder to create a key
-	Vrf    string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"1", AUTOCREATE: "true", DESCRIPTION: "System Vrf", DEFAULT:"default"`
-	Enable string `DESCRIPTION: "Enable/Diable Neighbor Discovery Globally", DEFAULT: "true"`
+	Vrf                         string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"1", AUTOCREATE: "true", DESCRIPTION: "System Vrf", DEFAULT:"default"`
+	RetransmitInterval          int32  ` DESCRIPTION: "The time between retransmissions of Neighbor Solicitation messages to a neighbor when resolving the address or when probing the reachability of a neighbor in ms", DEFAULT:1`
+	ReachableTime               int32  `DESCRIPTION: "The time a neighbor is considered reachable after receiving a reachability confirmation in ms", DEFAULT:30000`
+	RouterAdvertisementInterval int32  `DESCRIPTION: "Delay between each router advertisements in seconds", DEFAULT:5`
 }
 
 type NDPEntryState struct {
