@@ -137,5 +137,5 @@ type DistributedRelayState struct {
 type LacpGlobal struct {
 	baseObj
 	Vrf        string `SNAPROUTE: "KEY", ACCESS:"w",  MULTIPLICITY:"1", AUTOCREATE: "true", DEFAULT: "default", DESCRIPTION: global system object defining the global state of LACPD.`
-	AdminState string `DESCRIPTION: Administrative state of LACPD, UP will allow for lacp configuration to be applied, DOWN will disallow and de-provision from daemon, STRLEN:"4", SELECTION: UP/DOWN DEFAULT: DOWN`
+	AdminState string `DESCRIPTION: Administrative state of LACPD, UP will allow for lacp configuration to be applied, DOWN will disallow and de-provision from daemon, STRLEN:"4", SELECTION: UP/DOWN, DEFAULT: DOWN`
 }
