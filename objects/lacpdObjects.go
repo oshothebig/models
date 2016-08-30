@@ -15,6 +15,8 @@ type LaPortChannelIntfRefListState struct {
 	Defaulted                  bool   `DESCRIPTION: When no partner information is exchanged port will come up in a defaulted state`
 	SystemId                   string `DESCRIPTION: MAC address that defines the local system ID for the aggregate interface, SELECTION: "[0-9a-fA-F]{2}(:[0-9a-fA-F]{2}){5}"`
 	OperKey                    uint16 `DESCRIPTION: Current operational value of the key for the aggregate interface`
+	DrniName                   string `DESCRIPTION: Defines the Lag is owned by the Distributed Relay Object`
+	DrniSynced                 bool   `DESCRIPTION: Identify that the Distributed Relay is in sync with neighbor`
 	PartnerId                  string `DESCRIPTION: MAC address representing the protocol partners interface system ID, SELECTION: "[0-9a-fA-F]{2}(:[0-9a-fA-F]{2}){5}"`
 	PartnerKey                 uint16 `DESCRIPTION: Operational value of the protocol partners key`
 	DebugId                    uint32 `DESCRIPTION: Debug Information Id`
@@ -137,5 +139,5 @@ type DistributedRelayState struct {
 type LacpGlobal struct {
 	baseObj
 	Vrf        string `SNAPROUTE: "KEY", ACCESS:"w",  MULTIPLICITY:"1", AUTOCREATE: "true", DEFAULT: "default", DESCRIPTION: global system object defining the global state of LACPD.`
-	AdminState string `DESCRIPTION: Administrative state of LACPD, UP will allow for lacp configuration to be applied, DOWN will disallow and de-provision from daemon, STRLEN:"4", SELECTION: UP/DOWN, DEFAULT: DOWN`
+	AdminState string `DESCRIPTION: Administrative state of LACPD, UP will allow for lacp configuration to be applied, DOWN will disallow and de-provision from daemon, STRLEN:"4", SELECTION: UP/DOWN, DEFAULT: "DOWN"`
 }
