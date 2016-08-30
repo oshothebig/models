@@ -68,8 +68,8 @@ type EventObj interface {
 }
 
 var EventObjectMap = map[string]EventObj{
-	"Events":     Event{},
-	"EventStats": EventStats{},
+	"events":     Event{},
+	"eventstats": EventStats{},
 }
 
 type EventObjKeyIntf interface {
