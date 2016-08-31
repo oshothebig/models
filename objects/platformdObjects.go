@@ -237,28 +237,28 @@ type PowerConverterSensorPMDataState struct {
 
 type Qsfp struct {
 	baseObj
-	Location                  string  `SNAPROUTE: "KEY", ACCESS:"rw", MULTIPLICITY:"*", AUTODISCOVER: "true", DESCRIPTION: "Qsfp Name"`
-	AdminState                string  `DESCRIPTION: "Enable/Disable", DEFAULT: "Enable"`
-	HigherAlarmTemperature    float64 `DESCRIPTION: "Higher Alarm temperature threshold for TCA"`
-	HigerAlarmVoltage         float64 `DESCRIPTION: "Higher Alarm Voltage threshold for TCA"`
-	HigherAlarmRXPower        float64 `DESCRIPTION: "Higher Alarm Rx power Threshold for TCA"`
-	HigherAlarmTXPower        float64 `DESCRIPTION: "Higher Alarm Rx power for TCA"`
-	HigherAlarmTXBias         float64 `DESCRIPTION: "Higher Alarm Tx Current Bias for TCA"`
-	HigherWarningTemperature  float64 `DESCRIPTION: "Higher Warning temperature threshold for TCA"`
-	HigerWarningVoltage       float64 `DESCRIPTION: "Higher Warning Voltage threshold for TCA"`
-	HigherWarningRXPower      float64 `DESCRIPTION: "Higher Warning Rx power Threshold for TCA"`
-	HigherWarningTXPower      float64 `DESCRIPTION: "Higher Warning Rx power for TCA"`
-	HigherWarningTXBias       float64 `DESCRIPTION: "Higher Warning Tx Current Bias for TCA"`
-	LowerAlarmTemperature     float64 `DESCRIPTION: "Lower Alarm temperature threshold for TCA"`
-	LowerAlarmVoltage         float64 `DESCRIPTION: "Lower Alarm Voltage threshold for TCA"`
-	LowerAlarmRXPower         float64 `DESCRIPTION: "Lower Alarm Rx power Threshold for TCA"`
-	LowerAlarmTXPower         float64 `DESCRIPTION: "Lower Alarm Rx power for TCA"`
-	LowerAlarmTXBias          float64 `DESCRIPTION: "Lower Alarm Tx Current Bias for TCA"`
-	LowererWarningTemperature float64 `DESCRIPTION: "Lower Warning temperature threshold for TCA"`
-	LowerWarningVoltage       float64 `DESCRIPTION: "Lower Warning Voltage threshold for TCA"`
-	LowerWarningRXPower       float64 `DESCRIPTION: "Lower Warning Rx power Threshold for TCA"`
-	LowerWarningTXPower       float64 `DESCRIPTION: "Lower Warning Rx power for TCA"`
-	LowerWarningTXBias        float64 `DESCRIPTION: "Lower Warning Tx Current Bias for TCA"`
+	Location                 string  `SNAPROUTE: "KEY", ACCESS:"rw", MULTIPLICITY:"*", AUTODISCOVER: "true", DESCRIPTION: "Qsfp Name"`
+	AdminState               string  `DESCRIPTION: "Enable/Disable", DEFAULT: "Enable"`
+	HigherAlarmTemperature   float64 `DESCRIPTION: "Higher Alarm temperature threshold for TCA"`
+	HigherAlarmVoltage       float64 `DESCRIPTION: "Higher Alarm Voltage threshold for TCA"`
+	HigherAlarmRXPower       float64 `DESCRIPTION: "Higher Alarm Rx power Threshold for TCA"`
+	HigherAlarmTXPower       float64 `DESCRIPTION: "Higher Alarm Rx power for TCA"`
+	HigherAlarmTXBias        float64 `DESCRIPTION: "Higher Alarm Tx Current Bias for TCA"`
+	HigherWarningTemperature float64 `DESCRIPTION: "Higher Warning temperature threshold for TCA"`
+	HigherWarningVoltage     float64 `DESCRIPTION: "Higher Warning Voltage threshold for TCA"`
+	HigherWarningRXPower     float64 `DESCRIPTION: "Higher Warning Rx power Threshold for TCA"`
+	HigherWarningTXPower     float64 `DESCRIPTION: "Higher Warning Rx power for TCA"`
+	HigherWarningTXBias      float64 `DESCRIPTION: "Higher Warning Tx Current Bias for TCA"`
+	LowerAlarmTemperature    float64 `DESCRIPTION: "Lower Alarm temperature threshold for TCA"`
+	LowerAlarmVoltage        float64 `DESCRIPTION: "Lower Alarm Voltage threshold for TCA"`
+	LowerAlarmRXPower        float64 `DESCRIPTION: "Lower Alarm Rx power Threshold for TCA"`
+	LowerAlarmTXPower        float64 `DESCRIPTION: "Lower Alarm Rx power for TCA"`
+	LowerAlarmTXBias         float64 `DESCRIPTION: "Lower Alarm Tx Current Bias for TCA"`
+	LowerWarningTemperature  float64 `DESCRIPTION: "Lower Warning temperature threshold for TCA"`
+	LowerWarningVoltage      float64 `DESCRIPTION: "Lower Warning Voltage threshold for TCA"`
+	LowerWarningRXPower      float64 `DESCRIPTION: "Lower Warning Rx power Threshold for TCA"`
+	LowerWarningTXPower      float64 `DESCRIPTION: "Lower Warning Rx power for TCA"`
+	LowerWarningTXBias       float64 `DESCRIPTION: "Lower Warning Tx Current Bias for TCA"`
 }
 
 type QsfpState struct {
