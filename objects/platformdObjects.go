@@ -125,7 +125,7 @@ type FanState struct {
 
 type FanSensor struct {
 	baseObj
-	Name                   string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", AUTODISCOVER: "true", DESCRIPTION: "Fan Sensor Name"`
+	Name                   string `SNAPROUTE: "KEY", ACCESS:"rw", MULTIPLICITY:"*", AUTODISCOVER: "true", DESCRIPTION: "Fan Sensor Name"`
 	AdminState             string `DESCRIPTION: "Enable/Disable", DEFAULT: "Enable"`
 	HigherAlarmThreshold   int32  `DESCRIPTION: "Higher Alarm Threshold for TCA"`
 	HigherWarningThreshold int32  `DESCRIPTION: "Higher Warning Threshold for TCA"`
@@ -153,7 +153,7 @@ type FanSensorPMDataState struct {
 
 type TemperatureSensor struct {
 	baseObj
-	Name                   string  `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", AUTODISCOVER: "true", DESCRIPTION: "Temperature Sensor Name"`
+	Name                   string  `SNAPROUTE: "KEY", ACCESS:"rw", MULTIPLICITY:"*", AUTODISCOVER: "true", DESCRIPTION: "Temperature Sensor Name"`
 	AdminState             string  `DESCRIPTION: "Enable/Disable", DEFAULT: "Enable"`
 	HigherAlarmThreshold   float64 `DESCRIPTION: "Higher Alarm Threshold for TCA"`
 	HigherWarningThreshold float64 `DESCRIPTION: "Higher Warning Threshold for TCA"`
@@ -181,7 +181,7 @@ type TemperatureSensorPMDataState struct {
 
 type VoltageSensor struct {
 	baseObj
-	Name                   string  `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", AUTODISCOVER: "true", DESCRIPTION: "Voltage Sensor Name"`
+	Name                   string  `SNAPROUTE: "KEY", ACCESS:"rw", MULTIPLICITY:"*", AUTODISCOVER: "true", DESCRIPTION: "Voltage Sensor Name"`
 	AdminState             string  `DESCRIPTION: "Enable/Disable", DEFAULT: "Enable"`
 	HigherAlarmThreshold   float64 `DESCRIPTION: "Higher Alarm Threshold for TCA"`
 	HigherWarningThreshold float64 `DESCRIPTION: "Higher Warning Threshold for TCA"`
@@ -209,7 +209,7 @@ type VoltageSensorPMDataState struct {
 
 type PowerConverterSensor struct {
 	baseObj
-	Name                   string  `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", AUTODISCOVER: "true", DESCRIPTION: "Power Converter Sensor Name"`
+	Name                   string  `SNAPROUTE: "KEY", ACCESS:"rw", MULTIPLICITY:"*", AUTODISCOVER: "true", DESCRIPTION: "Power Converter Sensor Name"`
 	AdminState             string  `DESCRIPTION: "Enable/Disable", DEFAULT: "Enable"`
 	HigherAlarmThreshold   float64 `DESCRIPTION: "Higher Alarm Threshold for TCA"`
 	HigherWarningThreshold float64 `DESCRIPTION: "Higher Warning Threshold for TCA"`
@@ -237,7 +237,7 @@ type PowerConverterSensorPMDataState struct {
 
 type Qsfp struct {
 	baseObj
-	Location                  string  `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", AUTODISCOVER: "true", DESCRIPTION: "Qsfp Name"`
+	Location                  string  `SNAPROUTE: "KEY", ACCESS:"rw", MULTIPLICITY:"*", AUTODISCOVER: "true", DESCRIPTION: "Qsfp Name"`
 	AdminState                string  `DESCRIPTION: "Enable/Disable", DEFAULT: "Enable"`
 	HigherAlarmTemperature    float64 `DESCRIPTION: "Higher Alarm temperature threshold for TCA"`
 	HigerAlarmVoltage         float64 `DESCRIPTION: "Higher Alarm Voltage threshold for TCA"`
@@ -300,9 +300,9 @@ type QsfpPMDataState struct {
 	Data     []QsfpPMData
 }
 
-type PlatformManagementDeviceState struct {
+type PlatformMgmtDeviceState struct {
 	baseObj
-	DeviceName  string `SNAPROUTE: "KEY", "ACCESS:"r", MULTIPLICITY:"1", DESCRIPTION: "Board Management Device"`
+	DeviceName  string `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"1", DESCRIPTION: "Device Name", DEFAULT: "BMC"`
 	Uptime      string `DESCRIPTION: "Uptime and load description"`
 	Description string `DESCRIPTION: "Platform Description"`
 	ResetReason string `DESCRIPTION: "Reset Reason"`
