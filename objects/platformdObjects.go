@@ -153,23 +153,23 @@ type FanSensorPMDataState struct {
 
 type TemperatureSensor struct {
 	baseObj
-	Name                   string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", AUTODISCOVER: "true", DESCRIPTION: "Temperature Sensor Name"`
-	AdminState             string `DESCRIPTION: "Enable/Disable", DEFAULT: "Enable"`
-	HigherAlarmThreshold   int32  `DESCRIPTION: "Higher Alarm Threshold for TCA"`
-	HigherWarningThreshold int32  `DESCRIPTION: "Higher Warning Threshold for TCA"`
-	LowerWarningThreshold  int32  `DESCRIPTION: "Lower Warning Threshold for TCA"`
-	LowerAlarmThreshold    int32  `DESCRIPTION: "Lower Alarm Threshold for TCA"`
+	Name                   string  `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", AUTODISCOVER: "true", DESCRIPTION: "Temperature Sensor Name"`
+	AdminState             string  `DESCRIPTION: "Enable/Disable", DEFAULT: "Enable"`
+	HigherAlarmThreshold   float64 `DESCRIPTION: "Higher Alarm Threshold for TCA"`
+	HigherWarningThreshold float64 `DESCRIPTION: "Higher Warning Threshold for TCA"`
+	LowerWarningThreshold  float64 `DESCRIPTION: "Lower Warning Threshold for TCA"`
+	LowerAlarmThreshold    float64 `DESCRIPTION: "Lower Alarm Threshold for TCA"`
 }
 
 type TemperatureSensorState struct {
 	baseObj
-	Name               string `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Temperature Sensor Name"`
-	CurrentTemperature int32  `DESCRIPTION: "Current Temperature Value"`
+	Name               string  `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Temperature Sensor Name"`
+	CurrentTemperature float64 `DESCRIPTION: "Current Temperature Value"`
 }
 
 type TemperatureSensorPMData struct {
-	TimeStamp string `DESCRIPTION: "Timestamp at which data is collected"`
-	Value     int32  `DESCRIPTION: "Temperature Sensor PM Data Value in Degree Celsius"`
+	TimeStamp string  `DESCRIPTION: "Timestamp at which data is collected"`
+	Value     float64 `DESCRIPTION: "Temperature Sensor PM Data Value in Degree Celsius"`
 }
 
 type TemperatureSensorPMDataState struct {
@@ -181,23 +181,23 @@ type TemperatureSensorPMDataState struct {
 
 type VoltageSensor struct {
 	baseObj
-	Name                   string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", AUTODISCOVER: "true", DESCRIPTION: "Voltage Sensor Name"`
-	AdminState             string `DESCRIPTION: "Enable/Disable", DEFAULT: "Enable"`
-	HigherAlarmThreshold   int32  `DESCRIPTION: "Higher Alarm Threshold for TCA"`
-	HigherWarningThreshold int32  `DESCRIPTION: "Higher Warning Threshold for TCA"`
-	LowerWarningThreshold  int32  `DESCRIPTION: "Lower Warning Threshold for TCA"`
-	LowerAlarmThreshold    int32  `DESCRIPTION: "Lower Alarm Threshold for TCA"`
+	Name                   string  `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", AUTODISCOVER: "true", DESCRIPTION: "Voltage Sensor Name"`
+	AdminState             string  `DESCRIPTION: "Enable/Disable", DEFAULT: "Enable"`
+	HigherAlarmThreshold   float64 `DESCRIPTION: "Higher Alarm Threshold for TCA"`
+	HigherWarningThreshold float64 `DESCRIPTION: "Higher Warning Threshold for TCA"`
+	LowerWarningThreshold  float64 `DESCRIPTION: "Lower Warning Threshold for TCA"`
+	LowerAlarmThreshold    float64 `DESCRIPTION: "Lower Alarm Threshold for TCA"`
 }
 
 type VoltageSensorState struct {
 	baseObj
-	Name           string `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Voltage Sensor Name"`
-	CurrentVoltage int32  `DESCRIPTION: "Current Voltage Value"`
+	Name           string  `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Voltage Sensor Name"`
+	CurrentVoltage float64 `DESCRIPTION: "Current Voltage Value"`
 }
 
 type VoltageSensorPMData struct {
-	TimeStamp string `DESCRIPTION: "Timestamp at which data is collected"`
-	Value     int32  `DESCRIPTION: "Voltage Sensor PM Data Value in Volts"`
+	TimeStamp string  `DESCRIPTION: "Timestamp at which data is collected"`
+	Value     float64 `DESCRIPTION: "Voltage Sensor PM Data Value in Volts"`
 }
 
 type VoltageSensorPMDataState struct {
@@ -209,23 +209,23 @@ type VoltageSensorPMDataState struct {
 
 type PowerConverterSensor struct {
 	baseObj
-	Name                   string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", AUTODISCOVER: "true", DESCRIPTION: "Power Converter Sensor Name"`
-	AdminState             string `DESCRIPTION: "Enable/Disable", DEFAULT: "Enable"`
-	HigherAlarmThreshold   int32  `DESCRIPTION: "Higher Alarm Threshold for TCA"`
-	HigherWarningThreshold int32  `DESCRIPTION: "Higher Warning Threshold for TCA"`
-	LowerWarningThreshold  int32  `DESCRIPTION: "Lower Warning Threshold for TCA"`
-	LowerAlarmThreshold    int32  `DESCRIPTION: "Lower Alarm Threshold for TCA"`
+	Name                   string  `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", AUTODISCOVER: "true", DESCRIPTION: "Power Converter Sensor Name"`
+	AdminState             string  `DESCRIPTION: "Enable/Disable", DEFAULT: "Enable"`
+	HigherAlarmThreshold   float64 `DESCRIPTION: "Higher Alarm Threshold for TCA"`
+	HigherWarningThreshold float64 `DESCRIPTION: "Higher Warning Threshold for TCA"`
+	LowerWarningThreshold  float64 `DESCRIPTION: "Lower Warning Threshold for TCA"`
+	LowerAlarmThreshold    float64 `DESCRIPTION: "Lower Alarm Threshold for TCA"`
 }
 
 type PowerConverterSensorState struct {
 	baseObj
-	Name         string `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Power Converter Sensor Name"`
-	CurrentPower int32  `DESCRIPTION: "Current Output Power Value"`
+	Name         string  `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Power Converter Sensor Name"`
+	CurrentPower float64 `DESCRIPTION: "Current Output Power Value"`
 }
 
 type PowerConverterSensorPMData struct {
-	TimeStamp string `DESCRIPTION: "Timestamp at which data is collected"`
-	Value     int32  `DESCRIPTION: "Power Converter Sensor PM Data Value in Watts"`
+	TimeStamp string  `DESCRIPTION: "Timestamp at which data is collected"`
+	Value     float64 `DESCRIPTION: "Power Converter Sensor PM Data Value in Watts"`
 }
 
 type PowerConverterSensorPMDataState struct {
@@ -239,26 +239,26 @@ type Qsfp struct {
 	baseObj
 	Location                  string  `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", AUTODISCOVER: "true", DESCRIPTION: "Qsfp Name"`
 	AdminState                string  `DESCRIPTION: "Enable/Disable", DEFAULT: "Enable"`
-	HigherAlarmTemperature    float32 `DESCRIPTION: "Higher Alarm temperature threshold for TCA"`
-	HigerAlarmVoltage         float32 `DESCRIPTION: "Higher Alarm Voltage threshold for TCA"`
-	HigherAlarmRXPower        float32 `DESCRIPTION: "Higher Alarm Rx power Threshold for TCA"`
-	HigherAlarmTXPower        float32 `DESCRIPTION: "Higher Alarm Rx power for TCA"`
-	HigherAlarmTXBias         float32 `DESCRIPTION: "Higher Alarm Tx Current Bias for TCA"`
-	HigherWarningTemperature  float32 `DESCRIPTION: "Higher Warning temperature threshold for TCA"`
-	HigerWarningVoltage       float32 `DESCRIPTION: "Higher Warning Voltage threshold for TCA"`
-	HigherWarningRXPower      float32 `DESCRIPTION: "Higher Warning Rx power Threshold for TCA"`
-	HigherWarningTXPower      float32 `DESCRIPTION: "Higher Warning Rx power for TCA"`
-	HigherWarningTXBias       float32 `DESCRIPTION: "Higher Warning Tx Current Bias for TCA"`
-	LowerAlarmTemperature     float32 `DESCRIPTION: "Lower Alarm temperature threshold for TCA"`
-	LowerAlarmVoltage         float32 `DESCRIPTION: "Lower Alarm Voltage threshold for TCA"`
-	LowerAlarmRXPower         float32 `DESCRIPTION: "Lower Alarm Rx power Threshold for TCA"`
-	LowerAlarmTXPower         float32 `DESCRIPTION: "Lower Alarm Rx power for TCA"`
-	LowerAlarmTXBias          float32 `DESCRIPTION: "Lower Alarm Tx Current Bias for TCA"`
-	LowererWarningTemperature float32 `DESCRIPTION: "Lower Warning temperature threshold for TCA"`
-	LowerWarningVoltage       float32 `DESCRIPTION: "Lower Warning Voltage threshold for TCA"`
-	LowerWarningRXPower       float32 `DESCRIPTION: "Lower Warning Rx power Threshold for TCA"`
-	LowerWarningTXPower       float32 `DESCRIPTION: "Lower Warning Rx power for TCA"`
-	LowerWarningTXBias        float32 `DESCRIPTION: "Lower Warning Tx Current Bias for TCA"`
+	HigherAlarmTemperature    float64 `DESCRIPTION: "Higher Alarm temperature threshold for TCA"`
+	HigerAlarmVoltage         float64 `DESCRIPTION: "Higher Alarm Voltage threshold for TCA"`
+	HigherAlarmRXPower        float64 `DESCRIPTION: "Higher Alarm Rx power Threshold for TCA"`
+	HigherAlarmTXPower        float64 `DESCRIPTION: "Higher Alarm Rx power for TCA"`
+	HigherAlarmTXBias         float64 `DESCRIPTION: "Higher Alarm Tx Current Bias for TCA"`
+	HigherWarningTemperature  float64 `DESCRIPTION: "Higher Warning temperature threshold for TCA"`
+	HigerWarningVoltage       float64 `DESCRIPTION: "Higher Warning Voltage threshold for TCA"`
+	HigherWarningRXPower      float64 `DESCRIPTION: "Higher Warning Rx power Threshold for TCA"`
+	HigherWarningTXPower      float64 `DESCRIPTION: "Higher Warning Rx power for TCA"`
+	HigherWarningTXBias       float64 `DESCRIPTION: "Higher Warning Tx Current Bias for TCA"`
+	LowerAlarmTemperature     float64 `DESCRIPTION: "Lower Alarm temperature threshold for TCA"`
+	LowerAlarmVoltage         float64 `DESCRIPTION: "Lower Alarm Voltage threshold for TCA"`
+	LowerAlarmRXPower         float64 `DESCRIPTION: "Lower Alarm Rx power Threshold for TCA"`
+	LowerAlarmTXPower         float64 `DESCRIPTION: "Lower Alarm Rx power for TCA"`
+	LowerAlarmTXBias          float64 `DESCRIPTION: "Lower Alarm Tx Current Bias for TCA"`
+	LowererWarningTemperature float64 `DESCRIPTION: "Lower Warning temperature threshold for TCA"`
+	LowerWarningVoltage       float64 `DESCRIPTION: "Lower Warning Voltage threshold for TCA"`
+	LowerWarningRXPower       float64 `DESCRIPTION: "Lower Warning Rx power Threshold for TCA"`
+	LowerWarningTXPower       float64 `DESCRIPTION: "Lower Warning Rx power for TCA"`
+	LowerWarningTXBias        float64 `DESCRIPTION: "Lower Warning Tx Current Bias for TCA"`
 }
 
 type QsfpState struct {
@@ -271,20 +271,20 @@ type QsfpState struct {
 	VendorRevision     string  `DESCRIPTION: Vendor Revision"`
 	VendorSerialNumber string  `DESCRIPTION: Vendor Serial Number"`
 	DataCode           string  `DESCRIPTION: Data Code"`
-	Temperature        float32 `DESCRIPTION: "Current temperature"`
-	Voltage            float32 `DESCRIPTION: "Current Voltage"`
-	RX1Power           float32 `DESCRIPTION: "Rx power on channel 1"`
-	RX2Power           float32 `DESCRIPTION: "Rx power on channel 2"`
-	RX3Power           float32 `DESCRIPTION: "Rx power on channel 3"`
-	RX4Power           float32 `DESCRIPTION: "Rx power on channel 4"`
-	TX1Power           float32 `DESCRIPTION: "Rx power on channel 1"`
-	TX2Power           float32 `DESCRIPTION: "Rx power on channel 2"`
-	TX3Power           float32 `DESCRIPTION: "Rx power on channel 3"`
-	TX4Power           float32 `DESCRIPTION: "Rx power on channel 4"`
-	TX1Bias            float32 `DESCRIPTION: "Tx Current Bias on channel 1"`
-	TX2Bias            float32 `DESCRIPTION: "Tx Current Bias on channel 2"`
-	TX3Bias            float32 `DESCRIPTION: "Tx Current Bias on channel 3"`
-	TX4Bias            float32 `DESCRIPTION: "Tx Current Bias on channel 4"`
+	Temperature        float64 `DESCRIPTION: "Current temperature"`
+	Voltage            float64 `DESCRIPTION: "Current Voltage"`
+	RX1Power           float64 `DESCRIPTION: "Rx power on channel 1"`
+	RX2Power           float64 `DESCRIPTION: "Rx power on channel 2"`
+	RX3Power           float64 `DESCRIPTION: "Rx power on channel 3"`
+	RX4Power           float64 `DESCRIPTION: "Rx power on channel 4"`
+	TX1Power           float64 `DESCRIPTION: "Rx power on channel 1"`
+	TX2Power           float64 `DESCRIPTION: "Rx power on channel 2"`
+	TX3Power           float64 `DESCRIPTION: "Rx power on channel 3"`
+	TX4Power           float64 `DESCRIPTION: "Rx power on channel 4"`
+	TX1Bias            float64 `DESCRIPTION: "Tx Current Bias on channel 1"`
+	TX2Bias            float64 `DESCRIPTION: "Tx Current Bias on channel 2"`
+	TX3Bias            float64 `DESCRIPTION: "Tx Current Bias on channel 3"`
+	TX4Bias            float64 `DESCRIPTION: "Tx Current Bias on channel 4"`
 }
 
 type QsfpPMData struct {
