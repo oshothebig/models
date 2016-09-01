@@ -30,7 +30,7 @@ import (
 type OwnerId uint8
 type EventId uint32
 
-type KeyMap map[string]interface{}
+type KeyMap map[string]EventObjKeyIntf
 
 var EventKeyMap map[string]KeyMap = map[string]KeyMap{
 	"ASICD":  AsicdEventKeyMap,
@@ -41,6 +41,8 @@ var EventKeyMap map[string]KeyMap = map[string]KeyMap{
 }
 
 type Event struct {
+	OwnerId        int32
+	EventId        int32
 	OwnerName      string
 	EventName      string
 	TimeStamp      string
@@ -66,6 +68,10 @@ type EventObj interface {
 }
 
 var EventObjectMap = map[string]EventObj{
-	"Events":     Event{},
-	"EventStats": EventStats{},
+	"events":     Event{},
+	"eventstats": EventStats{},
+}
+
+type EventObjKeyIntf interface {
+	GetObjDBKey([]byte) (string, string, error)
 }
