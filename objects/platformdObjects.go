@@ -237,7 +237,7 @@ type PowerConverterSensorPMDataState struct {
 
 type Qsfp struct {
 	baseObj
-	Location                 string  `SNAPROUTE: "KEY", ACCESS:"rw", MULTIPLICITY:"*", AUTODISCOVER: "true", DESCRIPTION: "Qsfp Name"`
+	QsfpId                   int32   `SNAPROUTE: "KEY", ACCESS:"rw", MULTIPLICITY:"*", AUTODISCOVER: "true", DESCRIPTION: "Qsfp Id"`
 	AdminState               string  `DESCRIPTION: "Enable/Disable", DEFAULT: "Enable"`
 	HigherAlarmTemperature   float64 `DESCRIPTION: "Higher Alarm temperature threshold for TCA"`
 	HigherAlarmVoltage       float64 `DESCRIPTION: "Higher Alarm Voltage threshold for TCA"`
@@ -263,7 +263,7 @@ type Qsfp struct {
 
 type QsfpState struct {
 	baseObj
-	Location           string  `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "QSFP Location Name"`
+	QsfpId             int32   `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "QSFP Id"`
 	Present            bool    `DESCRIPTION: "Present or Not Value: true if present and false if not present"`
 	VendorName         string  `DESCRIPTION: Vendor Name"`
 	VendorOUI          string  `DESCRIPTION: Vendor OUI"`
@@ -294,7 +294,7 @@ type QsfpPMData struct {
 
 type QsfpPMDataState struct {
 	baseObj
-	Location string `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "QSFP Location Name"`
+	QsfpId   int32  `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "QSFP Id"`
 	Resource string `SNAPROUTE: "KEY", DESCRIPTION: "QSFP PM Resource Name"`
 	Class    string `SNAPROUTE: "KEY", DESCRIPTION: "Class of PM Data", SELECTION: CLASS-A/CLASS-B/CLASS-B, DEFAULT: CLASS-A`
 	Data     []QsfpPMData
