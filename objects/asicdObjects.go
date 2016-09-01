@@ -23,6 +23,15 @@
 
 package objects
 
+type AsicGlobalState struct {
+	baseObj
+	ModuleId   uint8   `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY: "1", DESCRIPTION:"Module identifier"`
+	VendorId   string  `DESCRIPTION: "Vendor identification value"`
+	PartNumber string  `DESCRIPTION: "Part number of underlying switching asic"`
+	RevisionId string  `DESCRIPTION: "Revision ID of underlying switching asic"`
+	ModuleTemp float64 `DESCRIPTION: "Current module temperature", UNIT: degC`
+}
+
 type Vlan struct {
 	baseObj
 	VlanId        int32    `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY: "*", MIN:"1", MAX: "4094", DESCRIPTION: "802.1Q tag/Vlan ID for vlan being provisioned"`
@@ -72,6 +81,8 @@ type Port struct {
 	MediaType    string `DESCRIPTION: "Type of media inserted into this port", STRLEN:"16"`
 	Mtu          int32  `DESCRIPTION: "Maximum transmission unit size for this port"`
 	BreakOutMode string `DESCRIPTION: "Break out mode for the port. Only applicable on ports that support breakout. Valid modes - 1x40, 4x10", STRLEN:"6" SELECTION: 1x40(1)/4x10(2)`
+	LoopbackMode string `DESCRIPTION: "Desired loopback setting for this port", SELECTION: NONE/MAC/PHY, DEFAULT: NONE`
+	EnableFEC    bool   `DESCRIPTION: "Enable/Disable 802.3bj FEC on this interface", DEFAULT: false`
 }
 
 type PortState struct {
@@ -96,6 +107,7 @@ type PortState struct {
 	IfOutErrors       int64  `DESCRIPTION: "RFC2233 Total number of packets discarded and not transmitted due to packet errors"`
 	ErrDisableReason  string `DESCRIPTION: "Reason explaining why port has been disabled by protocol code"`
 	PresentInHW       string `DESCRIPTION: "Indication of whether this port object maps to a physical port. Set to 'No' for ports that are not broken out."`
+	ConfigMode        string `DESCRIPTION: "The current mode of configuration on this port (L2/L3/Internal)"`
 }
 
 type MacTableEntryState struct {

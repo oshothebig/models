@@ -50,12 +50,23 @@ type SystemSwVersionState struct {
 	Repos             []RepoInfo `DESCRIPTION: "Git repo details"`
 }
 
+type ConfigLogState struct {
+	baseObj
+	Time      string `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY: "*", DESCRIPTION: "When the API was called", USESTATEDB:"true"`
+	API       string `SNAPROUTE: "KEY", DESCRIPTION: "Name of the API called"`
+	Operation string `DESCRIPTION: "Oprtation executed on this API"`
+	Data      string `DESCRIPTION: "User provided data"`
+	Result    string `DESCRIPTION: "Result of the API call"`
+	UserAddr  string `DESCRIPTION: "Host address from where the call was made"`
+	UserName  string `DESCRIPTION: "User who made the call"`
+}
+
 //Voyager specific config object
 type XponderGlobal struct {
 	baseObj
 	XponderId          uint8  `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY: "1", DESCRIPTION: "Xponder module identifier", DEFAULT:0, AUTOCREATE:"true"`
 	XponderMode        string `DESCRIPTION: "Global operational mode of Xponder module", SELECTION:"InServiceWire"/"InServiceRegen"/"InServiceOverSub"/"InServicePacketOptical"/"OutOfService", DEFAULT:"OutOfService"`
-	XponderDescription string `DESCRIPTION: "User configurable description string for the xponder module", DEFAULT:""`
+	XponderDescription string `DESCRIPTION: "User configurable description string for the xponder module", DEFAULT:"This is a Voyager platform"`
 }
 
 type XponderGlobalState struct {
