@@ -23,6 +23,15 @@
 
 package objects
 
+type AsicGlobalState struct {
+	baseObj
+	ModuleId   uint8   `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY: "1", DESCRIPTION:"Module identifier"`
+	VendorId   string  `DESCRIPTION: "Vendor identification value"`
+	PartNumber string  `DESCRIPTION: "Part number of underlying switching asic"`
+	RevisionId string  `DESCRIPTION: "Revision ID of underlying switching asic"`
+	ModuleTemp float64 `DESCRIPTION: "Current module temperature", UNIT: degC`
+}
+
 type Vlan struct {
 	baseObj
 	VlanId        int32    `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY: "*", MIN:"1", MAX: "4094", DESCRIPTION: "802.1Q tag/Vlan ID for vlan being provisioned"`
