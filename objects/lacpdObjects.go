@@ -55,7 +55,7 @@ type LaPortChannel struct {
 	MinLinks       uint16   `DESCRIPTION: Specifies the mininum number of member interfaces that must be active for the aggregate interface to be available, DEFAULT: 1`
 	Interval       int32    `DESCRIPTION: Set the period between LACP messages -- uses the lacp-period-type enumeration., SELECTION: SLOW(1)/FAST(0), DEFAULT: 1`
 	LacpMode       int32    `DESCRIPTION: ACTIVE is to initiate the transmission of LACP packets. PASSIVE is to wait for peer to initiate the transmission of LACP packets., SELECTION: ACTIVE(0)/PASSIVE(1), DEFAULT: 0`
-	SystemIdMac    string   `DESCRIPTION: The MAC address portion of the nodes System ID. This is combined with the system priority to construct the 8-octet system-id, SELECTION: "[0-9a-fA-F]{2}(:[0-9a-fA-F]{2}){5}", DEFAULT: "00:00:00:00:00:00"`
+	SystemIdMac    string   `DESCRIPTION: The MAC address portion of the nodes System ID. This is combined with the system priority to construct the 8-octet system-id, DEFAULT: "00-00-00-00-00-00"`
 	SystemPriority uint16   `DESCRIPTION: Sytem priority used by the node on this LAG interface. Lower value is higher priority for determining which node is the controlling system., DEFAULT: 32768`
 	LagHash        int32    `DESCRIPTION: The tx hashing algorithm used by the lag group, SELECTION: LAYER2(0)/LAYER3_4(2)/LAYER2_3(1), DEFAULT: 0`
 	AdminState     string   `DESCRIPTION: Convenient way to disable/enable a lag group.  The behaviour should be such that all traffic should stop.  LACP frames should continue to be processed, DEFAULT: "enable"`
@@ -70,7 +70,7 @@ type LaPortChannelState struct {
 	MinLinks              uint16   `DESCRIPTION: Specifies the mininum number of member interfaces that must be active for the aggregate interface to be available`
 	Interval              int32    `DESCRIPTION: Set the period between LACP messages -- uses the lacp-period-type enumeration., SELECTION: SLOW(1)/FAST(0), DEFAULT: 1`
 	LacpMode              int32    `DESCRIPTION: ACTIVE is to initiate the transmission of LACP packets. PASSIVE is to wait for peer to initiate the transmission of LACP packets., SELECTION: ACTIVE(0)/PASSIVE(1), DEFAULT: 0`
-	SystemIdMac           string   `DESCRIPTION: The MAC address portion of the nodes System ID. This is combined with the system priority to construct the 8-octet system-id, SELECTION: "[0-9a-fA-F]{2}(:[0-9a-fA-F]{2}){5}"`
+	SystemIdMac           string   `DESCRIPTION: The MAC address portion of the nodes System ID. This is combined with the system priority to construct the 8-octet system-id"`
 	SystemPriority        uint16   `DESCRIPTION: Sytem priority used by the node on this LAG interface. Lower value is higher priority for determining which node is the controlling system.`
 	LagHash               int32    `DESCRIPTION: The tx hashing algorithm used by the lag group, SELECTION: LAYER2(0)/LAYER3_4(2)/LAYER2_3(1), DEFAULT: 0`
 	AdminState            string   `DESCRIPTION: Convenient way to disable/enable a lag group.  The behaviour should be such that all traffic should stop.  LACP frames should continue to be processed`
