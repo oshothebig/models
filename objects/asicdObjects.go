@@ -274,3 +274,12 @@ type LinkScopeIpState struct {
 	IfIndex     int32  `DESCRIPTION: "System Generated Unique Interface Id"`
 	Used        bool   `DESCRIPTION : "states whether the ip being used"`
 }
+
+type CoppStatState struct {
+	baseObj
+	Protocol     string `SNAPROUTE: "KEY", MULTIPLICITY: "*", ACCESS:"r", DESCRIPTION:"Protocol type for which CoPP is configured."`
+	PeakRate     int32  `DESCRIPTION:"Peak rate (packets) for policer."`
+	BurstRate    int32  `DESCRIPTION:"Burst rate (packets) for policer."`
+	GreenPackets int64  `DESCRIPTION:"Packets marked with green for tri color policer."`
+	RedPackets   int64  `DESCRIPTION:"Dropped packets. Packets marked with red for tri color policer. "`
+}
