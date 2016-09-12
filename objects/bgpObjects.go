@@ -132,6 +132,7 @@ type BGPv4NeighborState struct {
 	AdjRIBOutFilter         string      `DESCRIPTION: "Policy that is applied for Adj-RIB-Out prefix filtering"`
 	Messages                BGPMessages `DESCRIPTION: "Rx/Tx counter for BGP update and notification packets"`
 	Queues                  BGPQueues   `DESCRIPTION: "Input/Output size of BGP packet queues"`
+	SessionStateUpdatedTime string      `DESCRIPTION: "Time when this neighbor's session state was updated."`
 }
 
 type BGPv6Neighbor struct {
@@ -192,6 +193,7 @@ type BGPv6NeighborState struct {
 	AdjRIBOutFilter         string      `DESCRIPTION: "Policy that is applied for Adj-RIB-Out prefix filtering"`
 	Messages                BGPMessages `DESCRIPTION: "Rx/Tx counter for BGP update and notification packets"`
 	Queues                  BGPQueues   `DESCRIPTION: "Input/Output size of BGP packet queues"`
+	SessionStateUpdatedTime string      `DESCRIPTION: "Time when this neighbor's session state was updated."`
 }
 
 type BGPv4PeerGroup struct {
