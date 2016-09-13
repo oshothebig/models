@@ -633,7 +633,7 @@
 				{
 					"EventId": 1,
 					"EventName": "FanHigherTCAAlarmClear",
-					"Description": "Fan higher alarm cleared",
+					"Description": "Fan speed higher alarm cleared",
 					"SrcObjName": "FanSensor",
 					"EventEnable": true,
 					"IsFault": false
@@ -655,7 +655,7 @@
 				{
 					"EventId": 3,
 					"EventName": "FanHigherTCAWarnClear",
-					"Description": "Fan higher warning cleared",
+					"Description": "Fan speed higher warning cleared",
 					"SrcObjName": "FanSensor",
 					"EventEnable": true,
 					"IsFault": false
@@ -677,7 +677,7 @@
 				{
 					"EventId": 5,
 					"EventName": "FanLowerTCAAlarmClear",
-					"Description": "Fan lower alarm cleared",
+					"Description": "Fan speed lower alarm cleared",
 					"SrcObjName": "FanSensor",
 					"EventEnable": true,
 					"IsFault": false
@@ -699,7 +699,7 @@
 				{
 					"EventId": 7,
 					"EventName": "FanLowerTCAWarnClear",
-					"Description": "Fan lower warning cleared",
+					"Description": "Fan speed lower warning cleared",
 					"SrcObjName": "FanSensor",
 					"EventEnable": true,
 					"IsFault": false
@@ -729,7 +729,7 @@
                                 {   
                                         "EventId": 10,
                                         "EventName": "TemperatureHigherTCAAlarm",
-                                        "Description": "Temperature speed has exceeded higher alarm threshold",
+                                        "Description": "Temperature has exceeded higher alarm threshold",
                                         "SrcObjName": "TemperatureSensor",
                                         "EventEnable": true,
                                         "IsFault": true,
@@ -751,7 +751,7 @@
                                 {   
                                         "EventId": 12,
                                         "EventName": "TemperatureHigherTCAWarn",
-                                        "Description": "Temperature speed has exceeded higher warn threshold",
+                                        "Description": "Temperature has exceeded higher warn threshold",
                                         "SrcObjName": "TemperatureSensor",
                                         "EventEnable": true,
                                         "IsFault": true,
@@ -773,7 +773,7 @@
                                 {   
                                         "EventId": 14,
                                         "EventName": "TemperatureLowerTCAAlarm",
-                                        "Description": "Temperature speed is below lower alarm threshold",
+                                        "Description": "Temperature is below lower alarm threshold",
                                         "SrcObjName": "TemperatureSensor",
                                         "EventEnable": true,
                                         "IsFault": true,
@@ -795,7 +795,7 @@
                                 {   
                                         "EventId": 16,
                                         "EventName": "TemperatureLowerTCAWarn",
-                                        "Description": "Temperature speed is below Lower warn threshold",
+                                        "Description": "Temperature is below Lower warn threshold",
                                         "SrcObjName": "TemperatureSensor",
                                         "EventEnable": true,
                                         "IsFault": true,
@@ -817,7 +817,7 @@
                                 {   
                                         "EventId": 18,
                                         "EventName": "VoltageHigherTCAAlarm",
-                                        "Description": "Voltage speed has exceeded higher alarm threshold",
+                                        "Description": "Voltage has exceeded higher alarm threshold",
                                         "SrcObjName": "VoltageSensor",
                                         "EventEnable": true,
                                         "IsFault": true,
@@ -839,7 +839,7 @@
                                 {   
                                         "EventId": 20,
                                         "EventName": "VoltageHigherTCAWarn",
-                                        "Description": "Voltage speed has exceeded higher warn threshold",
+                                        "Description": "Voltage has exceeded higher warn threshold",
                                         "SrcObjName": "VoltageSensor",
                                         "EventEnable": true,
                                         "IsFault": true,
@@ -861,7 +861,7 @@
                                 {   
                                         "EventId": 22,
                                         "EventName": "VoltageLowerTCAAlarm",
-                                        "Description": "Voltage speed is below lower alarm threshold",
+                                        "Description": "Voltage is below lower alarm threshold",
                                         "SrcObjName": "VoltageSensor",
                                         "EventEnable": true,
                                         "IsFault": true,
@@ -883,7 +883,7 @@
                                 {   
                                         "EventId": 24,
                                         "EventName": "VoltageLowerTCAWarn",
-                                        "Description": "Voltage speed is below Lower warn threshold",
+                                        "Description": "Voltage is below Lower warn threshold",
                                         "SrcObjName": "VoltageSensor",
                                         "EventEnable": true,
                                         "IsFault": true,
@@ -905,7 +905,7 @@
                                 {   
                                         "EventId": 26,
                                         "EventName": "PowerConverterHigherTCAAlarm",
-                                        "Description": "PowerConverter speed has exceeded higher alarm threshold",
+                                        "Description": "PowerConverter has exceeded higher alarm threshold",
                                         "SrcObjName": "PowerConverterSensor",
                                         "EventEnable": true,
                                         "IsFault": true,
@@ -927,7 +927,7 @@
                                 {   
                                         "EventId": 28,
                                         "EventName": "PowerConverterHigherTCAWarn",
-                                        "Description": "PowerConverter speed has exceeded higher warn threshold",
+                                        "Description": "PowerConverter has exceeded higher warn threshold",
                                         "SrcObjName": "PowerConverterSensor",
                                         "EventEnable": true,
                                         "IsFault": true,
@@ -949,7 +949,7 @@
                                 {   
                                         "EventId": 30,
                                         "EventName": "PowerConverterLowerTCAAlarm",
-                                        "Description": "PowerConverter speed is below lower alarm threshold",
+                                        "Description": "PowerConverter is below lower alarm threshold",
                                         "SrcObjName": "PowerConverterSensor",
                                         "EventEnable": true,
                                         "IsFault": true,
@@ -971,7 +971,7 @@
                                 {   
                                         "EventId": 32,
                                         "EventName": "PowerConverterLowerTCAWarn",
-                                        "Description": "PowerConverter speed is below Lower warn threshold",
+                                        "Description": "PowerConverter is below Lower warn threshold",
                                         "SrcObjName": "PowerConverterSensor",
                                         "EventEnable": true,
                                         "IsFault": true,
