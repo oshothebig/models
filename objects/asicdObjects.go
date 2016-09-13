@@ -117,7 +117,7 @@ type MacTableEntryState struct {
 	Port    int32  `DESCRIPTION: "Port number on which mac was learned", DEFAULT:0`
 }
 
-type IPv4RouteHwState struct {
+type IPRouteHwState struct {
 	baseObj
 	DestinationNw    string `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "IP address of the route in CIDR format"`
 	NextHopIps       string `DESCRIPTION: "next hop ip list for the route"`
