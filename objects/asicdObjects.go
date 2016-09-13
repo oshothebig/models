@@ -117,7 +117,15 @@ type MacTableEntryState struct {
 	Port    int32  `DESCRIPTION: "Port number on which mac was learned", DEFAULT:0`
 }
 
-type IPRouteHwState struct {
+type IPv4RouteHwState struct {
+	baseObj
+	DestinationNw    string `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "IP address of the route in CIDR format"`
+	NextHopIps       string `DESCRIPTION: "next hop ip list for the route"`
+	RouteCreatedTime string `DESCRIPTION :"Time when the route was added"`
+	RouteUpdatedTime string `DESCRIPTION :"Time when the route was last updated"`
+}
+
+type IPv6RouteHwState struct {
 	baseObj
 	DestinationNw    string `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "IP address of the route in CIDR format"`
 	NextHopIps       string `DESCRIPTION: "next hop ip list for the route"`
