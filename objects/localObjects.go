@@ -52,6 +52,7 @@ type SystemSwVersionState struct {
 
 type ConfigLogState struct {
 	baseObj
+	SeqNum    uint32 `SNAPROUTE: "KEY", DESCRIPTION: "Sequence number of the API call"`
 	Time      string `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY: "*", DESCRIPTION: "When the API was called", USESTATEDB:"true"`
 	API       string `SNAPROUTE: "KEY", DESCRIPTION: "Name of the API called"`
 	Operation string `DESCRIPTION: "Oprtation executed on this API"`
