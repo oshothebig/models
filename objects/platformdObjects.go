@@ -288,8 +288,8 @@ type QsfpState struct {
 }
 
 type QsfpPMData struct {
-	TimeStamp string `DESCRIPTION: "Timestamp at which data is collected"`
-	Value     int32  `DESCRIPTION: "Qsfp PM Data Value"`
+	TimeStamp string  `DESCRIPTION: "Timestamp at which data is collected"`
+	Value     float64 `DESCRIPTION: "Qsfp PM Data Value"`
 }
 
 type QsfpPMDataState struct {
