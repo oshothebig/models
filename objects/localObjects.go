@@ -75,3 +75,8 @@ type XponderGlobalState struct {
 	XponderMode        string `DESCRIPTION: "Global operational mode of Xponder module"`
 	XponderDescription string `DESCRIPTION: "User configurable description string for the xponder module"`
 }
+
+type ApiInfoState struct {
+	baseObj
+	Url string `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY: "1", DESCRIPTION: "URL"`
+}

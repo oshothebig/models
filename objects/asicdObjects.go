@@ -125,6 +125,14 @@ type IPv4RouteHwState struct {
 	RouteUpdatedTime string `DESCRIPTION :"Time when the route was last updated"`
 }
 
+type IPv6RouteHwState struct {
+	baseObj
+	DestinationNw    string `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "IP address of the route in CIDR format"`
+	NextHopIps       string `DESCRIPTION: "next hop ip list for the route"`
+	RouteCreatedTime string `DESCRIPTION :"Time when the route was added"`
+	RouteUpdatedTime string `DESCRIPTION :"Time when the route was last updated"`
+}
+
 type ArpEntryHwState struct {
 	baseObj
 	IpAddr  string `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", QPARAM: "optional" ,DESCRIPTION: "Neighbor's IP Address"`
@@ -223,6 +231,7 @@ type BufferGlobalStatState struct {
 type Acl struct {
 	baseObj
 	AclName      string   `SNAPROUTE: "KEY", ACCESS:"w",MULTIPLICITY: "*", DESCRIPTION: "Acl name to be used to refer to this ACL"`
+	AclType      string    `DESCRIPTION: "Type can be IP/MAC/SVI"`
 	IntfList     []string `DESCRIPTION: "list of IntfRef can be port/lag object"`
 	RuleNameList []string `DESCRIPTION: "List of rules to be applied to this ACL. This should match with AclRule RuleName"`
 	Direction    string   `SNAPROUTE: "IN/OUT direction in which ACL to be applied"`
@@ -241,6 +250,11 @@ type AclRule struct {
 	Proto      string `DESCRIPTION: "Protocol type"`
 	SrcPort    int32  `DESCRIPTION: "Source Port"`
 	DstPort    int32  `DESCRIPTION: "Dest Port"`
+	L4SrcPort  int32   `DESCRIPTION: "TCP/UDP source port"`
+	L4DstPort  int32  `DESCRIPTION: "TCP/UDP destionation port"`
+	L4PortMatch string `DESCRIPTION: "match condition can be EQ(equal) , NEQ(not equal), LT(larger than), GT(greater than), RANGE(port range)"`
+	L4MinPort int32 `DESCRIPTION: "Min port when l4 port is specified as range"`
+	L4MaxPort int32  `DESCRIPTION: "Max port when l4 port is specified as range"`
 }
 
 type AclState struct {
