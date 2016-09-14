@@ -238,7 +238,7 @@ type PowerConverterSensorPMDataState struct {
 type Qsfp struct {
 	baseObj
 	QsfpId                   int32   `SNAPROUTE: "KEY", ACCESS:"rw", MULTIPLICITY:"*", AUTODISCOVER: "true", DESCRIPTION: "Qsfp Id"`
-	AdminState               string  `DESCRIPTION: "Enable/Disable", DEFAULT: Enable, SELECTION: Enable/Disable`
+	AdminState               string  `DESCRIPTION: "Enable/Disable", DEFAULT: Disable, SELECTION: Enable/Disable`
 	HigherAlarmTemperature   float64 `DESCRIPTION: "Higher Alarm temperature threshold for TCA"`
 	HigherAlarmVoltage       float64 `DESCRIPTION: "Higher Alarm Voltage threshold for TCA"`
 	HigherAlarmRXPower       float64 `DESCRIPTION: "Higher Alarm Rx power Threshold for TCA"`
