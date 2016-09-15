@@ -59,7 +59,7 @@ type LaPortChannel struct {
 	SystemIdMac    string   `DESCRIPTION: The MAC address portion of the nodes System ID. This is combined with the system priority to construct the 8-octet system-id, DEFAULT: "00-00-00-00-00-00"`
 	SystemPriority uint16   `DESCRIPTION: Sytem priority used by the node on this LAG interface. Lower value is higher priority for determining which node is the controlling system., DEFAULT: 32768`
 	LagHash        int32    `DESCRIPTION: The tx hashing algorithm used by the lag group, SELECTION: LAYER2(0)/LAYER3_4(2)/LAYER2_3(1), DEFAULT: 0`
-	AdminState     string   `DESCRIPTION: Convenient way to disable/enable a lag group.  The behaviour should be such that all traffic should stop.  LACP frames should continue to be processed, DEFAULT: "enable"`
+	AdminState     string   `DESCRIPTION: Convenient way to disable/enable a lag group.  The behaviour should be such that all traffic should stop.  LACP frames should continue to be processed, SELECTION: UP/DOWN, DEFAULT: "UP"`
 	IntfRefList    []string `DESCRIPTION: List of current member interfaces for the aggregate, expressed as references to existing interfaces`
 }
 
