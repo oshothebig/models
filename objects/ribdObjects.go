@@ -81,7 +81,21 @@ type RIBEventState struct {
 	TimeStamp string `DESCRIPTION :"Time when the event occured"`
 	EventInfo string `DESCRIPTION :"Detailed description of the event"`
 }
-
+type PolicyPrefix struct {
+	Prefix          string
+	MaskLengthRange string
+}
+type PolicyPrefixSet struct {
+	baseObj
+	Name       string         `SNAPROUTE: "KEY", ACCESS:"w",MULTIPLICITY:"*",DESCRIPTION:"Policy Prefix set name.`
+	PrefixList []PolicyPrefix `DESCRIPTION:"List of policy prefixes part of this prefix set."`
+}
+type PolicyPrefixSetState struct {
+	baseObj
+	Name                string         `SNAPROUTE: "KEY", ACCESS:"r",MULTIPLICITY:"*",DESCRIPTION:"Policy Prefix set name.`
+	PrefixList          []PolicyPrefix `DESCRIPTION:"List of policy prefixes part of this prefix set."`
+	PolicyConditionList []string       `DESCRIPTION:"List of policy conditions using this prefix set"`
+}
 type PolicyCondition struct {
 	baseObj
 	Name            string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", DESCRIPTION: "PolicyConditionName"`
@@ -89,6 +103,7 @@ type PolicyCondition struct {
 	Protocol        string `DESCRIPTION: "Protocol to match on if the ConditionType is set to MatchProtocol",SELECTION:"CONNECTED"/"STATIC"/"OSPF"/"BGP"`
 	IpPrefix        string `DESCRIPTION: "Used in conjunction with MaskLengthRange to specify the IP Prefix to match on when the ConditionType is MatchDstIpPrefix/MatchSrcIpPrefix."`
 	MaskLengthRange string `DESCRIPTION: "Used in conjuction with IpPrefix to specify specify the IP Prefix to match on when the ConditionType is MatchDstIpPrefix/MatchSrcIpPrefix."`
+	PrefixSet       string `DESCRIPTION: "Name of a pre-defined prefix set to be used as a condition qualifier.", OPTIONAL, DEFAULT:""`
 }
 type PolicyConditionState struct {
 	baseObj

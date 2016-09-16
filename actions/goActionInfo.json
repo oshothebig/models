@@ -11,6 +11,9 @@
 "fMgrActions.go" : {"owner": "fMgrd",
                    "location" : "infra/fMgrd/rpc",
                    "svcName" : "nil"},
+"asicdActions.go" : {"owner": "asicd",
+                   "location" : "asicd/rpc/",
+                   "svcName" : "asicdInt"},
 "localActions.go" : {"owner": "local", 
                      "location" : "nil",
                      "svcName" : "nil"}
