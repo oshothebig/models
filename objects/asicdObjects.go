@@ -23,6 +23,15 @@
 
 package objects
 
+type AsicGlobalState struct {
+	baseObj
+	ModuleId   uint8   `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY: "1", DESCRIPTION:"Module identifier"`
+	VendorId   string  `DESCRIPTION: "Vendor identification value"`
+	PartNumber string  `DESCRIPTION: "Part number of underlying switching asic"`
+	RevisionId string  `DESCRIPTION: "Revision ID of underlying switching asic"`
+	ModuleTemp float64 `DESCRIPTION: "Current module temperature", UNIT: degC`
+}
+
 type Vlan struct {
 	baseObj
 	VlanId        int32    `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY: "*", MIN:"1", MAX: "4094", DESCRIPTION: "802.1Q tag/Vlan ID for vlan being provisioned"`
@@ -67,11 +76,13 @@ type Port struct {
 	AdminState   string `DESCRIPTION: "Administrative state of this port", STRLEN:"4" SELECTION: UP/DOWN, DEFAULT: DOWN`
 	MacAddr      string `DESCRIPTION: "Mac address associated with this port", STRLEN:"17"`
 	Speed        int32  `DESCRIPTION: "Port speed in Mbps", MIN: 10, MAX: "100000"`
-	Duplex       string `DESCRIPTION: "Duplex setting for this port", STRLEN:"16" SELECTION: Half Duplex/Full Duplex DEFAULT: Full Duplex`
+	Duplex       string `DESCRIPTION: "Duplex setting for this port", STRLEN:"16" SELECTION: Half Duplex/Full Duplex, DEFAULT: Full Duplex`
 	Autoneg      string `DESCRIPTION: "Autonegotiation setting for this port", STRLEN:"4" SELECTION: ON/OFF, DEFAULT: OFF`
 	MediaType    string `DESCRIPTION: "Type of media inserted into this port", STRLEN:"16"`
 	Mtu          int32  `DESCRIPTION: "Maximum transmission unit size for this port"`
 	BreakOutMode string `DESCRIPTION: "Break out mode for the port. Only applicable on ports that support breakout. Valid modes - 1x40, 4x10", STRLEN:"6" SELECTION: 1x40(1)/4x10(2)`
+	LoopbackMode string `DESCRIPTION: "Desired loopback setting for this port", SELECTION: NONE/MAC/PHY, DEFAULT: NONE`
+	EnableFEC    bool   `DESCRIPTION: "Enable/Disable 802.3bj FEC on this interface", DEFAULT: false`
 }
 
 type PortState struct {
@@ -96,6 +107,7 @@ type PortState struct {
 	IfOutErrors       int64  `DESCRIPTION: "RFC2233 Total number of packets discarded and not transmitted due to packet errors"`
 	ErrDisableReason  string `DESCRIPTION: "Reason explaining why port has been disabled by protocol code"`
 	PresentInHW       string `DESCRIPTION: "Indication of whether this port object maps to a physical port. Set to 'No' for ports that are not broken out."`
+	ConfigMode        string `DESCRIPTION: "The current mode of configuration on this port (L2/L3/Internal)"`
 }
 
 type MacTableEntryState struct {
@@ -165,7 +177,7 @@ type IPv6Intf struct {
 	baseObj
 	IntfRef string `SNAPROUTE: "KEY", ACCESS:"w", DESCRIPTION: "Interface name or ifindex of port/lag or vlan on which this IPv4 object is configured"`
 	IpAddr  string `DESCRIPTION: "Interface Global Scope IP Address/Prefix-Length to provision on switch interface", STRLEN:"43", DEFAULT:""`
-	LinkIp  bool   `DESCRIPTION: "Interface Link Scope IP Address auto-configured", DEFAULT:"true"`
+	LinkIp  bool   `DESCRIPTION: "Interface Link Scope IP Address auto-configured", DEFAULT:true`
 }
 
 type IPv6IntfState struct {
@@ -206,4 +218,68 @@ type BufferGlobalStatState struct {
 	BufferStat        uint64 `DESCRIPTION: "Buffer stats for the device "`
 	EgressBufferStat  uint64 `DESCRIPTION: "Egress Buffer stats "`
 	IngressBufferStat uint64 `DESCRIPTION: "Ingress buffer stats "`
+}
+
+type Acl struct {
+	baseObj
+	AclName      string   `SNAPROUTE: "KEY", ACCESS:"w",MULTIPLICITY: "*", DESCRIPTION: "Acl name to be used to refer to this ACL"`
+	IntfList     []string `DESCRIPTION: "list of IntfRef can be port/lag object"`
+	RuleNameList []string `DESCRIPTION: "List of rules to be applied to this ACL. This should match with AclRule RuleName"`
+	Direction    string   `SNAPROUTE: "IN/OUT direction in which ACL to be applied"`
+}
+
+type AclRule struct {
+	baseObj
+	RuleName   string `SNAPROUTE: "KEY", MULTIPLICITY: "*", ACCESS:"w", DESCRIPTION: "Acl rule name"`
+	SourceMac  string `DESCRIPTION: "Source MAC address."`
+	DestMac    string `DESCRIPTION: "Destination MAC address"`
+	SourceIp   string `DESCRIPTION: "Source IP address"`
+	DestIp     string `DESCRIPTION: "Destination IP address"`
+	SourceMask string `DESCRIPTION: "Network mask for source IP"`
+	DestMask   string `DESCRIPTION: "Network mark for dest IP"`
+	Action     string `DESCRIPTION: "Type of action (Allow/Deny)", DEFAULT:"Allow", STRLEN:"16"`
+	Proto      string `DESCRIPTION: "Protocol type"`
+	SrcPort    int32  `DESCRIPTION: "Source Port"`
+	DstPort    int32  `DESCRIPTION: "Dest Port"`
+}
+
+type AclState struct {
+	baseObj
+	AclName      string   `SNAPROUTE: "KEY", ACCESS:"r",MULTIPLICITY: "*", DESCRIPTION: "Acl name to be used to refer to this ACL", USESTATEDB:"true"`
+	RuleNameList []string `DESCRIPTION: "List of acl rules  to be applied to this ACL. This should match with Acl rule key"`
+	IntfList     []string `DESCRIPTION: "list of IntfRef can be port/lag object"`
+	Direction    string   `SNAPROUTE: "IN/OUT direction in which ACL to be applied"`
+}
+
+type AclRuleState struct {
+	baseObj
+	RuleName   string `SNAPROUTE: "KEY", MULTIPLICITY: "*", ACCESS:"r", DESCRIPTION: "Acl rule name"`
+	SourceMac  string `DESCRIPTION: "Source MAC address."`
+	DestMac    string `DESCRIPTION: "Destination MAC address"`
+	SourceIp   string `DESCRIPTION: "Source IP address"`
+	DestIp     string `DESCRIPTION: "Destination IP address"`
+	SourceMask string `DESCRIPTION: "Network mask for source IP"`
+	DestMask   string `DESCRIPTION: "Network mark for dest IP"`
+	Action     string `DESCRIPTION: "Type of action (Allow/Deny)", DEFAULT:"Allow", STRLEN:"16"`
+	Proto      string `DESCRIPTION: "Protocol type"`
+	SrcPort    int32  `DESCRIPTION: "Ingress Port"`
+	DstPort    int32  `DESCRIPTION: "Egress Port"`
+}
+
+// NEED TO ADD SUPPORT TO MAKE THIS INTERNAL ONLY
+type LinkScopeIpState struct {
+	baseObj
+	LinkScopeIp string `SNAPROUTE: "KEY", MULTIPLICITY: "*", ACCESS:"r", DESCRIPTION:"Link scope IP Address", USESTATEDB:"true"`
+	IntfRef     string `DESCRIPTION: "Interface where the link scope ip is configured"`
+	IfIndex     int32  `DESCRIPTION: "System Generated Unique Interface Id"`
+	Used        bool   `DESCRIPTION : "states whether the ip being used"`
+}
+
+type CoppStatState struct {
+	baseObj
+	Protocol     string `SNAPROUTE: "KEY", MULTIPLICITY: "*", ACCESS:"r", DESCRIPTION:"Protocol type for which CoPP is configured."`
+	PeakRate     int32  `DESCRIPTION:"Peak rate (packets) for policer."`
+	BurstRate    int32  `DESCRIPTION:"Burst rate (packets) for policer."`
+	GreenPackets int64  `DESCRIPTION:"Packets marked with green for tri color policer."`
+	RedPackets   int64  `DESCRIPTION:"Dropped packets. Packets marked with red for tri color policer. "`
 }
