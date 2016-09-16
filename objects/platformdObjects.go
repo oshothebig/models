@@ -131,6 +131,9 @@ type FanSensor struct {
 	HigherWarningThreshold int32  `DESCRIPTION: "Higher Warning Threshold for TCA"`
 	LowerWarningThreshold  int32  `DESCRIPTION: "Lower Warning Threshold for TCA"`
 	LowerAlarmThreshold    int32  `DESCRIPTION: "Lower Alarm Threshold for TCA"`
+	PMClassAAdminState     string `DESCRIPTION: "PM Class-A Admin State", DEFAULT: Enable, SELECTION: Enable/Disable`
+	PMClassBAdminState     string `DESCRIPTION: "PM Class-B Admin State", DEFAULT: Enable, SELECTION: Enable/Disable`
+	PMClassCAdminState     string `DESCRIPTION: "PM Class-C Admin State", DEFAULT: Enable, SELECTION: Enable/Disable`
 }
 
 type FanSensorState struct {
@@ -159,6 +162,9 @@ type TemperatureSensor struct {
 	HigherWarningThreshold float64 `DESCRIPTION: "Higher Warning Threshold for TCA"`
 	LowerWarningThreshold  float64 `DESCRIPTION: "Lower Warning Threshold for TCA"`
 	LowerAlarmThreshold    float64 `DESCRIPTION: "Lower Alarm Threshold for TCA"`
+	PMClassAAdminState     string  `DESCRIPTION: "PM Class-A Admin State", DEFAULT: Enable, SELECTION: Enable/Disable`
+	PMClassBAdminState     string  `DESCRIPTION: "PM Class-B Admin State", DEFAULT: Enable, SELECTION: Enable/Disable`
+	PMClassCAdminState     string  `DESCRIPTION: "PM Class-C Admin State", DEFAULT: Enable, SELECTION: Enable/Disable`
 }
 
 type TemperatureSensorState struct {
@@ -187,6 +193,9 @@ type VoltageSensor struct {
 	HigherWarningThreshold float64 `DESCRIPTION: "Higher Warning Threshold for TCA"`
 	LowerWarningThreshold  float64 `DESCRIPTION: "Lower Warning Threshold for TCA"`
 	LowerAlarmThreshold    float64 `DESCRIPTION: "Lower Alarm Threshold for TCA"`
+	PMClassAAdminState     string  `DESCRIPTION: "PM Class-A Admin State", DEFAULT: Enable, SELECTION: Enable/Disable`
+	PMClassBAdminState     string  `DESCRIPTION: "PM Class-B Admin State", DEFAULT: Enable, SELECTION: Enable/Disable`
+	PMClassCAdminState     string  `DESCRIPTION: "PM Class-C Admin State", DEFAULT: Enable, SELECTION: Enable/Disable`
 }
 
 type VoltageSensorState struct {
@@ -215,6 +224,9 @@ type PowerConverterSensor struct {
 	HigherWarningThreshold float64 `DESCRIPTION: "Higher Warning Threshold for TCA"`
 	LowerWarningThreshold  float64 `DESCRIPTION: "Lower Warning Threshold for TCA"`
 	LowerAlarmThreshold    float64 `DESCRIPTION: "Lower Alarm Threshold for TCA"`
+	PMClassAAdminState     string  `DESCRIPTION: "PM Class-A Admin State", DEFAULT: Enable, SELECTION: Enable/Disable`
+	PMClassBAdminState     string  `DESCRIPTION: "PM Class-B Admin State", DEFAULT: Enable, SELECTION: Enable/Disable`
+	PMClassCAdminState     string  `DESCRIPTION: "PM Class-C Admin State", DEFAULT: Enable, SELECTION: Enable/Disable`
 }
 
 type PowerConverterSensorState struct {
@@ -238,7 +250,7 @@ type PowerConverterSensorPMDataState struct {
 type Qsfp struct {
 	baseObj
 	QsfpId                   int32   `SNAPROUTE: "KEY", ACCESS:"rw", MULTIPLICITY:"*", AUTODISCOVER: "true", DESCRIPTION: "Qsfp Id"`
-	AdminState               string  `DESCRIPTION: "Enable/Disable", DEFAULT: Enable, SELECTION: Enable/Disable`
+	AdminState               string  `DESCRIPTION: "Enable/Disable", DEFAULT: Disable, SELECTION: Enable/Disable`
 	HigherAlarmTemperature   float64 `DESCRIPTION: "Higher Alarm temperature threshold for TCA"`
 	HigherAlarmVoltage       float64 `DESCRIPTION: "Higher Alarm Voltage threshold for TCA"`
 	HigherAlarmRXPower       float64 `DESCRIPTION: "Higher Alarm Rx power Threshold for TCA"`
@@ -259,6 +271,9 @@ type Qsfp struct {
 	LowerWarningRXPower      float64 `DESCRIPTION: "Lower Warning Rx power Threshold for TCA"`
 	LowerWarningTXPower      float64 `DESCRIPTION: "Lower Warning Rx power for TCA"`
 	LowerWarningTXBias       float64 `DESCRIPTION: "Lower Warning Tx Current Bias for TCA"`
+	PMClassAAdminState       string  `DESCRIPTION: "PM Class-A Admin State", DEFAULT: Disable, SELECTION: Enable/Disable`
+	PMClassBAdminState       string  `DESCRIPTION: "PM Class-B Admin State", DEFAULT: Disable, SELECTION: Enable/Disable`
+	PMClassCAdminState       string  `DESCRIPTION: "PM Class-C Admin State", DEFAULT: Disable, SELECTION: Enable/Disable`
 }
 
 type QsfpState struct {
@@ -288,8 +303,8 @@ type QsfpState struct {
 }
 
 type QsfpPMData struct {
-	TimeStamp string `DESCRIPTION: "Timestamp at which data is collected"`
-	Value     int32  `DESCRIPTION: "Qsfp PM Data Value"`
+	TimeStamp string  `DESCRIPTION: "Timestamp at which data is collected"`
+	Value     float64 `DESCRIPTION: "Qsfp PM Data Value"`
 }
 
 type QsfpPMDataState struct {
