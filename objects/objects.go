@@ -42,6 +42,7 @@ type ConfigObj interface {
 	GetAllObjFromDb(dbHdl redis.Conn) ([]ConfigObj, error)
 	GetBulkObjFromDb(startIndex int64, count int64, dbHdl redis.Conn) (error, int64, int64, bool, []ConfigObj)
 	MergeDbObjKeys(dbObj ConfigObj) (ConfigObj, error)
+	SortObjList(objList []ConfigObj) []ConfigObj
 }
 type PatchOpInfo struct {
 	Op    string
@@ -92,4 +93,7 @@ func (obj baseObj) GetBulkObjFromDb(startIndex int64, count int64, dbHdl redis.C
 }
 func (obj baseObj) MergeDbObjKeys(dbObj ConfigObj) (ConfigObj, error) {
 	return nil, nil
+}
+func (obj baseObj) SortObjList(objList []ConfigObj) []ConfigObj {
+	return nil
 }
