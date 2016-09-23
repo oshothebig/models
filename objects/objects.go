@@ -31,11 +31,13 @@ type ConfigObj interface {
 	UnmarshalObject(data []byte) (ConfigObj, error)
 	UnmarshalObjectData(queryMap map[string][]string) (ConfigObj, error)
 	StoreObjectInDb(dbHdl redis.Conn) error
+	StoreObjectDefaultInDb(dbHdl redis.Conn) error
 	DeleteObjectFromDb(dbHdl redis.Conn) error
 	GetKey() string
 	GetObjectFromDbByKey(objKey string, dbHdl redis.Conn) (ConfigObj, error)
 	GetObjectFromDb(objKey string, dbHdl redis.Conn) (ConfigObj, error)
 	CompareObjectsAndDiff(updateKeys map[string]bool, dbObj ConfigObj) ([]bool, error)
+	CompareObjectDefaultAndDiff(dbObj ConfigObj) ([]bool, error)
 	MergeDbAndConfigObjForPatchUpdate(dbObj ConfigObj, patchOpInfoSlice []PatchOpInfo) (ConfigObj, []bool, error)
 	MergeDbAndConfigObj(dbObj ConfigObj, attrSet []bool) (ConfigObj, error)
 	UpdateObjectInDb(dbV4Route ConfigObj, attrSet []bool, dbHdl redis.Conn) error
@@ -61,6 +63,9 @@ func (obj baseObj) UnmarshalObjectData(data map[string][]string) (ConfigObj, err
 func (obj baseObj) StoreObjectInDb(dbHdl redis.Conn) error {
 	return nil
 }
+func (obj baseObj) StoreObjectDefaultInDb(dbHdl redis.Conn) error {
+	return nil
+}
 func (obj baseObj) DeleteObjectFromDb(dbHdl redis.Conn) error {
 	return nil
 }
@@ -74,6 +79,9 @@ func (obj baseObj) GetObjectFromDb(objKey string, dbHdl redis.Conn) (ConfigObj, 
 	return nil, nil
 }
 func (obj baseObj) CompareObjectsAndDiff(updateKeys map[string]bool, dbObj ConfigObj) ([]bool, error) {
+	return nil, nil
+}
+func (obj baseObj) CompareObjectDefaultAndDiff(dbObj ConfigObj) ([]bool, error) {
 	return nil, nil
 }
 func (obj baseObj) MergeDbAndConfigObj(dbObj ConfigObj, attrSet []bool) (ConfigObj, error) {
