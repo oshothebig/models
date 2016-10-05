@@ -25,12 +25,6 @@ package objects
 
 import ()
 
-type SystemLogging struct {
-	baseObj
-	Vrf     string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"1", AUTOCREATE: "true", DEFAULT: "default", DESCRIPTION: "Vrf name"`
-	Logging string `DESCRIPTION: "Global logging", SELECTION: "on/off", DEFAULT: "on"`
-}
-
 type ComponentLogging struct {
 	baseObj
 	Module string `SNAPROUTE: "KEY", ACCESS:"w",  MULTIPLICITY:"*", DESCRIPTION: "Module name to set logging level"`
@@ -77,8 +71,8 @@ type SystemParam struct {
 	Vrf         string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", AUTOCREATE: "true", DESCRIPTION: "System Vrf", DEFAULT:"default"`
 	MgmtIp      string `DESCRIPTION: "Management Ip of System"`
 	Hostname    string `DESCRIPTION: "System Host Name"`
-	Version     string `DESCRIPTION: "System Version Information"`
 	SwitchMac   string `DESCRIPTION: "Switch Mac Address`
+	SwVersion   string `DESCRIPTION: "FlexSwitch Version Information"`
 	Description string `DESCRIPTION: "System Description"`
 }
 
@@ -87,7 +81,9 @@ type SystemParamState struct {
 	Vrf         string `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "System Vrf""`
 	MgmtIp      string `DESCRIPTION: "Management Ip of System"`
 	Hostname    string `DESCRIPTION: "System Host Name"`
-	Version     string `DESCRIPTION: "System Version Information"`
 	SwitchMac   string `DESCRIPTION: "Switch Mac Address`
+	SwVersion   string `DESCRIPTION: "FlexSwitch Version Information"`
 	Description string `DESCRIPTION: "System Description"`
+	Distro      string `DESCRIPTION: "Linux distro running on this system"`
+	Kernel      string `DESCRIPTION: "Kernel version running on this system"`
 }
