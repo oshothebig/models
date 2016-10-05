@@ -23,14 +23,7 @@
 
 package actions
 
-type Daemon struct {
+type ResetBfdSession struct {
 	baseAction
-	Name     string `DESCRIPTION: "Daemon name"`
-	Enable   bool   `DESCRIPTION: "Enable the flexswitch daemon"`
-	WatchDog bool   `DESCRIPTION: "Enable watchdog for daemon"`
-}
-
-type GlobalLogging struct {
-	baseAction
-	Level string `DESCRIPTION: "Logging level", SELECTION: "crit/err/warn/alert/emerg/notice/info/debug/trace/off", DEFAULT: "info"`
+	IpAddr string `DESCRIPTION: "Reset BFD session to this address"`
 }
