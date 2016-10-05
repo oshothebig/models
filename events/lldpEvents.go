@@ -7,11 +7,11 @@
 //
 //    http://www.apache.org/licenses/LICENSE-2.0
 //
-//	 Unless required by applicable law or agreed to in writing, software
-//	 distributed under the License is distributed on an "AS IS" BASIS,
-//	 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-//	 See the License for the specific language governing permissions and
-//	 limitations under the License.
+//       Unless required by applicable law or agreed to in writing, software
+//       distributed under the License is distributed on an "AS IS" BASIS,
+//       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//       See the License for the specific language governing permissions and
+//       limitations under the License.
 //
 // _______  __       __________   ___      _______.____    __    ____  __  .___________.  ______  __    __
 // |   ____||  |     |   ____\  \ /  /     /       |\   \  /  \  /   / |  | |           | /      ||  |  |  |
@@ -21,30 +21,35 @@
 // |__|     |_______||_______/__/ \__\ |_______/        \__/  \__/     |__|     |__|      \______||__|  |__|
 //
 
-package actions
+package events
 
 import (
 	"encoding/json"
+	"errors"
+	"fmt"
 )
 
-/*
- * This File contains all the actions that are supported by local client for configMgr i.e configMgr it self
- */
-type ResetConfig struct {
-	baseAction
+type LLDPIntfKey struct {
+	IfIndex int32
 }
 
-type SaveConfig struct {
-	baseAction
-	FileName string `DESCRIPTION: "FileName for the saved config", QPARAM: "optional" , DEFAULT:"startup-config"`
+const (
+	NeighborLearned EventId = 1
+	NeighborUpdated EventId = 2
+	NeighborRemoved EventId = 3
+)
+
+var LLDPEventKeyMap KeyMap = KeyMap{
+	"LLDPIntf": LLDPIntfKey{},
 }
 
-type ApplyConfig struct {
-	baseAction
-	ConfigData map[string][]json.RawMessage `json:"ConfigData"`
-}
-
-type ForceApplyConfig struct {
-	baseAction
-	ConfigData map[string][]json.RawMessage `json:"ConfigData"`
+func (obj LLDPIntfKey) GetObjDBKey(bytes []byte) (string, string, error) {
+	var err error
+	if len(bytes) == 0 {
+		return "", "", errors.New("Empty byte stream")
+	}
+	if err = json.Unmarshal(bytes, &obj); err != nil {
+		return "", "", err
+	}
+	return fmt.Sprintf("IfIndex:%d", obj.IfIndex), fmt.Sprintf("LLDPIntf#%d", obj.IfIndex), nil
 }

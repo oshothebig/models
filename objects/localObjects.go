@@ -49,3 +49,36 @@ type SystemSwVersionState struct {
 	FlexswitchVersion string     `SNAPROUTE: "KEY", ACCESS:"r",  MULTIPLICITY:"1", DESCRIPTION: "Flexswitch version"`
 	Repos             []RepoInfo `DESCRIPTION: "Git repo details"`
 }
+
+type ConfigLogState struct {
+	baseObj
+	SeqNum    uint32 `SNAPROUTE: "KEY", DESCRIPTION: "Sequence number of the API call"`
+	Time      string `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY: "*", DESCRIPTION: "When the API was called", USESTATEDB:"true"`
+	API       string `SNAPROUTE: "KEY", DESCRIPTION: "Name of the API called"`
+	Operation string `DESCRIPTION: "Oprtation executed on this API"`
+	Data      string `DESCRIPTION: "User provided data"`
+	Result    string `DESCRIPTION: "Result of the API call"`
+	UserAddr  string `DESCRIPTION: "Host address from where the call was made"`
+	UserName  string `DESCRIPTION: "User who made the call"`
+}
+
+//Voyager specific config object
+type XponderGlobal struct {
+	baseObj
+	XponderId          uint8  `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY: "1", DESCRIPTION: "Xponder module identifier", DEFAULT:0, AUTOCREATE:"true"`
+	XponderMode        string `DESCRIPTION: "Global operational mode of Xponder module", SELECTION:"InServiceWire"/"InServiceRegen"/"InServiceOverSub"/"InServicePacketOptical"/"OutOfService", DEFAULT:"OutOfService"`
+	XponderDescription string `DESCRIPTION: "User configurable description string for the xponder module", DEFAULT:"This is a Voyager platform"`
+}
+
+type XponderGlobalState struct {
+	baseObj
+	XponderId          uint8  `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY: "1", DESCRIPTION: "Xponder module identifier"`
+	XponderMode        string `DESCRIPTION: "Global operational mode of Xponder module"`
+	XponderDescription string `DESCRIPTION: "User configurable description string for the xponder module"`
+}
+
+type ApiInfoState struct {
+	baseObj
+	Url  string   `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY: "1", DESCRIPTION: "URL"`
+	Info []string `DESCRIPTION: "APIs available under this URL or details of the specific API"`
+}

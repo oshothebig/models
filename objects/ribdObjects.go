@@ -29,25 +29,10 @@ type NextHopInfo struct {
 	Weight        int32  `DESCRIPTION : "Weight of the next hop",DEFAULT:0, MIN:0, MAX:31, OPTIONAL `
 }
 
-/*
-type IPv4Route struct {
-	baseObj
-	DestinationNw     string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", ACCELERATED: "true", DESCRIPTION: "IP address of the route, can be specified either in CIDR notation or as a IP address."`
-	NetworkMask       string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", ACCELERATED: "true", DESCRIPTION: "mask of the route, required to be non-zero in case DestinationNw is a non-CIDR address."`
-	NextHopIp         string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", ACCELERATED: "true", DESCRIPTION: "next hop ip of the route"`
-	Cost              uint32 `DESCRIPTION :"Cost of this route", DEFAULT:0`
-	OutgoingIntfType  string `DESCRIPTION :"Interface type of the next hop interface"`
-	OutgoingInterface string `DESCRIPTION :"Interface ID of the next hop interface"`
-	Protocol          string `DESCRIPTION :"Protocol type of the route", DEFAULT:"STATIC"`
-	Weight            int32  `DESCRIPTION : "Weight of the next hop", DEFAULT:0, MIN:0, MAX:31`
+type NextBestRouteInfo struct {
+	Protocol    string
+	NextHopList []NextHopInfo `DESCRIPTION: "List of next hops to reach this network"`
 }
-/*type IPv4Route struct {
-	baseObj
-	DestinationNw     string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", ACCELERATED: "true", DESCRIPTION: "IP address of the route"`
-	NetworkMask       string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", ACCELERATED: "true", DESCRIPTION: "mask of the route"`
-	Protocol           string   `DESCRIPTION :"Protocol type of the route"`
-	NextHop           []NextHopInfo
-}*/
 type IPv4Route struct {
 	baseObj
 	DestinationNw string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", ACCELERATED: "true", DESCRIPTION: "IP address of the route"`
@@ -57,6 +42,28 @@ type IPv4Route struct {
 	NullRoute     bool   `DESCRIPTION : "Specify if this is a null route", OPTIONAL, DEFAULT:false`
 	NextHop       []NextHopInfo
 }
+
+type IPv6Route struct {
+	baseObj
+	DestinationNw string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", ACCELERATED: "true", DESCRIPTION: "IP address of the route"`
+	NetworkMask   string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", ACCELERATED: "true", DESCRIPTION: "mask of the route"`
+	Protocol      string `DESCRIPTION :"Protocol type of the route", OPTIONAL, DEFAULT:"STATIC"`
+	Cost          uint32 `DESCRIPTION :"Cost of this route", OPTIONAL, DEFAULT:0`
+	NullRoute     bool   `DESCRIPTION : "Specify if this is a null route", OPTIONAL, DEFAULT:false`
+	NextHop       []NextHopInfo
+}
+type IPv6RouteState struct {
+	baseObj
+	DestinationNw      string        `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "IP address of the route", USESTATEDB:"true"`
+	Protocol           string        `DESCRIPTION :"Protocol type of the route"`
+	IsNetworkReachable bool          `DESCRIPTION :"Indicates whether this network is reachable"`
+	RouteCreatedTime   string        `DESCRIPTION :"Time when the route was added"`
+	RouteUpdatedTime   string        `DESCRIPTION :"Time when the route was last updated"`
+	NextHopList        []NextHopInfo `DESCRIPTION: "List of next hops to reach this network"`
+	PolicyList         []string      `DESCRIPTION :"List of policies applied on this route"`
+	NextBestRoute      NextBestRouteInfo
+}
+
 type IPv4RouteState struct {
 	baseObj
 	DestinationNw      string        `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "IP address of the route", USESTATEDB:"true"`
@@ -66,14 +73,29 @@ type IPv4RouteState struct {
 	RouteUpdatedTime   string        `DESCRIPTION :"Time when the route was last updated"`
 	NextHopList        []NextHopInfo `DESCRIPTION: "List of next hops to reach this network"`
 	PolicyList         []string      `DESCRIPTION :"List of policies applied on this route"`
+	NextBestRoute      NextBestRouteInfo
 }
-type IPv4EventState struct {
+type RIBEventState struct {
 	baseObj
 	Index     uint32 `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "Event ID"`
 	TimeStamp string `DESCRIPTION :"Time when the event occured"`
 	EventInfo string `DESCRIPTION :"Detailed description of the event"`
 }
-
+type PolicyPrefix struct {
+	Prefix          string
+	MaskLengthRange string
+}
+type PolicyPrefixSet struct {
+	baseObj
+	Name       string         `SNAPROUTE: "KEY", ACCESS:"w",MULTIPLICITY:"*",DESCRIPTION:"Policy Prefix set name.`
+	PrefixList []PolicyPrefix `DESCRIPTION:"List of policy prefixes part of this prefix set."`
+}
+type PolicyPrefixSetState struct {
+	baseObj
+	Name                string         `SNAPROUTE: "KEY", ACCESS:"r",MULTIPLICITY:"*",DESCRIPTION:"Policy Prefix set name.`
+	PrefixList          []PolicyPrefix `DESCRIPTION:"List of policy prefixes part of this prefix set."`
+	PolicyConditionList []string       `DESCRIPTION:"List of policy conditions using this prefix set"`
+}
 type PolicyCondition struct {
 	baseObj
 	Name            string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", DESCRIPTION: "PolicyConditionName"`
@@ -81,6 +103,7 @@ type PolicyCondition struct {
 	Protocol        string `DESCRIPTION: "Protocol to match on if the ConditionType is set to MatchProtocol",SELECTION:"CONNECTED"/"STATIC"/"OSPF"/"BGP"`
 	IpPrefix        string `DESCRIPTION: "Used in conjunction with MaskLengthRange to specify the IP Prefix to match on when the ConditionType is MatchDstIpPrefix/MatchSrcIpPrefix."`
 	MaskLengthRange string `DESCRIPTION: "Used in conjuction with IpPrefix to specify specify the IP Prefix to match on when the ConditionType is MatchDstIpPrefix/MatchSrcIpPrefix."`
+	PrefixSet       string `DESCRIPTION: "Name of a pre-defined prefix set to be used as a condition qualifier.", OPTIONAL, DEFAULT:""`
 }
 type PolicyConditionState struct {
 	baseObj
@@ -126,4 +149,36 @@ type RouteDistanceState struct {
 	baseObj
 	Protocol string `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", DESCRIPTION: "RouteDistanceState protocol"`
 	Distance int32  `DESCRIPTION: "The current value of the admin distance of this protocol"`
+}
+
+type PerProtocolRouteCount struct {
+	Protocol   string
+	RouteCount int32
+	EcmpCount  int32
+}
+type RouteStatState struct {
+	baseObj
+	Vrf                       string                  `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"1", DESCRIPTION: "System Vrf", DEFAULT:"default"`
+	TotalRouteCount           int32                   `DESCRIPTION: Total number of routes on the system`
+	ECMPRouteCount            int32                   `DESCRIPTION: ECMP routes on the system`
+	V4RouteCount              int32                   `DESCRIPTION: Total number of IPv4 routes on the system`
+	V6RouteCount              int32                   `DESCRIPTION: Total number of IPv6 routes on the system`
+	PerProtocolRouteCountList []PerProtocolRouteCount `DESCRIPTION: Per Protocol routes stats`
+}
+type RouteInfoSummary struct {
+	DestinationNw   string        `DESCRIPTION: "IP address of the route"`
+	IsInstalledInHw bool          `DESCRIPTION :"Indicates whether this route is installed in HW"`
+	NextHopList     []NextHopInfo `DESCRIPTION: "List of next hops to reach this network"`
+}
+type RouteStatsPerProtocolState struct {
+	baseObj
+	Protocol string             `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"1", DESCRIPTION :"Protocol type of the route"`
+	V4Routes []RouteInfoSummary `DESCRIPTION: "Brief summary info of ipv4 routes of this protocol type"`
+	V6Routes []RouteInfoSummary `DESCRIPTION: "Brief summary info of ipv6 routes of this protocol type"`
+}
+type RouteStatsPerInterfaceState struct {
+	baseObj
+	Intfref  string   `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"1", DESCRIPTION :Interface of the next hop"`
+	V4Routes []string `DESCRIPTION: "Brief summary info of ipv4 routes which have nexthop on this interface"`
+	V6Routes []string `DESCRIPTION: "Brief summary info of ipv6 routes which have nexthop on this interface"`
 }

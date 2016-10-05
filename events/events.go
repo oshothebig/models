@@ -24,39 +24,55 @@
 package events
 
 import (
-	"time"
+	"github.com/garyburd/redigo/redis"
 )
 
 type OwnerId uint8
 type EventId uint32
 
-type EventBase struct {
-	OwnerId     OwnerId
-	OwnerName   string
-	EvtId       EventId
-	EventName   string
-	TimeStamp   time.Time
-	Description string
-	SrcObjName  string
+type KeyMap map[string]EventObjKeyIntf
+
+var EventKeyMap map[string]KeyMap = map[string]KeyMap{
+	"ASICD":     AsicdEventKeyMap,
+	"ARPD":      ArpdEventKeyMap,
+	"OPTICD":    OpticdEventKeyMap,
+	"BGPD":      BGPdEventKeyMap,
+	"LLDP":      LLDPEventKeyMap,
+	"PLATFORMD": PlatformdEventKeyMap,
 }
 
 type Event struct {
-	EventBase
-	SrcObjKey interface{}
+	OwnerId        int32
+	EventId        int32
+	OwnerName      string
+	EventName      string
+	TimeStamp      string
+	SrcObjName     string
+	SrcObjKey      interface{}
+	Description    string
+	AdditionalData interface{}
 }
 
-type KeyMap map[string]interface{}
-
-var EventKeyMap map[string]KeyMap = map[string]KeyMap{
-	"ASICD": AsicdEventKeyMap,
-	"ARPD":  ArpdEventKeyMap,
+type EventStats struct {
+	EventId       EventId
+	EventName     string
+	NumEvents     uint32
+	LastEventTime string
 }
 
-type EventObject struct {
-	OwnerName   string
-	EventName   string
-	TimeStamp   string
-	SrcObjName  string
-	SrcObjKey   string
-	Description string
+type EventObj interface {
+	UnmarshalObject([]byte) (EventObj, error)
+	GetKey() string
+	StoreObjectInDb(redis.Conn) error
+	GetObjectFromDb(string, redis.Conn) (EventObj, error)
+	GetAllObjFromDb(redis.Conn) ([]EventObj, error)
+}
+
+var EventObjectMap = map[string]EventObj{
+	"events":     Event{},
+	"eventstats": EventStats{},
+}
+
+type EventObjKeyIntf interface {
+	GetObjDBKey([]byte) (string, string, error)
 }

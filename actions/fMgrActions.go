@@ -23,28 +23,16 @@
 
 package actions
 
-import (
-	"encoding/json"
-)
-
-/*
- * This File contains all the actions that are supported by local client for configMgr i.e configMgr it self
- */
-type ResetConfig struct {
+type FaultEnable struct {
 	baseAction
+	OwnerName string `DESCRIPTION: "Fault owner name"`
+	EventName string `DESCRIPTION: "Fault event name"`
+	Enable    bool   `DESCRIPTION:"Enable/Disbale control"`
 }
 
-type SaveConfig struct {
+type FaultClear struct {
 	baseAction
-	FileName string `DESCRIPTION: "FileName for the saved config", QPARAM: "optional" , DEFAULT:"startup-config"`
-}
-
-type ApplyConfig struct {
-	baseAction
-	ConfigData map[string][]json.RawMessage `json:"ConfigData"`
-}
-
-type ForceApplyConfig struct {
-	baseAction
-	ConfigData map[string][]json.RawMessage `json:"ConfigData"`
+	OwnerName  string `DESCRIPTION: "Fault owner name"`
+	EventName  string `DESCRIPTION: "Fault event name"`
+	SrcObjUUID string `DESCRIPTION: "Source object Key UUID"`
 }

@@ -23,28 +23,14 @@
 
 package actions
 
-import (
-	"encoding/json"
-)
-
-/*
- * This File contains all the actions that are supported by local client for configMgr i.e configMgr it self
- */
-type ResetConfig struct {
+type Daemon struct {
 	baseAction
+	Name     string `DESCRIPTION: "Daemon name"`
+	Enable   bool   `DESCRIPTION: "Enable the flexswitch daemon"`
+	WatchDog bool   `DESCRIPTION: "Enable watchdog for daemon"`
 }
 
-type SaveConfig struct {
+type GlobalLogging struct {
 	baseAction
-	FileName string `DESCRIPTION: "FileName for the saved config", QPARAM: "optional" , DEFAULT:"startup-config"`
-}
-
-type ApplyConfig struct {
-	baseAction
-	ConfigData map[string][]json.RawMessage `json:"ConfigData"`
-}
-
-type ForceApplyConfig struct {
-	baseAction
-	ConfigData map[string][]json.RawMessage `json:"ConfigData"`
+	Level string `DESCRIPTION: "Logging level", SELECTION: "crit/err/warn/alert/emerg/notice/info/debug/trace/off", DEFAULT: "info"`
 }

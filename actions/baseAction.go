@@ -24,8 +24,7 @@
 package actions
 
 import (
-//	"github.com/garyburd/redigo/redis"
-    "fmt"
+	"fmt"
 )
 
 type ActionObj interface {
@@ -38,4 +37,8 @@ type baseAction struct {
 func (obj baseAction) UnmarshalAction(data []byte) (ActionObj, error) {
 	fmt.Println("base action unmarshal")
 	return nil, nil
+}
+
+type SaveConfigObj struct {
+	ConfigData map[string][]interface{} `json:"ConfigData"`
 }

@@ -23,28 +23,7 @@
 
 package actions
 
-import (
-	"encoding/json"
-)
-
-/*
- * This File contains all the actions that are supported by local client for configMgr i.e configMgr it self
- */
-type ResetConfig struct {
+type ResetBfdSession struct {
 	baseAction
-}
-
-type SaveConfig struct {
-	baseAction
-	FileName string `DESCRIPTION: "FileName for the saved config", QPARAM: "optional" , DEFAULT:"startup-config"`
-}
-
-type ApplyConfig struct {
-	baseAction
-	ConfigData map[string][]json.RawMessage `json:"ConfigData"`
-}
-
-type ForceApplyConfig struct {
-	baseAction
-	ConfigData map[string][]json.RawMessage `json:"ConfigData"`
+	IpAddr string `DESCRIPTION: "Reset BFD session to this address"`
 }

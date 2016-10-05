@@ -29,21 +29,20 @@ import (
 	"fmt"
 )
 
-type ArpEntryKey struct {
-	IpAddr string
+type BGPNeighborKey struct {
+	NeighborAddress string
+	IfIndex         int32
 }
 
 const (
-	ArpEntryLearned EventId = 1
-	ArpEntryDeleted EventId = 2
-	ArpEntryUpdated EventId = 3
+	BGPNeighborStateChange EventId = 1
 )
 
-var ArpdEventKeyMap KeyMap = KeyMap{
-	"ArpEntry": ArpEntryKey{},
+var BGPdEventKeyMap KeyMap = KeyMap{
+	"BGPNeighbor": BGPNeighborKey{},
 }
 
-func (obj ArpEntryKey) GetObjDBKey(bytes []byte) (string, string, error) {
+func (obj BGPNeighborKey) GetObjDBKey(bytes []byte) (string, string, error) {
 	var err error
 	if len(bytes) == 0 {
 		return "", "", errors.New("Empty byte stream")
@@ -51,5 +50,5 @@ func (obj ArpEntryKey) GetObjDBKey(bytes []byte) (string, string, error) {
 	if err = json.Unmarshal(bytes, &obj); err != nil {
 		return "", "", err
 	}
-	return fmt.Sprintf("IpAddr:%s", obj.IpAddr), fmt.Sprintf("ArpEntry#%s", obj.IpAddr), nil
+	return fmt.Sprintf("NeighborAddress:%s IfIndex:%d", obj.NeighborAddress, obj.IfIndex), fmt.Sprintf("BGPNeighbor#%s#%d", obj.NeighborAddress, obj.IfIndex), nil
 }

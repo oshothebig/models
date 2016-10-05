@@ -23,28 +23,22 @@
 
 package actions
 
-import (
-	"encoding/json"
-)
-
-/*
- * This File contains all the actions that are supported by local client for configMgr i.e configMgr it self
- */
-type ResetConfig struct {
+type ResetBGPv4NeighborByIPAddr struct {
 	baseAction
+	IPAddr string `DESCRIPTION: "IP address of the BGP IPv4 neighbor to restart"`
 }
 
-type SaveConfig struct {
+type ResetBGPv4NeighborByInterface struct {
 	baseAction
-	FileName string `DESCRIPTION: "FileName for the saved config", QPARAM: "optional" , DEFAULT:"startup-config"`
+	IntfRef string `DESCRIPTION: "Interface of the BGP IPv4 neighbor to restart"`
 }
 
-type ApplyConfig struct {
+type ResetBGPv6NeighborByIPAddr struct {
 	baseAction
-	ConfigData map[string][]json.RawMessage `json:"ConfigData"`
+	IPAddr string `DESCRIPTION: "IP address of the BGP IPv6 neighbor to restart"`
 }
 
-type ForceApplyConfig struct {
+type ResetBGPv6NeighborByInterface struct {
 	baseAction
-	ConfigData map[string][]json.RawMessage `json:"ConfigData"`
+	IntfRef string `DESCRIPTION: "Interface of the BGP IPv6 neighbor to restart"`
 }

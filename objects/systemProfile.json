@@ -25,16 +25,14 @@
             "Enable": true},
 
             {"Name":"vxland",
-            "Enable": true},
-
-            {"Name":"ldpd",
             "Enable": true}
             ],
 "TCPPortBase" : 10000,
 "API_Port"    : 8080,
+"Notifier_Port" : 8081,
 "SwitchMac": "9a:ed:e6:c2:27:67",
 "MgmtIp"   : "10.1.10.244",
-"Description" : "Flexswitch System",
+"Description" : "FlexSwitch System",
 "Version" : "1.0.0",
 "HostName" : "FLEXSWITCH",
 "Vrf": "default"

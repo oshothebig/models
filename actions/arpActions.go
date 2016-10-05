@@ -23,28 +23,22 @@
 
 package actions
 
-import (
-	"encoding/json"
-)
-
-/*
- * This File contains all the actions that are supported by local client for configMgr i.e configMgr it self
- */
-type ResetConfig struct {
+type ArpDeleteByIPv4Addr struct {
 	baseAction
+	IpAddr string `DESCRIPTION: "End Host IP Address for which corresponding Arp entry needed to be deleted"`
 }
 
-type SaveConfig struct {
+type ArpDeleteByIfName struct {
 	baseAction
-	FileName string `DESCRIPTION: "FileName for the saved config", QPARAM: "optional" , DEFAULT:"startup-config"`
+	IfName string `DESCRIPTION: "All the Arp learned for end host on given L3 interface will be deleted"`
 }
 
-type ApplyConfig struct {
+type ArpRefreshByIPv4Addr struct {
 	baseAction
-	ConfigData map[string][]json.RawMessage `json:"ConfigData"`
+	IpAddr string `DESCRIPTION: "Neighbor's IP Address for which corresponding Arp entry needed to be re-learned"`
 }
 
-type ForceApplyConfig struct {
+type ArpRefreshByIfName struct {
 	baseAction
-	ConfigData map[string][]json.RawMessage `json:"ConfigData"`
+	IfName string `DESCRIPTION: "All the Arp learned on given L3 interface will be re-learned"`
 }
