@@ -49,7 +49,7 @@ const (
 	LacpdEventNone EventId = iota
 	LacpdEventPortOperStateUp
 	LacpdEventPortOperStateDown
-        LacpdEventPortPartnerInfoSync
+	LacpdEventPortPartnerInfoSync
 	LacpdEventPortPartnerInfoMismatch
 	LacpdEventGroupOperStateUp
 	LacpdEventGroupOperStateDown
@@ -60,10 +60,10 @@ const (
 )
 
 var LacpdEventKeyMap KeyMap = KeyMap{
-	"LacpEntry":     LacpEntryKey{},
-	"LacpPortEntry": LacpPortEntryKey{},
-	"DrcpEntry":     DrcpEntryKey{},
-	"DrcpIppEntry":  DrcpEntryKey{},
+	"LaPortChannel":                 LacpEntryKey{},
+	"LaPortChannelIntfRefListState": LacpPortEntryKey{},
+	"DistributedRelay":              DrcpEntryKey{},
+	"IppLinkState":                  DrcpIppEntryKey{},
 }
 
 func (obj LacpEntryKey) GetObjDBKey(bytes []byte) (string, string, error) {
@@ -74,7 +74,7 @@ func (obj LacpEntryKey) GetObjDBKey(bytes []byte) (string, string, error) {
 	if err = json.Unmarshal(bytes, &obj); err != nil {
 		return "", "", err
 	}
-	return fmt.Sprintf("IntfRef:%s", obj.IntfRef), fmt.Sprintf("LacpEntry#%s", obj.IntfRef), nil
+	return fmt.Sprintf("IntfRef:%s", obj.IntfRef), fmt.Sprintf("LaPortChannel#%s", obj.IntfRef), nil
 }
 
 func (obj LacpPortEntryKey) GetObjDBKey(bytes []byte) (string, string, error) {
@@ -85,7 +85,7 @@ func (obj LacpPortEntryKey) GetObjDBKey(bytes []byte) (string, string, error) {
 	if err = json.Unmarshal(bytes, &obj); err != nil {
 		return "", "", err
 	}
-	return fmt.Sprintf("IntfRef:%s", obj.IntfRef), fmt.Sprintf("LacpPortEntry#%s", obj.IntfRef), nil
+	return fmt.Sprintf("IntfRef:%s", obj.IntfRef), fmt.Sprintf("LaPortChannelIntfRefListState#%s", obj.IntfRef), nil
 }
 
 func (obj DrcpEntryKey) GetObjDBKey(bytes []byte) (string, string, error) {
@@ -96,7 +96,7 @@ func (obj DrcpEntryKey) GetObjDBKey(bytes []byte) (string, string, error) {
 	if err = json.Unmarshal(bytes, &obj); err != nil {
 		return "", "", err
 	}
-	return fmt.Sprintf("IntfRef:%s", obj.DrcpName), fmt.Sprintf("DrcpEntry#%s", obj.DrcpName), nil
+	return fmt.Sprintf("IntfRef:%s", obj.DrcpName), fmt.Sprintf("DistributedRelay#%s", obj.DrcpName), nil
 }
 
 func (obj DrcpIppEntryKey) GetObjDBKey(bytes []byte) (string, string, error) {
@@ -107,5 +107,5 @@ func (obj DrcpIppEntryKey) GetObjDBKey(bytes []byte) (string, string, error) {
 	if err = json.Unmarshal(bytes, &obj); err != nil {
 		return "", "", err
 	}
-	return fmt.Sprintf("IntfRef:%s", obj.IntfRef), fmt.Sprintf("DrcpIppEntry#%s", obj.IntfRef), nil
+	return fmt.Sprintf("IntfRef:%s", obj.IntfRef), fmt.Sprintf("IppLinkState#%s", obj.IntfRef), nil
 }
