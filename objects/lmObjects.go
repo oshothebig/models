@@ -25,8 +25,12 @@ package objects
 
 type MplsAction struct {
 	ActionType string `DESCRIPTION: "MPLS action type", STRLEN:"10" SELECTION: POP/SWAP/SWAP_PUSH/PUSH`
+	label      int32  `DESCRIPTION: "Action Label"`
+	Exp        byte   `DESCRIPTION: "EXP value for MPLS encap"`
+	Bos        bool   `DESCRIPTION: "Bottom of label stack"`
 }
 
+/*
 type NextHopLfe struct {
 	baseObj
 	NhLFEIdx   int32        `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", ACCELERATED: "true", DESCRIPTION: "Label index"`
@@ -35,29 +39,33 @@ type NextHopLfe struct {
 	LabelMap   int32        `DESCRIPTION :"lable map for ILM entry into ILM table"`
 	ActionList []MplsAction `DESCRIPTION :"label action list"`
 }
+*/
 
 type NextHopLfeState struct {
 	baseObj
-	NhLFEIdx   int32        `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", ACCELERATED: "true", DESCRIPTION: "Label index"`
-	Vrf        string       `SNAPROUTE: "KEY", DESCRIPTION: "Routing and Forwarding context", DEFAULT:"default"`
-	IntfRef    string       `DESCRIPTION :"Next hop mpls interface index"`
-	LabelMap   int32        `DESCRIPTION :"lable map for ILM entry into ILM table"`
-	ActionList []MplsAction `DESCRIPTION :"label action list"`
+	NhLFEIdx     int32        `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", ACCELERATED: "true", DESCRIPTION: "Label index"`
+	Vrf          string       `SNAPROUTE: "KEY", DESCRIPTION: "Routing and Forwarding context", DEFAULT:"default"`
+	IntfRef      string       `DESCRIPTION :"Next hop mpls interface index"`
+	LabelMap     int32        `DESCRIPTION :"lable map for ILM entry into ILM table"`
+	RibQualified bool         `DESCRIPTION :"Installed into RIB"`
+	ActionList   []MplsAction `DESCRIPTION :"label action list"`
 }
 
+/*
 type FtnEntry struct {
 	baseObj
 	IpAddr   string     `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"1", ACCELERATED: "true", DESCRIPTION: "IP address prefix IP/Net mask in CIDR format", STRLEN:"18"`
 	Vrf      string     `SNAPROUTE: "KEY", DESCRIPTION: "Routing and Forwarding context", DEFAULT:"default"`
 	NhLFEIdx NextHopLfe `DESCRIPTION :"NH LFE for this FTN Entry"`
 }
+*/
 
 type FtnEntryState struct {
 	baseObj
 	IpAddr       string     `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"1", ACCELERATED: "true", DESCRIPTION: "IP address prefix IP/Net mask in CIDR format", STRLEN:"18"`
 	Vrf          string     `SNAPROUTE: "KEY", DESCRIPTION: "Routing and Forwarding context", DEFAULT:"default"`
 	NhLFEIdx     NextHopLfe `DESCRIPTION :"NH LFE for this FTN Entry"`
-	RibQualified string     `DESCRIPTION :"Installed into RIB YES/NO", STRLEN:"3" SELECTION: Yes/No`
+	RibQualified bool       `DESCRIPTION :"Installed into RIB"`
 }
 
 type MplsLabel struct {
@@ -74,28 +82,27 @@ type MplsLabelState struct {
 	Vrf           string     `SNAPROUTE: "KEY", DESCRIPTION: "Routing and Forwarding context", DEFAULT:"default"`
 	Protocol      string     `DESCRIPTION :"Protocol that learned or created the label", OPTIONAL, DEFAULT:"STATIC"`
 	NhLFEIdx      NextHopLfe `DESCRIPTION :"NH LFE for this label"`
-	LFibQualified string     `DESCRIPTION :"Installed into LFIB YES/NO", STRLEN:"3" SELECTION: Yes/No`
+	LFibQualified bool       `DESCRIPTION :"Installed into LFIB"`
 }
 
 /*
-type MplsIntf struct {
-	IntfRef string `SNAPROUTE: "KEY", ACCESS:"w", DESCRIPTION: "Interface name or ifindex of port/lag or vlan on which this IPv4 object is configured"`
-	Vrf     string `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"1", AUTOCREATE: "true", DESCRIPTION: "Routing and Forwarding context", DEFAULT:"default"`
-}
-*/
-
 type MplsGlobal struct {
 	baseObj
 	Vrf        string     `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"1", AUTOCREATE: "true", DESCRIPTION: "Routing and Forwarding context", DEFAULT:"default"`
 	MplsIntf   []MplsIntf `DESCRIPTION :"Interfaces enabled with MPLS"`
 	AdminState string     `DESCRIPTION :"Admin state of Router MPLS", OPTIONAL, DEFAULT:"UP"`
 }
+*/
 
 type MplsGlobalState struct {
 	baseObj
 	Vrf        string     `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"1", AUTOCREATE: "true", DESCRIPTION: "Routing and Forwarding context", DEFAULT:"default"`
 	MplsIntf   []MplsIntf `DESCRIPTION :"Interfaces enabled with MPLS"`
 	AdminState string     `DESCRIPTION :"Admin state of Router MPLS", OPTIONAL, DEFAULT:"UP"`
+	LibCnt     int32      `DESCRIPTION :"Lable Information Base size"`
+	LFibCnt    int32      `DESCRIPTION :"Lable Forwarding Information Base size"`
+	FtnCnt     int32      `DESCRIPTION :"Fec-to-Nh table size"`
+	NhLfeCnt   int32      `DESCRIPTION :"NextHop Lable Forwarde Entry table size"`
 }
 
 type MplsLsp struct {
@@ -114,18 +121,19 @@ type MplsLspState struct {
 	OperState string `DESCRIPTION: "Operational state of LSP"`
 }
 
-type LabelAlloc struct {
+type LabelOut struct {
 	baseObj
 	Vrf      int32  `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", ACCELERATED: "true", DESCRIPTION: "Routing and Forwarding context"`
 	IpAddr   string `SNAPROUTE: "KEY", DESCRIPTION: "IP address prefix IP/Net mask in CIDR format", STRLEN:"18"`
 	Protocol string `DESCRIPTION :"Protocol that is requesting the label"`
 }
 
-//
-//type LabelBindReq struct {
-//	baseObj
-//	IpAddress string
-//	IpMask    string
-//	VrfId     int32
-//	Protocol  string
-//}
+/*
+type LabelBindReq struct {
+	baseObj
+	IpAddress string
+	IpMask    string
+	VrfId     int32
+	Protocol  string
+}
+*/
