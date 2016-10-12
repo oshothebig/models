@@ -81,6 +81,21 @@ type EthernetPMState struct {
 	ClassCPMData []PMData `DESCRIPTION: "PM Data corresponding to PM Class C"`
 }
 
+type AsicSummaryState struct {
+	baseObj
+	ModuleId      uint8 `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY: "1", DESCRIPTION:"Module identifier"`
+	NumPortsUp    int32 `DESCRIPTION: Summary stating number of ports that have operstate UP`
+	NumPortsDown  int32 `DESCRIPTION: Summary stating number of ports that have operstate DOWN`
+	NumVlans      int32 `DESCRIPTION: Summary stating number of vlans configured in the asic`
+	NumV4Intfs    int32 `DESCRIPTION: Summary stating number of IPv4 interfaces configured in the asic`
+	NumV6Intfs    int32 `DESCRIPTION: Summary stating number of IPv6 interfaces configured in the asic`
+	NumV4Adjs     int32 `DESCRIPTION: Summary stating number of IPv4 adjacencies configured in the asic`
+	NumV6Adjs     int32 `DESCRIPTION: Summary stating number of IPv6 adjacencies configured in the asic`
+	NumV4Routes   int32 `DESCRIPTION: Summary stating number of IPv4 routes configured in the asic`
+	NumV6Routes   int32 `DESCRIPTION: Summary stating number of IPv6 routes configured in the asic`
+	NumECMPRoutes int32 `DESCRIPTION: Summary stating number of ECMP routes configured in the asic`
+}
+
 type Vlan struct {
 	baseObj
 	VlanId        int32    `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY: "*", MIN:"1", MAX: "4094", DESCRIPTION: "802.1Q tag/Vlan ID for vlan being provisioned"`
