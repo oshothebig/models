@@ -62,27 +62,27 @@ type FtnEntry struct {
 
 type FtnEntryState struct {
 	baseObj
-	IpAddr       string     `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"1", ACCELERATED: "true", DESCRIPTION: "IP address prefix IP/Net mask in CIDR format", STRLEN:"18"`
-	Vrf          string     `SNAPROUTE: "KEY", DESCRIPTION: "Routing and Forwarding context", DEFAULT:"default"`
-	NhLFEIdx     NextHopLfe `DESCRIPTION :"NH LFE for this FTN Entry"`
-	RibQualified bool       `DESCRIPTION :"Installed into RIB"`
+	IpAddr string `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"1", ACCELERATED: "true", DESCRIPTION: "IP address prefix IP/Net mask in CIDR format", STRLEN:"18"`
+	Vrf    string `SNAPROUTE: "KEY", DESCRIPTION: "Routing and Forwarding context", DEFAULT:"default"`
+	//NhLFEIdx     NextHopLfe `DESCRIPTION :"NH LFE for this FTN Entry"`
+	RibQualified bool `DESCRIPTION :"Installed into RIB"`
 }
 
 type MplsLabel struct {
 	baseObj
-	LabelIdx int32      `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", ACCELERATED: "true", DESCRIPTION: "Label index"`
-	Vrf      string     `SNAPROUTE: "KEY", DESCRIPTION: "Routing and Forwarding context", DEFAULT:"default"`
-	Protocol string     `DESCRIPTION :"Protocol that learned or created the label", OPTIONAL, DEFAULT:"STATIC"`
-	NhLFEIdx NextHopLfe `DESCRIPTION :"NH LFE for this label"`
+	LabelIdx int32  `SNAPROUTE: "KEY", ACCESS:"w", MULTIPLICITY:"*", ACCELERATED: "true", DESCRIPTION: "Label index"`
+	Vrf      string `SNAPROUTE: "KEY", DESCRIPTION: "Routing and Forwarding context", DEFAULT:"default"`
+	Protocol string `DESCRIPTION :"Protocol that learned or created the label", OPTIONAL, DEFAULT:"STATIC"`
+	//NhLFEIdx NextHopLfe `DESCRIPTION :"NH LFE for this label"`
 }
 
 type MplsLabelState struct {
 	baseObj
-	LabelIdx      int32      `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", ACCELERATED: "true", DESCRIPTION: "Label index"`
-	Vrf           string     `SNAPROUTE: "KEY", DESCRIPTION: "Routing and Forwarding context", DEFAULT:"default"`
-	Protocol      string     `DESCRIPTION :"Protocol that learned or created the label", OPTIONAL, DEFAULT:"STATIC"`
-	NhLFEIdx      NextHopLfe `DESCRIPTION :"NH LFE for this label"`
-	LFibQualified bool       `DESCRIPTION :"Installed into LFIB"`
+	LabelIdx int32  `SNAPROUTE: "KEY", ACCESS:"r", MULTIPLICITY:"*", ACCELERATED: "true", DESCRIPTION: "Label index"`
+	Vrf      string `SNAPROUTE: "KEY", DESCRIPTION: "Routing and Forwarding context", DEFAULT:"default"`
+	Protocol string `DESCRIPTION :"Protocol that learned or created the label", OPTIONAL, DEFAULT:"STATIC"`
+	//NhLFEIdx      NextHopLfe `DESCRIPTION :"NH LFE for this label"`
+	LFibQualified bool `DESCRIPTION :"Installed into LFIB"`
 }
 
 /*
