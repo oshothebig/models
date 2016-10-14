@@ -266,24 +266,6 @@ type SubIPv4Intf struct {
 	Enable  bool   `DESCRIPTION:"Enable or disable this interface", DEFAULT:false`
 }
 
-/*
- * MPLS Interface config
- */
-type MplsIntf struct {
-	baseObj
-	IntfRef string `SNAPROUTE: "KEY", ACCESS:"w",  MULTIPLICITY:"*", AUTOCREATE: "false", DESCRIPTION: "Interface which is MPLS enabled"`
-}
-
-/*
- * MPLS Interface State
- */
-type MplsIntfState struct {
-	baseObj
-	IntfRef   string `SNAPROUTE: "KEY", ACCESS:"r",  MULTIPLICITY:"*", DESCRIPTION: "Interface which is MPLS enabled"`
-	IfIndex   int32  `DESCRIPTION: "System assigned interface id for this MPLS interface"`
-	OperState string `DESCRIPTION: "Operational state of this MPLS interface"`
-}
-
 type IPv6Intf struct {
 	baseObj
 	IntfRef    string `SNAPROUTE: "KEY", ACCESS:"w", DESCRIPTION: "Interface name or ifindex of port/lag or vlan on which this IPv4 object is configured"`
