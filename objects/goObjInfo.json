@@ -60,5 +60,11 @@
                     "svcName" : "nil"},
 "stpdObjects.go" :  {"owner": "stpd",
                     "location" : "l2/stp/rpc",
+                    "svcName" : "nil"},
+"ldpObjects.go" :  {"owner": "ldpd",
+                    "location" : "mpls/ldp/rpc",
+                    "svcName" : "nil"},
+"lmObjects.go" :  {"owner": "lmd",
+                    "location" : "mpls/lm/rpc",
                     "svcName" : "nil"}
 }
